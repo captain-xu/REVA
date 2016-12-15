@@ -1,0 +1,95 @@
+<div class="new-app">
+    <div class="header">
+        <ul class="nav navbar-nav navbar-left breadcrumb">
+            <li>App Management</li>
+            <li>New App</li>
+        </ul>
+    </div>
+    <div class="edit-container">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Upload Package:<em>&#42;</em></label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control package" placeholder="Please select the package" readonly ng-model="fullpackage">
+            </div>
+            <button type="file" ngf-select="uploadPackage($file)" accept=".apk" class="btn btn-primary upload"> Upload</button>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">App Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" placeholder="This field will automatically loaded from the upload package" ng-model="detail.app">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Package Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" readonly placeholder="This field will automatically loaded from the upload package" ng-model="detail.packagename">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Version Code:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" readonly placeholder="This field will automatically loaded from the upload package" ng-model="detail.version_code">
+            </div>
+            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="codeOpen" ng-mouseenter="codeOpen=true" ng-mouseleave="codeOpen=false" uib-popover="Version Code must be set as an integer, such as '100'.">
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Version Name:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" readonly placeholder="This field will automatically loaded from the upload package" ng-model="detail.version_name">
+            </div>
+            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="nameOpen" ng-mouseenter="nameOpen=true" ng-mouseleave="nameOpen=false" uib-popover="The version number shown to users, such as '2.0.1'.">
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">App Icon:<em>&#42;</em></label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" placeholder="Please select the package" readonly ng-model="appicon">
+            </div>
+            <button type="file" ngf-select="uploadPic($file)" accept="image/png, image/jpeg" class="btn btn-primary upload"> Upload</button>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-6 img-preview">
+                <span>Preview</span>
+                <img ng-src="{{imgURL}}">
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label">Description:<em>&#42;</em></label>
+            <div class="col-sm-6">
+                <textarea class="form-control" placeholder="Please enter description" ng-model="detail.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Requires Android:<em>&#42;</em></label>
+            <div class="col-sm-2">
+                <div class="dropdown">
+                    <p class="dropdown-toggle app-name" data-toggle="dropdown" ng-show="versionstart">{{versionstart}}</p>
+                    <p class="dropdown-toggle app-name warn-tip" data-toggle="dropdown" ng-hide="versionstart">select version start</p>
+                    <span class="caret"></span>
+                    <ul class="dropdown-menu app-menu" role="menu">
+                        <li ng-repeat="vs in version" ng-click="versionData(vs,'start')">{{vs}}</li>
+                    </ul>
+                </div>
+            </div>
+            <span class="version-dash">  ~  </span>
+            <div class="col-sm-2">
+                <div class="dropdown">
+                    <p class="dropdown-toggle app-name" data-toggle="dropdown" ng-show="versionend">{{versionend}}</p>
+                    <p class="dropdown-toggle app-name warn-tip" data-toggle="dropdown" ng-hide="versionend">select version end</p>
+                    <span class="caret"></span>
+                    <ul class="dropdown-menu app-menu" role="menu">
+                        <li ng-repeat="vs in version" ng-click="versionData(vs,'end')" ng-show="vs >= versionstart">{{vs}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="right-btn">
+            <a href="javascript:history.go(-1)">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+            <button type="button" class="btn btn-default save" ng-click="saveData()">Save</button>
+        </div>
+    </div>
+</div>

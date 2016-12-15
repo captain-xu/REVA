@@ -1,0 +1,12 @@
+<div class="editpush">
+    <div class="header">
+        <span class="head-name">{{currentStep==1?"Who should receive this push?":currentStep==2?"What will your message say?":currentStep==3?"When will this message be sent?":"Ready to go"}}</span>
+        <ul class="nav navbar-nav navbar-right breadcrumb">
+            <li class="available" ng-class="{'target':currentStep==1,'active':currentStep!=1}" ng-click="goStep(1)">Target Users</li>
+            <li ng-class="{'target':currentStep==2,'active':currentStep!=2,'available':step>1}" ng-click="goStep(2)">Creatives</li>
+            <li ng-class="{'target':currentStep==3,'active':currentStep!=3,'available':step>2}" ng-click="goStep(3)">Scheduling</li>
+            <li ng-class="{'target':currentStep==4,'active':currentStep!=4,'available':step>2}" ng-click="goStep(4)">Confirm</li>
+        </ul>
+    </div>
+    <div ui-view></div>
+</div>

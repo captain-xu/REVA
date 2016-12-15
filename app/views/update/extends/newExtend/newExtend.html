@@ -1,0 +1,66 @@
+<div class="new-version new-extend">
+    <div class="header">
+        <ul class="nav navbar-nav navbar-left breadcrumb">
+            <li><a href="javascript:history.go(-1)">{{appName}}</a></li>
+            <li ng-hide="state=='edit'" class="active">New Extend</li>
+            <li ng-show="state=='edit'" class="active">Edit Extend</li>
+        </ul>
+    </div>
+    <div class="version-con form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Device:<em>&#42;</em>
+            </label>
+            <div class="col-sm-6" ng-show="state=='edit'">
+                <div class="dropdown os_filter">
+                    <div class="dropdown-toggle">
+                        <p>{{device}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" ng-hide="state=='edit'">
+                <div class="dropdown os_filter">
+                    <div class="dropdown-toggle" data-toggle="dropdown">
+                        <p>{{device}}<span class="caret"></span></p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="dev in deviceList" ng-click="deviceData(dev)">{{dev}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Extend:<em>&#42;</em>
+            </label>
+            <div class="col-sm-6 control-btn">
+                <ul>
+                    <li><button ng-click="format()"><i class="fa fa-chevron-left"></i><i class="fa fa-chevron-right"></i>Format</button></li>
+                    <li><button ng-click="removeWhiteSpace()"><i class="fa fa-outdent"></i>Remove white space</button></li>
+                    <li><button ng-click="clearText()"><i class="fa fa-copy"></i>Clear</button></li>
+                    <li class="pull-right"><button ng-click="check()"><i class="fa fa-eye"></i>Preview</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-6">
+                <textarea class="ex-text" autocomplete="off" ng-model="textarea"  set-Focus ng-blur="setBlur()"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="preview-mask" ng-show="previewstatus" ng-click="hidepreview()"></div>
+    <div class="preview-wrapper" ng-show="previewstatus">
+        <p class="preview-header">
+            <b>Preview</b>
+        </p>
+        <div class="jsonView">
+            <json-formatter json="textareaJson" open="1"></json-formatter>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="right-btn">
+            <a href="javascript:history.go(-1)"><button type="button" class="btn btn-default cancle">Cancel</button></a>
+            <button type="button" class="btn btn-default save" ng-click="saveExtend()">Save &#38; Continue</button>
+        </div>
+    </div>
+</div>
+

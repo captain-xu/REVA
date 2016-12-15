@@ -1,0 +1,21 @@
+<div class="tableau-model" ng-controller="tableauCtrl">
+    <div class="header">
+        <span class="head-name">{{header_name}}</span>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-class="{true:'active'}[slide_num==$index]" ng-click="showSlide($index)" ng-repeat="btnName in btnDatas">{{btnName}}</li>
+        </ul>
+    </div>
+    <div class="con">
+        <div class="banner">
+            <ul>
+                <li class="tableau-div"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="load-fail">
+        <span>Failed to load report. Please try to <a href="javascript:history.go(0)">refresh</a> this page.</span>
+        <br>
+        <br>
+        <a href="#/view/da/tableau/dashboard" class="go-homepage">Go to Homepage</a>
+    </div>
+</div>

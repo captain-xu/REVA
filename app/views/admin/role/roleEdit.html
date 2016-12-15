@@ -1,0 +1,53 @@
+<div class="roleEdit" id="roleEdit">
+	<div class="header">
+		<ol class="breadcrumb">
+			<li><a href="#/view/admin/role/view"><strong>Role</strong></a></li>
+			<li>Edit</li>
+		</ol>
+	</div>
+	
+	<div class="viewer">
+
+		<div class="title">
+			<sapn>{{!roleNameBk ? "Create Role" : roleNameBk}}</sapn>
+		</div>
+
+		<div class="edit-form detail-con form-horizontal" >
+			<div class="form-group">
+				<label class="control-label col-sm-3">Role:<em>&#42;</em></label>
+				<div class="col-sm-5">
+	                <input type="text" ng-model="role.name" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+	            </div>
+			</div>
+		</div>
+
+	 	<div class="toolbar">
+	 		<button id="expandAll" ng-click="expandAllNode()" class="btn btn-default">Expand All</button>
+	 		<button id="collapseAll" ng-click="collapseAllNode()" class="btn btn-default">Collapse All</button>
+	 	</div>
+
+		<table id="tb-permission" data-toolbar=".toolbar" class="table table-bordered"></table>
+		
+		<div class="title">
+			<sapn>Assign Users:</sapn>
+		</div>
+
+		<div class="edit-form list-assign">
+			<span class="itemLine" ng-repeat="item in roleActivityUserList">
+				<input type="checkbox" name="{{item.userName}}" id="{{item.id}}" ng-checked="item.active" ng-click="selectRoleUser($event, item)">
+				<label>{{item.userName}}</label>
+			</span>			
+		</div>
+
+	</div>
+
+	<div class="footer">
+        <div class="left-btn">
+            <a href="#/view/admin/role/view"><button type="button" class="btn btn-default">Cancel</button></a>
+        </div>
+        <div class="right-btn">
+            <button type="button" class="btn btn-default save" ng-click="roleSave()" ng-show="roleActivityUserList.length>0">Save</button>
+        </div>
+    </div>
+
+</div>

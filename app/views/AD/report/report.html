@@ -1,0 +1,82 @@
+<div class="campaign">    
+    <div class="report">
+        <div class="header">
+            <ol class="breadcrumb">
+                <li><b>Report</b></li>
+            </ol>
+            <div class="daterange">
+                <i class="glyphicon glyphicon-calendar"></i>
+                <input type="text" class="form-control" readonly date-range>
+            </div>
+         </div>
+        <div class="seach-bar clearfix">
+            <div class="seach">
+                <span>Campaign:</span>
+                <reportselect datalists="camList" confirm="camSel()"></reportselect>
+            </div>
+            <div class="seach">
+                <span>Placement:</span>
+                <reportselect datalists="placeList" confirm="placeSel()"></reportselect>
+            </div>
+            <div class="seach">
+                <span>Type:</span>
+                <osselecttitle datalists="tyleLIst" confirm="typeClick()" vo="tyleLIst[3]"></osselecttitle>
+            </div>
+        </div>
+        <div class="echart-line" id="echart-line"></div>
+        <div class="list">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Campaign</th>
+                            <th ng-click="orderBy('imp')">Impression
+                                <div class="icon-order">
+                                    <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; !desc]"></i>
+                                    <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; desc]"></i>
+                                </div>
+                            </th>
+                            <th ng-click="orderBy('click')">Click
+                                <div class="icon-order">
+                                    <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; !desc]"></i>
+                                    <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; desc]"></i>
+                                </div>
+                            </th>
+                            <th ng-click="orderBy('ctr')">CTR
+                                <div class="icon-order">
+                                    <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; !desc]"></i>
+                                    <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; desc]"></i>
+                                </div>
+                            </th>
+                            <th>Date</th>
+                            <th ng-click="orderBy('finishRate')">Finish Rate
+                                <div class="icon-order">
+                                    <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='finishRate' &amp;&amp; !desc]"></i>
+                                    <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='finishRate' &amp;&amp; desc]"></i>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="vo in dataList | orderBy:orderField:desc">
+                            <td>{{vo.adName}}</td>
+                            <td>{{vo.imp}}</td>
+                            <td>{{vo.click}}</td>
+                            <td>{{vo.ctr}}</td>
+                            <td>{{vo.date}}</td>
+                            <td>{{vo.finishRate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <div class="btn-group">
+                    <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+                    <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+                    <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+                </div>
+                <ul uib-pagination total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+            </div>
+        </div>
+    </div>
+</div>

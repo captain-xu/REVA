@@ -1,0 +1,232 @@
+<div class="offer">
+    <div class="edit">
+        <div class="header">
+            <ol class="breadcrumb">
+                <li class="cursor" ng-click="cancel()">Ad Exchange</li>
+                <li class="active">Edit</li>
+            </ol>
+        </div>
+        <div class="edit-container">
+            <ul>
+                <li verification><span class="edit-key">Name:<em>&#42;</em></span>
+                    <input type="text" ng-model="name">
+                    <span class="msg"></span>
+                </li>
+                <li verification>
+                    <span class="edit-key">CPX:</span>
+                    <div class="dropdown cpx">
+                        <p class="dropdown-toggle app-filter" data-toggle="dropdown" ng-init="appfilter = 'Please select'">
+                        {{detailVO.CPX}}
+                        </p>
+                        <span class="caret"></span>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="cpx in CPX" ng-click="cpxData(cpx)">{{cpx}}</li>
+                        </ul>
+                    </div>
+                </li>
+                <li verification>
+                    <span class="edit-key">Payout:</span>
+                    <input type="text" ng-model="detailVO.payout">
+                </li>
+                <li verification>
+                    <span class="edit-key">Budget:</span>
+                    <input type="text" ng-model="detailVO.budget">
+                </li>
+                <li>
+                    <span class="edit-key">Date:<em>&#42;</em></span>
+                    <input id="datarange" type="text" name="datarange" date-unlimited data-start="startDate" data-end="endDate" ng-blur="timeDate($event)">
+                </li>
+                <li>
+                    <div class="tab-list">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a data-target="#home" aria-controls="home" role="tab" data-toggle="tab">Placement</a></li>
+                            <li role="presentation"><a data-target="#profile" aria-controls="profile" role="tab" data-toggle="tab">Targeting</a></li>
+                            <li role="presentation"><a data-target="#messages" aria-controls="messages" role="tab" data-toggle="tab">Advertiser</a>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <ul role="tabpanel" class="tab-pane active" id="home">
+                                <li>
+                                    <span class="title">App &amp; Version:<em>&#42;</em></span>
+                                    <div class="app">
+                                        <div class="dropdown">
+                                            <p class="dropdown-toggle" id="applist" data-toggle="dropdown">
+                                                {{detailVO.appName}}
+                                            </p>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="applist">
+                                                <li ng-repeat="vo in appList" ng-click="appData(vo)">{{vo.name}}</li>
+                                            </ul>
+                                            <span class="caret"></span>
+                                        </div>
+                                    </div>
+                                    <div class="app">
+                                        <div class="dropdown">
+                                            <p class="dropdown-toggle" id="versionlist" data-toggle="dropdown">
+                                                {{detailVO.version}}
+                                            </p>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="versionlist">
+                                                <li ng-repeat="vo in version" ng-click="versionData(vo)">{{vo.version}}</li>
+                                            </ul>
+                                            <span class="caret"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="title">Group:<em>&#42;</em></span>
+                                    <div class="dropdown">
+                                        <p class="dropdown-toggle" id="grouplist" data-toggle="dropdown">
+                                            {{detailVO.groupName}}
+                                        </p>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="grouplist">
+                                            <li ng-repeat="vo in group" ng-click="groupData(vo)">{{vo.name}}
+                                            </li>
+                                        </ul>
+                                        <span class="caret"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="title">Placement:<em>&#42;</em></span>
+                                    <div class="dropdown">
+                                        <p class="dropdown-toggle" id="placelist" data-toggle="dropdown">
+                                            {{detailVO.placeName}}
+                                        </p>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="placelist">
+                                            <li ng-repeat="vo in place" ng-click="placeData(vo)">{{vo.name}}
+                                            </li>
+                                        </ul>
+                                        <span class="caret"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <ul>
+                                    <li verification>
+                                        <span class="title">IMP Frequency:<em>&#42;</em></span>
+                                        <input type="text" ng-model="detailVO.remaining_daily_cap">
+                                        <span class="msg"></span>
+                                    </li>
+                                    <li verification>
+                                        <span class="title">Click Frequency:<em>&#42;</em></span>
+                                        <input type="text" ng-model="detailVO.click">
+                                        <span class="msg"></span>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Area:</span>
+                                        <div class="dropdown area-dropdown">
+                                            <p ng-click="areaClick($event)" class="dropdown-toggle" data-toggle="dropdown">{{detailVO.countries}}</p>
+                                            <ul class="dropdown-menu area-date" role="menu">
+                                                <li ng-click="allArea(detailVO,$event)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-all icon-area"></i>All
+                                                    <span style="display: none;">ALL</span>
+                                                </li>
+                                                <li ng-repeat="area in countryList" ng-click="areaData(area,$event)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-area"></i>{{area.name}}
+                                                    <span style="display: none;">{{area.code}}</span>
+                                                </li>
+                                            </ul>
+                                            <span class="caret"></span>
+                                        </div>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.areaExcept" class="areaexcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Device:</span>
+                                        <input type="text" ng-model="detailVO.device">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.deviceExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">IMEI:</span>
+                                        <input type="text" ng-model="detailVO.imei">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.imeiExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Model:</span>
+                                        <input type="text" ng-model="detailVO.model">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.modelExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">OS Version:</span>
+                                        <input type="text" ng-model="detailVO.osVersion">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.osVersionExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Language:</span>
+                                        <input type="text" ng-model="detailVO.language">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.languageExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Network:</span>
+                                        <input type="text" ng-model="detailVO.network">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.networkExcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Channel1:</span>
+                                        <input type="text" ng-model="detailVO.channel1">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.channel1Except">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Channel2:</span>
+                                        <input type="text" ng-model="detailVO.channel2">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.channel2Except">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Channel3:</span>
+                                        <input type="text" ng-model="detailVO.channel3">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.channel3Except">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Api Version:</span>
+                                        <input type="text" ng-model="detailVO.appVer">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.appVerExcept">
+                                    </li>
+                                    <li>
+                                        <span class="title">Time Setting:</span>
+                                        <ul class="native-cont timeset" ng-init="nums=['All','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']">
+                                            <li ng-click="checkData(i,$event)" ng-repeat="i in nums" class="timecheck"><i class="fa fa-check-square icon-check active"></i>{{i}}</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+                                <ul>
+                                    <li>
+                                        <span class="title">RTB:</span>
+                                        <ul class="native-cont">
+                                            <li><i class="fa fa-dot-circle-o icon-radio"></i>Yes</li>
+                                            <li><i class="fa fa-dot-circle-o icon-radio active"></i>No</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="title">Advertiser Name:</span>
+                                        <input type="text" ng-model="detailVO.advertiserName" readonly>
+                                    </li>
+                                    <li>
+                                        <span class="title">All List:</span>
+                                        <input type="text" ng-model="detailVO.offerName" readonly>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="edit-footer">
+                    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                    <button class="btn btn-default save" ng-click="saveData(detailVO)" ng-disabled="resubmit">Save</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+body{
+  position: relative;
+    background: linear-gradient(#2B406D, #4E5F84);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#2B406D, endColorStr=#4E5F84);
+    overflow: hidden;
+}
+
+/*icons start*/
+.container-404 .logo .icon-reva {display: block;font-size: 50px;color: #fff;}
+/*icons end*/
+
+.footer{position: absolute;bottom: 18px;color: #fff;width: 100%;font-size: 12px;text-align: center;}
+.footer a{color: #fff;}
+.footer p{color:rgba(255, 255, 255, 0.67);}
+
+/*404 start*/
+.container-404{
+  position: absolute;
+  width: 600px;height: 560px;
+  left: 50%;top: 50%;
+  margin-left: -300px;
+  margin-top: -280px;
+}
+.content-404{
+  width: 600px;
+  height: 290px;
+  background: transparent;
+  border-radius: 5px;
+  padding:80px 0 30px;
+}
+.content-404 .img-404{
+  width: 100%;
+  text-align: center;
+  font-size: 35px;
+  line-height: 30px;
+}
+.content-404 .img-404 img{
+  width: 190px;height: 100px;
+}
+.content-404 .content{
+  width: 100%;
+  text-align: center;
+  line-height: 26px;
+  color: #fff;
+}
+.content-404 .name{
+  padding: 30px 0;
+  font-size: 53px;
+  text-align: center;
+  color: #fff;
+}
+.home-link:link{color: #4988F5 !important;}
+.home-link:visited{color: #4988F5 !important;}
+
+.ret-btn {
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 3px;
+    background: #fff;
+    margin: 70px auto 0;
+}
+.ret-btn a{
+    display: inline-block;
+    width: 100%;
+    color: #253A61;
+    font-weight: bold;
+}
+/*404 end*/
+
+/*505 start*/
+.container-505{
+  position: absolute;
+  width: 600px;height: 560px;
+  left: 50%;top: 50%;
+  margin-left: -300px;
+  margin-top: -280px;
+}
+.content-505{
+  width: 600px;
+  height: 290px;;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 70px;
+  padding:40px 0 30px;
+}
+.clear{
+  clear: both;
+}
+.coming p{
+  width: 500px;
+  height: 32px;
+  font-size: 34px;
+  line-height: 32px;
+  text-align: center;
+  margin: 0 auto;
+  color: #4A4A4A;
+  padding-top: 34px;
+  padding-bottom: 18px;
+}
+.maintance p{
+  width: 500px;
+  height: 30px;
+  text-align: center;
+    margin: 0 auto;
+    color:#848484;
+    padding-bottom: 45px;
+}
+.time ul{
+  padding: 10px 0 0 10px;
+  text-align: center;
+}
+.time ul li{
+  display: inline-block;
+  font-size: 12px;
+  color: #C9C9C9;
+  padding-right: 54px;
+}
+.time ul .mins{
+  padding-right: 0;
+}
+.deta ul .mins{
+  padding-right: 0;
+}
+.deta ul{
+  text-align: center;
+}
+.deta ul li{
+  min-height: 50px;
+  display: inline-block;
+  font-size: 45px;
+  color: #2988E3;
+  padding-right: 44px;
+}
+
+
+.icon-reva:before { content: "\e642"; }
+.logo .icon-reva {display: block;font-size: 50px;color: #fff;text-align: center;}
+/*icons end*/

@@ -1,0 +1,38 @@
+@import '../less/variables';
+#lewaos-header {
+    background: linear-gradient(@dark-nav-light, @dark-nav-dark);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=@dark-nav-light, endColorStr=@dark-nav-dark);
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.37);
+    border: 0;
+    border-radius: 0;
+    min-width: 1280px;
+    margin: 0;
+    z-index: 3;
+}
+.sidebar{
+    position: relative;
+    z-index: 1;
+	.box-shadow;
+	color: @dark-font-black;
+}
+.main {
+    .empty_msg {
+    	background: #fff;
+        .content {
+            p {
+                color: @dark-font-black;
+            }
+            span{
+            	color: @dark-font-gray;
+            }
+        }
+        .btn-bar{
+        	a{
+        		background: @dark-btn-back;
+        	}
+        }
+    }
+    .list-msg{
+    	color: @dark-font-black;
+    }
+}

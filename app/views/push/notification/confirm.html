@@ -1,0 +1,76 @@
+<div class="confirm">
+    <ul class="confirm-container clearfix">
+        <li class="left-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHO</span>
+                </li>
+                <li class="content-wripper">
+                    <p>1.Target devices are <span>{{receiver.targetDevices}}</span></p>
+                    <p>2.Target app is <span>{{receiver.targetAppname}}</span></p>
+                    <p>3.Message type is <span>{{receiver.messageType=="0"?'Standard':'Automoated'}}</span> </p>
+                    <p ng-show="receiver.messageType=='0'">4.<span>{{receiver.allUsers}}</span> will see this message</p>
+                    <p ng-show="receiver.messageType=='1'">4.Send when app is not opened within <span>{{receiver.trigger}}</span> day(s)</p>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(1,'push.edit.targetuser')">Edit</button>
+                </li>
+            </ol>
+        </li>
+        <li class="mid-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHAT</span>
+                </li>
+                <li class="content-wripper">
+                    <div class="banner">
+                        <ul>
+                            <li class="message" ng-repeat="cont in body" repeat-finish>
+                                <p class="title">
+                                    <span class="item">{{cont.order}}</span> Message{{cont.order}}
+                                    <span class="user">Target Users {{cont.target}}%</span>
+                                </p>
+                                <div class="content">
+                                    <h5><strong>{{cont.title}}</strong></h5>
+                                    <span>{{cont.content}}</span>
+                                </div>
+                                <div class="img-preview" ng-class="{2:'active'}[cont.displayType]" ng-hide="cont.templet==1">
+                                    <img ng-src="{{cont.image}}" ng-show="cont.templet==3">
+                                    <img ng-src="{{cont.poster}}" ng-show="cont.templet==4">
+                                    <i class="fa fa-youtube-play" ng-show="cont.templet==4"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(2,'push.edit.creative')">Edit</button>
+                </li>
+            </ol>
+        </li>
+        <li class="right-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHEN</span>
+                </li>
+                <li class="content-wripper">
+                    <p>Message will be sent from <span>{{receiver.startTime}}</span> to <span>{{receiver.endTime}}</span></p>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(3,'push.edit.scheduling')">Edit</button>
+                </li>
+            </ol>
+        </li>
+    </ul>
+    <div class="footer">
+        <div class="left-btn">
+            <button type="button" class="btn btn-default draft" ng-click="goList()">Save as Draft</button>
+        </div>
+        <div class="right-btn">
+            <a href="#/view/push/list">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+            <button type="button" class="btn btn-default save" ng-click="activeData()" ng-disabled="resubmit">Activate</button>
+        </div>
+    </div>
+</div>

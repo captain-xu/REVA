@@ -1,0 +1,108 @@
+<div class="card-detail">
+    <div class="header">
+        <ul class="nav breadcrumb">
+            <li><a href="#/view/xscreen/card">Card</a></li>
+            <li><b>Edit</b></li>
+        </ul>
+    </div>
+    <div class="detail-con form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Device Model:<em>&#42;</em>
+            </label>
+            <div class="col-sm-7">
+                <div class="dropdown os_filter" ng-show="channelDetail!='new'">
+                    <div class="dropdown-toggle">
+                        <p>{{channelName}}</p>
+                    </div>
+                </div>
+                <div class="dropdown os_filter" ng-show="channelDetail=='new'">
+                    <div class="dropdown-toggle" data-toggle="dropdown">
+                        <p>{{channelName}}<span class="caret"></span></p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="channel in channelList" ng-click="loadList(channel)">{{channel.name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Service:<em>&#42;</em>
+            </label>
+            <div class="col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Opened Cards</div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Card Name</th>
+                                    <th>Show Name</th>
+                                    <th>Display</th>
+                                    <th>On/Off</th>
+                                    <th>Sort Operation</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="list in openList">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{list.name}}</td>
+                                    <td><input type="text" name="showname" ng-model="list.showname"></td>
+                                    <td>
+                                        <a href="javascript:void(0)" ng-hide="list.display" ng-click="changeDisplay(list,1)">Shown</a>
+                                        <a href="javascript:void(0)" ng-show="list.display" ng-click="changeDisplay(list,0)">Hidden</a>
+                                    </td>
+                                    <td><a href="javascript:void(0)" ng-click="changeCard(list,$index,0)">Off</a></td>
+                                    <td>
+                                        <span ng-click="upRecord(openList,$index)"><a href="javascript:void(0)">Up</a></span>
+                                        <span ng-click="downRecord(openList,$index)"><a href="javascript:void(0)">Down</a></span>
+                                    </td>
+                                    <td>
+                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==1" href="#/view/xscreen/configUrl/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
+                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==2" href="#/view/xscreen/configPlace/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+            </label>
+            <div class="col-sm-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Closed Cards</div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Card Name</th>
+                                <th>On/Off</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="list in closeList">
+                                <td>{{$index+1}}</td>
+                                <td>{{list.name}}</td>
+                                <td><a href="javascript:void(0)" ng-click="changeCard(list,$index,1)">On</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="right-btn">
+            <a href="#/view/xscreen/card">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+            <button type="button" class="btn btn-default save" ng-click="saveData()" ng-show="statu=='edit'">Save</button> 
+        </div>
+    </div>
+</div>

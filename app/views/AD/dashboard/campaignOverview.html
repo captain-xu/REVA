@@ -1,0 +1,126 @@
+<div class="campaign-overview">
+    <div class="header">
+        <span class="head-name">Dashboard</span>
+        <div class="campaign-date">
+            <i class="glyphicon glyphicon-calendar"></i>
+            <input type="text" readonly report-date>
+        </div>
+    </div>
+    <div class="overview-container">
+        <h5></h5>
+        <div class="view">
+        	<ul>
+				<li>
+                    <span>Requests</span><br>
+					<b>{{statics.request===''?'-':statics.request}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.reqFlag=='+' && rate.reqRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.reqFlag=='-' && rate.reqRate!=0"></i>
+					<span>{{rate.reqRate===''?'-':rate.reqRate + '%'}}</span>
+				</li>
+				<li>
+                    <span>Impressions</span><br>
+                    <b>{{statics.imp===''?'-':statics.imp}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.impFlag=='+' && rate.impRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.impFlag=='-' && rate.impRate!=0"></i>
+                    <span>{{rate.impRate===''?'-':rate.impRate + '%'}}</span>
+				</li>
+				<li>
+                    <span>Clicks</span><br>
+                    <b>{{statics.click===''?'-':statics.click}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.clickFlag=='+' && rate.clickRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.clickFlag=='-' && rate.clickRate!=0"></i>
+                    <span>{{rate.clickRate===''?'-':rate.clickRate + '%'}}</span>
+				</li>
+				<li>
+                    <span>Conversions</span><br>
+                    <b>{{statics.conversion===''?'-':statics.conversion}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.conversionFlag=='+' && rate.conversionRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.conversionFlag=='-' && rate.conversionRate!=0"></i>
+                    <span>{{rate.conversionRate===''?'-':rate.conversionRate + '%'}}</span>
+				</li>
+                <li>
+                    <span>eCPM</span><br>
+                    <b>{{statics.eCPM===''?'-':statics.eCPM}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.eCPMFlag=='+' && rate.eCPMRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.eCPMFlag=='-' && rate.eCPMRate!=0"></i>
+                    <span>{{rate.eCPMRate===''?'-':rate.eCPMRate + '%'}}</span>                
+                </li>
+                <li>
+                    <span>Revenue</span><br>
+                    <b>{{statics.revenue===''?'-':statics.revenue}}</b><br>
+                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.revenueFlag=='+' && rate.revenueRate!=0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.revenueFlag=='-' && rate.revenueRate!=0"></i>
+                    <span>{{rate.revenueRate===''?'-':rate.revenueRate + '%'}}</span>
+                </li>
+        	</ul>
+        </div>
+        <h5></h5>
+        <div class="summary">
+        	<div class="summary-filter clearfix">
+                <label for="">Summary By:</label>
+                <div class="dropdown">
+                    <p class="dropdown-toggle" data-toggle="dropdown">
+                        {{typeName}}
+                        <span class="caret"></span>
+                    </p>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-click="typeData('request','Requests')">Requests</li>
+                        <li ng-click="typeData('imp','Impressions')">Impressions</li>
+                        <li ng-click="typeData('click','Clicks')">Clicks</li>
+                        <li ng-click="typeData('conversion','Conversions')">Conversions</li>
+                        <li ng-click="typeData('eCPM','eCPM')">eCPM</li>
+                        <li ng-click="typeData('revenue','Revenue')">Revenue</li>
+                    </ul>
+                </div>
+        		<ul class="chart-change">
+        			<li class="fa fa-bar-chart" ng-click="changeChart($event,0)"></li>
+                    <li class="fa fa-line-chart active" ng-click="changeChart($event,1)"></li>
+        			<li class="fa fa-pie-chart" ng-click="changeChart($event,2)"></li>
+        		</ul>
+        	</div>
+            <div class="summary-chart" id="chart-bar" style="z-index: 0;"></div>
+            <div class="summary-chart" id="chart-line" style="z-index: 1;"></div>
+        	<div class="summary-chart" id="chart-pie" style="z-index: 0;"></div>
+        </div>
+        <div class="top-five">
+            <div class="revenue">
+                <h5>Top 5 Campaigns (Revenue)</h5>
+                <div class="revenue-chart" id="camp-chart"></div>
+            </div>
+            <div class="revenue">
+                <h5>Top 5 Brands & Models (Revenue)</h5>
+                <div class="revenue-chart" id="brand-chart"></div>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Campaign<br>(TOP10)</th>
+                        <th>App</th>
+                        <th>CPX</th>
+                        <th>Prices($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('price')" ng-class="{'price': 'active'}[orderField]"></i></th>
+                        <th>Impressions<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('impression')" ng-class="{'impression': 'active'}[orderField]"></i></th>
+                        <th>Clicks<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click')" ng-class="{'click': 'active'}[orderField]"></i></th>
+                        <th>Conversions<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion')" ng-class="{'conversion': 'active'}[orderField]"></i></th>
+                        <th>eCPM<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM')" ng-class="{'eCPM': 'active'}[orderField]"></i></th>
+                        <th>Revenue($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue')" ng-class="{'revenue': 'active'}[orderField]"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in dataList | orderBy:orderField:!desc">
+                        <td>{{list.adName}}</td>
+                        <td>{{list.appName}}</td>
+                        <td>{{list.cpx}}</td>
+                        <td>{{list.price===''?'-':list.price}}</td>
+                        <td>{{list.impression===''?'-':list.impression}}</td>
+                        <td>{{list.click===''?'-':list.click}}</td>
+                        <td>{{list.conversion===''?'-':list.conversion}}</td>
+                        <td>{{list.eCPM===''?'-':list.eCPM}}</td>
+                        <td>{{list.revenue===''?'-':list.revenue}}</td>
+                    </tr>
+                </tbody>
+            </table>   
+        </div>
+    </div>
+</div>

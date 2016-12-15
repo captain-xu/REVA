@@ -1,0 +1,109 @@
+<div class="form-group">
+    <div class="col-sm-2">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <input type="text" class="form-control" ng-model="item.param.name" readonly><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu">
+                <li ng-click="changeName(item.param,'Device')">Device</li>
+                <li ng-click="changeName(item.param,'Android Version')">Android Version</li>
+                <li ng-click="changeName(item.param,'Location')">Location</li>
+                <li ng-click="changeName(item.param,'Create Time')">Create Time</li>
+                <li ng-click="changeName(item.param,'Client ID')">Client ID</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <input type="text" class="form-control" ng-model="item.param.where" readonly><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu condition">
+                <li ng-show="item.param.name=='Device' || item.param.name=='Location' || item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'is')">is</li>
+                <li ng-show="item.param.name=='Device' || item.param.name=='Location' || item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'is not')">is not</li>
+                <li ng-show="item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'are')" ng-if="clientAre">are</li>
+                <li ng-show="item.param.name=='Android Version'" ng-click="setValue(item, 'where', 'is above')">is above</li>
+                <li ng-show="item.param.name=='Create Time'" ng-click="setValue(item, 'where', 'more than')">more than</li>
+                <li ng-show="item.param.name=='Android Version' || item.param.name=='Create Time'" ng-click="setValue(item, 'where', 'between')">between</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2" ng-if="item.param.name !='Create Time' && item.param.name !='Client ID'">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
+                <input type="text" class="form-control" ng-model="item.param.value1" readonly><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Device'">
+               <!--  <li ng-click="changeValue(item.param, 'All Devices')">All Devices</li> -->
+                <li ng-repeat="option in devices" ng-click="changeValue(item.param,option.chl)">{{option.chl}}</li>
+            </ul>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Location'">
+            <!--    <li ng-click="changeValue(item.param, 'All Country')">All Country</li> -->
+                <li ng-repeat="option in areas" ng-click="changeValue(item.param,option.country)">{{option.country}}</li>
+            </ul>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Android Version'">
+                <li ng-repeat="option in androidVersion" ng-click="changeValue(item.param,option)">{{option}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2" ng-if="item.param.name=='Create Time'">
+        <input type="text" class="form-control" ng-model="item.param.value1">
+    </div>
+    <div class="col-xs-1" ng-if="item.param.where=='between'">
+        ~
+    </div>
+    <div class="col-sm-2" ng-if="item.param.where=='between' &#38;&#38; item.param.name=='Create Time'">
+        <input type="text" class="form-control"  ng-model="item.param.value2">
+    </div>
+    <div class="col-sm-2" ng-if="(item.param.value2 || item.param.where=='between' ) &#38;&#38; item.param.name!='Create Time'">
+         <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
+                <input type="text" class="form-control" ng-model="item.param.value2" readonly><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Device'" ng-repeat="one in devices | filter:{chl: item.param.value1}">
+                <li ng-click="setValue(item, 'value2', 'All Devices')">All Devices</li>
+                <li ng-repeat="option in one.mod" ng-click="setValue(item, 'value2', option, 1)">{{option}}</li>
+            </ul>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Location'" ng-repeat="one in areas | filter:{country: item.param.value1}">
+               <li ng-click="setValue(item, 'value2', 'All States')">All States</li>
+                <li ng-repeat="option in one.state" ng-click="setValue(item, 'value2', option)">{{option}}</li>
+            </ul>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Android Version'">
+                <li ng-repeat="option in androidVersion" ng-click="setValue(item, 'value2', option)">{{option}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2"  ng-if="item.param.name=='Device'">
+         <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
+                <input type="text" class="form-control" ng-model="item.param.value3" readonly><span class="caret"></span>
+            </div>
+            <ul class="dropdown-menu" ng-if="item.param.name=='Device'">
+                <li ng-click="setValue(item, 'value3', 'All OS Versions')">All OS Versions</li>
+                <li ng-repeat="os in OSList" ng-click="setValue(item, 'value3' ,os)" title="{{os}}">{{os}}</li>
+            </ul>
+        </div>
+    </div>
+    <span class="spec" ng-if="item.param.name=='Create Time'">days</span>
+    <div class="col-sm-3" ng-if="item.param.name=='Client ID'">
+        <input type="text" class="form-control" ng-model="item.param.value1" ng-readonly="item.param.where=='are'">
+        <button type="file" ngf-select="uploadClient($file, $invalidFiles, item)" accept=".txt" name="file" class="btn btn-primary clientBtn" ng-show="item.param.where=='are'">Upload</button>
+    </div>
+    <div class="col-sm-1">
+        <div class="dropdown btn-drop">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                ...
+            </div>
+            <div class="dropdown-menu">
+                <div class="triangle-top">
+                    <i class="arrow"></i>
+                </div>
+                <ul>
+                    <li ng-click="addChild(item)" ng-hide="isChild == 'true'">Add a Item</li>
+                    <li ng-click="remove($index)">Remove</li>
+                </ul>
+            </div>
+        </div>
+    </div> 
+   
+</div>

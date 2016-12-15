@@ -1,0 +1,106 @@
+<div class="appinfo">
+    <div class="edit">
+        <div class="header">
+            <ol class="breadcrumb">
+                <li class="cursor" ng-click="cancel()">AppInfo</li>
+                <li class="active">View</li>
+            </ol>
+        </div>
+        <div class="edit-container">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Package Name:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.packagename">
+                </div>
+            </div>
+            <div class="form-group description">
+                <label class="col-sm-2 control-label">Description:</label>
+                <div class="col-xs-6">
+                    <textarea type="text" readonly class="form-control" ng-model="detailVO.description"></textarea>
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label class="col-sm-2 control-label">Country:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.area">
+                </div>   
+            </div> -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">File Size:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.filesize">
+                </div>   
+            </div>
+            <div class="form-group" verification>
+                <label class="col-sm-2 control-label">Datepublish:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.datepublish">
+                </div>
+                <span class="msg"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Downloads:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.numdownloads">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Category:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.category">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Version:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.softwareversion">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Score:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.score">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Operating System:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.operatingsystems">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Developer:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.developer">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Rate:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.rate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Icon URL:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.appIconUrl">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Google Play URL:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.googlePlayLink">
+                </div>
+            </div>
+            <div class="edit-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

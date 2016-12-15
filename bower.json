@@ -1,0 +1,32 @@
+{
+  "name": "fis3-angular",
+  "version": "0.0.0",
+  "authors": [
+    "lvaicui <aclv@lewatek.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "latest",
+    "angular": "~1.5.3",
+    "bootstrap": "3.3.4",
+    "angular-ui-router": "latest",
+    "angular-route": "~1.2",
+    "jquery": "2.2.4",
+    "echarts": "3.1.10",
+    "bootstrap-daterangepicker": "latest",
+    "moment": "2.14.1",
+    "font-awesome": "latest",
+    "unslider": "2.0.3",
+    "ng-file-upload-shim": "^12.0.4",
+    "ng-file-upload": "^12.0.4",
+    "angular-sanitize": "^1.5.8",
+    "json-formatter": "^0.6.0",
+    "video.js": "^5.12.4"
+  }
+}

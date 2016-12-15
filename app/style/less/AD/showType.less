@@ -1,0 +1,61 @@
+@import '../variables';
+
+.show-type {
+    .edit {
+        .form-group {
+            .others-type{
+                li{
+                    display: inline-block;
+                    width: 100px;
+                    height: 40px;
+                    line-height: 40px;
+                    cursor: pointer;
+                }
+            }
+            .two_icon {
+                border: 0px;
+                vertical-align: top;
+                margin-right: 10px;
+                input {
+                    border: 1px solid #ccc;
+                }
+            }
+            .input-group-addon {
+                border: 1px;
+            }
+        }
+        .fields{
+            overflow: visible;
+            .dropdown{
+                padding: 0;
+                width: 50%;
+                .dropdown-toggle{
+                    text-indent: 0;
+                    display: inline-block;
+                    width: 98%;
+                    height: 36px;
+                    line-height: 36px;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .caret{
+                    float: right;
+                    position: absolute;
+                    bottom: 15px;
+                    right: 8px;
+                    height: 0;
+                    z-index: -1;
+                }
+                .dropdown-menu{
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                    max-height: 200px;
+                    overflow-y: auto;
+                }
+            }
+        }
+    }
+}

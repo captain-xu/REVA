@@ -1,0 +1,54 @@
+@import '../variables';
+.list-card {
+    width: 100%;
+    height: 100%;
+    padding: 0px 30px;
+	.header{
+	    line-height: 60px;
+    	.nav{
+    		li{
+    			a{
+    				padding: 0;
+				    margin: 14px;
+				    width: 150px;
+				    height: 32px;
+				    line-height: 32px;
+				    font-size: 12px;
+				    text-align: center;
+	                background: @add-btn-back;
+	                border: 1px solid @add-btn-border;
+	                box-shadow: inset 0px 2px 0px 0px #FFFFFF;
+                    font-weight: bold;
+                    color:@add-btn-color;
+				    .border-radius;
+				    &:hover{
+				    	background: #eee;
+				    }
+    			}
+    		}
+    	}
+	}
+	.table{
+		td{
+			.glyphicon{
+				color: @icon-color;
+				padding-right: 10px;
+			}
+		}
+	}
+	.cardname{
+		max-width: 600px;
+	    overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis;
+	}
+	.list-content{
+		background: #FFF;
+		margin: 20px 0;
+	}
+	.footer{
+		ul{
+			margin: 0;
+		}
+	}
+}

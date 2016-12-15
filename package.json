@@ -1,0 +1,20 @@
+{
+  "name": "fis3-angular",
+  "version": "1.0.0",
+  "keywords": [
+    "angular",
+    "fis",
+    "fis3"
+  ],
+  "dependencies": {
+    "fis3-hook-commonjs": "*",
+    "fis3-postpackager-loader": "*",
+    "fis-parser-less-2.x": "*",
+    "fis-preprocessor-annotate": "*",
+    "fis3-deploy-skip-packed": "*",
+    "fis3-deploy-replace": "*"
+  },
+  "author": "lvaicui",
+  "license": "MIT",
+  "homepage": "http://fis.baidu.com"
+}

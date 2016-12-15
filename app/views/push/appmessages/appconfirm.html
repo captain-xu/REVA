@@ -1,0 +1,62 @@
+<div class="confirm">
+    <ul class="confirm-container clearfix">
+        <li class="left-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHO</span>
+                </li>
+                <li class="content-wripper">
+                    <p>1. Target devices are <span>{{detail.targetDevices}}</span></p>
+                    <p>2. Target app is <span>{{detail.targetAppname}}</span></p>
+                    <p>3. Message type is <span>{{detail.messageType == "0" ?"Standard":"Automated"}}</span> </p>
+                    <p ng-show="detail.messageType=='0'">4.<span>{{detail.allUsers}}</span> will see this message</p>
+                    <p ng-show="detail.messageType=='1'">4.Send when app is not opened within <span>{{detail.trigger}}</span> day(s)</p>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(1,'push.editApp.apptargetuser')">Edit</button>
+                </li>
+            </ol>
+        </li>
+        <li class="mid-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHAT</span>
+                </li>
+                <li class="app-slider-wripper">
+                    <div class="info-wripper" ng-repeat="slider in detail.body track by $index">
+                        <i>{{$index == 0?'A':$index == 1?'B':'C'}}</i>
+                        <span class="info-container">NO UI</span>
+                        <span>
+                            Target Users {{slider.target}}%
+                        </span>
+                    </div>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(2,'push.editApp.appcreative')">Edit</button>
+                </li>
+            </ol>
+        </li>
+        <li class="right-container">
+            <ol>
+                <li class="img-wripper">
+                    <span>WHEN</span>
+                </li>
+                <li class="content-wripper">
+                    <p>Message will be sent from <span>{{detail.startTime}} </span> to <span>{{detail.endTime}}</span></p>
+                </li>
+                <li class="btn-wripper">
+                    <button class="btn btn-default" ng-click="nextStep(3,'push.editApp.appscheduling')">Edit</button>
+                </li>
+            </ol>
+        </li>
+    </ul>
+    <div class="footer">
+        <div class="left-btn">
+            <button type="button" class="btn btn-default draft" ng-click="goList()">Save as Draft</button>
+        </div>
+        <div class="right-btn">
+            <a href="#/view/push/list"><button type="button" class="btn btn-default cancle">Cancel</button></a>
+            <button type="button" class="btn btn-default save" ng-click="activeData()" ng-disabled="resubmit">Activate</button>
+        </div>
+    </div>
+</div>

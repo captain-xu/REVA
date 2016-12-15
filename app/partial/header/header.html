@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="logo logo-reva" ng-class="{true:'logo-reva',false:'logo-firms'}[!img_url]">
+        <i class="iconfont icon-reva icon-logo"></i>
+        <img ng-src="{{img_url}}">
+    </div>
+    <ul class="nav-title lewaos-header-hidden" style="display:none">
+        <li ng-repeat="item in headerItems" ng-class="{true:'active'}[item.menuType==activeTitle]" ng-click="titleClick(item)">{{item.name}}
+            <span ng-if="item.name == 'OPERATION'">New</span></li>
+    </ul>
+    <ul class="nav lewaos-header-hidden" style="display:none">
+        <li class="dropdown">
+            <span class="dropdown-toggle nav-width
+                    " data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i>
+                    {{userInfo.realName}}
+                    <b class="caret"></b>
+                </span>
+            <ul class="down dropdown-menu nav-width">
+                <li><a href="#/changePassword"><i class="glyphicon glyphicon-pencil"></i>Change Password</a></li>
+                <li ng-click="logout()"><a href="javascript:void(0)"><i class="glyphicon glyphicon-log-out"></i>Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,194 @@
+@import '../variables';
+.daterangepicker.dropdown-menu{line-height: 12px;}
+.operation,.offer {
+	height: 100%;
+    .header{
+        .add-net{
+            margin-right: 10px;
+        }
+    }
+    .showList{
+        .tab-btn{
+            position: relative;
+            top: 20px;
+            li{
+                cursor: pointer;
+            }
+        }
+    }
+    .edit {
+        .edit-container{
+            position: relative;
+            li>select{
+                display: inline-block;
+                height: 36px;
+                width: 50%;
+                padding: 0 1%;
+                border: 1px solid #c9c9c9;
+                border-radius: 3px;
+                font-size: 14px;
+                vertical-align: middle;
+            }
+            .cpx{
+                p{
+                    line-height: 36px;
+                }
+                .caret{
+                    width: auto;
+                    top: 14px;
+                    right: 8px;
+                    z-index: -1;
+                }
+            }  
+        }
+        .clear-data{
+            font-size: 12px;
+            right: 20px;
+            top: 6px;
+            cursor: pointer;
+            color: @font-color;
+        }
+        .clear-pubdata{
+            top: 2px;
+        }
+        .tab-list {
+            font-size: 14px;
+            border: 1px solid @border-color;
+            .nav-tabs {
+                border-bottom: 1px solid @border-color;
+                background: @tr-hover-color;
+                li{cursor: pointer;}
+                li > a {
+                    margin: 0;
+                    border-right: 1px solid @border-color;
+                    border-left: 0;
+                    border-top: 0;
+                    border-radius: 0;
+                    color: @font-color;
+                    font-weight: bold;
+                }
+            }
+            .nav-tabs > li.active > a,
+            .nav-tabs > li.active > a:hover,
+            .nav-tabs > li.active > a:focus {
+                color: @sidebar-hover;
+                background-color: #fff;
+                border-right: 1px solid @border-color;
+                cursor: pointer;
+            }
+            .tab-content {
+                padding: 30px 0;
+                .tab-pane {
+                    .icon-offer,
+                    .icon-area,
+                    .icon-device,
+                    .icon-model,
+                    .icon-osVersion,
+                    .icon-language{
+                        color: @icon-color;
+                        position: relative;
+                        right: 8px;
+                        z-index: -1;
+                        &.active{color: @sky-color}
+                    }
+                    li {
+                        margin-bottom: 20px;
+                        min-height: 34px;
+                        .title {
+                            display: inline-block;
+                            width: 170px;
+                            text-align: right;
+                            padding: 6px 20px 0 0;
+                            font-weight: bold;
+                            float: left;
+                            color: #6c6c6c;
+                        }
+                        .url{
+                            color: @warn-font-color;
+                            font-weight: bold;
+                            padding-left: 15px;
+                            display: none;
+                        }
+                        ul{
+                            &>li{
+                                margin-bottom: 0px;
+                            }
+                        }
+                        .app {
+                            float: left;
+                            margin-right: 20px;
+                        }
+                        select{
+                            width: 24%;
+                            height: 36px;
+                            border-color: #c9c9c9;
+                            border-radius: 3px;
+                            &:last-child{margin-left: 2%}
+                        }
+                        .dropdown {
+                            display: inline-block;
+                            width: 300px;
+                            border: 1px solid #ccc;
+                            height: 34px;
+                            line-height: 34px;
+                            border-radius: 4px;
+                            text-indent: 10px;
+                            textarea{
+                                font-size: 13px;
+                                display: block;
+                                width: 100%;
+                                height: 34px;
+                                line-height: 34px;
+                                border: none;
+                                background: none;
+                                cursor:pointer;
+                                position: absolute;
+                                top: 0;
+                                text-align: left;
+                                padding: 0 20px;
+                                color: @font-color;
+                            }
+                            .adver{
+                                position: relative;
+                                top: 32px;
+                                border: 1px solid @border-color;
+                                overflow-y: auto;
+                                background: #fff;
+                                z-index: 1;
+                                li{
+                                    border-bottom: 1px solid @border-color;
+                                    margin: 0;
+                                }
+                            }
+                        }
+                        .multi-sel{
+                            width: 50%;
+                        }
+                    }
+                    .except{
+                    	span.title{
+                    		display: inline-block;
+                		    float: none;
+                    	}
+                    	input{
+                    		width: 200px;
+                            margin-left: -4px;
+                    	}
+                        .areaexcept{
+                            width: 50%;
+                        }
+                        .area-dropdown{
+                            width: 50%;
+                            margin-left: -4px;
+                        }
+                    }
+                    .upload_img {
+                        .div_img {
+                            margin-left: 170px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

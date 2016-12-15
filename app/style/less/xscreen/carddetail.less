@@ -1,0 +1,95 @@
+@import '../variables';
+.card-detail {
+    padding: 0px 30px;
+    .header{
+        line-height: 60px;
+        .nav{
+            a{
+                padding: 0;
+                color: #333;
+                &:hover{
+                    background: transparent;
+                }
+            }
+        }
+    }
+    .detail-con.form-horizontal {
+        margin: 20px 30px 100px;
+        padding: 20px;
+        position: relative;
+        background: #fff;
+        z-index: 1;
+        border: 1px solid #c6c6c6;
+        border-radius: 3px;
+        .form-group{
+            .col-sm-7{
+                min-width: 610px;
+            }
+            .dropdown{
+                width: 100%;
+                .dropdown-toggle{
+                    p{
+                        .border;
+                        border-radius: 4px;
+                    }
+                }
+            }
+            .panel-body{
+                table{
+                    border:0px;
+                    td{
+                        input[name="showname"]{
+                            .border;
+                            .border-radius;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .footer {
+        position: fixed;
+        left: 220px;
+        right: 40px;
+        bottom: 0px;
+        height: 80px;
+        background: #fff;
+        border-radius: 3px 3px 0 0;
+        z-index: 1;
+        .box-shadow;
+        .left-btn {
+            height: 100%;
+            line-height: 80px;
+            padding: 0 40px;
+            float: left;
+            .ridio {
+                padding-right: 10px;
+                cursor: pointer;
+            }
+        }
+        .text-container {
+            display: inline-block;
+            height: 100%;
+            line-height: 80px;
+            width: 40%;
+            input {
+                padding: 10px;
+                height: 36px;
+                width: 100%;
+                .border;
+                .border-radius;
+            }
+        }
+        .right-btn {
+            height: 100%;
+            line-height: 80px;
+            padding: 0 40px;
+            float: right;
+            .save {
+                font-weight: bold;
+                margin-left: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+<div class="update-list">
+    <div class="header">
+        <ul class="nav navbar-nav navbar-left breadcrumb">
+            <li>App Management</li>
+            <li class="active">{{appName}}</li>
+        </ul>
+    </div>
+    <div class="list-content">
+        <div class="overview">
+            <ul>
+                <li>
+                    <p class="view-head clearfix">
+                        <span class="pull-left"><b>New Users</b></span>
+                        <span class="pull-right">Last Week</span>
+                    </p>
+                    <p class="view-content">{{updateData.newuser}}</p>
+                    <p class="view-foot" ng-class="{'up': 'trendUp', 'down': 'trendDown'}[newTrand]">
+                        <i class="glyphicon glyphicon-arrow-up" ng-if="newTrand=='up'"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-if="newTrand=='down'"></i>
+                        <span>{{difference_newuser}} ({{updateData.per_newuser}}%)</span>
+                    </p>
+                </li>
+                <li>
+                   <p class="view-head clearfix">
+                        <span class="pull-left"><b>Active Users</b></span>
+                        <span class="pull-right">Last Week</span>
+                    </p>
+                    <p class="view-content">{{updateData.activeuser}}</p>
+                    <p class="view-foot" ng-class="{'up': 'trendUp', 'down': 'trendDown'}[activeTrand]">
+                        <i class="glyphicon glyphicon-arrow-up"  ng-if="activeTrand=='up'"></i>
+                        <i class="glyphicon glyphicon-arrow-down"  ng-if="activeTrand=='down'"></i>
+                        <span>{{difference_activeuser}} ({{updateData.per_activeuser}}%)</span>
+                    </p> 
+                </li>
+                <li>
+                    <p class="view-head clearfix">
+                        <span class="pull-left"><b>ARPU</b></span>
+                        <span class="pull-right">Last Week</span>
+                    </p>
+                    <p class="view-content">{{arpu}}</p>
+                    <p class="view-foot" ng-class="{'up': 'trendUp', 'down': 'trendDown'}[arpuTrand]">
+                        <i class="glyphicon glyphicon-arrow-up"  ng-if="arpuTrand=='up'"></i>
+                        <i class="glyphicon glyphicon-arrow-down"  ng-if="arpuTrand=='down'"></i>
+                        <span>{{difference_arpu}} ({{per_arpu}}%)</span>
+                    </p>
+                </li>
+                <li>
+                    <p class="view-head clearfix">
+                        <span class="pull-left"><b>eCPM</b></span>
+                        <span class="pull-right">Last Week</span>
+                    </p>
+                    <p class="view-content">{{ecpm}}</p>
+                    <p class="view-foot" ng-class="{'up': 'trendUp', 'down': 'trendDown'}[ecpmTrand]">
+                        <i class="glyphicon glyphicon-arrow-up"  ng-if="ecpmTrand=='up'"></i>
+                        <i class="glyphicon glyphicon-arrow-down"  ng-if="ecpmTrand=='down'"></i>
+                        <span>{{difference_ecpm}} ({{per_ecpm}}%)</span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav nav-tabs tab-btn" role="tabList">
+            <li ui-sref="update.list.version" ng-class="{'version': 'active'}[tab]"><a href="javascript:void(0)" ng-click="tabClick('version')" ng-if="permission.update || permission.review">Version Mgmt</a></li>
+            <li ui-sref="update.list.campaign.placement" ng-class="{'campaign': 'active'}[tab]" ng-if="permission.campaign"><a href="javascript:void(0)" ng-click="tabClick('campaign')">Campaign Mgmt</a></li>
+            <li ui-sref="update.list.extends" ng-class="{'extends': 'active'}[tab]" ng-if="permission.extends"><a href="javascript:void(0)" ng-click="tabClick('extends')">Extends</a></li>
+        </ul>
+        <div class="tab-content">
+            <div ui-view></div>
+        </div>
+    </div>
+</div>

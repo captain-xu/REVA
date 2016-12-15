@@ -1,0 +1,14 @@
+<div class="wrapper">
+    <div class="menu panel-group" id="accordion">
+        <div class="item panel" ng-repeat='menu in sidebarMenu'>
+            <div data-toggle="collapse" data-parent="#accordion" href="{{'#menu'+menu.id}}" ng-click="menuClick($event)" class="side-parent">
+                <span ng-if="menu.children">{{menu.name}}</span>
+                <a href="{{'#'+menu.url}}" ng-if="menu.url" ng-class="{true:'active'}[menu.url == currentUrl]" ng-click="linkTo(menu)">{{menu.name}}</a>
+                <i class="glyphicon"  ng-class="{'glyphicon-chevron-right' : menu.children}"></i>
+            </div>
+            <ul class="side-menu collapse" id="{{'menu'+menu.id}}" ng-if="menu.children">
+                <li ng-repeat="child in menu.children" ng-click="linkTo(child)"><a href="{{'#'+child.url}}" ng-class="{true:'active'}[child.url == currentUrl]">{{child.name}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

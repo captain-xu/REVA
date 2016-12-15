@@ -1,0 +1,118 @@
+<div class="userEdit" id="userEdit">
+	<div class="header">
+		<ol class="breadcrumb">
+			<li><a href="#/view/admin/user/view"><strong>User</strong></a></li>
+			<li>Edit</li>
+		</ol>
+	</div>
+	
+	<div class="viewer">
+
+		<div class="title">
+			<sapn>{{!userNameBk ? "Create User" : userNameBk}}</sapn>
+		</div>
+
+		<div class="edit-form detail-con form-horizontal">
+<!-- 			<div class="form-group">
+				<label class="control-label col-sm-3">Group:<em>&#42;</em></label>
+				<div class="col-sm-5">
+	                <div class="dropdown os_filter">
+	                    <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+	                    	<input type="text" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" ng-model="item.name" placeholder="Please select your target group">
+	                        <span class="caret"></span>
+	                    </div>
+	                    <ul class="dropdown-menu">
+	                        <li ng-repeat="item in groupList" ng-click="reloadView(item)">{{item.name}}</li>
+	                    </ul>
+	                </div>
+	            </div>
+			</div> -->
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">User Name:<em>&#42;</em></label>
+				<div class="col-sm-5">
+	                <input type="text" placeholder="User Name" ng-model="user.userName" ng-blur="setRealName()" class="form-control ng-pristine ng-valid ng-not-empty ng-touched" ng-readonly="user.action == 'update'">
+	            </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">Real Name:</label>
+				<div class="col-sm-5">
+	                <input type="text" placeholder="Real Name" ng-model="user.realName" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+	            </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">Email:<em>&#42;</em></label>
+				<div class="col-sm-5">
+	                <input type="text" placeholder="Email" ng-model="user.email" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+	            </div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">Time Zone:</label>
+				<div class="controls">
+					<div class="col-sm-5">
+		                <input type="text" placeholder="Time Zone" ng-model="user.timezone" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+		            </div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">Language:</label>
+				<div class="controls">
+					<div class="col-sm-5">
+		                <input type="text" placeholder="Language" ng-model="user.language" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+		            </div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="control-label col-sm-3">Channel:</label>
+				<div class="col-sm-5">
+					<span class="channelLine" ng-repeat="iChannel in userChannelChosenList">
+						<input type="checkbox" name="{{iChannel.channel}}" id="{{iChannel.channelId}}" ng-model="iChannel.active" ng-checked="iChannel.active">
+						<label>{{iChannel.channel}}</label>
+					</span>
+
+				<!--     <div multi-select datalists="channelList" datavalue="name" confirm="setParam()"></div> -->
+
+	            </div>
+			</div>
+
+		</div>
+		
+		<div class="title">
+			<sapn>Assign Role:</sapn>
+		</div>
+
+		<form class="edit-form list-assign">
+			<span class="itemLine" ng-repeat="iRole in userActivityRoleList">
+				<input type="checkbox" name="{{iRole.name}}" id="{{iRole.id}}" ng-checked="iRole.active" ng-click="assignRoleByUser($event, iRole)">
+				<label>{{iRole.name}}</label>
+			</span>			
+		</form>
+
+		<div class="title">
+			<sapn>choose Boss:</sapn>
+		</div>
+
+		<form class="edit-form list-assign">
+			<span class="itemLine" ng-repeat="iUser in adminUserList">
+				<input type="radio" id="{{iUser.id}}" ng-checked="iUser.checked" ng-click="chooseUserBoss($event, iUser)">
+				<label>{{iUser.userName}}</label>
+			</span>			
+		</form>
+
+	</div>
+
+	<div class="footer">
+        <div class="left-btn">
+            <a href="#/view/admin/user/view"><button type="button" class="btn btn-default">Cancel</button></a>
+        </div>
+        <div class="right-btn">
+            <button type="button" class="btn btn-default save" ng-click="userSave()" ng-show="userActivityRoleList.length>0">Save</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,23 @@
+*{ margin: 0; padding: 0; border: 0;font-weight: normal;}
+html { color: #000; }
+html,body { height: 100%;}
+body,button,input,select,textarea { font-size: 14px;font-family: 'Helvetica','Microsoft Yahei',Arial;}
+h3{font-size: 15px;color: #707070;font-weight: bold}
+ul,ol,li,dl,dd,dt{list-style: none;}
+em { font-style: normal; }
+a { text-decoration: none; }
+a:hover,a:focus {text-decoration: none;}
+a:focus {outline: thin dotted;outline: 5px auto -webkit-focus-ring-color;outline-offset: -2px;}
+a:visited {color:inherit;}
+select{cursor: pointer;}
+/*解决IE图片缩放失真*/
+img { -ms-interpolation-mode: bicubic; max-width: 100%; }
+/*清除浮动*/
+.clearfix:after { content: ''; display: block; height: 0; clear: both; }
+.clearfix { zoom: 1; }
+.clear { clear: both; }
+
+
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand { display: none; }

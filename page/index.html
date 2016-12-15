@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>REVA</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+    if (top.location !== self.location) {
+        top.location.href = "/login";
+    }
+    </script>
+    <link rel="stylesheet" type="text/css" href="login/loginstyle.css">
+    <link rel="stylesheet" type="text/css" href="login/reset.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-86415390-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+    <div class="wrapper pos-relative" id="first-part-wrapper">
+        <div class="content pos-relative align-center p-t-140 p-b-140" id="top">
+            <div class="hideMe particles pos-absolute t-1p l-1p width-98 height-98 in" data-dur=".5" id="particles-top" style="transition-duration: 0.5s;">
+                <canvas class="particles-js-canvas-el" width="1254" height="768" style="width: 100%; height: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="loginbox">
+        <div class="logo icon-collections">
+            <span class="icon-reva"></span>
+        </div>
+        <form id="loginform">
+            <div class="input">
+                <input type="text" placeholder="Username" id="username">
+                <input type="password" placeholder="Password" id="password">
+            </div>
+            <p id="error-message" class="warn clear"></p>
+            <div class="btn clear">
+                <input type="button" value=" Sign in" id="signin" onclick="login();">
+                <button id="animate"><img src="login/loding.gif" alt=""></button>
+            </div>
+        </form>
+    </div>
+    <div class="footer">
+        <p>Copyright © 2015-2016 REVA(TM). All rights reserved.</p>
+    </div>
+    <script type="text/javascript" src="login/jquery.min.js"></script>
+    <script type="text/javascript" src="login/particles.min.js"></script>
+    <script type="text/javascript" src="login/main.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        checkLoginUser();
+    });
+    function checkLoginUser() {
+        if (getCookie("TimeToken") != "") {
+            $.ajax({
+                type: "post",
+                url: "/auth/main/getLoginUser",
+                // headers: {
+                //     'TimeToken': getCookie('TimeToken')
+                // },
+                success: function(result) {
+                    if (result.status == 0 && result.code == 0) {
+                        // setCookie("TimeToken", result.data.authId);
+                        location.href = '../statics/#'+result.data.defaultUrl;
+                    } else {
+                        showLogin()
+                    };
+                },
+                error: function(result) {
+                    showLogin()
+                }
+            });
+        } else {
+            showLogin()
+        }
+
+    };
+
+    function showLogin() {
+        $(".logo").addClass('active');
+        $("#loginform").addClass('active');
+    };
+
+    function login() {
+        if ($('#username').val().trim() == "") {
+            $('#error-message').text('UserName is required');
+        } else if ($('#password').val().trim() == "") {
+            $('#error-message').text('Password is required');
+        };
+        $("#signin").hide();
+        $("#animate").show();
+        $.ajax({
+            url: "/auth/main/login",
+            data: JSON.stringify({
+                "userName": $('#username').val(),
+                "password": $('#password').val()
+            }),
+            contentType: "application/json; charset=utf-8",
+            type: "post",
+            success: function(result) {
+                if (result.status == 0 && result.code == 0) {
+                    // setCookie("TimeToken", result.data);
+                    location.href = '../statics/#'+result.data;
+                } else {
+                    $("#signin").show();
+                    $("#animate").hide();
+                    $('#error-message').text(result.msg);
+                }
+            },
+            error: function() {
+                $("#signin").show();
+                $("#animate").hide();
+            }
+        })
+    };
+
+    function setCookie(cname, cvalue) {
+        document.cookie = cname + "=" + cvalue + ";path=/";
+    };
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    };
+    $("body").on('keydown', function(event) {
+        if (event.keyCode == 13) {
+            $("#signin").focus();
+            //login();
+        }
+    });
+    </script>
+</body>
+
+</html>

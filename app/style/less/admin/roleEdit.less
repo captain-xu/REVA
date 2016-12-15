@@ -1,0 +1,138 @@
+@import '../variables';
+.roleEdit {
+    width: 100%;
+    height: 100%;
+    padding: 0 30px;
+    overflow-y: auto;
+    
+	.header {
+	    height: 60px;
+    	width: 100%;
+    	border: 0;
+    	border-bottom: 1px solid #c6c6c6;
+    	.breadcrumb {
+			display: inline-block;
+			padding: 0 0 0 30px;
+			line-height: 60px;
+			background: transparent;
+			margin-bottom: 0px;
+    	}
+	}
+
+	.viewer {
+	    margin-bottom: 180px;
+		.title {
+			margin: 0;
+			line-height: 60px;
+			height: 60px;
+			border: 0;
+			font-weight: 700;
+			color: #585858;
+		}
+		.edit-form {
+	    	background: #FFF;
+		    margin: 0px 0px 20px;
+		    padding: 30px;
+		    position: relative;
+		    z-index: 1;
+		    border: 1px solid #c6c6c6;
+		    border-radius: 3px;
+		}
+		.form-group {
+		    margin-bottom: 0px;
+		}
+		.table {
+			background: #FFFFFF;
+		}
+		.list-assign {
+			.itemLine {
+				border: 1px solid #dddddd;
+				background: #FFFFFF;
+				padding: 8px;
+				display: inline-flex;
+				label {
+					width: 220px;
+					display: inline-block;
+					font-weight: normal;
+					margin-bottom: 0px;
+					margin-left: 12px;
+				}
+			}
+		}
+		.pageBar {
+			margin: 20px 0px 0px 0px;
+			.pagination {
+				margin: 0;
+				float: right;
+			}
+		}
+	}
+
+    .footer {
+        position: absolute;
+        left: 30px;
+        bottom: 0;
+        width: e("calc(100% - 77px)");
+        height: 80px;
+        background: #fff;
+        border-radius: 3px 3px 0 0;
+        z-index: 99;
+        .box-shadow;
+        .btn{
+            width: 80px;
+        }
+        .right-btn {
+            height: 100%;
+            line-height: 80px;
+            padding: 0 40px;
+            float: right;
+            .save {
+                font-weight: bold;
+                color: #666;
+            }
+        }
+        .left-btn{
+            height: 100%;
+            line-height: 80px;
+            padding: 0 40px;
+            float: left;
+        }
+    }
+
+	#tb-permission {
+		background: #FFFFFF;
+		th, td {
+		    vertical-align: middle !important;
+		    border-right: none;
+		}
+	}
+	.fixed-table-container tbody tr:first-child td {
+	    width: 3%;
+	}
+	
+	.bs-checkbox {
+	    width: 1% !important;
+	    vertical-align: middle !important;
+	}
+
+	.per-nodeCheckBox {
+		border-left: none !important;
+		padding: 4px !important;
+		.bootstrap-switch-container {
+		    span {
+		    	width: 80px;
+		    }
+		}
+	}
+
+	.bootstrap-table {
+		.table {
+			border: 0px solid #c6c6c6 !important;
+			border-bottom: 0px solid #dddddd !important;
+		}
+	}
+
+	.bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-label {
+	    padding: 6px 2px;
+	}
+}

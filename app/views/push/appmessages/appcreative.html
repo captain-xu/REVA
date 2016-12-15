@@ -1,0 +1,116 @@
+<div class="creatives">
+    <div class="creatives-container in-app">
+        <div class="left-wripper">
+            <ul class="message-wripper">
+                <li ng-repeat="item in notification" ng-click="changeDetail(item)" ng-class="{true: 'active'}[detail.order==item.order]">
+                    <p class="title"><span>{{item.order}}</span>Message {{item.order}}
+                        <i class="glyphicon glyphicon-remove" ng-show="notification.length>1" ng-click="delDetail($index)" selfStopPropagation></i>
+                    </p>
+                    <p class="percent"><span>Target Users</span><span class="percentage">{{item.target}}%</span></p>
+                    <div slider percentage="item.target" confirm='setPercentage(item.order)' is-drag="notification.length>1"></div>
+                    <span class="caret" ng-show="detail.order==item.order"></span>
+                </li>
+                <li ng-hide="notification.length == 3" ng-click="addMeaasge()">
+                    <p class="add-message"><i class="glyphicon glyphicon-plus"></i>Add Variants</p>
+                </li>
+            </ul>
+            <div class="content-container">
+                <div class="notification-wripper clearfix">
+                    <a id="content"></a>
+                    <div class="form-group clearfix" style="margin: 0">
+                        <label class="col-sm-3">Notification</label>
+                        <span class="option-check" ng-class="{1:'active'}[detail.sendNotification]" ng-click='changeState("sendNotification")'></span>
+                    </div>
+                    <div class="form-group" ng-show="detail.sendNotification">
+                        <label class="col-sm-1">Tittle:<em><em>&#42;</em></em>
+                        </label>
+                        <input class="col-xs-6" name="title" type="text" ng-model="detail.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" ng-change="titleSum()" maxlength="50">&nbsp;
+                        <span class="word-sum">{{detail.titleLen}}</span>
+                        <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="titleOpen" ng-mouseenter="titleOpen=true" ng-mouseleave="titleOpen=false" uib-popover="Shown to end users as the notification titile.">
+                    </div>
+                    <div class="form-group message clearfix" ng-show="detail.sendNotification">
+                        <label class="col-sm-1">Message:<em><em>&#42;</em></em>
+                        </label>
+                        <textarea class="col-xs-6" ng-model="detail.content" ng-focus="validateParam.msgWarn=false" ng-change="msgSum()" maxlength="240"></textarea>
+                        <span class="word-sum">{{detail.msgLen}}</span>
+                    </div>
+                    <div class="form-group warn-container" ng-show="validateParam.msgWarn">
+                        <label class="col-sm-1"></label>
+                        <ins class="warn"><i class="fa fa-close"></i>This field is required.</ins>
+                    </div>
+                    <div class="image-wripper" ng-show="detail.sendNotification">
+                        <p class="title"><span>{{detail.order}}</span>Message{{detail.order}} <b style="float: right;">Preview</b> </p>
+                        <div class="container">
+                            <h5>{{detail.title}}</h5>
+                            <span>{{detail.content}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="option-wripper" ng-show="detail.sendNotification">
+                    <a id="option"></a>
+                    <div class="form-group adv-options">
+                        <label class="col-sm-6">Notification Advanced options</label>
+                        <span class="option-check" ng-class="{1:'active'}[detail.options]" ng-click='changeState("options")'></span>
+                    </div>
+                    <div class="form-group" ng-show="detail.options">
+                        <label class="col-sm-12">Custom data <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="cusOpen" ng-mouseenter="cusOpen=true" ng-mouseleave="cusOpen=false" uib-popover="Key/Value pairs will be delivered with the message to your app."></label>
+                    </div>
+                    <div class="form-group" ng-show="detail.options" ng-repeat="data in detail.customdata">
+                        <input type="text" placeholder="key" ng-model="data.key" ng-focus="validateParam.customWarn=false">
+                        <input type="text" placeholder="value" ng-model="data.value" ng-focus="validateParam.customWarn=false">
+                        <i class="glyphicon glyphicon-remove" ng-click=delCustom($index)></i>
+                    </div>
+                    <div class="form-group custom-val" ng-show="validateParam.customWarn">
+                        <ins class="warn"><i class="fa fa-close"></i>The key and value must be submitted in pairs.</ins>
+                    </div>
+                    <div class="form-group" ng-show="detail.options">
+                        <button class="btn btn-default" ng-click="addCustomData()"><i class="glyphicon glyphicon-plus"></i>Add Key/Value</button>
+                    </div>
+                    <div class="form-group" ng-show="detail.options">
+                        <ul class="check-container">
+                            <li><strong>Sound</strong> <span class="check" ng-class="{1:'active'}[detail.sound]" ng-click='changeState("sound")'></span></li>
+                            <li><strong>Vibrate</strong> <span class="check" ng-class="{1:'active'}[detail.vibrate]" ng-click='changeState("vibrate")'></span></li>
+                            <li><strong>Delay while idle</strong> <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="delayOpen" ng-mouseenter="delayOpen=true" ng-mouseleave="delayOpen=false" uib-popover="Indicates that the message should not be displayed immediately if the device is idle."> <span class="check" ng-class="{1:'active'}[detail.delayidle]" ng-click='changeState("delayidle")'></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="inAppMessage-wripper">
+                    <a id="inapp"></a>
+                    <div class="form-group">
+                        <label class="col-sm-3">In-App Message</label>
+                    </div>
+                    <div class="form-group message clearfix">
+                        <label class="col-sm-1">Message:<em>&#42;</em></label>
+                        <textarea class="col-xs-10" ng-model="detail.inContent" ng-focus="validateParam.inmsgWarn=false" ng-change="inmsgSum()" maxlength="3000"></textarea>
+                        <span class="word-sum">{{detail.inmsgLen}}</span>
+                    </div>
+                    <div class="form-group" ng-show="validateParam.inmsgWarn">
+                        <label class="col-sm-1"></label>
+                        <ins class="warn"><i class="fa fa-close"></i>This field is required.</ins>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1">Network: <em>&#42;</em></label>
+                        <span class="col-xs-3" ng-click="detail.network=0"><i class="fa fa-dot-circle-o icon-radio" ng-class="{0:'active'}[detail.network]"></i>All</span>
+                        <span class="col-xs-3" ng-click="detail.network=1"><i class="fa fa-dot-circle-o icon-radio" ng-class="{1:'active'}[detail.network]"></i>Only WiFi</span>
+                    </div>
+                </div>
+                <div class="messageType-wripper" style="display:none">
+                    <div class="form-group">
+                        <label class="col-sm-1">Message Type <em>&#42;</em></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left-btn">
+            <button type="button" class="btn btn-default draft" ng-click="saveData(0)">Save as Draft</button>
+        </div>
+        <div class="right-btn">
+            <a href="#/view/push/list">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+            <button type="button" class="btn btn-default save" ng-click="saveData(1)">Save & Continue</button>
+        </div>
+    </div>
+</div>

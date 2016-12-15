@@ -1,0 +1,180 @@
+html{
+    min-height: 500px;
+    overflow: auto;
+}
+body{
+	overflow: hidden;
+}
+html,body{
+	height: 100%;
+	position: relative;
+    background: linear-gradient(#2B406D, #4E5F84);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#2B406D, endColorStr=#4E5F84);
+}
+.wrapper .content {
+    width: 100%;
+    margin: 0 auto;
+}.p-b-140 {
+    padding-bottom: 140px;
+}.p-t-140 {
+    padding-top: 140px;
+}.pos-relative {
+    position: relative;
+    height: 100%;
+}.align-center {
+    text-align: center;
+}.hideMe.in {
+    opacity: 1;
+    height: 100%;
+}.hideMe {
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+    opacity: 0;
+}.l-1p {
+    left: 1%;
+}.t-1p {
+    top: 1%;
+}.height-98 {
+    height: 98%;
+}.width-98 {
+    width: 98%;
+}.pos-absolute {
+    position: absolute;
+}
+.container{
+	position: absolute;
+	width: 600px;height: 396px;
+	left: 50%;top: 50%;
+	margin-left: -300px;
+	margin-top: -196px;
+	z-index: 1;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform-style: preserve-3d;
+}
+
+.logo{
+	display: block;
+	margin: 0 auto;
+	position: relative;
+    text-align: center;
+    top: 150px;
+	-webkit-transition: top 1s ease;
+    -moz-transition: top 1s ease;
+    -o-transition: top 1s ease;
+	transition: top 1s ease;
+}
+.logo.active{
+	top: 0px;
+}
+#loginform{
+	-webkit-transition: opacity .2s linear .8s;
+    -moz-transition: opacity .2s linear .8s;
+    -o-transition: opacity .2s linear .8s;
+    transition: opacity .2s linear .8s;
+    opacity:0;
+    filter:alpha(opacity=0);
+}
+#loginform.active{
+	opacity: 1;
+}
+.input{
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	margin-top: 60px;
+	text-align: center;
+}
+.input input{
+	width: 318px;
+	height: 36px;
+	display: inline-block;
+	margin-top: 30px;
+	padding:0 20px;
+	border: 1px solid rgba(255,255,255,.33);
+	border-radius:3px;
+  	background-color:rgba(0,0,0,.22);
+	font-size: 14px;
+	color: #fff;
+	outline:none;
+	-webkit-transition: width .2s linear;
+    -moz-transition: width .2s linear;
+    -o-transition: width .2s linear;
+    transition: width .2s linear;
+}
+input:-webkit-autofill {-webkit-box-shadow: 0 0 0px 1000px rgba(255,255,255,.33) inset;}
+input:focus{border: 1px solid rgba(255,255,255,.33);background:rgba(0,0,0,.33);width: 360px;}
+/*
+::-webkit-input-placeholder {
+	color:  #eee;
+}
+:-moz-placeholder {
+	color:  #eee;
+}
+::-moz-placeholder {
+	color:  #eee;
+}*/
+:-ms-input-placeholder {
+	color:  #A3A8AD !important;
+}
+.input input.right{background:url(../images/right-input.png) no-repeat right center;}
+.input input.wrong{transition: background-color 1s ease 0s ;background: rgba(255, 0, 0, .17) url(../images/wrong-input.png) no-repeat right center;}
+.warn{width: 100%;color:#fff;height:74px;line-height:74px;text-align: center;}
+.tips{
+	width:360px ;
+	margin: 0 auto;
+	position: relative;
+	margin-top: 32px;
+}
+
+.btn{text-align:center;position: relative;}
+.btn input,
+button{
+	display: inline-block;
+	width: 360px;
+	height: 48px;
+	border-radius: 2px;
+	color: #2B406D;
+	background: #fff;
+	font-weight: 700;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+#animate{
+	display: none;
+}
+.btn img{
+	width: 38px;
+	height: 38px;
+}
+.btn input:hover{
+	background:#E7E7E7;
+}
+/*icons start*/
+/*icons start*/
+@font-face {font-family: "icon-collections";
+  src: url('../statics/app/style/font/icon.eot?t=1464575669'); /* IE9*/
+  src: url('../statics/app/style/font/icon.eot?t=1464575669#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../statics/app/style/font/icon.woff?t=1464575669') format('woff'), /* chrome, firefox */
+  url('../statics/app/style/font/icon.ttf?t=1464575669') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../statics/app/style/font/icon.svg?t=1464575669#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.icon-collections {
+  font-family:"icon-collections" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-reva:before { content: "\e642"; }
+.icon-mailbox:before { content: "\e644"; }
+.logo .icon-reva {display: inline-block;font-size: 50px;color: #fff;}
+/*icons end*/
+
+.footer{position: absolute;bottom: 18px;color: #fff;width: 100%;font-size: 12px;text-align: center;}
+.footer a{color: #fff;}
+.footer p{color:rgba(255, 255, 255, 0.67);}

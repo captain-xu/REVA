@@ -1,0 +1,44 @@
+<div class="form-group">
+    <div class="col-sm-2">
+        <div class="dropdown os_filter">
+            <div>
+                <input type="text" class="form-control" ng-model="item.param.name" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <input type="text" class="form-control" ng-model="item.param.where" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2" ng-if="item.param.name !='Create Time'">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
+                <input type="text" class="form-control" ng-model="item.param.value1" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2" ng-if="item.param.name=='Create Time'">
+        <input type="text" class="form-control" ng-model="item.param.value1">
+    </div>
+    <div class="col-xs-1" ng-if="item.param.where=='between'">
+        ~
+    </div>
+    <div class="col-sm-2" ng-if="item.param.where=='between' &#38;&#38; item.param.name=='Create Time'">
+        <input type="text" class="form-control"  ng-model="item.param.value2">
+    </div>
+    <div class="col-sm-2" ng-if="(item.param.value2 || item.param.where=='between' ) &#38;&#38; item.param.name!='Create Time'">
+         <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
+                <input type="text" class="form-control" ng-model="item.param.value2" readonly>
+            </div>
+        </div>
+    </div>
+    <p class="col-sm-2" ng-if="item.param.name=='Device'">
+        <input type="text" class="form-control" title="{{item.param.value3}}"  ng-model="item.param.value3" readonly>
+    </p>
+    <span class="spec" ng-if="item.param.name=='Create Time'">days</span>
+   
+</div>

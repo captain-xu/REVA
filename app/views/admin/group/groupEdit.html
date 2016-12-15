@@ -1,0 +1,32 @@
+<div class="groupEdit" id="groupEdit">
+	<div class="header">
+		<ol class="breadcrumb">
+			<li><a href="#/view/admin/group/view"><strong>Group</strong></a></li>
+			<li>Edit</li>
+		</ol>
+	</div>
+	
+	<div class="viewer">
+		<div class="title">
+			<sapn>{{group.name}}</sapn>
+		</div>
+
+	 	<div class="toolbar">
+	 		<button id="expandAll" ng-click="expandAllNode()" class="btn btn-default">Expand All</button>
+	 		<button id="collapseAll" ng-click="collapseAllNode()" class="btn btn-default">Collapse All</button>
+	 	</div>
+
+		<table id="tb-permission" data-toolbar=".toolbar" class="table table-bordered"></table>
+
+	</div>
+
+	<div class="footer">
+        <div class="left-btn">
+            <a href="#/view/admin/group/view"><button type="button" class="btn btn-default">Cancel</button></a>
+        </div>
+        <div class="right-btn">
+            <button type="button" class="btn btn-default save" ng-click="groupUpdate()">Save</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,58 @@
+<div class="group">
+    <div class="edit">
+        <div class="header">
+            <ol class="breadcrumb">
+                <li class="cursor" ng-click="cancel()">Group</li>
+                <li class="active" ng-show="!detailVO.status">Edit</li>
+                <li class="active" ng-show="detailVO.status">View</li>
+            </ol>
+        </div>
+        <div class="edit-container">
+            <ul>
+                <li verification><span class="edit-key">Name:<em>&#42;</em></span>
+                    <input type="text" ng-model="detailVO.name" ng-readonly="{1: 'true'}[detailVO.status]">
+                    <span class="msg"></span>
+                </li>
+                <li>
+                    <span class="edit-key">App &amp; Version:<em>&#42;</em></span>
+                    <div class="dropdown sel-first">
+                        <p class="dropdown-toggle" data-toggle="dropdown">{{detailVO.app}}</p>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="vo in appList" ng-click="detailVO.app=vo.name;appData()">{{vo.name}}</li>
+                        </ul>
+                        <span class="caret"></span>
+                    </div>
+                    <div class="dropdown">
+                        <p class="dropdown-toggle" data-toggle="dropdown">{{detailVO.version}}</p>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="vo in version" ng-click="detailVO.version=vo.version;versionData()">{{vo.version}}</li>
+                        </ul>
+                        <span class="caret"></span>
+                    </div>
+                    <span class="right-span"><a href="#/view/campaign/app/detail/new/0">Add New App</a></span>
+                </li>
+                <li>
+                    <span class="edit-key">Placement:<em>&#42;</em></span>
+                    <ul class="native-cont">
+                        <li ng-click="checkData(detailVO,$event)" ng-repeat="vo in placeList" class="sel-place"><span style="display: none;">{{vo.placementId}}</span><i class="fa fa-check-square icon-check"></i>{{vo.name}}</li>
+                    </ul>
+                </li>
+                <li class="upload_img clearfix">
+                    <span class="label_img col-sm-2 edit-key" class="edit-key">Thumbnail:</span>
+                    <button type="file" ngf-select="uploadPic(picFile)" ng-model="picFile" accept="image/png, image/jpeg" name="file" class="btn btn-primary" ng-hide="detailVO.status">Upload</button>
+                    <div class="div_img" ng-show="img_url || begin_upload">
+                        <uib-progressbar max="100" value="dynamic" ng-show="begin_upload" class="progress-striped active"><b>{{dynamic}}%</b></uib-progressbar>
+                        <div class="img-container">
+                            <img ng-src="{{img_url}}" ng-show="img_url">
+                            <span ng-click="delete(detailVO)" ng-show="img_url" ng-hide="detailVO.status">&times;</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="edit-footer">
+                    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                    <button class="btn btn-default save" ng-click="saveData(detailVO)" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

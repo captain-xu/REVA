@@ -2,6 +2,13 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
     function($scope, ModalAlert, serviceAPI, $state, $stateParams, urlAPI) {
         $scope.orderField = 'id';
         $scope.desc = true;
+        $scope.loadData = function() {
+            if ($scope.seachParam.adNetWork == 2) {
+                $scope.loadAsList();
+            } else {
+                $scope.loadList();
+            }
+        };
         //获取List详情页
         $scope.loadList = function() {
             serviceAPI.loadData(urlAPI.campaign_operate_list,$scope.seachParam).then(function(result) {
@@ -10,8 +17,20 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
             }).
             catch(function(result) {});
         };
+        $scope.loadAsList = function(){
+            if ($scope.seachParam.operationId) {
+                var url = urlAPI.campaign_operate_singleAslist;
+            } else {
+                var url = urlAPI.campaign_operate_allAslist;
+            }
+            serviceAPI.loadData(url, $scope.seachParam).then(function(result) {
+                $scope.aslist = result.offerList;
+                $scope.totalItems = result.totalCount;
+            }).
+            catch(function(result) {});
+        };
         $scope.searchBlur = function() {
-            $scope.loadList();
+            $scope.loadData();
         };
         //获取下拉列表数据
         $scope.loadAppList = function() {
@@ -25,15 +44,24 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.appFilter = function(vo) {
             $scope.seachParam.appId = vo.appId;
             $scope.filterParam.appfilter = vo.name;
-            $scope.loadList();
+            $scope.loadData();
         };
         //切换operation net 数据
-        $scope.detailList = function(num){
+        $scope.detailList = function(num, id){
             if ($scope.seachParam.adNetWork != num) {
                 $scope.seachParam.currentPage = 1;
+                $scope.seachParam.adNetWork = num;
+                if (id) {
+                    $scope.seachParam.operationId = id;
+                } else {
+                    delete $scope.seachParam.operationId;
+                }
+                if (num == 2) {
+                    $scope.loadAsList();
+                } else {
+                    $scope.loadList();
+                }
             }
-            $scope.seachParam.adNetWork = num;
-            $scope.loadList();
         }
         //列表排序
         $scope.orderBy = function(str) {
@@ -84,7 +112,11 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                     }
                     serviceAPI.delData(url,paramId).then(function(result){
                         if (result.status == 0 && result.result == 0) {
-                            $scope.loadList();
+                            if ($scope.seachParam.adNetWork == 2) {
+                                $scope.loadAsList();
+                            } else {
+                                $scope.loadList();
+                            }
                         } else {
                             ModalAlert.popup({msg: result.msg}, 2500)
                         }
@@ -109,7 +141,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.addNet = function() {
             $state.go("campaign.operation.network", {param: 'new', id: 0});
         };
-        $scope.loadList();
+        $scope.loadData();
         $scope.loadAppList();
     }
 ];

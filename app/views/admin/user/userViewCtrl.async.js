@@ -47,7 +47,6 @@ var scope = ["$scope", "ModalAlert", "urlAPI", "serviceAPI", "adminAPI",
 
 					var statusParam = {
 						userId: item.id,
-						groupId: item.groupId,
 						isDisabled: num
 					}
 
@@ -73,8 +72,8 @@ var scope = ["$scope", "ModalAlert", "urlAPI", "serviceAPI", "adminAPI",
 			var user = {};
 			user.action = adminAPI.str.create;
 			user.groupId = adminAPI.loginUser.groupId;
-  			user.language = adminAPI.loginUser.language;
-  			user.timezone = adminAPI.loginUser.timezone;
+  			user.language = adminAPI.str.language;
+  			user.timezone = adminAPI.str.timezone;
 			user.name = "";
 			adminAPI.setUser(user);
 		};
@@ -91,7 +90,7 @@ var scope = ["$scope", "ModalAlert", "urlAPI", "serviceAPI", "adminAPI",
 
 					var param = {
 						userId: item.id,
-						groupId: item.groupId,
+						userName: item.userName,
 						isDeleted: 1
 					}
 

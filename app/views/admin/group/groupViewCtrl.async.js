@@ -11,6 +11,7 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 				if (result.status == 0 && result.code == 0) {
 					$scope.groupList = result.data.groupList;
 					$scope.pageBar.totalRows = result.data.totalRows;
+					adminAPI.loginUser = result.data.loginUser;
 				}
 			});
 		};
@@ -64,9 +65,20 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 
 		$scope.groupUpdate = function(item) {
 			item.action = adminAPI.str.update;
+			// item.tableauUser = adminAPI.loginUser.
+			item.userName = adminAPI.loginUser.userName;
+			item.userEmail = adminAPI.loginUser.email;
 			adminAPI.setGroup(item);
 		};
 		
+
+		$scope.groupCreate = function() {
+			var group = {};
+			group.action = adminAPI.str.create;
+			group.name = "";
+			adminAPI.setGroup(group);
+		};
+
 		$scope.groupDelete = function(item) {
 			var alertMsg = "Are you sure to delete the group?";
 

@@ -2,8 +2,23 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
  function($scope, ModalAlert, serviceAPI, $state, $stateParams, urlAPI) {
     $scope.orderField = "offerId";
     $scope.desc = true;
+    $scope.activeTab = 0;
     $scope.loadList = function() {
+        if ($scope.activeTab) {
+            $scope.loadOnList();
+        } else {
+            $scope.loadOffList();
+        }
+    }
+    $scope.loadOffList = function() {
         serviceAPI.loadData(urlAPI.campaign_offer_list,$scope.seachParam).then(function(result) {
+            $scope.list = result.offers;
+            $scope.totalItems = result.totalCount;
+        }).
+        catch(function(result) {});
+    };
+    $scope.loadOnList = function() {
+        serviceAPI.loadData(urlAPI.campaign_offerOn_list,$scope.seachParam).then(function(result) {
             $scope.list = result.offers;
             $scope.totalItems = result.totalCount;
         }).
@@ -78,10 +93,10 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         });
     };
     $scope.editDetail = function(vo) {
-        $state.go("campaign.offer.detail", {id: vo.advertiserId, offerId: vo.offerId});
+        $state.go("campaign.offer.detail", {id: vo.advertiserId, offerId: vo.offerId, rtb: vo.rtb});
     };
     $scope.viewDetail = function(vo) {
-        $state.go("campaign.offer.view", {id: vo.advertiserId, offerId: vo.offerId});
+        $state.go("campaign.offer.view", {id: vo.advertiserId, offerId: vo.offerId, rtb: vo.rtb});
     };
     $scope.loadList();
     $scope.loadSelectList();

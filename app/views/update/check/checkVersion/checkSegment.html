@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="panel-body" ng-repeat="item in checksegment.params">
-        <div class="label label-default" ng-if="$index > 0">{{checksegment.isAnd?"AND":"OR"}}</div>
+        <div class="label label-default" ng-if="$index > 0">{{checksegment.isAnd==1?"AND":"OR"}}</div>
         <div ng-if="item.param" sql-check>
         </div>
         <div check-segment attr-segment="item" ng-if="item.params.length>0" attr-view="{{btnDisabled}}" attr-child="true"></div>

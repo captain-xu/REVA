@@ -315,6 +315,9 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                     $scope.validateParam.img = "The picture is too big";
                     $scope.validateParam.imgWarn = true;
                     return false;
+                } else if (file.type != "image/png" && file.type != "image/jpeg" && file.type != "image/gif") {
+                    ModalAlert.popup({ msg: 'Wrong Format' }, 2500);
+                    return false;
                 } else {
                     Upload.upload({
                         url: urlAPI.push_uploadImg,
@@ -333,6 +336,9 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                 if (file.size >= 100000) {
                     $scope.validateParam.posterImg = "The picture is too big";
                     $scope.validateParam.posterImgWarn = true;
+                    return false;
+                } else if (file.type != "image/png" && file.type != "image/jpeg" && file.type != "image/gif") {
+                    ModalAlert.popup({ msg: 'Wrong Format' }, 2500);
                     return false;
                 } else {
                     Upload.upload({

@@ -11,12 +11,11 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         $scope.endTime = end.format('YYYY/MM/DD');
         $scope.init();
     };
-    
     $scope.loadList = function(){
         var dataParam = {
             startDate: $scope.startTime,
             endDate: $scope.endTime
-        }
+        };
         serviceAPI.loadData(urlAPI.campaign_dashboard_data,dataParam).then(function(result){
             $scope.rate = result;
             if (result.appStatistics == '') {
@@ -31,9 +30,6 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             } else {
                 $scope.statics = result.appStatistics;
             }
-        });
-        serviceAPI.loadData(urlAPI.campaign_dashboard_list,dataParam).then(function(result){
-            $scope.dataList = result.dataList;
         });
         serviceAPI.loadData(urlAPI.campaign_dashboard_camp,dataParam).then(function(result){
             if (!result.campData || !result.campData.data) {
@@ -274,20 +270,91 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             $("#chart-pie").css('z-index', '1');
         }
     };
-    $scope.desc = 0;
-    $scope.orderField = 'conversion';
-    $scope.orderBy = function(str) {
-        if ($scope.desc == 0) {
-            $scope.desc = 1;
-        } else {
-            $scope.desc = 0;
-        };
-        $scope.orderField = str;
+    $scope.uniqueField = 'conversion';
+    $scope.orderUnique = function(str) {
+        $scope.uniqueField = str;
+        // $scope.loadReportList();
     };
+
+//report List start
+    $scope.reportPage = 1;
+    $scope.channelName = 'Campaign';
+    $scope.channel1Name = 'All';
+    $scope.channel1Id = '';
+    $scope.channel2Name = 'All';
+    $scope.channel2Id = '';
+    $scope.reportField = 'conversion';
+    $scope.loadReportList = function(){
+        var reportParam = {
+            startDate: $scope.startTime,
+            endDate: $scope.endTime,
+            type: $scope.channelName,
+            currentPage: $scope.reportPage,
+            orderBy: $scope.reportField,
+            channelId1: $scope.channel1Id,
+            channelId2: $scope.channel2Id
+        };
+        serviceAPI.loadData(urlAPI.campaign_dashboard_list,reportParam).then(function(result){
+            $scope.dataList = result.dataList;
+        });
+
+    };
+    // 排序
+    $scope.orderBy = function(str) {
+        if ($scope.reportField != str) {
+            $scope.reportField = str;
+            $scope.loadReportList();
+        }
+    };
+
+    //根据 report 筛选
+    $scope.reportBy = function(str) {
+        $scope.channelName = str;
+        $scope.reportField = 'conversion';
+        if ($scope.channelName == 'Channel') {
+            serviceAPI.loadData(urlAPI.campaign_report_channel1).then(function(result){
+                $scope.channel1List = result.channel1List;
+            });
+        } else {
+            $scope.channel1Name = 'All';
+            $scope.channel2Name = 'All';
+            $scope.channel1Id = '';
+            $scope.channel2Id = '';
+        }
+        $scope.loadReportList();
+    }
+    //根据 channel 筛选
+    $scope.channelData = function(num, channel) {
+        if (num) {
+            $scope.channel1Name = channel;
+            $scope.channel2Name = 'All';
+            $scope.channel2Id = '';
+            if (channel == 'All') {
+                $scope.channel1Id = '';
+            } else {
+                $scope.channel1Id = channel;
+            }
+            serviceAPI.loadData(urlAPI.campaign_report_channel2, {channelId1: $scope.channel1Id}).then(function(result){
+                $scope.channel2List = result.channel2List;
+            });
+        } else {
+            $scope.channel2Name = channel;
+            if (channel == 'All') {
+                $scope.channel2Id = '';
+            } else {
+                $scope.channel2Id = channel;
+            }
+        }
+        $scope.loadReportList();
+    };
+//report List end
+    
     $scope.init = function(){
         $scope.loadList();
         //init summary chart
         $scope.loadChart();
+        //init report List
+        $scope.loadReportList();
         window.onresize = function () {
             brandChart.resize();
             campChart.resize();

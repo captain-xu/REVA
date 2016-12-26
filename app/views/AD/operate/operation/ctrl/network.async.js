@@ -776,8 +776,8 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                             offer = offer.split(',');
                         }
                         if (offer && offer.length == 1) {
-                            for (var i = 0; i < $('.offer-name li').length; i++) {
-                                var offerStr = $('.offer-name li').eq(i).find('span').text();
+                            for (var i = 0; i < $scope.allName.length; i++) {
+                                var offerStr = $scope.allName[i].offerId;
                                 if (offer.indexOf(offerStr) > -1) {
                                     $scope.allName[i].isSelect = true;
                                 };

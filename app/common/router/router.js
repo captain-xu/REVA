@@ -80,6 +80,17 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }
         }).state('push.segment', {
             url: "/segment",
+            templateUrl: 'app/views/push/segment/pushSegment.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/push/segment/pushSegment.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/segment/pushSegment') }
+            }
+        }).state('push.segmentDetail', {
+            url: "/segmentDetail/:id",
             templateUrl: 'app/views/push/segment/newPushSegment.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/push/segment/newPushSegment.async.js', function(ctrl) {
@@ -345,26 +356,28 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/views/main/layout.html',
             params: { activeTitle: "da" }
         })
-        .state('da.appanalysis', {
-            url: '/appanalysis/:param',
-            templateUrl: 'app/views/revanow/tableau.html'
-        })
+        // .state('da.appanalysis', {
+        //     url: '/appanalysis/:param',
+        //     templateUrl: 'app/views/revanow/tableau.html'
+        // })
         .state('da.tableau', {
             url: '/tableau/:param',
-            templateUrl: 'app/views/revanow/revaModel.html'
+            templateUrl: 'app/views/revanow/tableau.html'
+
         })
-        .state('da.region', {
-            url: '/region/:param',
-            templateUrl: 'app/views/revanow/region.html'
-        })
-        .state('da.analysis', {
-            url: '/analysis',
-            templateUrl: 'app/views/revanow/analysis.html',
-            params: { param: "os_analysis" }
-        })
+        // .state('da.region', {
+        //     url: '/region/:param',
+        //     templateUrl: 'app/views/revanow/tableau.html'
+        // })
+        // .state('da.analysis', {
+        //     url: '/analysis',
+        //     templateUrl: 'app/views/revanow/tableau.html',
+        //     params: { param: "os_analysis" }
+        // })
         .state('da.download', {
             url: '/download',
-            templateUrl: 'app/views/revanow/dataDownload.html'
+            templateUrl: 'app/views/revanow/dataDownload.html',
+             params:{param:"data_download"}
         })
         .state('campaign', {
             url: "/view/campaign",
@@ -648,7 +661,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('campaign.offer.view', {
-            url: "/view/:id/:offerId",
+            url: "/view/:id/:offerId/:rtb",
             templateUrl: 'app/views/AD/operate/offer/offerView.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/AD/operate/offer/ctrl/offerView.async.js', function(ctrl) {
@@ -1032,6 +1045,18 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }],
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/configPlace/configPlace') }
+            }
+        })
+        .state('xscreen.category', {
+            url: "/category",
+            templateUrl: 'app/views/xscreen/category/category.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/xscreen/category/category.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/category/category') }
             }
         });
 });

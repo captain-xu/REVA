@@ -46,7 +46,7 @@ modules.factory('sessionRecoverer', ['$q', '$injector', '$location', "$rootScope
                     // No such result code. Especially handle the unexpected result in Firefox.
                 } else {
                     $rootScope.status = response.status;
-                    $location.path("/view/error");
+                    // $location.path("/view/error");
                 }
 
                 return $q.reject(response);

@@ -11,8 +11,8 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				userName: "",
 				realName: "",
 				email: "",
-				timezone: "CST",
-				language: "English",
+				timezone: adminAPI.str.timezone,
+				language: adminAPI.str.language,
 				bossId: ""
 			},
 			userChannelChosenList: {},
@@ -234,6 +234,11 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				adminAPI.comfirmPopup("User name is too long!");
 				return false;
 			}
+			
+			if ($scope.user.email.length > 64) {
+				adminAPI.comfirmPopup("User email is too long!");
+				return false;
+			}
 
 	    	var regExp = new RegExp(adminAPI.str.email);
 	    	if (!regExp.test($scope.user.email)) {
@@ -263,12 +268,15 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 			$scope.paramData.userInfo.userName = $scope.user.userName;
 			$scope.paramData.userInfo.realName = $scope.user.realName;
-			$scope.paramData.userInfo.password = "123456";
+			// $scope.paramData.userInfo.password = "123456";
 			// $scope.paramData.userInfo.password = adminAPI.getPassword();
-			$scope.paramData.userInfo.groupId = $scope.user.groupId;
 			$scope.paramData.userInfo.email = $scope.user.email;
+			$scope.paramData.userInfo.groupId = $scope.user.groupId;
 			$scope.paramData.userInfo.bossId = adminAPI.isNullOrEmpty($scope.user.bossId) ? null : $scope.user.bossId;
+			$scope.paramData.userInfo.timezone = $scope.user.timezone;
+			$scope.paramData.userInfo.language = $scope.user.language;
 			$scope.paramData.userInfo.isDefault = adminAPI.num.int_0;
+			$scope.paramData.userInfo.isDisabled = adminAPI.num.int_0;
 			$scope.paramData.userAssignRoleOrderList = $scope.userAssignRoleOrderList;
 	    	$scope.paramData.userChannelChosenList = $scope.userChannelChosenList;
 

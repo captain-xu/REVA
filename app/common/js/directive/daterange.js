@@ -7,14 +7,10 @@ angular.module('app.directive').directive('dateRange', [function() {
                     "format": 'YYYY/MM/DD',
                     "separator": ' ~ '
                 },
-                "startDate": moment().subtract(6, 'days'),
-                "endDate": moment(),
-                "maxDate": moment(),
+                "startDate": moment().subtract(7, 'days'),
+                "endDate": moment().subtract(1, 'days'),
+                "maxDate": moment().subtract(1, 'days'),
                 "opens": "left"
-                // "startDate": moment().subtract(7, 'days'),
-                // "endDate": moment().subtract(1, 'days'),
-                // "maxDate": moment().subtract(1, 'days'),
-                // 下版本释放
             }, cb);
             //cb(moment().subtract(6, 'days'), moment());
 

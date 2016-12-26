@@ -11,6 +11,10 @@
          </div>
         <div class="seach-bar clearfix">
             <div class="seach">
+                <span>App:</span>
+                <reportselect datalists="appList" confirm="appSel()"></reportselect>
+            </div>
+            <div class="seach">
                 <span>Campaign:</span>
                 <reportselect datalists="camList" confirm="camSel()"></reportselect>
             </div>
@@ -20,7 +24,7 @@
             </div>
             <div class="seach">
                 <span>Type:</span>
-                <osselecttitle datalists="tyleLIst" confirm="typeClick()" vo="tyleLIst[3]"></osselecttitle>
+                <osselecttitle datalists="tyleLIst" confirm="typeClick()" vo="tyleLIst[5]"></osselecttitle>
             </div>
         </div>
         <div class="echart-line" id="echart-line"></div>

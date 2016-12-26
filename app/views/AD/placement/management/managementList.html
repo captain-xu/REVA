@@ -136,9 +136,9 @@
                 <li>
                     <span class="edit-key">Click Action:<em>&#42;</em></span>
                     <div class="dropdown" ng-click="detailList(vo)">
-                        <p class="dropdown-toggle click-type" data-toggle="dropdown">{{click.name}}</p><p style="display: none;">{{detailVO.clickType}}</p>
+                        <p class="dropdown-toggle click-type" data-toggle="dropdown">{{clickName}}</p>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="vo in click" ng-click="click.name=vo.name;clickData(detailVO,$event)">{{vo.name}}<p style="display: none;">{{vo.id}}</p></li>
+                            <li ng-repeat="vo in click" ng-click="clickData(vo)">{{vo.name}}</li>
                         </ul>
                         <span class="caret"></span>
                     </div>

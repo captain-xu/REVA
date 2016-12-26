@@ -380,8 +380,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 type: 'value'
             },
             dataZoom: [{
-                type: 'inside',
-                zoomLock: true
+                type: 'slider'
             },{
                 startValue: start,
                 endValue: end

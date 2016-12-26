@@ -10,6 +10,7 @@ angular.module('app.services').factory("urlAPI", [
         	/*admin*/
         	admin_group_view: admin + "group/view",
         	admin_group_edit: admin + "group/edit",
+            admin_group_create: admin + "group/create",
         	admin_group_update: admin + "group/update",
             admin_group_delete: admin + "group/delete",
             admin_group_disable: admin + "group/disable",
@@ -79,6 +80,12 @@ angular.module('app.services').factory("urlAPI", [
             push_clickTable: push + "tableclick",
             push_displayTable: push + "tabledisplay",
             push_step: push + "stepStatus",
+            push_segment: push + "segmentList",
+            push_segmentDelete: push + "deleteSegment",
+            push_segmentDetail: push + "segmentDetail",
+            push_segmentNew: push + "saveSegment",
+            push_segmentUpdate: push + "updateSegment",
+            push_segmentCondition: push + "segmentCondition",
             /*update接口*/
             update_data: update + "data",
             update_permission: update + "permission",
@@ -165,6 +172,7 @@ angular.module('app.services').factory("urlAPI", [
             campaign_appInfo_delete: "/campaign/appInfo/10005",
             campaign_appInfo_category: "/campaign/operate/7006",
             campaign_offer_list: "/campaign/offer/20001",
+            campaign_offerOn_list: "/campaign/offer/20006",
             campaign_offer_detail: "/campaign/offer/20002",
             campaign_offer_edit: "/campaign/operate/7013",
             campaign_offer_delete: "/campaign/offer/20005",
@@ -174,6 +182,8 @@ angular.module('app.services').factory("urlAPI", [
             campaign_offer_group: "/campaign/util/2008",
             campaign_offer_place: "/campaign/util/2009",
             campaign_operate_list: "/campaign/operate/7007",
+            campaign_operate_allAslist: "/campaign/operate/7017",
+            campaign_operate_singleAslist: "/campaign/operate/7018",
             campaign_operate_detail: "/campaign/operate/7002",
             campaign_operate_state: "/campaign/operate/7003",
             campaign_operate_new: "/campaign/operate/7004",
@@ -197,8 +207,9 @@ angular.module('app.services').factory("urlAPI", [
             campaign_report_chart: "/campaign/report/8006",
             campaign_report_list: "/campaign/report/8007",
             campaign_report_app: "/campaign/util/2013",
-            campaign_report_place: "/campaign/util/2014",
-            campaign_report_camp: "/campaign/util/2015",
+            campaign_report_camp: "/campaign/util/2014",
+            campaign_report_channel1: "/campaign/util/2015",
+            campaign_report_channel2: "/campaign/util/2017",
             /*X-screen*/
             xscreen_list: "/xscreen/card/list",
             xscreen_detail: "/xscreen/card/detail",
@@ -224,7 +235,9 @@ angular.module('app.services').factory("urlAPI", [
             xscreen_directList:"/xscreen/nav/list",
             xscreen_directDetail:"/xscreen/nav/getnavinfo",
             xscreen_directAdd:"/xscreen/nav/create",
-            xscreen_directDelete:"/xscreen/nav/delete"
+            xscreen_directDelete:"/xscreen/nav/delete",
+            xscreen_categoryList:"/xscreen/card/cardcate",
+            xscreen_categoryEdit:"/xscreen/card/changename"
         }
     }
 ])

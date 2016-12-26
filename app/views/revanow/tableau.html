@@ -1,8 +1,9 @@
 <div class="tableau-model" ng-controller="tableauCtrl">
     <div class="header">
-        <span class="head-name">{{header_name}}</span>
+        <span class="head-name">{{tableauData.title}}</span>
         <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{true:'active'}[slide_num==$index]" ng-click="showSlide($index)" ng-repeat="btnName in btnDatas">{{btnName}}</li>
+            <li ui-sref="da.download" class="export" ng-if="tableauData.export"><i class="fa fa-print"></i>Export</li>
+            <li ng-class="{true:'active'}[slide_num==$index]" ng-click="showSlide($index)" ng-repeat="btnName in tableauData.tabs">{{btnName}}</li>
         </ul>
     </div>
     <div class="con">

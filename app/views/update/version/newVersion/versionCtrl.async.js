@@ -234,14 +234,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         where = " $_androidVersion between '" + vo.value1 + "'' and '" + vo.value2 + "' ";
                     } else {
                         where = " $_androidVersion >= " + vo.value1;
-                    };
+                    }
                     break;
                 case "Create Time":
                     if (vo.value2 && vo.value2 != "") {
                         where = " to_days($_current_time)-to_days($_serverTime) between " + vo.value1 + " and " + vo.value2;
                     } else {
                         where = " to_days($_current_time)-to_days($_serverTime) > " + vo.value1;
-                    };
+                    }
                     break;
                 case "Client ID":
                     if (vo.where == "are") {
@@ -254,7 +254,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     }
                     break;
             };
-            return where;
+            return "(" + where + ")";
         };
         $scope.setSegment = function(vo) {
             var where = "";

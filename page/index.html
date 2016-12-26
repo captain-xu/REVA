@@ -62,8 +62,20 @@
     <script type="text/javascript" src="login/main.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+        checkIE();
         checkLoginUser();
     });
+    function checkIE(){
+        var browser = navigator.appName,
+            b_version = navigator.appVersion;
+        if(browser=="Microsoft Internet Explorer") {
+            var version = b_version.split(";");
+            var trim_Version = Math.abs(version[1].replace(/[ ]/g,"").substring(4)); 
+            if(trim_Version < 11){
+                location.href = '/IEwarn.html'
+            }
+        }
+    };
     function checkLoginUser() {
         if (getCookie("TimeToken") != "") {
             $.ajax({

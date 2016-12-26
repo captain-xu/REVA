@@ -133,7 +133,30 @@ body{
   color: #2988E3;
   padding-right: 44px;
 }
+/*IE warning*/
 
+.ie-warn-title p{
+  font-size: 28px;
+  color: #4A4A4A;
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 45px;
+}
+.ie-warn-content p{
+  padding: 0 60px 20px;
+  opacity: 0.92;
+  font-size: 14px;
+  color: #4A4A4A;
+}
+.ie-warn-browser ul {
+  text-align: center;
+  letter-spacing: 45px;
+  color: #4A4A4A;
+}
+.ie-warn-browser ul li{
+  display: inline-block;
+  letter-spacing: 0;
+}
 
 .icon-reva:before { content: "\e642"; }
 .logo .icon-reva {display: block;font-size: 50px;color: #fff;text-align: center;}

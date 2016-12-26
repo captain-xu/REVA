@@ -16,11 +16,11 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
                 // $scope.showType = managementAPI.getshowType();
                 $scope.initTackBy();
                 if ($scope.detailVO.clickType == 1) {
-                    $('.click-type').html('Open a Link')
+                    $scope.clickName = 'Open a Link';
                 } else if ($scope.detailVO.clickType == 2) {
-                    $('.click-type').html('Download')
+                    $scope.clickName = 'Download';
                 } else {
-                    $('.click-type').html('Impression')
+                    $scope.clickName = 'Impression';
                 };
                 var verParam = {
                     name: $scope.detailVO.app
@@ -74,7 +74,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
                 $scope.detailVO.showType = $scope.type[0].typeId;
                 $scope.showType = $scope.type[0].name;
                 $scope.detailVO.clickType = $scope.click[0].id;
-                $scope.click.name = $scope.click[0].name;
+                $scope.clickName = $scope.click[0].name;
                 $scope.versionList();
             };
         };
@@ -105,8 +105,9 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
         $scope.detailVO.showType = vo.typeId;
         $scope.detailVO.showTypeName = vo.name;
     };
-    $scope.clickData = function(detailVO, event) {
-        detailVO.clickType = $(event.target).find('span').text();
+    $scope.clickData = function(vo) {
+        $scope.clickName = vo.name;
+        $scope.detailVO.clickType = vo.id;
     }
     $scope.radioData = function(num) {
         if ($scope.detailVO.status == 0) {
@@ -268,7 +269,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
                 $scope.detailVO.showType = $scope.type[0].typeId;
                 $scope.showType = $scope.type[0].name;
                 $scope.detailVO.clickType = $scope.click[0].id;
-                $scope.click.name = $scope.click[0].name;
+                $scope.clickName = $scope.click[0].name;
                 $scope.versionList();
             }
         }).

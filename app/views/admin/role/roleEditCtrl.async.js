@@ -432,6 +432,8 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 		$scope.chargeNodeAttrIndeterminateSub = function(nodePermission) {
 
+			if (adminAPI.isNullOrEmpty(nodePermission)) return;
+
 			if ($scope.isPermissionNode(nodePermission)) {
 
 				for (var i = 0; i < nodePermission.length; i++) {
@@ -741,6 +743,8 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.isPermissionNode = function(permission) {
 
 			var row, isPermissionNodeFlg = false;
+			if (adminAPI.isNullOrEmpty(permission)) return isPermissionNodeFlg;
+
 			if (adminAPI.isNullOrEmpty(permission.length)) {
 				if (!adminAPI.isNullOrEmpty(permission.node) && permission.node.length != 0) {
 					return true;
@@ -1111,7 +1115,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 			// Super Admin
 			var status = $scope.getNodeAllCheckboxStatus($scope.permitOrderList);
-			if (status == adminAPI.num.int_1 && $scope.permitOrderList.length == $scope.roleActivityPermits.length) {
+			if (status == adminAPI.num.int_1 && $scope.permitOrderList.length == $scope.adminPermissionPool.length) {
 
 				$scope.permitOrderItem.permissionId = adminAPI.num.int_0;
 				$scope.permitOrderItem.active = adminAPI.num.int_1;
@@ -1126,6 +1130,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 			$scope.paramData.roleInfo.name = $scope.role.name;
 			$scope.paramData.roleInfo.groupId = $scope.role.groupId;
 			$scope.paramData.roleInfo.isDefault = adminAPI.num.int_0;
+			$scope.paramData.roleInfo.isDisabled = adminAPI.num.int_0;
 			$scope.paramData.roleUserOrderList = $scope.roleUserOrderList;
 
 			var url;

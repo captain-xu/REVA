@@ -342,15 +342,10 @@
                                         <span class="title">All List:<em>&#42;</em></span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
                                             <textarea readonly ng-click="offerClick(detailNET,$event)" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
-                                            <textarea ng-model="allIds" style="display: none;"></textarea>
                                             <ul class="dropdown-menu offer-name" role="menu" pull-refresh="loadMore()">
                                                 <li ng-repeat="all in allName" ng-click="offerData(all,$event)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[all.isSelect]"></i>{{all.offerName}}
-                                                    <span style="display: none;">{{all.offerId}}</span>
                                                 </li>
-                                                <!-- <li self-stop-propagation ng-show="busy" style="text-align: center;">
-                                                    <i class="fa fa-circle-o-notch fa-spin" style="text-indent: 0;"></i>
-                                                </li> -->
                                             </ul>
                                             <span class="caret"></span>
                                         </div>

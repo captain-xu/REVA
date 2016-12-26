@@ -1,38 +1,121 @@
 <div class="push-segment">
 	<div class="segment-edit">
-		<div class="header"></div>
+		<div class="header">
+			<span class="head-name">Segment Detail</span>
+		</div>
 		<div class="segment-edit-container">
 			<div class="form-group clearfix">
 	            <label class="col-sm-2 control-label">Segment Name:<em>*</em></label>
 	            <div class="col-sm-6">
-	                <input type="text" class="form-control" ng-model="" placeholder="">
+	                <input type="text" class="form-control" ng-model="segmDetail.segmentName" placeholder="Retained Users" ng-focus="removeValidate('segmentWarn')" maxlength="50">
+	            	<ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
 	            </div>
 	        </div>
 			<div class="form-group clearfix">
 	            <label class="col-sm-2 control-label">App Name:<em>*</em></label>
 	            <div class="col-sm-6">
 	                <div class="dropdown">
-	                    <p class="dropdown-toggle" data-toggle="dropdown">{{receiver.targetAppName}}</p>
+	                    <input name="appName" class="dropdown-toggle" data-toggle="dropdown" ng-model="segmDetail.appName" ng-focus="removeValidate('appWarn')" readonly placeholder="Please select an app">
 	                    <span class="caret"></span>
 	                    <ul class="dropdown-menu" role="menu">
 	                        <li ng-repeat="app in appNames" ng-click="appData(app)">{{app.appName}}</li>
 	                    </ul>
 	                </div>
+	            	<ins class="warn" ng-show="validateParam.appWarn"><i class="fa fa-close"></i>This field is required.</ins>
 	            </div>
 	        </div>
 			<div class="form-group clearfix">
 	            <label class="col-sm-2 control-label">Description:</label>
 	            <div class="col-sm-6">
-	                <input type="text" class="form-control" ng-model="" placeholder="">
+	                <textarea name="description" class="form-control" ng-model="segmDetail.description" placeholder="Please describe this segment" maxlength="240"></textarea>
 	            </div>
 	        </div>
-			<div class="form-group clearfix">
+			<div class="form-group clearfix constraint-container">
 	            <label class="col-sm-2 control-label">Constraint:<em>*</em></label>
-	            <div class="col-sm-10">
-	                
+	            <div class="col-sm-9">
+	            	<div class="item-container clearfix" ng-repeat="item in segmDetail.constraint">
+					    <div class="col-sm-2">
+					        <div class="dropdown">
+					            <div class="dropdown-toggle" data-toggle="dropdown">
+					                <input type="text" class="form-control" ng-model="item.factor" readonly><span class="caret"></span>
+					            </div>
+					            <ul class="dropdown-menu">
+					                <li  ng-repeat="seg in segment" ng-click="chooseItem(item, seg)">{{seg}}</li>
+					            </ul>
+					        </div>
+					    </div>
+					    <div class="col-sm-2" ng-if="item.factor!='Choose…'">
+					        <div class="dropdown">
+					            <div class="dropdown-toggle" data-toggle="dropdown">
+					                <input type="text" class="form-control" ng-model="item.judge" readonly><span class="caret"></span>
+					            </div>
+					            <ul class="dropdown-menu">
+					                <li ng-click="item.judge='is'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is</li>
+					                <li ng-click="item.judge='is not'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is not</li>
+					                <li ng-click="item.judge='is above'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version'">is above</li>
+					                <li ng-click="item.judge='is between'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version' || item.factor=='Created Time' || item.factor=='The open time'">is between</li>
+					                <li ng-click="item.judge='is more than'" ng-if="item.factor=='Created Time' || item.factor=='The open time'">is more than</li>
+					                <li ng-click="item.judge='is less than'" ng-if="item.factor=='The open time'">is less than</li>
+					                <li ng-click="item.judge='is active'" ng-if="item.factor=='User'">is active</li>
+					                <li ng-click="item.judge='is inactive'" ng-if="item.factor=='User'">is inactive</li>
+					            </ul>
+					        </div>
+					    </div>
+					    <span class="item-text" ng-if="item.factor=='Notification' || item.factor=='GPS'">enabled</span>
+					    <span class="item-text" ng-if="item.factor=='User'">in</span>
+					    <div class="col-sm-2" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Location' || item.factor=='Language' || item.factor=='Push Version' || item.factor=='App Version'">
+					        <div class="dropdown">
+					            <div class="dropdown-toggle" data-toggle="dropdown">
+					                <input type="text" class="form-control" ng-model="item.factorValue1" readonly><span class="caret"></span>
+					            </div>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Android Version'">
+					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue1=option">{{option}}</li>
+					            </ul>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Location'">
+					                <li ng-repeat="option in areas" ng-click="item.factorValue1=option.country">{{option.country}}</li>
+					            </ul>
+					        </div>
+					    </div>
+					    <div class="col-sm-1" ng-if="item.factor=='Created Time' || item.factor=='User' || item.factor=='The open time'">
+					        <input type="text" ng-model="item.factorValue1">
+					    </div>
+					    <span class="item-text" ng-if="item.judge=='is between'">~</span>
+					    <div class="col-sm-2" ng-if="(item.factor=='Android Version'&&item.judge=='is between') || (item.factor=='OS Version'&&item.judge=='is between') || item.factor=='Location' || (item.factor=='Push Version'&&item.judge=='is between') || (item.factor=='App Version'&&item.judge=='is between')">
+					        <div class="dropdown">
+					            <div class="dropdown-toggle" data-toggle="dropdown">
+					                <input type="text" class="form-control" ng-model="item.factorValue2" readonly><span class="caret"></span>
+					            </div>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Android Version'">
+					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue2=option">{{option}}</li>
+					            </ul>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Location'" ng-repeat="one in areas | filter:{country: item.factorValue1}">
+					                <li ng-repeat="option in one.state" ng-click="item.factorValue2=option">{{option}}</li>
+					            </ul>
+					        </div>
+					    </div>
+					    <div class="col-sm-1" ng-if="item.factor=='The open time' && item.judge=='is between'">
+					        <input type="text">
+					    </div>
+					    <span class="item-text" ng-if="item.factor=='The open time'">times within</span>
+					    <div class="col-sm-1" ng-if="item.factor=='The open time' || (item.factor=='Created Time' && item.judge=='is between')">
+					        <input type="text" ng-model="item.factorValue2">
+					    </div>
+					    <span class="item-text" ng-if="item.factor=='Created Time' || item.factor=='User' || item.factor=='The open time'">days</span>
+					    <i class="fa fa-plus-square" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<5" ng-click="addItem(item)"></i>
+					    <i class="fa fa-minus-square" ng-show="item.factor!='Choose…' && segmDetail.constraint.length>1" ng-click="removeItem(item,$index)"></i>
+		            </div>
 	            </div>
 	        </div>
 		</div>
-		<div class="footer"></div>
+		<div class="footer">
+	        <div class="left-btn">
+	            <a href="javascript:history.go(-1)">
+	            	<button type="button" class="btn btn-default">Cancel</button>
+	            </a>
+	        </div>
+	        <div class="right-btn">
+	            <button type="button" class="btn btn-default" ng-click="saveDetail()">Save</button>
+	        </div>
+		</div>
 	</div>
 </div>

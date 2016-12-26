@@ -93,23 +93,24 @@
             </div>
         </div>
         <div class="table-container">
+            <div class="table-header">
+                <label class="table-title">Unique Users</label>
+            </div>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Campaign<br>(TOP10)</th>
                         <th>App</th>
-                        <th>CPX</th>
-                        <th>Prices($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('price')" ng-class="{'price': 'active'}[orderField]"></i></th>
-                        <th>Impressions<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('impression')" ng-class="{'impression': 'active'}[orderField]"></i></th>
-                        <th>Clicks<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click')" ng-class="{'click': 'active'}[orderField]"></i></th>
-                        <th>Conversions<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion')" ng-class="{'conversion': 'active'}[orderField]"></i></th>
-                        <th>eCPM<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM')" ng-class="{'eCPM': 'active'}[orderField]"></i></th>
-                        <th>Revenue($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue')" ng-class="{'revenue': 'active'}[orderField]"></i></th>
+                        <th>Request</th>
+                        <th>Unique Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('price')" ng-class="{'price': 'active'}[uniqueField]"></i></th>
+                        <th>IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('impression')" ng-class="{'impression': 'active'}[uniqueField]"></i></th>
+                        <th>Unique IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('click')" ng-class="{'click': 'active'}[uniqueField]"></i></th>
+                        <th>CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('conversion')" ng-class="{'conversion': 'active'}[uniqueField]"></i></th>
+                        <th>Unique CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('eCPM')" ng-class="{'eCPM': 'active'}[uniqueField]"></i></th>
+                        <th>Revenue($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('revenue')" ng-class="{'revenue': 'active'}[uniqueField]"></i></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="list in dataList | orderBy:orderField:!desc">
-                        <td>{{list.adName}}</td>
+                    <tr ng-repeat="list in dataList">
                         <td>{{list.appName}}</td>
                         <td>{{list.cpx}}</td>
                         <td>{{list.price===''?'-':list.price}}</td>
@@ -120,7 +121,84 @@
                         <td>{{list.revenue===''?'-':list.revenue}}</td>
                     </tr>
                 </tbody>
-            </table>   
+            </table>  
+            <div class="table-pagenation clearfix">
+                <ul uib-pagination class="pull-right" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10"></ul>
+            </div> 
+        </div>
+        <div class="table-container">
+            <div class="table-header">
+                <label class="table-title">Reports By:</label>
+                <div class="dropdown">
+                    <p class="dropdown-toggle" data-toggle="dropdown">
+                        {{channelName}}
+                        <span class="caret"></span>
+                    </p>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-click="reportBy('Campaign')">Campaign</li>
+                        <li ng-click="reportBy('App')">App</li>
+                        <li ng-click="reportBy('AdNetwork')">AdNetwork</li>
+                        <li ng-click="reportBy('Channel')">Channel</li>
+                    </ul>
+                </div>
+                <div class="dropdown" ng-show="channelName=='Channel'">
+                    <p class="dropdown-toggle" data-toggle="dropdown">
+                        {{channel1Name}}
+                        <span class="caret"></span>
+                    </p>
+                    <ul class="dropdown-menu" role="menu">
+                        <li  ng-click="channel1Data('All')">All</li>
+                        <li ng-repeat="channel1 in channel1List" ng-click="channelData(1, channel1)">{{channel1}}</li>
+                    </ul>
+                </div>
+                <div class="dropdown" ng-show="channelName=='Channel'">
+                    <p class="dropdown-toggle" data-toggle="dropdown">
+                        {{channel2Name}}
+                        <span class="caret"></span>
+                    </p>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-click="">All</li>
+                        <li ng-repeat="channel2 in channel2List" ng-click="channelData(0, channel2)">{{channel2}}</li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th ng-show="channelName=='Campaign'">Campaign<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('adName')" ng-class="{'adName': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='AdNetwork'">AdNetwork<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('advertiserName')" ng-class="{'advertiserName': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='Channel'">Channel 1<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('channelId1')" ng-class="{'channelId1': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='Channel'">Channel 2<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('channelId2')" ng-class="{'channelId2': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='Campaign' || channelName=='App'">App<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('appName')" ng-class="{'appName': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='Campaign'">CPX<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('cpx')" ng-class="{'cpx': 'active'}[reportField]"></i></th>
+                        <th ng-show="channelName=='Campaign'">Prices($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('price')" ng-class="{'price': 'active'}[reportField]"></i></th>
+                        <th>IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('imp')" ng-class="{'imp': 'active'}[reportField]"></i></th>
+                        <th>CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click')" ng-class="{'click': 'active'}[reportField]"></i></th>
+                        <th>Conversions<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion')" ng-class="{'conversion': 'active'}[reportField]"></i></th>
+                        <th>eCPM<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM')" ng-class="{'eCPM': 'active'}[reportField]"></i></th>
+                        <th>Revenue($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue')" ng-class="{'revenue': 'active'}[reportField]"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in dataList">
+                        <td ng-show="channelName=='Campaign'">{{list.adName}}</td>
+                        <td ng-show="channelName=='AdNetwork'">{{list.advertiserName}}</td>
+                        <td ng-show="channelName=='Channel'">{{list.channelId1}}</td>
+                        <td ng-show="channelName=='Channel'">{{list.channelId2}}</td>
+                        <td ng-show="channelName=='Campaign' || channelName=='App'">{{list.appName==''?'--':list.appName}}</td>
+                        <td ng-show="channelName=='Campaign'">{{list.cpx==''?'--':list.cpx}}</td>
+                        <td ng-show="channelName=='Campaign'">{{list.price==''?'--':list.price}}</td>
+                        <td>{{list.impression==''?'--':list.impression}}</td>
+                        <td>{{list.click==''?'--':list.click}}</td>
+                        <td>{{list.conversion==''?'--':list.conversion}}</td>
+                        <td>{{list.eCPM==''?'--':list.eCPM}}</td>
+                        <td>{{list.revenue==''?'--':list.revenue}}</td>
+                    </tr>
+                </tbody>
+            </table>  
+            <div class="table-pagenation clearfix">
+                <ul uib-pagination class="pull-right" ng-model="reportPage" max-size="5" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadReportList()"></ul>
+            </div> 
         </div>
     </div>
 </div>

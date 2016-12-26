@@ -34,7 +34,16 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 		};
 
 		$scope.paramData = {
+			action: "",
 			groupId: "",
+			groupInfo: {
+				name: "",
+				tableauUser: "",
+				userName: "",
+				userEmail: "",
+				iconUrl: "",
+				channel: ""
+			},
 			groupOrderPermitList: {}
 		};
 
@@ -42,12 +51,26 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 		$scope.initTableView = function() {
 			$scope.group = adminAPI.getGroup();
-			if (!$scope.group || !$scope.group.action || $scope.group.id == undefined || $scope.group.id == null) {
+			// if (!$scope.group || !$scope.group.action || $scope.group.id == undefined || $scope.group.id == null) {
+			// 	// alert("paramter is invalid!");
+			// 	adminAPI.comfirmPopup("paramter is invalid!");
+			// 	return;
+			// }
+
+			if (adminAPI.isNullOrEmpty($scope.group) || adminAPI.isNullOrEmpty($scope.group.action)) {
 				// alert("paramter is invalid!");
 				adminAPI.comfirmPopup("paramter is invalid!");
 				return;
 			}
 
+			if ($scope.group.action == adminAPI.str.update) {
+				if (adminAPI.isNullOrEmpty($scope.group.id)) {
+					adminAPI.comfirmPopup("paramter is invalid!");
+					return;
+				}
+			}
+
+			$scope.paramData.action = $scope.group.action;
 			$scope.paramData.groupId = $scope.group.id;
 
 			serviceAPI.loadData(urlAPI.admin_group_edit, $scope.paramData).then(function(result) {
@@ -250,6 +273,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 		};
 
 		$scope.chargeNodeAttrIndeterminateSub = function(nodePermission) {
+
+			if (adminAPI.isNullOrEmpty(nodePermission)) return;
 
 			if ($scope.isPermissionNode(nodePermission)) {
 
@@ -518,6 +543,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 		$scope.isPermissionNode = function(permission) {
 
 			var row, isPermissionNodeFlg = false;
+			if (adminAPI.isNullOrEmpty(permission)) return isPermissionNodeFlg;
+			
 			if (adminAPI.isNullOrEmpty(permission.length)) {
 				if (!adminAPI.isNullOrEmpty(permission.node) && permission.node.length != 0) {
 					return true;
@@ -855,7 +882,71 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 			});
 		};
 
+		$scope.checkParameter = function() {
+
+			if (adminAPI.isNullOrEmpty($scope.group.name)) {
+				adminAPI.comfirmPopup("Group name is invalid!");
+				return false;
+			}
+
+			if (adminAPI.isNullOrEmpty($scope.group.tableauUser)) {
+				adminAPI.comfirmPopup("Group tableau user is invalid!");
+				return false;
+			}
+
+			if (adminAPI.str.create == $scope.group.action) {
+				if (adminAPI.isNullOrEmpty($scope.group.userName)) {
+					adminAPI.comfirmPopup("Group of user name is invalid!");
+					return false;
+				}
+
+				if (adminAPI.isNullOrEmpty($scope.group.userEmail)) {
+					adminAPI.comfirmPopup("Group of user email is invalid!");
+					return false;
+				}
+			}
+
+			if ($scope.group.name.length > 24) {
+				adminAPI.comfirmPopup("Group name is too long!");
+				return false;
+			}
+
+			if ($scope.group.tableauUser.length > 8) {
+				adminAPI.comfirmPopup("Group tableau user is too long!");
+				return false;
+			}
+
+			if (adminAPI.str.create == $scope.group.action) {
+				if ($scope.group.userName.length > 64) {
+					adminAPI.comfirmPopup("Group of user name is too long!");
+					return false;
+				}
+
+				if ($scope.group.userEmail.length > 64) {
+					adminAPI.comfirmPopup("Group of user email is too long!");
+					return false;
+				}
+
+				var regExp = new RegExp(adminAPI.str.email);
+				if (!regExp.test($scope.group.userEmail)) {
+					adminAPI.comfirmPopup("Group of user email is invalid!");
+					return false;
+				}
+			}
+
+			return true;
+		};
+
+		// $scope.uploadIcon = function(file) {
+		// 	if (adminAPI.isNullOrEmpty(file)) return;
+
+		// 	Upload.upload({url: });
+
+		// };
+
 		$scope.groupUpdate = function() {
+
+			if (!$scope.checkParameter()) return;
 
 			$scope.permitOrderList.sort(adminAPI.compareById(adminAPI.str.sequence));
 
@@ -873,9 +964,34 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 				$scope.paramData.groupOrderPermitList = $scope.permitOrderList;
 			}
 
-			serviceAPI.updateData(urlAPI.admin_group_update, $scope.paramData).then(function(result) {
+			$scope.paramData.groupInfo.name = $scope.group.name;
+			$scope.paramData.groupInfo.tableauUser = $scope.group.tableauUser;
+			$scope.paramData.groupInfo.iconUrl = $scope.group.iconUrl;
+			$scope.paramData.groupInfo.channel = $scope.group.channel;
+
+			var url;
+			if (adminAPI.str.create == $scope.group.action) {
+				url = urlAPI.admin_group_create;
+				$scope.paramData.groupInfo.userName = $scope.group.userName;
+				$scope.paramData.groupInfo.userEmail = $scope.group.userEmail;
+			} else if (adminAPI.str.update == $scope.group.action) {
+				url = urlAPI.admin_group_update;
+			}
+
+			serviceAPI.updateData(url, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
-					$location.path('/view/admin/group/view');
+					// $location.path('/view/admin/group/view');
+					$location.path('/view' + urlAPI.admin_group_view);
+
+				} else if (result.status == -1 && result.code == 80100101) {
+					adminAPI.comfirmPopup("Group name was aready existed!");
+					return;
+				} else if (result.status == -1 && result.code == 80101101) {
+					adminAPI.comfirmPopup("Group of user name was aready existed!");
+					return;
+				} else {
+					adminAPI.comfirmPopup(result.msg);
+					return;
 				}
 			});
 		};

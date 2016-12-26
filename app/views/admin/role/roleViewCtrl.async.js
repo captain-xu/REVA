@@ -47,7 +47,6 @@ var scope = ["$scope", "ModalAlert", "urlAPI", "serviceAPI", "adminAPI",
 
 					var param = {
 						roleId: item.id,
-						groupId: item.groupId,
 						isDisabled: num
 					}
 
@@ -89,7 +88,6 @@ var scope = ["$scope", "ModalAlert", "urlAPI", "serviceAPI", "adminAPI",
 
 					var param = {
 						roleId: item.id,
-						groupId: item.groupId,
 						isDeleted: 1
 					}
 

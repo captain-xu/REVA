@@ -30,7 +30,7 @@ angular.module('app.services').factory('adminAPI', [
 	        	create: "create",
 	        	update: "update",
 	        	delete: "delete",
-				timezone: "CST",
+				timezone: "UTC",
 				language: "English",
 				checkbox: "checkbox",
 				sequence: "sequence",

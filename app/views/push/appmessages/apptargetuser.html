@@ -64,9 +64,9 @@
                 <ul class="user-select">
                     <li ng-class="{true:'active'}[status.taegetNum == 0]">
                         <p>
-                            <span ng-click="status.taegetNum=0;detail.allUsers=100;validateParam.singleWarn=false;validateParam.userWarn=false;validateParam.testWarn=false" class="cursor" ng-class="{true:'bold'}[status.taegetNum == 0]">
+                            <span ng-click="userSelect(0)" class="cursor" ng-class="{true:'bold'}[status.taegetNum == 0]">
                                 <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 0]"></i>
-                                All Users:
+                                All Users
                             </span>
                         </p>
                         <p class="user-content" ng-show="status.taegetNum == 0">
@@ -78,14 +78,14 @@
                     </li>
                     <li ng-class="{true:'active'}[status.taegetNum == 1]">
                         <p>
-                            <span ng-click="status.taegetNum=1;validateParam.testWarn=false" class="cursor" ng-class="{true:'bold'}[status.taegetNum == 1]">
+                            <span ng-click="userSelect(1)" class="cursor" ng-class="{true:'bold'}[status.taegetNum == 1]">
                                 <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 1]"></i>
                                 Single Users
                             </span>
                         </p>
                         <p class="user-content" ng-show="status.taegetNum == 1">Deliver this message to single users. You must enter the unique Device Identifier for the target user.</p>
-                        <p class="user-content" ng-show="status.taegetNum == 1">
-                            <span class="cursor" ng-click="status.single=0;validateParam.userWarn=false;" ng-class="{true:'bold'}[status.single==0]"> 
+                        <p class="user-content" ng-show="status.taegetNum == 1" ng-click="singleList(0)">
+                            <span class="cursor" ng-class="{true:'bold'}[status.single==0]"> 
                                 <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.single==0]"></i>
                                 Single User
                             </span>
@@ -94,8 +94,8 @@
                             <br>
                             <ins class="warn" ng-show="validateParam.singleWarn"><i class="fa fa-close"></i>This field is required.</ins>
                         </p>
-                        <p class="user-content" ng-show="status.taegetNum == 1">
-                            <span class="cursor" ng-click="status.single=1;validateParam.singleWarn=false;" ng-class="{true:'bold'}[status.single==1]">
+                        <p class="user-content" ng-show="status.taegetNum == 1" ng-click="singleList(1)">
+                            <span class="cursor" ng-class="{true:'bold'}[status.single==1]">
                                 <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.single==1]"></i>
                                 User list
                             </span>
@@ -107,20 +107,21 @@
                         </p>
                     </li>
                     <li ng-class="{true:'active'}[status.taegetNum == 2]">
-                        <p>
-                            <span ng-click="status.taegetNum=2;validateParam.singleWarn=false;validateParam.userWarn=false" class="cursor" ng-class="{true:'bold'}[status.taegetNum == 2]">
-                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 2]"></i>
-                                Test Devices
-                            </span>
+                        <p ng-click="userSelect(2)" ng-class="{true:'bold'}[status.taegetNum == 2]">
+                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 2]"></i> Segments
                         </p>
-                        <p class="user-content" ng-show="status.taegetNum==2">Deliver this message to test devices.</p>
-                        <p class="user-content" ng-show="status.taegetNum==2">
-                            <input name="test" type="text" class="test-devices" ng-model="detail.testDeviceIds" placeholder="Please upload a Test Devices list" readonly>
-                            <button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="text/plain" class="btn btn-primary">Upload</button>
-                            <img src="app/style/less/images/icon_i.png" uib-popover="Please upload a txt file containing up to 100 Device IDs, and the device ID should be separated by a semicolon." popover-placement="top" popover-is-open="testOpen" ng-mouseenter="testOpen=true" ng-mouseleave="testOpen=false">
-                            <br>
-                            <ins class="warn" ng-show="validateParam.testWarn"><i class="fa fa-close"></i>{{validateParam.testList}}</ins>
-                        </p>
+                        <div class="user-content" ng-show="status.taegetNum == 2">
+                            <div class="dropdown clearfix">
+                                <input type="text" name="segmentName" class="dropdown-toggle" data-toggle="dropdown" ng-model="detail.segmentName" readonly>
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu device-menu">
+                                    <li ng-repeat="item in segmentList" class="cursor" ng-click="selectSegment(item)">
+                                        {{item.segmentName}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                        </div>
                     </li>
                 </ul>
             </div>

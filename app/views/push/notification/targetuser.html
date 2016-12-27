@@ -81,7 +81,7 @@
                 <ul class="user-select">
                     <li ng-class="{true:'active'}[status.taegetNum == 0]">
                         <p ng-click="userSelect(0)" ng-class="{true:'bold'}[status.taegetNum == 0]">
-                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 0]"></i> All Users:
+                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 0]"></i> All Users
                         </p>
                         <p class="user-content" ng-show="status.taegetNum == 0">
                             Deliver this message to <b>{{receiver.allUsers}}%</b> of all eligible users on selected devices.
@@ -120,16 +120,20 @@
                     </li>
                     <li ng-class="{true:'active'}[status.taegetNum == 2]">
                         <p ng-click="userSelect(2)" ng-class="{true:'bold'}[status.taegetNum == 2]">
-                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 2]"></i> Test Devices
+                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 2]"></i> Segments
                         </p>
-                        <p class="user-content" ng-show="status.taegetNum == 2">Deliver this message to test devices.</p>
-                        <p class="user-content" ng-show="status.taegetNum == 2">
-                            <input name="test" type="text" class="test-devices" ng-model="receiver.testDeviceIds" placeholder="Please upload a Test Devices list" readonly>
-                            <button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="text/plain" class="btn btn-primary"> Upload</button>
-                            <img src="app/style/less/images/icon_i.png" popover-placement="top" popover-is-open="testOpen" ng-mouseenter="testOpen=true" ng-mouseleave="testOpen=false" uib-popover="Please upload a txt file containing up to 100 Device IDs, and the device ID should be separated by a semicolon.">
-                            <br>
-                            <ins class="warn" ng-show="validateParam.testWarn"><i class="fa fa-close"></i>{{validateParam.testList}}</ins>
-                        </p>
+                        <div class="user-content" ng-show="status.taegetNum == 2">
+                            <div class="dropdown clearfix">
+                                <input type="text" name="segmentName" class="dropdown-toggle" data-toggle="dropdown" ng-model="receiver.segmentName" readonly>
+                                <span class="caret"></span>
+                                <ul class="dropdown-menu device-menu">
+                                    <li ng-repeat="item in segmentList" class="cursor" ng-click="selectSegment(item)">
+                                        {{item.segmentName}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                        </div>
                     </li>
                 </ul>
             </div>

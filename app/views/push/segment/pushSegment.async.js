@@ -1,9 +1,18 @@
 var scope = ["$scope", "serviceAPI", 'urlAPI', 'ModalAlert',
 	function($scope, serviceAPI, urlAPI, ModalAlert) {
+        $scope.segmentNum = 1;
+        $scope.segmentSize = 20;
+        $scope.segmentName = '';
 		$scope.loadList = function(){
-			serviceAPI.loadData(urlAPI.push_segment).then(function(result){
+            var param = {
+                segmentName: $scope.segmentName,
+                pageSize: $scope.segmentSize,
+                pageNum: $scope.segmentNum
+            }
+			serviceAPI.loadData(urlAPI.push_segment, param).then(function(result){
 				if (result.code == 200 && result.status == 1) {
-					$scope.segmList = result.data;
+                    $scope.segmList = result.data.SegmentList;
+					$scope.totalItems = result.data.ListCount;
 				}
 			});
 		};

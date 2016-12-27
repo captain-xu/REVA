@@ -242,7 +242,7 @@
                         }
                         .user-content {
                             padding: 10px 20px;
-                            input {
+                            &>input {
                                 width: 40px;
                                 border-radius: 3px;
                                 .border;
@@ -252,7 +252,7 @@
                             b {
                                 color: @sky-color
                             }
-                            span {
+                            &>span {
                                 width: 110px;
                                 display: inline-block;
                             }
@@ -271,6 +271,16 @@
                                 vertical-align: top;
                                 background-color: @sky-color;
                                 border-color: @sky-color;
+                            }
+                            .dropdown {
+                                background: #fff;
+                                input[name="segmentName"] {
+                                    width: 100%;
+                                    height: 34px;
+                                    border: 0;
+                                    .border-radius;
+                                    padding: 0 18px;
+                                }
                             }
                         }
                     }

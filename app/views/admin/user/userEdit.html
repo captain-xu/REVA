@@ -89,7 +89,7 @@
 		<form class="edit-form list-assign">
 			<span class="itemLine" ng-repeat="iRole in userActivityRoleList">
 				<input type="checkbox" name="{{iRole.name}}" id="{{iRole.id}}" ng-checked="iRole.active" ng-click="assignRoleByUser($event, iRole)">
-				<label>{{iRole.name}}</label>
+				<label ng-click="assignRoleByUser($event, iRole)">{{iRole.name}}</label>
 			</span>			
 		</form>
 
@@ -100,7 +100,7 @@
 		<form class="edit-form list-assign">
 			<span class="itemLine" ng-repeat="iUser in adminUserList">
 				<input type="radio" id="{{iUser.id}}" ng-checked="iUser.checked" ng-click="chooseUserBoss($event, iUser)">
-				<label>{{iUser.userName}}</label>
+				<label ng-click="chooseUserBoss($event, iUser)">{{iUser.userName}}</label>
 			</span>			
 		</form>
 

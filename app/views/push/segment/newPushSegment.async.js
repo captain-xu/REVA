@@ -7,6 +7,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
         		$scope.segmDetail = {
 				    "segmentId": 0,
 				    "appName": "",
+				    "packageName": "",
 				    "segmentName": "",
 				    "description": "",
 				    "constraint": [{"factor": "Choose…", segmentId: $scope.segmentId}]
@@ -44,6 +45,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
         };
         $scope.appData = function(app){
         	$scope.segmDetail.appName = app.appName;
+        	$scope.segmDetail.packageName = app.packageName;
         };
 		$scope.chooseItem = function(item, seg){
 			if (item.factor != 'Choose…') {

@@ -99,31 +99,31 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>App</th>
-                        <th>Request</th>
-                        <th>Unique Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('price')" ng-class="{'price': 'active'}[uniqueField]"></i></th>
-                        <th>IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('impression')" ng-class="{'impression': 'active'}[uniqueField]"></i></th>
-                        <th>Unique IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('click')" ng-class="{'click': 'active'}[uniqueField]"></i></th>
-                        <th>CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('conversion')" ng-class="{'conversion': 'active'}[uniqueField]"></i></th>
-                        <th>Unique CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('eCPM')" ng-class="{'eCPM': 'active'}[uniqueField]"></i></th>
+                        <th>App<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('appId')" ng-class="{'appId': 'active'}[uniqueField]"></i></th>
+                        <th>Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('request')" ng-class="{'request': 'active'}[uniqueField]"></i></th>
+                        <th>Unique Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('uniqueRequest')" ng-class="{'uniqueRequest': 'active'}[uniqueField]"></i></th>
+                        <th>IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('imp')" ng-class="{'imp': 'active'}[uniqueField]"></i></th>
+                        <th>Unique IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('uniqueImp')" ng-class="{'uniqueImp': 'active'}[uniqueField]"></i></th>
+                        <th>CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('click')" ng-class="{'click': 'active'}[uniqueField]"></i></th>
+                        <th>Unique CLK<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('uniqueClick')" ng-class="{'uniqueClick': 'active'}[uniqueField]"></i></th>
                         <th>Revenue($)<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('revenue')" ng-class="{'revenue': 'active'}[uniqueField]"></i></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="list in dataList">
-                        <td>{{list.appName}}</td>
-                        <td>{{list.cpx}}</td>
-                        <td>{{list.price===''?'-':list.price}}</td>
-                        <td>{{list.impression===''?'-':list.impression}}</td>
-                        <td>{{list.click===''?'-':list.click}}</td>
-                        <td>{{list.conversion===''?'-':list.conversion}}</td>
-                        <td>{{list.eCPM===''?'-':list.eCPM}}</td>
-                        <td>{{list.revenue===''?'-':list.revenue}}</td>
+                    <tr ng-repeat="list in uniqueList">
+                        <td>{{list.appName==''?'--':list.appName}}</td>
+                        <td>{{list.request==''?'--':list.request}}</td>
+                        <td>{{list.uniqueRequest==''?'--':list.uniqueRequest}}</td>
+                        <td>{{list.imp==''?'--':list.imp}}</td>
+                        <td>{{list.uniqueImp==''?'--':list.uniqueImp}}</td>
+                        <td>{{list.click==''?'--':list.click}}</td>
+                        <td>{{list.uniqueClick==''?'--':list.uniqueClick}}</td>
+                        <td>{{list.revenue==''?'--':list.revenue}}</td>
                     </tr>
                 </tbody>
             </table>  
             <div class="table-pagenation clearfix">
-                <ul uib-pagination class="pull-right" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10"></ul>
+                <ul uib-pagination class="pull-right" total-items="uniqueCount" ng-model="uniquePage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadUniqueList()"></ul>
             </div> 
         </div>
         <div class="table-container">
@@ -197,7 +197,7 @@
                 </tbody>
             </table>  
             <div class="table-pagenation clearfix">
-                <ul uib-pagination class="pull-right" ng-model="reportPage" max-size="5" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadReportList()"></ul>
+                <ul uib-pagination class="pull-right" total-items="reportCount" ng-model="reportPage" max-size="5" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadReportList()"></ul>
             </div> 
         </div>
     </div>

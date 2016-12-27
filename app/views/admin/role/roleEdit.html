@@ -35,7 +35,7 @@
 		<div class="edit-form list-assign">
 			<span class="itemLine" ng-repeat="item in roleActivityUserList">
 				<input type="checkbox" name="{{item.userName}}" id="{{item.id}}" ng-checked="item.active" ng-click="selectRoleUser($event, item)">
-				<label>{{item.userName}}</label>
+				<label ng-click="selectRoleUser($event, item)">{{item.userName}}</label>
 			</span>			
 		</div>
 

@@ -329,9 +329,9 @@
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]" >
                                             <textarea readonly ng-click="adverClick($event)" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown"></textarea>
                                             <ul class="dropdown-menu adver" role="menu">
-                                                <li ng-repeat="ad in adverList" ng-click="adverData(ad,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-offer"></i>
-                                                    {{ad.name}}<span style="display: none;">{{ad.name}}</span>
+                                                <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[ad.isSelect]"></i>
+                                                    {{ad.name}}
                                                 </li>
                                             </ul>
                                             <span class="caret"></span>
@@ -341,15 +341,28 @@
                                     <li ng-show="detailNET.rtb">
                                         <span class="title">All List:<em>&#42;</em></span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
-                                            <textarea readonly ng-click="offerClick(detailNET,$event)" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
+                                            <textarea readonly ng-click="offerClick()" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
                                             <ul class="dropdown-menu offer-name" role="menu" pull-refresh="loadMore()">
-                                                <li ng-repeat="all in allName" ng-click="offerData(all,$event)" self-stop-propagation>
+                                                <li ng-repeat="all in allName" ng-click="offerData(all)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[all.isSelect]"></i>{{all.offerName}}
                                                 </li>
                                             </ul>
                                             <span class="caret"></span>
                                         </div>
                                         <input type="text" ng-model="detailNET.offerName" ng-show="{1: 'true'}[detailNET.status]" readonly>
+                                    </li>
+                                    <li ng-show="!detailNET.rtb && showChannel">
+                                        <span class="title">Channel:<em>&#42;</em></span>
+                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
+                                            <textarea readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[channel.isSelect]"></i>{{channel.name}}
+                                                </li>
+                                            </ul>
+                                            <span class="caret"></span>
+                                        </div>
+                                        <input type="text" ng-model="channelNames" ng-show="{1: 'true'}[detailNET.status]" readonly>
                                     </li>
                                 </ul>
                             </div>

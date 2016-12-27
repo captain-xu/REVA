@@ -270,11 +270,31 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             $("#chart-pie").css('z-index', '1');
         }
     };
-    $scope.uniqueField = 'conversion';
-    $scope.orderUnique = function(str) {
-        $scope.uniqueField = str;
-        // $scope.loadReportList();
+//unique List start
+    $scope.uniquePage = 1;
+    $scope.uniqueField = 'appId';
+    $scope.loadUniqueList = function(){
+        var uniqueParam = {
+            startDate: $scope.startTime,
+            endDate: $scope.endTime,
+            currentPage: $scope.uniquePage,
+            orderBy: $scope.uniqueField
+        };
+        serviceAPI.loadData(urlAPI.campaign_dashboard_unique,uniqueParam).then(function(result){
+            $scope.uniqueList = result.dataList;
+            $scope.uniqueCount = result.totalCount;
+        });
+
     };
+    // 排序
+    $scope.orderUnique = function(str) {
+        if ($scope.uniqueField != str) {
+            $scope.uniqueField = str;
+            $scope.loadUniqueList();
+        }
+    };
+
+//unique List end
 
 //report List start
     $scope.reportPage = 1;
@@ -296,6 +316,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         };
         serviceAPI.loadData(urlAPI.campaign_dashboard_list,reportParam).then(function(result){
             $scope.dataList = result.dataList;
+            $scope.reportCount = result.totalCount;
         });
 
     };
@@ -322,7 +343,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             $scope.channel2Id = '';
         }
         $scope.loadReportList();
-    }
+    };
     //根据 channel 筛选
     $scope.channelData = function(num, channel) {
         if (num) {
@@ -353,6 +374,8 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         $scope.loadList();
         //init summary chart
         $scope.loadChart();
+        //init unique List
+        $scope.loadUniqueList();
         //init report List
         $scope.loadReportList();
         window.onresize = function () {

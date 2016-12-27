@@ -1085,7 +1085,18 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.selectRoleUser = function($event, item) {
 
 			var existFlg = false;
-			var checkFlg = $event.target.checked == true ? adminAPI.num.int_1 : adminAPI.num.int_0;
+			var checkFlg;
+
+			if (adminAPI.isNullOrEmpty($event.target.checked)) {
+				checkFlg = item.active == adminAPI.num.int_1 ? adminAPI.num.int_0 : adminAPI.num.int_1;
+				if (!adminAPI.isNullOrEmpty($event.target.previousElementSibling && $event.target.previousElementSibling.id == item.id)) {
+					$event.target.previousElementSibling.checked = checkFlg == adminAPI.num.int_1 ? true : false;
+					item.active = checkFlg;
+				}
+			} else {
+				checkFlg = $event.target.checked == true ? adminAPI.num.int_1 : adminAPI.num.int_0;
+			}
+
 			for (var i = 0; i < $scope.roleUserOrderList.length; i++) {
 				if ($scope.roleUserOrderList[i].userId == item.id) {
 					$scope.roleUserOrderList[i].active = checkFlg;

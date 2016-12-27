@@ -78,8 +78,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weekReport/ctrl/pushWeekly') }
             }
-        }).state('push.segment', {
-            url: "/segment",
+        }).state('push.segments', {
+            url: "/segments",
             templateUrl: 'app/views/push/segment/pushSegment.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/push/segment/pushSegment.async.js', function(ctrl) {

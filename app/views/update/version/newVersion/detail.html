@@ -92,8 +92,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Mandatory Update:<em>&#42;</em>
-            </label>
+            <label class="col-sm-2 control-label">Mandatory Update:</label>
             <div class="col-sm-7 turn-container">
                 <span ng-class="{0: 'turn-on', 1: 'turn-off'}[detail.mandatory_update]" ng-click="changeState( 'mandatory_update' )"></span>
                 <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="mandOpen" ng-mouseenter="mandOpen=true" ng-mouseleave="mandOpen=false" uib-popover="When this option is ‘On’, user must choose to update or exit the selected app.">
@@ -101,18 +100,23 @@
          
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Silence Install:<em>&#42;</em>
-            </label>
+            <label class="col-sm-2 control-label">Silence Install:</label>
             <div class="col-sm-7 turn-container">
                 <span ng-class="{0: 'turn-on', 1: 'turn-off'}[detail.silenceinstall]" ng-click="changeState( 'silenceinstall' )"></span>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Update Priority:<em>&#42;</em>
-            </label>
+            <label class="col-sm-2 control-label">Update Priority:</label>
             <div class="col-sm-7">
                 <span class="ridio" ng-click="changePriority( 'updatepriority',0)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{0: 'active'}[detail.updatepriority]"></i> Normal </span>
                 <span class="ridio" ng-click="changePriority( 'updatepriority',1)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{1: 'active'}[detail.updatepriority]"></i> Important </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Release in Grayscale:</label>
+            <div class="col-sm-7 turn-container">
+                <span ng-class="{false: 'turn-on', true: 'turn-off'}[detail.target==100]" ng-click="changeTarget()"></span>
+                <span class="grayscale-user" ng-hide="detail.target==100">Targeting <input type="text" ng-model="detail.target" maxlength="2" ng-blur="checkTarget()"> % of All Users</span>
             </div>
         </div>
         <div class="form-group segment">

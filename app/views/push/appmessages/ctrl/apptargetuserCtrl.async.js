@@ -7,13 +7,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
         };
         $scope.validateParam = {
             userList: 'This field is required.',
-            testList: 'This field is required.',
             campWarn: false,
             appWarn: false,
             deviceWarn: false,
             singleWarn: false,
             userWarn: false,
-            testWarn: false
+            segmentWarn: false
         };
         $scope.getDetail = function() {
             serviceAPI.loadData(urlAPI.pushSetReceiver, { "pushId": $scope.pushId }).then(function(result) {
@@ -43,6 +42,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                             if ($scope.detail.targetAppName == $scope.apps[i].name) {
                                 $scope.appName.id = $scope.apps[i].id;
                                 $scope.getDevices(1);
+                                $scope.getSegments();
                             }
                         }
                     }
@@ -56,7 +56,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
             } else if ($scope.detail.deviceIds != '') {
                 $scope.status.taegetNum = 1;
                 $scope.status.single = 1;
-            } else if ($scope.detail.testDeviceIds != '') {
+            } else if ($scope.detail.segmentId != 0) {
                 $scope.status.taegetNum = 2;
                 $scope.status.single = 0;
             } else {
@@ -67,6 +67,18 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
         /*Page change begin*/
         $scope.campSum = function() {
             $scope.campLen = 50 - $scope.detail.campaignName.length;
+        };
+        $scope.setParam = function() {
+            $scope.detail.targetAppName = $scope.appName.name;
+            $scope.getDevices();
+            $scope.getSegments();
+        };
+        $scope.getSegments = function(){
+            serviceAPI.loadData(urlAPI.pushGetSegment, { "packageName": $scope.appName.id }).then(function(result) {
+                if (result.status == 1 && result.code == 200) {
+                    $scope.segmentList = result.data;
+                }
+            });
         };
         $scope.getDevices = function(num) {
             serviceAPI.loadData(urlAPI.pushGetDevice, { "packageName": $scope.appName.id }).then(function(result) {
@@ -200,6 +212,29 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
             };
             $scope.setTargetDevice();
         };
+        //user 选择
+        $scope.userSelect = function(num) {
+            $scope.status.taegetNum = num;
+            if (num == 0) {
+                $scope.validateParam.singleWarn = false;
+                $scope.validateParam.userWarn = false;
+                $scope.validateParam.segmentWarn = false;
+            } else if (num == 1) {
+                $scope.validateParam.segmentWarn = false;
+            } else {
+                $scope.validateParam.singleWarn = false;
+                $scope.validateParam.userWarn = false;
+            }
+        };
+        //singleUser 目标用户选择
+        $scope.singleList = function(num) {
+            $scope.status.single = num;
+            if (num == 0) {
+                $scope.validateParam.userWarn = false;
+            } else {
+                $scope.validateParam.singleWarn = false;
+            }
+        };
         $scope.checkNum = function(num, value) {
             if (value == 100) {
                 if (isNaN(Number(num)) || Number(num) > 100 || Number(num) < 1) {
@@ -217,46 +252,30 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
 
         };
         $scope.uploadFiles = function(file, errFiles) {
-            $("input[name='list']").removeClass('warn');
-            $("input[name='test']").removeClass('warn');
             if (file) {
-                if ($scope.status.taegetNum == 1) {
-                    $scope.idType = 0;
-                } else if ($scope.status.taegetNum == 2) {
-                    $scope.idType = 1;
-                }
                 Upload.upload({
                     url: urlAPI.pushUploadIds,
-                    data: { file: file, type: $scope.idType, pushId: $scope.pushId }
+                    data: { file: file, type: 0, pushId: $scope.pushId }
                     // , idType: 1
                 }).then(function(result) {
                     var data = result.data;
                     if (data.status == 1 && data.code == 200) {
-                        if ($scope.status.taegetNum == 1) {
-                            $scope.detail.deviceIds = file.name;
-                        } else if ($scope.status.taegetNum == 2) {
-                            $scope.detail.testDeviceIds = file.name;
-                        };
+                        $scope.detail.deviceIds = file.name;
                         $scope.setPushId(data.data.pushId);
                         $scope.validateParam.userWarn = false;
-                        $scope.validateParam.testWarn = false;
                         ModalAlert.success({ msg: "Upload Succeeded" }, 2500);
                     } else {
-                        if ($scope.idType == 0) {
-                            $scope.validateParam.userWarn = true;
-                            $scope.validateParam.userList = data.msg;
-                        } else {
-                            $scope.validateParam.testWarn = true;
-                            $scope.validateParam.testList = data.msg;
-                        }
+                        $scope.validateParam.userWarn = true;
+                        $scope.validateParam.userList = data.msg;
                     }
                 });
             }
 
         };
-        $scope.setParam = function() {
-            $scope.detail.targetAppName = $scope.appName.name;
-            $scope.getDevices();
+        $scope.selectSegment = function (item) {
+            $scope.detail.segmentId = item.segmentId;
+            $scope.detail.segmentName = item.segmentName;
+            $scope.validateParam.segmentWarn = false;
         };
         /*Page save*/
         $scope.saveDraft = function() {
@@ -271,29 +290,33 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                 if ($scope.status.taegetNum == 0) {
                     $scope.detail.deviceId = "";
                     $scope.detail.deviceIds = 0;
-                    $scope.detail.testDeviceIds = 0;
+                    $scope.detail.segmentId = 0;
+                    $scope.detail.useSegment = 0;
                 } else if ($scope.status.taegetNum == 1) {
                     if ($scope.status.single == 0) {
                         $scope.detail.allUsers = "";
                         $scope.detail.deviceIds = 0;
-                        $scope.detail.testDeviceIds = 0;
+                        $scope.detail.segmentId = 0;
+                        $scope.detail.useSegment = 0;
                     } else {
                         $scope.detail.allUsers = "";
                         $scope.detail.deviceId = "";
-                        $scope.detail.testDeviceIds = 0;
+                        $scope.detail.segmentId = 0;
+                        $scope.detail.useSegment = 0;
                         $scope.detail.deviceIds = 1;
                     }
                 } else {
                     $scope.detail.allUsers = "";
                     $scope.detail.deviceId = "";
                     $scope.detail.deviceIds = 0;
-                    $scope.detail.testDeviceIds = 1;
+                    $scope.detail.useSegment = 1;
                 }
             } else {
                 $scope.detail.allUsers = "";
                 $scope.detail.deviceId = "";
                 $scope.detail.deviceIds = 0;
-                $scope.detail.testDeviceIds = 0;
+                $scope.detail.segmentId = 0;
+                $scope.detail.useSegment = 0;
             }
             $scope.detail.pushId = $scope.pushId;
             $scope.detail.pushType = 1;
@@ -311,6 +334,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
         $scope.saveDetail = function() {
             $scope.detail.pushId = $scope.pushId;
             $scope.detail.pushType = 1;
+            $scope.detail.testDeviceIds = 0;
             $scope.detail.targetDevices = $scope.detail.targetDevices.toString();
             if ($scope.detail.triggerDays) {
                 $scope.detail.triggerDays = Number($scope.detail.triggerDays);
@@ -353,9 +377,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                 $scope.validateParam.deviceWarn = true;
                 return false;
             } else if ($scope.detail.messageType == 0) {
-                if ($scope.status.taegetNum == 2 && $scope.detail.testDeviceIds == "") {
-                    $scope.validateParam.testWarn = true;
-                    $scope.validateParam.testList = 'This field is required.';
+                if ($scope.status.taegetNum == 2 && $scope.detail.segmentId == 0) {
+                    $scope.validateParam.segmentWarn = true;
                     return false;
                 } else if ($scope.status.taegetNum == 1 && $scope.status.single == 0 && $scope.detail.deviceId == "") {
                     $scope.validateParam.singleWarn = true;
@@ -370,29 +393,33 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                 if ($scope.status.taegetNum == 0) {
                     $scope.detail.deviceId = "";
                     $scope.detail.deviceIds = 0;
-                    $scope.detail.testDeviceIds = 0;
+                    $scope.detail.segmentId = 0;
+                    $scope.detail.useSegment = 0;
                 } else if ($scope.status.taegetNum == 1) {
                     if ($scope.status.single == 0) {
                         $scope.detail.allUsers = "";
                         $scope.detail.deviceIds = 0;
-                        $scope.detail.testDeviceIds = 0;
+                        $scope.detail.segmentId = 0;
+                        $scope.detail.useSegment = 0;
                     } else {
                         $scope.detail.allUsers = "";
                         $scope.detail.deviceId = "";
-                        $scope.detail.testDeviceIds = 0;
+                        $scope.detail.segmentId = 0;
+                        $scope.detail.useSegment = 0;
                         $scope.detail.deviceIds = 1;
                     }
                 } else {
                     $scope.detail.allUsers = "";
                     $scope.detail.deviceId = "";
                     $scope.detail.deviceIds = 0;
-                    $scope.detail.testDeviceIds = 1;
+                    $scope.detail.deviceIds = 1;
                 }
             } else {
                 $scope.detail.allUsers = "";
                 $scope.detail.deviceId = "";
                 $scope.detail.deviceIds = 0;
-                $scope.detail.testDeviceIds = 0;
+                $scope.detail.segmentId = 0;
+                $scope.detail.useSegment = 0;
             }
             return true;
         };

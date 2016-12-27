@@ -6,13 +6,12 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
         };
         $scope.validateParam = {
             userList: 'This field is required.',
-            testList: 'This field is required.',
             campWarn: false,
             appWarn: false,
             deviceWarn: false,
             singleWarn: false,
             userWarn: false,
-            testWarn: false
+            segmentWarn: false
         };
         $scope.getDetail = function() {
             serviceAPI.loadData(urlAPI.pushSetReceiver, { "pushId": $scope.pushId }).then(function(result) {
@@ -33,6 +32,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
                 for (var i = $scope.appNames.length - 1; i >= 0; i--) {
                     if ($scope.receiver.targetAppName == $scope.appNames[i].appName) {
                         $scope.getDevices($scope.appNames[i].packageName, 1);
+                        $scope.getSegments($scope.appNames[i].packageName, 1);
                         break;
                     }
                 }
@@ -47,7 +47,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             } else if ($scope.receiver.deviceIds != '') {
                 $scope.status.taegetNum = 1;
                 $scope.status.single = 1;
-            } else if ($scope.receiver.testDeviceIds != '') {
+            } else if ($scope.receiver.segmentId != 0) {
                 $scope.status.taegetNum = 2;
                 $scope.status.single = 0;
             } else {
@@ -64,7 +64,15 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
         $scope.appData = function(app) {
             $scope.receiver.targetAppName = app.appName;
             $scope.getDevices(app.packageName, 0);
+            $scope.getSegments(app.packageName, 0);
 
+        };
+        $scope.getSegments = function(param, num){
+            serviceAPI.loadData(urlAPI.pushGetSegment, { "packageName": param }).then(function(result) {
+                if (result.status == 1 && result.code == 200) {
+                    $scope.segmentList = result.data;
+                }
+            });
         };
         $scope.getDevices = function(param, num) {
             serviceAPI.loadData(urlAPI.pushGetDevice, { "packageName": param }).then(function(result) {
@@ -207,9 +215,9 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             if (num == 0) {
                 $scope.validateParam.singleWarn = false;
                 $scope.validateParam.userWarn = false;
-                $scope.validateParam.testWarn = false;
+                $scope.validateParam.segmentWarn = false;
             } else if (num == 1) {
-                $scope.validateParam.testWarn = false;
+                $scope.validateParam.segmentWarn = false;
             } else {
                 $scope.validateParam.singleWarn = false;
                 $scope.validateParam.userWarn = false;
@@ -243,37 +251,27 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
         //目标用户列表上传
         $scope.uploadFiles = function(file, errFiles) {
             if (file) {
-                if ($scope.status.taegetNum == 1) {
-                    $scope.idType = 0;
-                } else if ($scope.status.taegetNum == 2) {
-                    $scope.idType = 1;
-                }
                 Upload.upload({
                     url: urlAPI.pushUploadIds,
-                    data: { file: file, type: $scope.idType, pushId: $scope.pushId }
+                    data: { file: file, type: 0, pushId: $scope.pushId }
                 }).then(function(result) {
                     var data = result.data;
                     if (data.status == 1 && data.code == 200) {
-                        if ($scope.status.taegetNum == 1) {
-                            $scope.receiver.deviceIds = file.name;
-                        } else if ($scope.status.taegetNum == 2) {
-                            $scope.receiver.testDeviceIds = file.name;
-                        };
-                         $scope.setPushId(data.data.pushId);
+                        $scope.receiver.deviceIds = file.name;
+                        $scope.setPushId(data.data.pushId);
                         $scope.validateParam.userWarn = false;
-                        $scope.validateParam.testWarn = false;
                         ModalAlert.success({ msg: "Upload Succeeded" }, 2500);
                     } else {
-                        if ($scope.idType == 0) {
-                            $scope.validateParam.userWarn = true;
-                            $scope.validateParam.userList = data.msg;
-                        } else {
-                            $scope.validateParam.testWarn = true;
-                            $scope.validateParam.testList = data.msg;
-                        }
+                        $scope.validateParam.userWarn = true;
+                        $scope.validateParam.userList = data.msg;
                     }
                 });
             }
+        };
+        $scope.selectSegment = function (item) {
+            $scope.receiver.segmentId = item.segmentId;
+            $scope.receiver.segmentName = item.segmentName;
+            $scope.validateParam.segmentWarn = false;
         };
         $scope.saveDraft = function() {
             if (!$scope.receiver.campaignName || $scope.receiver.campaignName == "") {
@@ -287,29 +285,33 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
                 if ($scope.status.taegetNum == 0) {
                     $scope.receiver.deviceId = "";
                     $scope.receiver.deviceIds = 0;
-                    $scope.receiver.testDeviceIds = 0;
+                    $scope.receiver.useSegment = 0;
+                    $scope.receiver.segmentId = 0;
                 } else if ($scope.status.taegetNum == 1) {
                     if ($scope.status.single == 0) {
                         $scope.receiver.allUsers = "";
                         $scope.receiver.deviceIds = 0;
-                        $scope.receiver.testDeviceIds = 0;
+                        $scope.receiver.useSegment = 0;
+                        $scope.receiver.segmentId = 0;
                     } else {
                         $scope.receiver.allUsers = "";
                         $scope.receiver.deviceId = "";
-                        $scope.receiver.testDeviceIds = 0;
+                        $scope.receiver.useSegment = 0;
+                        $scope.receiver.segmentId = 0;
                         $scope.receiver.deviceIds = 1;
                     }
                 } else {
                     $scope.receiver.allUsers = "";
                     $scope.receiver.deviceId = "";
                     $scope.receiver.deviceIds = 0;
-                    $scope.receiver.testDeviceIds = 1;
+                    $scope.receiver.useSegment = 1;
                 }
             } else {
                 $scope.receiver.allUsers = "";
                 $scope.receiver.deviceId = "";
                 $scope.receiver.deviceIds = 0;
-                $scope.receiver.testDeviceIds = 0;
+                $scope.receiver.useSegment = 0;
+                $scope.receiver.segmentId = 0;
             }
             $scope.receiver.pushId = $scope.pushId;
             $scope.receiver.pushType = 0;
@@ -327,6 +329,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
         $scope.saveDetail = function() {
             $scope.receiver.pushId = $scope.pushId;
             $scope.receiver.pushType = 0;
+            $scope.receiver.testDeviceIds = 0;
             if (($scope.receiver.targetDevices instanceof Array)) {
                 $scope.receiver.targetDevices = $scope.receiver.targetDevices.toString();
             };
@@ -370,9 +373,8 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
                 $scope.validateParam.deviceWarn = true;
                 return false;
             } else if ($scope.receiver.messageType == 0) {
-                if ($scope.status.taegetNum == 2 && $scope.receiver.testDeviceIds == "") {
-                    $scope.validateParam.testWarn = true;
-                    $scope.validateParam.testList = 'This field is required.';
+                if ($scope.status.taegetNum == 2 && $scope.receiver.segmentId == 0) {
+                    $scope.validateParam.segmentWarn = true;
                     return false;
                 } else if ($scope.status.taegetNum == 1 && $scope.status.single == 0 && $scope.receiver.deviceId == "") {
                     $scope.validateParam.singleWarn = true;
@@ -387,29 +389,33 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
                 if ($scope.status.taegetNum == 0) {
                     $scope.receiver.deviceId = "";
                     $scope.receiver.deviceIds = 0;
-                    $scope.receiver.testDeviceIds = 0;
+                    $scope.receiver.useSegment = 0;
+                    $scope.receiver.segmentId = 0;
                 } else if ($scope.status.taegetNum == 1) {
                     if ($scope.status.single == 0) {
                         $scope.receiver.allUsers = "";
                         $scope.receiver.deviceIds = 0;
-                        $scope.receiver.testDeviceIds = 0;
+                        $scope.receiver.useSegment = 0;
+                        $scope.receiver.segmentId = 0;
                     } else {
                         $scope.receiver.allUsers = "";
                         $scope.receiver.deviceId = "";
-                        $scope.receiver.testDeviceIds = 0;
+                        $scope.receiver.useSegment = 0;
+                        $scope.receiver.segmentId = 0;
                         $scope.receiver.deviceIds = 1;
                     }
                 } else {
                     $scope.receiver.allUsers = "";
                     $scope.receiver.deviceId = "";
                     $scope.receiver.deviceIds = 0;
-                    $scope.receiver.testDeviceIds = 1;
+                    $scope.receiver.useSegment = 1;
                 }
             } else {
                 $scope.receiver.allUsers = "";
                 $scope.receiver.deviceId = "";
                 $scope.receiver.deviceIds = 0;
-                $scope.receiver.testDeviceIds = 0;
+                $scope.receiver.useSegment = 0;
+                $scope.receiver.segmentId = 0;
             }
             return true;
         };

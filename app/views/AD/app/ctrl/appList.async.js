@@ -96,6 +96,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","$state", "serviceAPI"
             company: "",
             createTime: "",
             name: "",
+            packageName: "",
             type: "",
             typeName: "",
             version: ""
@@ -135,7 +136,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","$state", "serviceAPI"
         $scope.img_url = '';
     }
     $scope.validateForm = function(url) {
-        if ($scope.detailVO.name != "" && $scope.detailVO.type != "" && $scope.detailVO.version != "" && $scope.detailVO.company != "") {
+        if ($scope.detailVO.name != "" && $scope.detailVO.packageName != "" && $scope.detailVO.type != "" && $scope.detailVO.version != "" && $scope.detailVO.company != "") {
             $scope.resubmit = true;
             serviceAPI.saveData(url, $scope.detailVO).then(function(result) {
                 if (result.status == 0) {
@@ -148,6 +149,8 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","$state", "serviceAPI"
         } else {
             if ($scope.detailVO.name == "") {
                 ModalAlert.popup({ msg: "the name value is necessary" }, 2500);
+            } else if ($scope.detailVO.packageName == "") {
+                ModalAlert.popup({ msg: "the packageName is necessary" }, 2500);
             } else if ($scope.detailVO.type == "") {
                 ModalAlert.popup({ msg: "the category is necessary" }, 2500);
             } else if ($scope.detailVO.version == "") {

@@ -4,6 +4,10 @@
         <div class="header">
             <span class="head-name">Segments</span>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" ng-model="segmentName" ng-change="loadList()" placeholder="Search">
+                </li>
                 <li><a href="#/view/push/segmentDetail/0">+&nbsp;&nbsp;New Segments</a></li>
             </ul>
         </div>
@@ -11,26 +15,26 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th ng-click="orderBy('targetAppName')">APP Name
+                        <th ng-click="orderBy('appName')">APP Name
                             <div class="icon-order">
                                 <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; !desc]"></i>
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; desc]"></i>
                             </div>
                         </th>
-                        <th ng-click="orderBy('campaignName')">Segment Name
+                        <th ng-click="orderBy('segmentName')">Segment Name
                             <div class="icon-order">
                                 <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='segmentName' &amp;&amp; !desc]"></i>
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='segmentName' &amp;&amp; desc]"></i>
                             </div>
                         </th>
                         <th>Description</th>
-                        <th ng-click="orderBy('startTime')">Create Time
+                        <th ng-click="orderBy('createTime')">Create Time
                             <div class="icon-order">
                                 <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='createTime' &amp;&amp; !desc]"></i>
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='createTime' &amp;&amp; desc]"></i>
                             </div>
                         </th>
-                        <th ng-click="orderBy('targetUsers')">Last Modified
+                        <th ng-click="orderBy('updateTime')">Last Modified
                             <div class="icon-order">
                                 <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='updateTime' &amp;&amp; !desc]"></i>
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='updateTime' &amp;&amp; desc]"></i>
@@ -66,11 +70,11 @@
         </div>
         <div class="footer">
             <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 20]" ng-click="seachParam.pageSize=20;loadList()">20</button>
-                <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 50]" ng-click="seachParam.pageSize=50;loadList()">50</button>
-                <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 100]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 20]" ng-click="segmentSize=20;loadList()">20</button>
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 50]" ng-click="segmentSize=50;loadList()">50</button>
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 100]" ng-click="segmentSize=100;loadList()">100</button>
             </div>
-            <ul uib-pagination total-items="totalItems" ng-model="seachParam.pageNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+            <ul uib-pagination total-items="totalItems" ng-model="segmentNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="segmentSize" ng-change="loadList()"></ul>
         </div>
     </div>
 </div>

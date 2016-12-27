@@ -1,10 +1,20 @@
 var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI','$stateParams',
     function($scope, ModalAlert, regexAPI,serviceAPI, $state,urlAPI, $stateParams) {
         $scope.resubmit = false;
+        $scope.channelNames = '';
         //net获取详情数据
         $scope.editNetList = function(net) {
             $scope.dataState = $stateParams.param;
             $('.msg').text('');
+            serviceAPI.loadData(urlAPI.campaign_operate_adver,{rtb: 1}).then(function(result) {
+                $scope.channelList = result.advertisers.map(function(data) {
+                    return {
+                        name: data.name,
+                        id: data.id,
+                        isSelect: false
+                    }
+                });
+            });
             if ($scope.dataState == 'edit') {
                 var param = {
                     operationId: $stateParams.id
@@ -34,6 +44,18 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     $scope.endDate = $scope.detailNET.endDate;
                     $scope.allNames = $scope.detailNET.offerName;
                     $scope.allIds = $scope.detailNET.offerId;
+                    if ($scope.detailNET.channel) {
+                        var channelIds = $scope.detailNET.channel;
+                        for (var i = 0; i < $scope.channelList.length; i++) {
+                            var eqId = $scope.channelList[i].id;
+                            if (channelIds.indexOf(eqId) > -1) {
+                                $scope.channelList[i].isSelect = true;
+                                $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                            }
+                        }
+                    } else {
+                        $scope.detailNET.channel = '';
+                    }
                     $('.icon-check').removeClass('active');
                     var timeSet = $scope.detailNET.timeSet.split(',');
                     for (var i = 0; i < timeSet.length; i++) {
@@ -44,12 +66,21 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                         $('.icon-check').removeClass('active');
                     }else if (timeSet.length == 24) {
                         $('.icon-check').addClass('active');
-                    };
+                    }
+                    if ($scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
+                        $scope.showChannel = true;
+                    }
                     var adverParam = {
                         rtb: $scope.detailNET.rtb
-                    }
+                    };
                     serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
-                        $scope.adverList = result.advertisers;
+                        $scope.adverList = result.advertisers.map(function(data) {
+                            return {
+                                name: data.name,
+                                id: data.id,
+                                isSelect: false
+                            }
+                        });
                     });
                     //$scope.loadModel();
                     $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
@@ -102,7 +133,8 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     "offerName":'',
                     "offerId":'',
                     "advertiserName": '',
-                    "advertiserId": ''
+                    "advertiserId": '',
+                    "channel": ''
                 };
                 $scope.startDate = '';
                 $scope.endDate = '';
@@ -112,33 +144,34 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 //$scope.loadModel();
                 var adverParam = {
                     rtb: $scope.detailNET.rtb
-                }
+                };
                 serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
-                    $scope.adverList = result.advertisers;
-                }).
-                catch(function(result) {});
+                    $scope.adverList = result.advertisers.map(function(data) {
+                        return {
+                            name: data.name,
+                            id: data.id,
+                            isSelect: false
+                        };
+                    });
+                });
             }
             if (!$scope.app || $scope.app.length == 0) {
                 $scope.getAppList();
             };
             serviceAPI.loadData(urlAPI.campaign_offer_cpx).then(function(result) {
                 $scope.CPX = result.CPX;
-            }).
-            catch(function(result) {});
+            });
             serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
                 $scope.areaList = result.countries;
-            }).
-            catch(function(result) {});
+            });
 
 /*
             serviceAPI.loadData(urlAPI.campaign_operate_device).then(function(result) {
                 $scope.deviceList = result.deviceInfo.split(',');
-            }).
-            catch(function(result) {});
+            });
             serviceAPI.loadData(urlAPI.campaign_operate_os).then(function(result) {
                 $scope.osList = result.osVersionInfo;
-            }).
-            catch(function(result) {});
+            });
             serviceAPI.loadData(urlAPI.campaign_operate_language).then(function(result) {
                 $scope.languageList = result.languageInfo;
             }).
@@ -149,8 +182,26 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
         $scope.getAppList = function() {
             serviceAPI.loadData(urlAPI.campaign_detailList).then(function(result) {
                 $scope.app = result.appList;
-            }).
-            catch(function(result) {});
+            });
+        };
+        //恢复 Advertiser 数据 原始状态
+        $scope.defaultAdvertiser = function(){
+            $scope.detailNET.advertiserName = '';
+            $scope.showChannel = false;
+            $scope.channelNames = '';
+            $scope.detailNET.channel = '';
+            for (var i = 0; i < $scope.channelList.length; i++) {
+                $scope.channelList[i].isSelect = false;
+            }
+            $scope.detailNET.advertiserId = '';
+            $scope.allNames = "";
+            $scope.allIds = '';
+            $scope.detailNET.offerInfoList = [];
+            if ($scope.allName) {
+                for (var i = 0; i < $scope.allName.length; i++) {
+                    $scope.allName[i].isSelect = false;
+                };
+            }
         };
         /*Network编辑页面app值修改获取version数据*/
         $scope.appNetData = function(net) {
@@ -161,10 +212,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.detailNET.placeId = "";
             $scope.detailNET.placeName = "";
             $scope.detailNET.version = "";
-            $scope.detailNET.advertiserName = '';
-            $scope.detailNET.advertiserId = '';
-            $scope.allNames = "";
-            $scope.allIds = '';
+            $scope.defaultAdvertiser();
             $scope.group = [];
             $scope.place = [];
             var verParam = {
@@ -172,8 +220,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             }
             serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
                 $scope.version = result.versionList;
-            }).
-            catch(function(result) {});
+            });
         };
         /*Network编辑页面version数据修改获取group数据*/
         $scope.versionNetData = function(net) {
@@ -182,10 +229,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.detailNET.groupName = "";
             $scope.detailNET.placeId = "";
             $scope.detailNET.placeName = "";
-            $scope.detailNET.advertiserName = '';
-            $scope.detailNET.advertiserId = '';
-            $scope.allNames = "";
-            $scope.allIds = '';
+            $scope.defaultAdvertiser();
             $scope.place = [];
             var groupParam = {
                 app: $scope.detailNET.appName,
@@ -193,8 +237,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             };
             serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
                 $scope.group = result.groupList;
-            }).
-            catch(function(result) {});
+            });
         };
         /*Network编辑页面group数据修改获取Placement数据*/
         $scope.groupNetData = function(net) {
@@ -202,10 +245,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.detailNET.groupName = net.name;
             $scope.detailNET.placeId = "";
             $scope.detailNET.placeName = "";
-            $scope.detailNET.advertiserName = '';
-            $scope.detailNET.advertiserId = '';
-            $scope.allNames = "";
-            $scope.allIds = '';
+            $scope.defaultAdvertiser();
             var placeParam = {
                 groupId: $scope.detailNET.groupId
             };
@@ -214,18 +254,14 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 if ($scope.detailNET.inServer == 1) {
                     $scope.place.unshift({placementId:"",name:'All'})
                 }
-            }).
-            catch(function(result) {});
+            });
         };
         /*Network编辑页面Placement数据修改获取img title数据*/
         $scope.placeNetData = function(net) {
             $scope.detailNET.placeId = net.placementId;
             $scope.detailNET.placeName = net.name;
             $scope.detailNET.rtb = 0;
-            $scope.detailNET.advertiserName = '';
-            $scope.detailNET.advertiserId = '';
-            $scope.allNames = "";
-            $scope.allIds = '';
+            $scope.defaultAdvertiser();
         };
         //network timeSet 编辑
         $scope.checkNetData = function(num, dom) {
@@ -361,8 +397,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             }
             serviceAPI.loadData(urlAPI.campaign_operate_device,modelParam).then(function(result) {
                 $scope.modelList = result.modelInfo.split(',');
-            }).
-            catch(function(result) {});
+            });
         };
 
 */
@@ -688,21 +723,16 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 // if (num == 1) {
                 //     $scope.loadOfferData();
                 // }
-                $scope.detailNET.rtb = num;
-                $scope.detailNET.advertiserName = '';
-                $scope.detailNET.advertiserId = '';
-                // $scope.allNames = "";
-                // $scope.allIds = "";
-                // $scope.detailNET.offerName = '';
-                // $scope.detailNET.offerInfoList = [];
-                // $('.icon-offer').removeClass('active');
-                var adverParam = {
-                    rtb: $scope.detailNET.rtb
+                if ($scope.detailNET.rtb != num) {
+                    $scope.detailNET.rtb = num;
+                    $scope.defaultAdvertiser();
+                    var adverParam = {
+                        rtb: $scope.detailNET.rtb
+                    }
+                    serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
+                        $scope.adverList = result.advertisers;
+                    });
                 }
-                serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
-                    $scope.adverList = result.advertisers;
-                }).
-                catch(function(result) {});
             }
          };
         //Advertiser Name下拉框
@@ -714,10 +744,10 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 adver = adver.split(',');
             }
             if (adver != []) {
-                for (var i = 0; i < $('.adver li').length; i++) {
-                    var adverStr = $('.adver li').eq(i).find('span').text();
+                for (var i = 0; i < $scope.adverList.length; i++) {
+                    var adverStr = $scope.adverList[i].name;
                     if (adver.indexOf(adverStr) > -1) {
-                        $('.adver li').eq(i).find('.icon-offer').addClass('active');
+                        $scope.adverList[i].isSelect = true;
                     };
                 };
             }
@@ -727,8 +757,8 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
         $scope.totalPages = 1;
         $scope.busy = false;
         $scope.firstReq = true;
-         //获取offerName值
-        $scope.offerClick = function(detailNET,dom){
+         //获取 offerName 值
+        $scope.offerClick = function(){
             $scope.offerParam = {
                 "advertiserIds": $scope.detailNET.advertiserId,
                  "countryCodes": $scope.detailNET.area, 
@@ -789,11 +819,11 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             }
         };
         //选择广告主名并请求offerName值
-         $scope.adverData = function(ad, dom) {
+         $scope.adverData = function(ad) {
             if ($scope.detailNET.advertiserName == "") {
                 $scope.detailNET.advertiserId = "";
                 $scope.detailNET.advertiserName = ad.name + ',';
-                $(dom.target).find('.icon-offer').addClass('active');
+                ad.isSelect = true;
             } else {
                 var arrName = $scope.detailNET.advertiserName.split(',');
                 if (arrName[arrName.length - 1] == "") {
@@ -801,12 +831,12 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 };
                 var index = arrName.indexOf(ad.name);
                 if (index >= 0) {
-                    arrName = arrName.slice(0, index).concat(arrName.slice(index + 1))
+                    arrName = arrName.slice(0, index).concat(arrName.slice(index + 1));
                     arrName.sort();
-                    $(dom.target).find('.icon-offer').removeClass('active');
+                    ad.isSelect = false;
                 } else {
                     arrName.push(ad.name);
-                    $(dom.target).find('.icon-offer').addClass('active');
+                    ad.isSelect = true;
                 }
                 $scope.detailNET.advertiserName = arrName.toString();
             };
@@ -827,13 +857,25 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
                 $scope.detailNET.advertiserId = arr.toString();
             };
+            if ($scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
+                $scope.showChannel = true;
+            } else {
+                $scope.showChannel = false;
+                $scope.channelNames = '';
+                $scope.detailNET.channel = '';
+                for (var i = 0; i < $scope.channelList.length; i++) {
+                    $scope.channelList[i].isSelect = false;
+                }
+            }
             $scope.allNames = "";
             $scope.allIds = "";
-            $scope.detailNET.offerName = '';
             $scope.detailNET.offerInfoList = [];
+            for (var i = 0; i < $scope.allName.length; i++) {
+                $scope.allName[i].isSelect = false;
+            };
          };
         //选择All Name值
-         $scope.offerData = function(all, event) {
+         $scope.offerData = function(all) {
             all.isSelect = !all.isSelect;
             if ($scope.allNames == "" && $scope.allIds == '') {
                 $scope.allNames = all.offerName + ';';
@@ -851,8 +893,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 if (index >= 0) {
                     allName = allName.slice(0, index).concat(allName.slice(index + 1));
                     allId = allId.slice(0, index).concat(allId.slice(index + 1));
-                    allName.sort();
-                    allId.sort();
                 } else {
                     allName.push(all.offerName);
                     allId.push(all.offerId);
@@ -872,11 +912,40 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             var offerList = $scope.detailNET.offerInfoList;
             var offerIndex = offerList.findIndex(findOffer);
             if (offerIndex >= 0 ) {
-                offerList.pop(offer);
+                offerList.splice(offerIndex, 1);
             } else {
                 offerList.push(offer);
             }
-         };;
+         };
+         $scope.channelData = function(channel) {
+            channel.isSelect = !channel.isSelect;
+            if ($scope.channelNames == "" && $scope.detailNET.channel == '') {
+                $scope.channelNames = channel.name + ',';
+                $scope.detailNET.channel = channel.id + ',';
+            } else {
+                var channelName = $scope.channelNames.split(',');
+                var channelId = $scope.detailNET.channel.split(',');
+                if (channelId[channelId.length - 1] == "") {
+                    channelId.length = channelId.length - 1;
+                };
+                if (channelName[channelName.length - 1] == "") {
+                    channelName.length = channelName.length - 1;
+                };
+                var index = channelId.indexOf(channel.id.toString());
+                if (index >= 0) {
+                    channelName = channelName.slice(0, index).concat(channelName.slice(index + 1));
+                    channelId = channelId.slice(0, index).concat(channelId.slice(index + 1));
+                } else {
+                    channelName.push(channel.name);
+                    channelId.push(channel.id);
+                };
+                $scope.channelNames = channelName.join(',');
+                $scope.detailNET.channel = channelId.toString();
+            };
+         };
+
+
+
          $scope.cancel = function(){
             history.go(-1);
          };
@@ -901,6 +970,12 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 };
                 if ($scope.detailNET.rtb == 0) {
                     $scope.detailNET.offerInfoList = [];
+                    if ($scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
+                        if ($scope.detailNET.channel == '') {
+                            ModalAlert.popup({msg:"The Channel value is necessary"}, 2500);
+                            return;
+                        }
+                    }
                 } else {
                     if ($scope.detailNET.offerInfoList.length == 0) {
                         ModalAlert.popup({msg:"The All List value is necessary"}, 2500);

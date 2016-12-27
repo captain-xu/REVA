@@ -13,6 +13,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 "updatenote": "",
                 "mandatory_update": 0,
                 "silenceinstall": 0,
+                "target": 100,
                 "updatepriority": 0,
                 "segment": "where 1=1",
                 "requiresandroid": "",
@@ -117,6 +118,19 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 $scope.detail[str] = 0;
             }
         };
+        $scope.changeTarget = function() {
+            if ($scope.detail.target == 100) {
+                $scope.detail.target = 99;
+            } else {
+                $scope.detail.target = 100;
+            }
+        };
+        $scope.checkTarget = function() {
+            if (!$scope.detail.target || $scope.detail.target == 0) {
+                $scope.detail.target = 1;
+            }
+            $scope.detail.target = parseInt($scope.detail.target);
+        }
         $scope.changePriority = function(str, num) {
             $scope.detail[str] = num;
         };

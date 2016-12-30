@@ -1,4 +1,4 @@
-angular.module('app.controller').controller('tableauCtrl', ["$scope", '$stateParams', 'serviceAPI', '$timeout',
+var scope=["$scope", '$stateParams', 'serviceAPI', '$timeout',
     function($scope, $stateParams, serviceAPI, $timeout) {
         $scope.isShow = false;
         $scope.init = function() {
@@ -57,4 +57,5 @@ angular.module('app.controller').controller('tableauCtrl', ["$scope", '$statePar
         );
         $scope.init();
     }
-]);
+];
+return scope;

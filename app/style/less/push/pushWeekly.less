@@ -21,6 +21,7 @@
                 .fa{
                     font-size: 20px;
                     padding: 0 10px;
+                    color: #6D727C;
                     border-right: 1px solid #b2b22b;
                     cursor: pointer;
                 }
@@ -42,7 +43,6 @@
             line-height: 60px;
             .border-bottom;
             .pull-left{
-                font-family: OpenSans;
                 font-size: 18px;
                 color: #7A7A7A;
             }
@@ -54,13 +54,13 @@
             }
             .pull-right{
                 opacity: 0.65;
-                font-family: OpenSans-SemiboldItalic;
+                font-family: 'OpenSans-SemiboldItalic';
                 font-size: 16px;
                 color: #8B8B8B;
             }
         }
         h4{
-            padding: 30px 0;
+            padding-top: 30px;
             color: #475463;
             span{
                 font-size: 12px;
@@ -71,10 +71,11 @@
             }
         }
         .basic-info{
+            padding-top: 30px;
             text-align: center;
             li{
                 width: 30%;
-                height: 150px;
+                height: 140px;
                 padding-top: 24px;
                 background: #fff;
                 vertical-align: top;
@@ -89,29 +90,47 @@
                 .info-content{
                     font-size: 40px;
                 }
-                .trendUp{
-                    color: #50C336;
+                &.trendUp {
+                    .info-content,
+                    .info-foot {
+                        color: #50C336;
+                        .glyphicon-arrow-down {
+                            display: none;
+                        }
+                    }
                 }
-                .trendDown{
-                    color: #ED5537;
+                &.trendDown {
+                    .info-content,
+                    .info-foot {
+                        color: #ED5537;
+                        .glyphicon-arrow-up {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
         .content-wripper{
             .border-bottom;
-            .chart{
+            .average {
                 width: 100%;
-                height: 240px;
+                height: 270px;
+                margin: -25px 0 10px;
+            }
+            .app{
+                width: 100%;
+                height: 180px;
+                text-align: center;
                 .app-percent{
+                    display: inline-block;
                     font-size: 0;
-                    width: 800px;
                     margin: 0 auto;
                     li{
                         font-size: 14px;
                         display: inline-block;
-                        width: 140px;
-                        height: 140px;
-                        padding-top: 42px;
+                        width: 120px;
+                        height: 120px;
+                        padding-top: 30px;
                         text-align: center;
                         border: 5px solid #eee;
                         border-radius: 140px;
@@ -138,26 +157,42 @@
                         &>p{
                             font-size: 24px;
                         }
+                        .app-name {
+                            display: inline-block;
+                            max-width: 106px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
                     }
                 }
             }
-            .map{
+            .map {
                 width: 100%;
                 height: 500px;
+            }
+            .channel-rate{
+                width: 100%;
+                text-align: center;
                 .rating{
-                    width: 800px;
+                    display: inline-block;
                     margin: 0 auto;
                     &>li{
+                        // text-align: left;
                         label{
-                            width: 100px;
+                            width: 120px;
                             color: #3b4053;
                             text-align: center;
                             vertical-align: middle;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
                         ol{
                             display: inline-block;
                             vertical-align: middle;
                             li{
+                                opacity: 0.5;
                                 display: inline-block;
                                 font-size: 60px;
                                 color: #d7d7d7;
@@ -168,6 +203,7 @@
                                 -webkit-transform:rotate(10deg); /* Safari 和 Chrome */
                                 -o-transform:rotate(10deg);  /* Opera */
                                 &.active{
+                                    opacity: 1;
                                     color: @sky-color;
                                 }
                             }
@@ -189,7 +225,7 @@
             line-height: 60px;
             color: #696969;
             .pull-right{
-                font-family: OpenSans;
+                font-family: 'OpenSans';
                 letter-spacing: 1.55px;
             }
 

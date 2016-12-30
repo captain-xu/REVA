@@ -28,24 +28,6 @@ angular.module('app.services').factory("urlAPI", [
             admin_user_delete: admin + "user/delete",
             admin_user_disable: admin + "user/disable",
 
-        	//appmonitor
-        	appmonitor_getApp: appmonitor + "applive/runtime/mapping.htm",
-            appmonitor_getDevice: appmonitor + "applive/runtime/appDevice.htm",
-            appmonitor_overview_href: "#/view/da/appmonitor/overview/",
-            appmonitor_overview_notification_getChart: appmonitor + "app/notification/overviewData.htm",
-            appmonitor_overview_notification_getTable: appmonitor + "app/notification/listDataByPage.htm",
-            appmonitor_overview_data_getChart: appmonitor + "info/network/traffic/overviewData.htm",
-            appmonitor_overview_data_getTable: appmonitor + "info/network/traffic/listDataByPage.htm",
-            appmonitor_overview_background_getChart: appmonitor + "applive/runtime/overviewData.htm",
-            appmonitor_overview_background_getTable: appmonitor + "applive/runtime/listDataByPage.htm",
-            appmonitor_overview_silentInstallation_getChart: appmonitor + "silent/install/info/overviewData.htm",
-            appmonitor_overview_silentInstallation_getTable: appmonitor + "silent/install/info/listDataByPage.htm",
-            appmonitor_notification_getChartTimesUser: appmonitor + "app/notification/timesUser.htm",
-            appmonitor_notification_getChartTimeSpace: appmonitor + "app/notification/timeSpaceData.htm",
-            appmonitor_data_getChart: appmonitor + "info/network/traffic/timesUser.htm",
-            appmonitor_background_getChart: appmonitor + "applive/runtime/timesUser.htm",
-            appmonitor_silentInstallation_getTable: appmonitor + "silent/install/all/listDataByPage.htm",
-
             /*push 接口*/
             pushAllApp: push + "allapp",
             push_delPush: push + "deletePush",
@@ -87,6 +69,7 @@ angular.module('app.services').factory("urlAPI", [
             push_segmentNew: push + "saveSegment",
             push_segmentUpdate: push + "updateSegment",
             push_segmentCondition: push + "segmentCondition",
+            push_weeklyReport: push + "weeklyReport",
             /*update接口*/
             update_data: update + "data",
             update_permission: update + "permission",

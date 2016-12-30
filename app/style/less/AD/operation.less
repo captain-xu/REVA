@@ -10,9 +10,25 @@
     .showList{
         .tab-btn{
             position: relative;
-            top: 20px;
+            top: 21px;
             li{
                 cursor: pointer;
+                a {
+                    border: 1px solid #ddd;
+                    border-bottom: 0;
+                    &.net-tab {
+                        margin: 0;
+                        border-right: 0;
+                        border-radius: 4px 0 0 0;
+                    }
+                    &.as-tab {
+                        border-left: 0;
+                        font-size: 12px;
+                        height: 42px;
+                        line-height: 24px;
+                        border-radius: 0 4px 0 0;
+                    }
+                }
             }
         }
         .table-responsive .table-bordered > thead > tr > th{

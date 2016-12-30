@@ -1,0 +1,92 @@
+<div class="push-weekly">
+    <div class="header">
+        <span class="head-name"><a href="#/view/push/list">Weekly Push Report > </a></span><span class="head-name">Latest Report</span>
+        <ul class="pull-right">
+            <li><i class="fa fa-file-pdf-o"></i></li>
+            <li ng-click="printPage()"><i class="fa fa-print"></i></li>
+            <li><a href="#/view/push/historyWeeks"><i class="fa fa-file-text-o"></i></a></li>
+        </ul>
+    </div>
+    <div class="weekly-container" id="weeklyReport">
+        <div class="weekly-header">
+            <span class="pull-left">Weekly Push Report ({{dateRange}})</span>
+            <i class="iconfont icon-reva icon-logo"></i>
+            <i class="pull-right">Powered by </i>
+        </div>
+        <h4>Basic Information <span>{{dateRange}}</span></h4>
+        <ul class="basic-info">
+            <li class="pull-left" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.arriveDifferentSign]">
+                <p class="info-head"><b>Total Push Arrived</b></p>
+                <p class="info-content">{{basicInfo.arrive}}</p>
+                <p class="info-foot" ng-if="basicInfo">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <span>{{basicInfo.arriveDifferent}} ({{basicInfo.arriveDifferentPercent}})</span>
+                </p>
+            </li>
+            <li class="mid-child" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.arriveDifferentSign]">
+                <p class="info-head"><b>Total Push Displayed</b></p>
+                <p class="info-content">{{basicInfo.click}}</p>
+                <p class="info-foot" ng-if="basicInfo">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <span>{{basicInfo.clickDifferent}} ({{basicInfo.clickDifferentPercent}})</span>
+                </p>
+            </li>
+            <li class="pull-right" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.arriveDifferentSign]">
+                <p class="info-head"><b>Total Push Clicked</b></p>
+                <p class="info-content">{{basicInfo.display}}</p>
+                <p class="info-foot" ng-if="basicInfo">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <span>{{basicInfo.displayDifferent}} ({{basicInfo.displayDifferentPercent}})</span>
+                </p>
+            </li>
+        </ul>
+        <h4>Average Clicks Ratio at Different Time of the Day <span>{{dateRange}}</span></h4>
+        <div class="content-wripper">
+            <div class="average" id="bar"></div>
+            <p>Different push time makes different Clicks Ratio.</p>
+            <p>Why not have a try to push your notification during following period?</p>
+            <p class="data-detail"><b ng-repeat="time in topClick">{{time.dataHour - 1}}:00-{{time.dataHour}}:00;&nbsp;</b></p>
+        </div>
+        <h4>Clicks Ratio:Top apps <span>{{dateRange}}</span></h4>
+        <div class="content-wripper">
+            <div class="app" id="appCli">
+                <ul class="app-percent">
+                    <li ng-repeat="app in appClick">
+                        <p><b>{{app.clickRate}}%</b></p>
+                        <span class="app-name" title="{{app.appName}}">{{app.appName}}</span>
+                    </li>
+                </ul>
+            </div>
+            <p>In this week, users are more interested in Clicking the messages pushed from following apps</p>
+            <p class="data-detail"><b ng-repeat="app in appClick">{{app.appName}}({{app.clickRate}}%);&nbsp;</b></p>
+        </div>
+        <h4>Clicks Ratio:Top areas <span>{{dateRange}}</span></h4>
+        <div class="content-wripper">
+            <div class="map" id="map"></div>
+            <p>The top five areas that have the higest Clicks Ratios are:</p>
+            <p class="data-detail"><b ng-repeat="area in areaClick">{{area.state}}({{area.clickRate}}%);&nbsp;</b></p>
+        </div>
+        <h4>Clicks Ratio:Top Chanels <span>{{dateRange}}</span></h4>
+        <div class="content-wripper">
+            <div class="channel-rate">
+                <ul class="rating" ng-init="nums=[1,2,3,4,5,6,7,8,9,10]">
+                    <li ng-repeat="channel in channelClick">
+                        <label title="{{channel.channel}}">{{channel.channel}}</label>
+                        <ol>
+                            <li ng-repeat="i in nums" ng-class="{true: 'active'}[channel.clickRate/10 >= i]"><i class="fa fa-mobile"></i></li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+            <p>In this week, the users of <b ng-repeat="channel in channelClick">{{channel.channel}}({{channel.clickRate}}%);&nbsp;</b> </p>
+            <p class="data-detail">show more positive attitude to click the push messages.</p>
+        </div>
+        <div class="weekly-footer">
+            <span class="pull-left">Pubdate: {{publishDate}}</span>
+            <span class="pull-right">www.REVANOW.com</span>
+        </div>
+    </div>
+</div>

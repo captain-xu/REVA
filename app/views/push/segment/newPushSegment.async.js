@@ -1,5 +1,5 @@
-var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
-	function($scope, serviceAPI, urlAPI, $stateParams) {
+var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
+	function($scope, serviceAPI, urlAPI, $stateParams, ModalAlert) {
 		$scope.segment = ['Android Version', 'Location', 'Push Version', 'Created Time'];
         $scope.segmentId = Number($stateParams.id);
         $scope.getDetail = function() {
@@ -16,17 +16,22 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
 	            serviceAPI.loadData(urlAPI.push_segmentDetail, { "segmentId": $scope.segmentId }).then(function(result) {
 	                $scope.segmDetail = result.data;
 	                for (var i = 0; i < $scope.segmDetail.constraint.length; i++) {
-	                	var item = $scope.segmDetail.constraint[i].factorValue.split(";");
-	                	if (item.length == 1) {
-		                	$scope.segmDetail.constraint[i].factorValue1 = item[0];
-	                	} else if (item.length == 2) {
-			                $scope.segmDetail.constraint[i].factorValue1 = item[0];
-			                $scope.segmDetail.constraint[i].factorValue2 = item[1];
+	                	var item = $scope.segmDetail.constraint[i];
+	                	var factorVal = item.factorValue.split(";");
+	                	if (factorVal.length == 1) {
+		                	item.factorValue1 = factorVal[0];
+	                	} else if (factorVal.length == 2) {
+			                item.factorValue1 = factorVal[0];
+			                item.factorValue2 = factorVal[1];
 	                	} else {
-			                $scope.segmDetail.constraint[i].factorValue1 = item[0];
-			                $scope.segmDetail.constraint[i].factorValue2 = item[1];
-			                $scope.segmDetail.constraint[i].factorValue3 = item[2];
+			                item.factorValue1 = factorVal[0];
+			                item.factorValue2 = factorVal[1];
+			                item.factorValue3 = factorVal[2];
 	                	}
+                		var segmIndex = $scope.segment.indexOf(item.factor);
+                		if (segmIndex > -1) {
+                			$scope.segment.splice(segmIndex, 1);
+                		}
 	                }
 	            });
         	}
@@ -153,6 +158,9 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
             				item.factorValueNum = 2;
         				}
 					break;
+					case 'Choose…':
+						delete item;
+					break;
             	}
     			delete item.factorValue1;
     			delete item.factorValue2;
@@ -160,6 +168,8 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams',
 			serviceAPI.updateData(url, $scope.segmDetail).then(function(result){
 				if (result.code == 200 && result.status == 1) {
 					history.go(-1);
+				} else {
+					ModalAlert.popup({msg: result.msg}, 2500);
 				}
 			})
 		};

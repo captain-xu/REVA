@@ -20,8 +20,6 @@ require('app/views/update/check/checkVersion/checkSegment');
 
 //admin
 require('app/views/admin/api/adminAPI');
-
-require('app/views/revanow/tableauCtrl');
 require('app/views/error/errorCtrl');
 angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/view/da');
@@ -67,16 +65,27 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/overview/ctrl/pushOverviewCtrl') }
             }
-        }).state('push.weekly', {
-            url: '/weekly',
-            templateUrl: 'app/views/push/weekReport/pushWeekly.html',
+        }).state('push.latestWeek', {
+            url: '/latestWeek',
+            templateUrl: 'app/views/push/weeklyReport/latestWeek/latestWeek.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/push/weekReport/ctrl/pushWeekly.async.js', function(ctrl) {
+                require.async('app/views/push/weeklyReport/latestWeek/ctrl/latestWeek.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });
                 })
             }],
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weekReport/ctrl/pushWeekly') }
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weeklyReport/latestWeek/ctrl/latestWeek') }
+            }
+        }).state('push.historyWeeks', {
+            url: '/historyWeeks',
+            templateUrl: 'app/views/push/weeklyReport/historyWeeks/historyWeeks.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/push/weeklyReport/historyWeeks/ctrl/historyWeeks.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weeklyReport/historyWeeks/ctrl/historyWeeks') }
             }
         }).state('push.segments', {
             url: "/segments",
@@ -356,28 +365,30 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/views/main/layout.html',
             params: { activeTitle: "da" }
         })
-        // .state('da.appanalysis', {
-        //     url: '/appanalysis/:param',
-        //     templateUrl: 'app/views/revanow/tableau.html'
-        // })
         .state('da.tableau', {
             url: '/tableau/:param',
-            templateUrl: 'app/views/revanow/tableau.html'
-
+            templateUrl: 'app/views/revanow/tableau.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/revanow/tableauCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('revanow/tableauCtrl') }
+            }
         })
-        // .state('da.region', {
-        //     url: '/region/:param',
-        //     templateUrl: 'app/views/revanow/tableau.html'
-        // })
-        // .state('da.analysis', {
-        //     url: '/analysis',
-        //     templateUrl: 'app/views/revanow/tableau.html',
-        //     params: { param: "os_analysis" }
-        // })
         .state('da.download', {
             url: '/download',
             templateUrl: 'app/views/revanow/dataDownload.html',
-             params:{param:"data_download"}
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/revanow/tableauCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('revanow/tableauCtrl') }
+            },
+            params: { param: "data_download" }
         })
         .state('campaign', {
             url: "/view/campaign",
@@ -958,7 +969,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 require.async('app/views/xscreen/search/searchCtrl.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });
                 })
-            }], 
+            }],
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchCtrl') }
             }

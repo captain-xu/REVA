@@ -66,7 +66,6 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","$state", "serviceAPI"
                 if (!$scope.category[i].istitle) {
                     $scope.detailVO.type = $scope.category[i].id;
                     $scope.detailVO.typeName = $scope.category[i].name;
-
                     break;
                 }
             }

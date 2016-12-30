@@ -32,8 +32,8 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tab-btn" role="tablist">
                 <li role="presentation" ng-class="{0:'active'}[seachParam.adNetWork]" ng-click="detailList(0)"><a data-target="#opti" aria-controls="opti" role="tab" data-toggle="tab">Operation</a></li>
-                <li role="presentation" ng-class="{1:'active'}[seachParam.adNetWork]" ng-click="detailList(1)"><a data-target="#opnet" aria-controls="adnet" role="tab" data-toggle="tab">AdNetwork</a></li>
-                <li role="presentation" ng-class="{2:'active'}[seachParam.adNetWork]" ng-click="detailList(2)"><a data-target="#as" aria-controls="as" role="tab" data-toggle="tab">Ads</a></li>
+                <li role="presentation" ng-class="{1:'active'}[seachParam.adNetWork]" ng-click="detailList(1)"><a data-target="#opnet" aria-controls="adnet" role="tab" data-toggle="tab" class="net-tab">AdNetwork</a></li>
+                <li role="presentation" ng-class="{2:'active'}[seachParam.adNetWork]" ng-click="detailList(2)"><a data-target="#as" aria-controls="as" role="tab" data-toggle="tab" class="as-tab">Ads</a></li>
             </ul>
             <div class="tab-content">
                 <!-- operation 列表页面 -->
@@ -312,7 +312,7 @@
                 <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadData()">50</button>
                 <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadData()">100</button>
             </div>
-            <ul uib-pagination ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+            <ul uib-pagination ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadData()"></ul>
         </div>
     </div>
 </div>

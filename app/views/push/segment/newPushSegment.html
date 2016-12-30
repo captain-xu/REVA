@@ -53,7 +53,7 @@
 					                <li ng-click="item.judge='is'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is</li>
 					                <li ng-click="item.judge='is not'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is not</li>
 					                <li ng-click="item.judge='is above'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version'">is above</li>
-					                <li ng-click="item.judge='is between'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version' || item.factor=='Created Time' || item.factor=='The open time'">is between</li>
+					                <li ng-click="item.judge='is between'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version' || item.factor=='The open time'">is between</li>
 					                <li ng-click="item.judge='is more than'" ng-if="item.factor=='Created Time' || item.factor=='The open time'">is more than</li>
 					                <li ng-click="item.judge='is less than'" ng-if="item.factor=='The open time'">is less than</li>
 					                <li ng-click="item.judge='is active'" ng-if="item.factor=='User'">is active</li>
@@ -101,7 +101,7 @@
 					        <input type="text" ng-model="item.factorValue2">
 					    </div>
 					    <span class="item-text" ng-if="item.factor=='Created Time' || item.factor=='User' || item.factor=='The open time'">days</span>
-					    <i class="fa fa-plus-square" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<5" ng-click="addItem(item)"></i>
+					    <i class="fa fa-plus-square" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<4" ng-click="addItem(item)"></i>
 					    <i class="fa fa-minus-square" ng-show="item.factor!='Choose…' && segmDetail.constraint.length>1" ng-click="removeItem(item,$index)"></i>
 		            </div>
 	            </div>

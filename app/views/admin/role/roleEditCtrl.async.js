@@ -110,6 +110,9 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 					$scope.addAttrNodeLength(permit.name, permit.node.length);
 
 					$scope.chargeNodePermitLength(permit.node);
+				} else {
+					
+					$scope.addAttrNodeLength(permit.name, adminAPI.num.int_0);
 				}
 			}
 		};
@@ -233,6 +236,12 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				}
 
 				$scope.permitOrderList = adminAPI.cloneArray($scope.roleActivityPermits);
+
+			} else if ($scope.roleExistPermitList.length == adminAPI.num.int_0) {
+
+				for (var i = 0; i < $scope.roleActivityPermits.length; i++) {
+					$scope.roleActivityPermits[i].active = adminAPI.num.int_0;
+				}
 
 			} else {
 

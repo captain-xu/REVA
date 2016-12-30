@@ -1,0 +1,58 @@
+
+<div class="push-segment">
+    <div class="segment-list">
+        <div class="header">
+            <span class="head-name">History</span>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" ng-model="segmentName" ng-change="loadList()" placeholder="Search">
+                </li>
+            </ul>
+        </div>
+        <div class="list-content">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('appName')">ID
+                            <div class="icon-order">
+                                <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; !desc]"></i>
+                                <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; desc]"></i>
+                            </div>
+                        </th>
+                        <th ng-click="orderBy('segmentName')">Report Name
+                            <div class="icon-order">
+                                <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='segmentName' &amp;&amp; !desc]"></i>
+                                <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='segmentName' &amp;&amp; desc]"></i>
+                            </div>
+                        </th>
+                        <th ng-click="orderBy('updateTime')">Last Modified
+                            <div class="icon-order">
+                                <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='updateTime' &amp;&amp; !desc]"></i>
+                                <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='updateTime' &amp;&amp; desc]"></i>
+                            </div>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="vo in segmList | orderBy: orderField:desc">
+                        <td>{{vo.appName}}</td>
+                        <td>{{vo.segmentName}}</td>
+                        <td>{{vo.description}}</td>
+                        <td><i class="fa fa-download"></i> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="go-list"><a href="#/view/push/list">For more Information about push data， you can refer to the specific report of each push item.</a></p>
+        <div class="footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 20]" ng-click="segmentSize=20;loadList()">20</button>
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 50]" ng-click="segmentSize=50;loadList()">50</button>
+                <button type="button" class="btn btn-default" ng-class="{true:'active'}[segmentSize == 100]" ng-click="segmentSize=100;loadList()">100</button>
+            </div>
+            <ul uib-pagination total-items="totalItems" ng-model="segmentNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="segmentSize" ng-change="loadList()"></ul>
+        </div>
+    </div>
+</div>

@@ -169,6 +169,7 @@ angular.module('app.services').factory("urlAPI", [
             campaign_operate_list: "/campaign/operate/7007",
             campaign_operate_allAslist: "/campaign/operate/7017",
             campaign_operate_singleAslist: "/campaign/operate/7018",
+            campaign_operate_netlist: "/campaign/operate/7019",
             campaign_operate_detail: "/campaign/operate/7002",
             campaign_operate_state: "/campaign/operate/7003",
             campaign_operate_new: "/campaign/operate/7004",

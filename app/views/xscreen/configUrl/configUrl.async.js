@@ -1,16 +1,5 @@
 var scope = ["$scope", "serviceAPI", "ModalAlert", 'urlAPI', 'Upload','$stateParams','$location',
     function($scope, serviceAPI, ModalAlert, urlAPI, Upload, $stateParams, $location) {
-        // $scope.loadChannel = function() {
-        //     serviceAPI.getData(urlAPI.xscreen_channel).then(function(result) {
-        //         if (result.status == 0 && result.code == 0) {
-        //             $scope.channelList = result.data;
-        //             $scope.channel = $scope.channelList[0];
-        //             $scope.loadList($scope.channel);
-        //         }
-        //     })
-        // };
-        // $scope.statu = $stateParams.param;
-        // $scope.channelDetail = $stateParams.name;
         $scope.loadList = function(){
             $scope.channelId = {
                 id: $stateParams.id,

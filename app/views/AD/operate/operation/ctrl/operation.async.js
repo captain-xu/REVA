@@ -1,17 +1,26 @@
 var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'urlAPI', 
     function($scope, ModalAlert, serviceAPI, $state, $stateParams, urlAPI) {
-        $scope.orderField = 'id';
-        $scope.desc = true;
-        $scope.loadData = function() {
+        $scope.seachParam.orderBy = "id";
+        $scope.seachParam.order = 0;
+        $scope.loadList = function() {
             if ($scope.seachParam.adNetWork == 2) {
                 $scope.loadAsList();
+            } else if ($scope.seachParam.adNetWork == 1) {
+                $scope.loadNetList();
             } else {
-                $scope.loadList();
+                $scope.loadOpList();
             }
         };
         //获取List详情页
-        $scope.loadList = function() {
+        $scope.loadOpList = function() {
             serviceAPI.loadData(urlAPI.campaign_operate_list,$scope.seachParam).then(function(result) {
+                $scope.list = result.operList;
+                $scope.totalItems = result.totalCount;
+            }).
+            catch(function(result) {});
+        };
+        $scope.loadNetList = function() {
+            serviceAPI.loadData(urlAPI.campaign_operate_netlist,$scope.seachParam).then(function(result) {
                 $scope.list = result.operList;
                 $scope.totalItems = result.totalCount;
             }).
@@ -30,7 +39,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
             catch(function(result) {});
         };
         $scope.searchBlur = function() {
-            $scope.loadData();
+            $scope.loadList();
         };
         //获取下拉列表数据
         $scope.loadAppList = function() {
@@ -44,10 +53,12 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.appFilter = function(vo) {
             $scope.seachParam.appId = vo.appId;
             $scope.filterParam.appfilter = vo.name;
-            $scope.loadData();
+            $scope.loadList();
         };
         //切换operation net 数据
         $scope.detailList = function(num, id){
+            $scope.seachParam.orderBy = "id";
+            $scope.seachParam.order = 0;
             if ($scope.seachParam.adNetWork != num) {
                 $scope.seachParam.currentPage = 1;
                 $scope.seachParam.adNetWork = num;
@@ -58,15 +69,21 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                 }
                 if (num == 2) {
                     $scope.loadAsList();
+                } else if (num == 1) {
+                    $scope.loadNetList();
                 } else {
-                    $scope.loadList();
+                    $scope.loadOpList();
                 }
             }
         }
         //列表排序
-        $scope.orderBy = function(str) {
-            $scope.desc = !$scope.desc;
-            $scope.orderField = str;
+        $scope.orderBy = function(str, num) {
+            if ($scope.seachParam.order == num && $scope.seachParam.orderBy == str) {
+                return;
+            }
+            $scope.seachParam.order = num;
+            $scope.seachParam.orderBy = str;
+            $scope.loadList();
         };
         /*修改operation状态*/
         $scope.changeState = function(vo) {
@@ -112,11 +129,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                     }
                     serviceAPI.delData(url,paramId).then(function(result){
                         if (result.status == 0 && result.result == 0) {
-                            if ($scope.seachParam.adNetWork == 2) {
-                                $scope.loadAsList();
-                            } else {
-                                $scope.loadList();
-                            }
+                            $scope.loadList();
                         } else {
                             ModalAlert.popup({msg: result.msg}, 2500)
                         }
@@ -141,7 +154,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.addNet = function() {
             $state.go("campaign.operation.network", {param: 'new', id: 0});
         };
-        $scope.loadData();
+        $scope.loadList();
         $scope.loadAppList();
     }
 ];

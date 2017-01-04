@@ -1,4 +1,4 @@
-var scope=["$scope", '$stateParams', 'serviceAPI', '$timeout',
+var scope = ["$scope", '$stateParams', 'serviceAPI', '$timeout',
     function($scope, $stateParams, serviceAPI, $timeout) {
         $scope.isShow = false;
         $scope.init = function() {
@@ -20,9 +20,14 @@ var scope=["$scope", '$stateParams', 'serviceAPI', '$timeout',
                     $('.banner ul').append('<li class="tableau-div"></li>');
                 }
             };
-            $('.tableau-div').each(function(i, dom) {
-                $scope.viz = new tableau.Viz(dom,
-                    $scope.tableauData.urls[i], {
+            var option = function() {
+                if ($stateParams.param == "data_download") {
+                    return {
+                        hideTabs: true,
+                        'Channel': $scope.userInfo.channels
+                    }
+                } else {
+                    return {
                         hideTabs: true,
                         'p_chl': $scope.userInfo.channels
                             // onFirstInteractive: function(viz) {
@@ -35,7 +40,12 @@ var scope=["$scope", '$stateParams', 'serviceAPI', '$timeout',
                             //         console.log(123)
                             //     })
                             // }
-                    });
+                    }
+                }
+            }
+            $('.tableau-div').each(function(i, dom) {
+                $scope.viz = new tableau.Viz(dom,
+                    $scope.tableauData.urls[i], option());
             });
             $('.banner').unslider({ nav: false, arrows: false });
         };

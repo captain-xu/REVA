@@ -41,53 +41,53 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th ng-click="orderBy('id')">ID
+                                <th>ID
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='id' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='id' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('id', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('id', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('name')">Name
+                                <th>Name
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='name' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='name' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('name', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('name', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('appName')">App
+                                <th>App
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('app', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='app' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('app', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='app' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('priority')">Priority
+                                <th>Priority
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='priority' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='priority' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('priority', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='priority' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('priority', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='priority' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('startDate')">Start Time
+                                <th>Start Time
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='startDate' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='startDate' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('startDate', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='startDate' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('startDate', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='startDate' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('endDate')">End Time
+                                <th>End Time
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='endDate' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='endDate' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('endDate', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='endDate' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('endDate', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='endDate' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('createTime')">Create Time
+                                <th>Create Time
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='createTime' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='createTime' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('createDate', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='createDate' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('createDate', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='createDate' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="vo in list | orderBy:orderField:desc">
+                            <tr ng-repeat="vo in list">
                                 <td>{{vo.id}}</td>
                                 <td>{{vo.name}}</td>
                                 <td>{{vo.appName}}</td>
@@ -109,83 +109,83 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th ng-click="orderBy('id')">ID
+                                <th>ID
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='id' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='id' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('id', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('id', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('name')">Campaign
+                                <th>Campaign
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='name' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='name' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('name', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('name', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('CPX')">CPX
+                                <th>CPX
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='CPX' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='CPX' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('CPX', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='CPX' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('CPX', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='CPX' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('advertiserName')">AdNetwork
+                                <th>AdNetwork
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='advertiserName' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='advertiserName' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('advertiser', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='advertiser' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('advertiser', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='advertiser' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('appName')">APP
+                                <th>APP
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='appName' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('app', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='app' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('app', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='app' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('imp')">Impression
+                                <th>Impression
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('imp', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('imp', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('click')">Click
+                                <th>Click
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('click', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('ctr')">CTR
+                                <th>CTR
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('ctr', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='ctr' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('ctr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='ctr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('conversion')">Conversion
+                                <th>Conversion
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('conversion', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('cvr')">CVR
+                                <th>CVR
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='cvr' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='cvr' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('cvr', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('cvr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('revenue')">Revenue
+                                <th>Revenue
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('revenue', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('eCPM')">eCPM
+                                <th>eCPM
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('eCPM', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
                                 <th>Operate</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="net in list | orderBy:orderField:desc">
+                            <tr ng-repeat="net in list">
                                 <td>{{net.id}}</td>
                                 <td ng-click="detailList(2, net.id)"><a href="javascript:void(0)">{{net.name}}</a></td>
                                 <td>{{net.CPX==''?'--':net.CPX}}</td>
@@ -212,82 +212,82 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th ng-click="orderBy('offerId')">ID
+                                <th>ID
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='offerId' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='offerId' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('id', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('id', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='id' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('offerName')">Ads
+                                <th>Ads
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='offerName' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='offerName' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('name', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('name', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='name' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('CPX')">CPX
+                                <th>CPX
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='CPX' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='CPX' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('CPX', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='CPX' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('CPX', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='CPX' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('advertiserName')">AdNetwork
+                                <th>AdNetwork
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='advertiserName' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='advertiserName' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('advertiser', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='advertiser' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('advertiser', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='advertiser' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('payout')">Payout
+                                <th>Payout
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='payout' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='payout' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('payout', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='payout' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('payout', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='payout' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('imp')">Impression
+                                <th>Impression
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('imp', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('imp', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('click')">Click
+                                <th>Click
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='click' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('click', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('ctr')">CTR
+                                <th>CTR
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('ctr', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='ctr' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('ctr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='ctr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('cvr')">CVR
+                                <th>CVR
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='cvr' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='cvr' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('cvr', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('cvr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('conversion')">Conversion
+                                <th>Conversion
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('conversion', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('revenue')">Revenue
+                                <th>Revenue
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('revenue', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th ng-click="orderBy('eCPM')">eCPM
+                                <th>eCPM
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; !desc]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; desc]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('eCPM', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="as in aslist | orderBy:orderField:desc">
+                            <tr ng-repeat="as in aslist">
                                 <td style="min-width: 100px;">{{as.offerId}}</td>
                                 <td><a href="#/view/campaign/offer/view/{{as.advertiserId}}/{{as.offerId}}/{{as.rtb}}">{{as.offerName==''?'--':as.offerName}}</a></td>
                                 <td>{{as.CPX==''?'--':as.CPX}}</td>

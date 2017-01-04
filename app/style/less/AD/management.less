@@ -109,7 +109,6 @@
 			border-bottom: 0px;
 			min-width:150px;
 			color: @font-color;
-			cursor: pointer;
 			.icon-order{
 				position: relative;
 				left: 6px;
@@ -117,16 +116,17 @@
 			    display: inline-block;
 			    vertical-align: top;
 			    font-size: 10px;
-			    z-index: -1;
+			    cursor: pointer;
 				i {
-                        display: block;
-                    }
-                    i:last-child {
-                        margin-top: -3px;
-                    }
-                    .icon-color {
-                        color: #000;
-                    }
+                    display: block;
+                    top: 0;
+                }
+                i:last-child {
+                    margin-top: -2px;
+                }
+                .icon-color {
+                    color: #000;
+                }
 			}
 		}
 		.table-bordered > thead > tr > th:first-child{

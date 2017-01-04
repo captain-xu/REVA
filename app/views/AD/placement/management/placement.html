@@ -6,44 +6,43 @@
                 <li class="active">Placement</li>
             </ol>
         </div>
-        <div class="edit-container" >
+        <div class="edit-container">
             <div class="seach">
                 <span>Placement:</span>
                 <div class="dropdown">
                     <p class="dropdown-toggle type-filter" data-toggle="dropdown">
-                    {{seachParam.placement}}
+                        {{seachParam.placement}}
                     </p>
                     <span class="caret"></span>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="vo in placeList" ng-click="typeFilter($event,vo)">{{vo.name}}
-                        </li>
+                        <li ng-repeat="vo in placeList" ng-click="typeFilter(vo)">{{vo.name}}</li>
                     </ul>
                 </div>
             </div>
             <div class="date-filter">
                 <span>Date:</span>
                 <div class="date-wripper">
-                  <i class="glyphicon glyphicon-calendar"></i>
-                  <input id="datarange" type="text" readonly date-placements startTime="startDate" endTime="endDate">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    <input id="datarange" type="text" readonly date-placements startTime="startDate" endTime="endDate">
                 </div>
             </div>
             <div class="btn-group" role="group">
-              <button type="button" class="btn btn-default active" ng-click="weekDate($event)">Week</button>
-              <button type="button" class="btn btn-default" ng-click="monthDate($event)">Month</button>
+                <button type="button" class="btn btn-default" ng-class="{'week': 'active'}[seachParam.selectDateType]" ng-click="timeRange('week')">Week</button>
+                <button type="button" class="btn btn-default" ng-class="{'month': 'active'}[seachParam.selectDateType]" ng-click="timeRange('month')">Month</button>
             </div>
             <nav class="arrow">
-              <ul class="pagination">
-                  <li>
-                      <a href="" aria-lable="Previous" ng-click="previous($event)">
-                          <span aria-hiddden="ture"><</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="" aria-lable="Next" ng-click="next()">
-                          <span aria-hiddden="ture">></span>
-                      </a>
-                  </li>
-              </ul>
+                <ul class="pagination">
+                    <li>
+                        <a href="" aria-lable="Previous" ng-click="timeChange('previous')">
+                            <span aria-hiddden="ture"><</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" aria-lable="Next" ng-click="timeChange('next')">
+                            <span aria-hiddden="ture">></span>
+                        </a>
+                    </li>
+                </ul>
             </nav>
             <div class="details" id="echart-bar"></div>
             <div class="table-responsive">
@@ -56,9 +55,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="vo in list"> 
+                        <tr ng-repeat="vo in list">
                             <td>{{vo.name}}</td>
-                            <td><input type="text" ng-model="vo.priority" ng-blur="priorityDate(vo)" ng-mouseover="priorityOver(vo,$event)"></td>
+                            <td>
+                                <input type="text" ng-model="vo.priority" ng-readonly="!vo.priority" ng-blur="priorityDate(vo)">
+                            </td>
                             <td>
                                 <a href="javascript:void(0);" class="glyphicon glyphicon-search" ng-click="getDetail(vo)"><span>View</span></a>
                                 <span ng-class="{1:'turn-on',0:'turn-off'}[vo.status]" ng-click="changeState(vo)"></span>

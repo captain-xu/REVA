@@ -1,7 +1,6 @@
 var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'urlAPI',
  function($scope, ModalAlert, serviceAPI, $state, $stateParams, urlAPI) {
-    $scope.orderField = "offerId";
-    $scope.desc = true;
+    $scope.seachParam.order = 0;
     $scope.activeTab = 0;
     $scope.loadList = function() {
         if ($scope.activeTab) {
@@ -23,6 +22,11 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
             $scope.totalItems = result.totalCount;
         }).
         catch(function(result) {});
+    };
+    $scope.tabList = function(num){
+        $scope.activeTab = num;
+        $scope.seachParam.order = 0;
+        $scope.loadList();
     };
     $scope.loadSelectList = function() {
         serviceAPI.loadData(urlAPI.campaign_offer_cpx).then(function(result) {
@@ -67,9 +71,12 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.filterParam.countryfilter = vo.name;
         $scope.loadList();
     };
-    $scope.orderBy = function(str) {
-        $scope.desc = !$scope.desc;
-        $scope.orderField = str;
+    $scope.orderBy = function(num) {
+        if ($scope.seachParam.order == num) {
+            return;
+        }
+        $scope.seachParam.order = num;
+        $scope.loadList();
     };
     $scope.deleteItem = function(vo) {
         ModalAlert.alert({

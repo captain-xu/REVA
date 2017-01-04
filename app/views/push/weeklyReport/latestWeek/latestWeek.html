@@ -24,22 +24,22 @@
                     <span>{{basicInfo.arriveDifferent}} ({{basicInfo.arriveDifferentPercent}})</span>
                 </p>
             </li>
-            <li class="mid-child" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.arriveDifferentSign]">
+            <li class="mid-child" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.displayDifferentSign]">
                 <p class="info-head"><b>Total Push Displayed</b></p>
-                <p class="info-content">{{basicInfo.click}}</p>
-                <p class="info-foot" ng-if="basicInfo">
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    <i class="glyphicon glyphicon-arrow-down"></i>
-                    <span>{{basicInfo.clickDifferent}} ({{basicInfo.clickDifferentPercent}})</span>
-                </p>
-            </li>
-            <li class="pull-right" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.arriveDifferentSign]">
-                <p class="info-head"><b>Total Push Clicked</b></p>
                 <p class="info-content">{{basicInfo.display}}</p>
                 <p class="info-foot" ng-if="basicInfo">
                     <i class="glyphicon glyphicon-arrow-up"></i>
                     <i class="glyphicon glyphicon-arrow-down"></i>
                     <span>{{basicInfo.displayDifferent}} ({{basicInfo.displayDifferentPercent}})</span>
+                </p>
+            </li>
+            <li class="pull-right" ng-class="{1: 'trendUp', 0: 'trendDown'}[basicInfo.clickDifferentSign]">
+                <p class="info-head"><b>Total Push Clicked</b></p>
+                <p class="info-content">{{basicInfo.click}}</p>
+                <p class="info-foot" ng-if="basicInfo">
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <span>{{basicInfo.clickDifferent}} ({{basicInfo.clickDifferentPercent}})</span>
                 </p>
             </li>
         </ul>

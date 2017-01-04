@@ -124,7 +124,7 @@
                         </p>
                         <div class="user-content" ng-show="status.taegetNum == 2">
                             <div class="dropdown clearfix">
-                                <input type="text" name="segmentName" class="dropdown-toggle" data-toggle="dropdown" ng-model="receiver.segmentName" readonly>
+                                <input type="text" name="segmentName" placeholder="Please select a segment for targeting" class="dropdown-toggle" data-toggle="dropdown" ng-model="receiver.segmentName" readonly>
                                 <span class="caret"></span>
                                 <ul class="dropdown-menu device-menu">
                                     <li ng-repeat="item in segmentList" class="cursor" ng-click="selectSegment(item)">

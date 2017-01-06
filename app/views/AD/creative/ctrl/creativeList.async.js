@@ -17,7 +17,7 @@ var scope = ["$scope", "ModalAlert", "$state", "serviceAPI", "urlAPI", '$statePa
         if ($scope.detailVO.name != "") {
             $scope.resubmit = true;
             serviceAPI.saveData(url,$scope.detailVO).then(function(result) {
-                if (result.status == 0) {
+                if (result.result == 200) {
                     history.go(-1);
                 } else {
                     $scope.resubmit = false;

@@ -6,7 +6,6 @@ angular.module('app.directive').directive('checkSegment', [function() {
         transclude: false,
         scope: {
             checksegment: "=attrSegment",
-            btnDisabled:"@attrView",
             isChild:"@attrChild"
         }
     }

@@ -176,7 +176,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state', "urlAPI",'$statePar
         if ($scope.detailVO.name != "" && $scope.detailVO.country != "") {
             $scope.resubmit = true;
             serviceAPI.saveData(url, $scope.detailVO).then(function(result) {
-                if (result.status == 0) {
+                if (result.result == 200) {
                     $state.go("campaign.owner.list");
                 } else {
                     $scope.resubmit = false;

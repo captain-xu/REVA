@@ -7,7 +7,8 @@
 			<div class="form-group clearfix">
 	            <label class="col-sm-2 control-label">Segment Name:<em>*</em></label>
 	            <div class="col-sm-6">
-	                <input type="text" class="form-control" ng-model="segmDetail.segmentName" placeholder="Retained Users" ng-focus="removeValidate('segmentWarn')" maxlength="50">
+	                <input type="text" class="form-control" ng-model="segmDetail.segmentName" placeholder="Give your segment a name" ng-focus="removeValidate('segmentWarn')" maxlength="50">
+	                <span class="word-sum">{{50 - segmDetail.segmentName.length}}</span>
 	            	<ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
 	            </div>
 	        </div>
@@ -28,6 +29,7 @@
 	            <label class="col-sm-2 control-label">Description:</label>
 	            <div class="col-sm-6">
 	                <textarea name="description" class="form-control" ng-model="segmDetail.description" placeholder="Please describe this segment" maxlength="240"></textarea>
+	                <span class="word-sum">{{240 - segmDetail.description.length}}</span>
 	            </div>
 	        </div>
 			<div class="form-group clearfix constraint-container">
@@ -101,8 +103,8 @@
 					        <input type="text" ng-model="item.factorValue2">
 					    </div>
 					    <span class="item-text" ng-if="item.factor=='Created Time' || item.factor=='User' || item.factor=='The open time'">days</span>
-					    <i class="fa fa-plus-square" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<4" ng-click="addItem(item)"></i>
-					    <i class="fa fa-minus-square" ng-show="item.factor!='Choose…' && segmDetail.constraint.length>1" ng-click="removeItem(item,$index)"></i>
+					    <i class="glyphicon glyphicon-plus-sign" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<4" ng-click="addItem(item)"></i>
+					    <i class="glyphicon glyphicon-minus-sign" ng-show="item.factor!='Choose…' && segmDetail.constraint.length>1" ng-click="removeItem(item,$index)"></i>
 		            </div>
 	            </div>
 	        </div>

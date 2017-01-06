@@ -18,7 +18,7 @@
             <div class="dropdown-toggle" data-toggle="dropdown">
                 <input type="text" class="form-control" ng-model="item.param.where" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu condition">
+            <ul class="dropdown-menu">
                 <li ng-show="item.param.name=='Device' || item.param.name=='Location' || item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'is')">is</li>
                 <li ng-show="item.param.name=='Device' || item.param.name=='Location' || item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'is not')">is not</li>
                 <li ng-show="item.param.name=='Client ID'" ng-click="setValue(item, 'where', 'are')" ng-if="clientAre">are</li>

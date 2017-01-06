@@ -190,11 +190,8 @@
                                 padding: 10px;
                                 line-height: 30px;
                                 top: 90%;
-                                height: 140px;
+                                max-height: 140px;
                                 box-sizing: border-box;
-                                &.condition{
-                                    height: 75px;
-                                }
                             }
                             .dropdown-menu li:hover {
                                 background: #4896f1;
@@ -208,15 +205,11 @@
                             }
                             .dropdown-menu {
                                 margin-top: 10px;
-                                height: 75px;
                             }
                         }
                     }
                     &>div:first-child {
                         margin-left: 10px;
-                    }
-                    &>div:last-child {
-                        width: 110px;
                     }
                     .spec {
                         line-height: 34px;
@@ -271,6 +264,15 @@
             .save {
                 font-weight: bold;
                 margin-left: 10px;
+            }
+        }
+    }
+}
+.new-hotfix {
+    .form-group {
+        .col-sm-2 {
+            .os_filter {
+                width: 100%;
             }
         }
     }

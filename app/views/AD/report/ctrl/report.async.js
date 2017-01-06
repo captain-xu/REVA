@@ -113,7 +113,7 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
     };
     $scope.loadList = function() {
         serviceAPI.loadData(urlAPI.campaign_report_list,$scope.seachParam).then(function(result) {
-            if (result.status == 0) {
+            if (result.result == 200) {
                 $scope.dataList = result.reports;
                 $scope.totalItems = result.totalCount;
             }

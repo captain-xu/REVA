@@ -1,16 +1,5 @@
 var scope = ["$scope", "serviceAPI", "ModalAlert", 'urlAPI', 'Upload','$stateParams','$location',
     function($scope, serviceAPI, ModalAlert, urlAPI, Upload, $stateParams, $location) {
-        $scope.loadChannel = function() {
-            serviceAPI.getData(urlAPI.xscreen_channel).then(function(result) {
-                if (result.status == 0 && result.code == 0) {
-                    $scope.channelList = result.data;
-                    $scope.channel = $scope.channelList[0];
-                    $scope.loadList($scope.channel);
-                }
-            })
-        };
-        $scope.statu = $stateParams.param;
-        $scope.channelDetail = $stateParams.name;
         $scope.loadList = function(channel){
             $scope.channelId = {
                 id: channel.id
@@ -94,20 +83,16 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'urlAPI', 'Upload','$statePar
             $scope.lifeList.channelid = $scope.channelId.id;
             serviceAPI.saveData(urlAPI.xscreen_lifeAdd, $scope.lifeList).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    $location.path('/view/xscreen/service');
+                    history.go(-1);
                 }
             })
         };
         $scope.init = function() {
-            if ($stateParams.name == 'new') {
-                $scope.loadChannel();
-            } else {
-                $scope.channel = {
-                    id: $stateParams.id,
-                    name: $stateParams.name
-                };
-                $scope.loadList($scope.channel);
-            }
+            $scope.channel = {
+                id: $stateParams.id,
+                name: $stateParams.name
+            };
+            $scope.loadList($scope.channel);
         };
         $scope.init();
     }

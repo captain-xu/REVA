@@ -8,11 +8,10 @@
         </div>
         <div class="edit-container">
             <ul>
-                <li verification><span>Name:</span>
+                <li><span>Name:</span>
                     <input type="text" ng-model="detailVO.name" readonly>
-                    <span class="msg"></span>
                 </li>
-                <li verification ng-hide="detailVO.adNetWork">
+                <li ng-hide="detailVO.adNetWork">
                     <span>Priority:</span>
                     <input type="text" ng-model="detailVO.priority" readonly>
                 </li>
@@ -27,15 +26,15 @@
                         </li>
                     </ul>
                 </li>
-                <li verification ng-show="detailVO.adNetWork">
+                <li ng-show="detailVO.adNetWork">
                     <span>CPX:</span>
                     <input type="text" readonly ng-model="detailVO.CPX">
                 </li>
-                <li verification ng-show="detailVO.adNetWork">
+                <li ng-show="detailVO.adNetWork">
                     <span>Payout:</span>
                     <input type="text" readonly ng-model="detailVO.payout">
                 </li>
-                <li verification ng-show="detailVO.adNetWork">
+                <li ng-show="detailVO.adNetWork">
                     <span>Budget:</span>
                     <input type="text" readonly ng-model="detailVO.budget">
                 </li>
@@ -60,14 +59,14 @@
                                     <span class="title">App &amp; Version:</span>
                                     <div class="app">
                                         <div class="dropdown">
-                                            <p class="dropdown-toggle" id="applist" data-toggle="dropdown">
+                                            <p class="dropdown-toggle" id="applist">
                                                 {{detailVO.appName}}
                                             </p>
                                         </div>
                                     </div>
                                     <div class="app">
                                         <div class="dropdown">
-                                            <p class="dropdown-toggle" id="versionlist" data-toggle="dropdown">
+                                            <p class="dropdown-toggle" id="versionlist">
                                                 {{detailVO.version}}
                                             </p>
                                         </div>
@@ -76,7 +75,7 @@
                                 <li>
                                     <span class="title">Group:</span>
                                     <div class="dropdown">
-                                        <p class="dropdown-toggle" id="grouplist" data-toggle="dropdown">
+                                        <p class="dropdown-toggle" id="grouplist">
                                             {{detailVO.groupName}}
                                         </p>
                                     </div>
@@ -84,12 +83,12 @@
                                 <li>
                                     <span class="title">Placement:</span>
                                     <div class="dropdown">
-                                        <p class="dropdown-toggle" id="placelist" data-toggle="dropdown">
+                                        <p class="dropdown-toggle" id="placelist">
                                             {{detailVO.placeName}}
                                         </p>
                                     </div>
                                 </li>
-                                <li class="upload_img clearfix" ng-repeat="vo in detailVO.imageList">
+                                <li class="upload_img clearfix" ng-hide="detailVO.adNetWork" ng-repeat="vo in detailVO.imageList">
                                     <span class="title">{{vo.imageName}}</span>
                                     <div class="div_img" ng-show="vo.imageUrlForShow || vo.begin_upload">
                                         <uib-progressbar max="100" value="dynamic" ng-show="vo.begin_upload" class="progress-striped active"><b>{{dynamic}}%</b></uib-progressbar>
@@ -98,22 +97,20 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li ng-repeat="vo in detailVO.titleList" verification>
+                                <li ng-repeat="vo in detailVO.titleList" ng-hide="detailVO.adNetWork">
                                     <span class="title">{{vo.titleName}}</span>
                                     <input type="text" ng-model="vo.value" readonly>
                                 </li>
                             </ul>
                             <div role="tabpanel" class="tab-pane" id="profile">
                                 <ul>
-                                    <li verification>
+                                    <li>
                                         <span class="title">IMP Frequency:</span>
                                         <input type="text" ng-model="detailVO.imp" readonly>
-                                        <span class="msg"></span>
                                     </li>
-                                    <li verification>
+                                    <li>
                                         <span class="title">Click Frequency:</span>
                                         <input type="text" ng-model="detailVO.click" readonly>
-                                        <span class="msg"></span>
                                     </li>
                                     <li class="except">
                                         <span class="title">Area:</span>
@@ -181,7 +178,7 @@
                                     <li>
                                         <span class="title">Category:</span>
                                         <div class="dropdown">
-                                            <p class="dropdown-toggle" id="categroylist" data-toggle="dropdown">
+                                            <p class="dropdown-toggle" id="categroylist">
                                                 {{detailVO.category}}
                                             </p>
                                         </div>

@@ -77,12 +77,12 @@ var scope = ["$scope", "ModalAlert", "chartAPI", '$location', "serviceAPI", "url
                         status: num
                     }
                     serviceAPI.updateData(urlAPI.campaign_placement_state, statusParam).then(function(result) {
-                        if (result.status == -6 && result.result == -6) {
+                        if (result.result == 200) {
+                            vo.status = num;
+                        } else {
                             ModalAlert.popup({
                                 msg: result.msg
                             }, 2500);
-                        } else {
-                            vo.status = num;
                         }
                     }).catch(function() {})
                 }
@@ -114,7 +114,7 @@ var scope = ["$scope", "ModalAlert", "chartAPI", '$location', "serviceAPI", "url
                 priority: vo.priority
             }
             serviceAPI.saveData(urlAPI.campaign_placement_priority, saveParam).then(function(result) {
-                if (result.status == 0) {
+                if (result.result == 200) {
                     $scope.loadList();
                 }
             }).catch(function() {})

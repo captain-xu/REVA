@@ -150,7 +150,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$state", "urlAPI",
         }
         $scope.resubmit = true;
         serviceAPI.saveData(url, $scope.detailVO).then(function(result) {
-            if (result.status == 0) {
+            if (result.result == 200) {
                 history.go(-1);
             } else {
                 $scope.resubmit = false;
@@ -178,7 +178,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$state", "urlAPI",
             };
         }, function(result) {
             $scope.begin_upload = false;
-            console.log('Error status: ' + result.status);
         }, function(evt) {
             $scope.dynamic = 80;
         });

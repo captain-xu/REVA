@@ -24,15 +24,15 @@
                     <div class="form-group" ng-show="detail.sendNotification">
                         <label class="col-sm-1">Tittle:<em><em>&#42;</em></em>
                         </label>
-                        <input class="col-xs-6" name="title" type="text" ng-model="detail.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" ng-change="titleSum()" maxlength="50">&nbsp;
-                        <span class="word-sum">{{detail.titleLen}}</span>
+                        <input class="col-xs-6" name="title" type="text" ng-model="detail.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" maxlength="50">&nbsp;
+                        <span class="word-sum">{{50 - detail.title.length}}</span>
                         <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="titleOpen" ng-mouseenter="titleOpen=true" ng-mouseleave="titleOpen=false" uib-popover="Shown to end users as the notification titile.">
                     </div>
                     <div class="form-group message clearfix" ng-show="detail.sendNotification">
                         <label class="col-sm-1">Message:<em><em>&#42;</em></em>
                         </label>
-                        <textarea class="col-xs-6" ng-model="detail.content" ng-focus="validateParam.msgWarn=false" ng-change="msgSum()" maxlength="240"></textarea>
-                        <span class="word-sum">{{detail.msgLen}}</span>
+                        <textarea class="col-xs-6" ng-model="detail.content" ng-focus="validateParam.msgWarn=false" maxlength="240"></textarea>
+                        <span class="word-sum">{{240 - detail.content.length}}</span>
                     </div>
                     <div class="form-group warn-container" ng-show="validateParam.msgWarn">
                         <label class="col-sm-1"></label>
@@ -81,8 +81,8 @@
                     </div>
                     <div class="form-group message clearfix">
                         <label class="col-sm-1">Message:<em>&#42;</em></label>
-                        <textarea class="col-xs-10" ng-model="detail.inContent" ng-focus="validateParam.inmsgWarn=false" ng-change="inmsgSum()" maxlength="3000"></textarea>
-                        <span class="word-sum">{{detail.inmsgLen}}</span>
+                        <textarea class="col-xs-10" ng-model="detail.inContent" ng-focus="validateParam.inmsgWarn=false" maxlength="3000"></textarea>
+                        <span class="word-sum">{{3000 - detail.inContent.length}}</span>
                     </div>
                     <div class="form-group" ng-show="validateParam.inmsgWarn">
                         <label class="col-sm-1"></label>

@@ -1,24 +1,14 @@
 <div class="service-config">
     <div class="header">
         <ul class="nav breadcrumb">
-            <li><a href="#/view/xscreen/service">Service Settings</a></li>
+            <li><a href="javascript:history.go(-1)">Service Settings</a></li>
             <li><b>Edit</b></li>
         </ul>
     </div>
     <div class="config-content">
         <div class="form-group clearfix">
             <label class="col-sm-2 control-label">Device Model:<em>&#42;</em></label>
-            <div class="col-sm-6" ng-show="channelDetail!='new'">{{channelName}}</div>
-            <!-- <div class="col-sm-6" ng-show="channelName==0"> -->
-                <div class="col-sm-6 dropdown os_filter" ng-show="channelDetail=='new'">
-                    <div class="dropdown-toggle" data-toggle="dropdown">
-                        <p>{{channelName}}<span class="caret"></span></p>
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="channel in channelList" ng-click="loadList(channel)">{{channel.channels}}</li>
-                    </ul>
-                </div>
-            <!-- </div> -->
+            <div class="col-sm-6">{{channelName}}</div>
         </div>
         <div class="form-group clearfix">
             <label class="col-sm-2 control-label">Service:<em>&#42;</em></label>
@@ -28,7 +18,7 @@
                         <th>Icon</th>
                         <th>Service Name</th>
                         <th>URL</th>
-                        <th ng-show="statu=='edit'">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,11 +26,11 @@
                         <td>
                             <img ngf-thumbnail="life.picFile">
                             <img ng-src="{{life.life_icon}}" ng-show="life.showPic">
-                            <button type="file" ngf-select="uploadImg($file,life)" accept="image/png, image/jpeg" name="file" class="btn btn-primary upload-img"  ng-show="statu=='edit'"></button>
+                            <button type="file" ngf-select="uploadImg($file,life)" accept="image/png, image/jpeg" name="file" class="btn btn-primary upload-img" ></button>
                         </td>
-                        <td><input type="text" ng-model="life.life" ng-readonly="statu=='view'"></td>
-                        <td><input type="text" ng-model="life.life_url" ng-readonly="statu=='view'"></td>
-                        <td  ng-show="statu=='edit'">
+                        <td><input type="text" ng-model="life.life"></td>
+                        <td><input type="text" ng-model="life.life_url"></td>
+                        <td >
                             <i class="fa fa-minus-square" ng-click="deleteData(life,$index)"></i>
                             <i class="fa fa-plus-square plus" ng-click="addData()" ng-hide="!$last || lifeLength == 5"></i>
                         </td>
@@ -51,10 +41,10 @@
     </div>
     <div class="footer">
         <div class="right-btn">
-            <a href="#/view/xscreen/service">
+            <a href="javascript:history.go(-1)">
                 <button type="button" class="btn btn-default cancle">Cancel</button>
             </a>
-            <button type="button" class="btn btn-default save" ng-click="saveData()" ng-show="statu=='edit'">Save</button> 
+            <button type="button" class="btn btn-default save" ng-click="saveData()">Save</button> 
         </div>
     </div>
 </div>

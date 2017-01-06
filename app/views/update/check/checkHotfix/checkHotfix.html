@@ -1,0 +1,84 @@
+<div class="new-version new-hotfix">
+    <div class="header">
+        <ul class="nav navbar-nav navbar-left breadcrumb">
+            <li><a href="javascript:history.go(-1)">{{appName}}</a></li>
+            <li class="active">New Hot Fix</li>
+        </ul>
+    </div>
+    <div class="version-con form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">App Name:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="appName" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Package Name:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="detail.app" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Target Version Code:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" ng-model="detail.versionCode" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Hot Fix Patch:<em>&#42;</em>
+            </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="detail.fullpackage" placeholder="Please upload the hot fix patch" readonly>
+            </div>
+            <button class="btn btn-primary"><a href="{{detail.fullpackage}}">Download</a></button>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Hot Fix Version:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="detail.hotfixCode" readonly placeholder="This field will automatically loaded from the upload patch">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Update Note:<em>&#42;</em>
+            </label>
+            <div class="col-sm-7">
+                <textarea class="form-control" ng-model="detail.updatenote" placeholder="Please enter description" readonly></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Release in Grayscale:</label>
+            <div class="col-sm-7 turn-container">
+                <span ng-class="{false: 'turn-on', true: 'turn-off'}[detail.target==100]"></span>
+                <span class="grayscale-user" ng-hide="detail.target==100">Targeting <input type="text" ng-model="detail.target" maxlength="2" readonly> % of All Users</span>
+            </div>
+        </div>
+        <div class="form-group segment">
+            <label class="col-sm-2 control-label">Segment:</label>
+            <div class="col-sm-10">
+                <div check-segments attr-segments="detail.segment"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer" ng-show="statu=='edit'">
+        <div class="form-group left-btn">
+            <span class="ridio" ng-click="action='approved'"><i class="fa fa-dot-circle-o icon-radio active" ng-class="{'approved': 'active'}[action]"></i> Approved </span>
+            <span class="ridio" ng-click="action='unapproved'"><i class="fa fa-dot-circle-o icon-radio" ng-class="{'unapproved': 'active'}[action]"></i> Rejected </span>
+        </div>
+        <div class="text-container">
+            <input type="text" ng-model="approvedtext" placeholder="Please enter rejected reason (required)" ng-show="action=='unapproved'">
+        </div>
+        <div class="right-btn">
+            <a href="javascript:history.go(-1)">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+            <button type="button" class="btn btn-default save" ng-click="submitDetail()">Submit</button>
+        </div>
+    </div>
+    <div class="footer" ng-show="statu=='view'">
+        <div class="right-btn">
+            <a href="javascript:history.go(-1)">
+                <button type="button" class="btn btn-default cancle">Cancel</button>
+            </a>
+        </div>
+    </div>
+</div>

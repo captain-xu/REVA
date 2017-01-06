@@ -1,12 +1,23 @@
 <div class="tab-pane">
     <div class="search-bar">
+        <div class="dropdown os_filter">
+            <div class="dropdown-toggle" data-toggle="dropdown">
+                <p class="form-control">Type</p><span class="caret"></span></div>
+            <ul class="dropdown-menu">
+                <li>Update Package</li>
+                <li>Hot Fix</li>
+            </ul>
+        </div>
         <div multi-select datalists="pushStatus" datavalue="status" confirm="setParam()"></div>
         <span class="seach-input">
-                        <i class="glyphicon glyphicon-search"></i>
-                        <input type="text" class="form-control" placeholder="Search" ng-model="keywords" ng-keyup="setParam()">
-                    </span>
+            <i class="glyphicon glyphicon-search"></i>
+            <input type="text" class="form-control" placeholder="Search" ng-model="keywords" ng-keyup="setParam()">
+        </span>
         <a href="#/view/update/newVersion/0/new/{{appName}}/{{packageName}}" ng-show="permission.update">
             <div class="add-version">+&nbsp;&nbsp;New Version</div>
+        </a>
+        <a href="#/view/update/newHotfix/0/new/{{appName}}/{{packageName}}" ng-show="permission.update">
+            <div class="add-version">+&nbsp;&nbsp;New Hot Fix</div>
         </a>
     </div>
     <div class="select-item" ng-show="status.length">
@@ -49,10 +60,16 @@
                                 <i class="arrow"></i>
                             </div>
                             <ul>
-                                <a href="#/view/update/newVersion/{{vo.id}}/edit/{{appName}}/{{packageName}}" ng-show="vo.status == 'Unapproved' && permission.update">
+                                <a href="#/view/update/newVersion/{{vo.id}}/edit/{{appName}}/{{packageName}}" ng-show="vo.status == 'Unapproved' && permission.update && vo.isnew == 'Update Package'">
                                     <li><i class="glyphicon glyphicon-pencil"></i> Edit</li>
                                 </a>
-                                <a href="#/view/update/checkVersion/{{vo.id}}/edit" ng-show="permission.review">
+                                <a href="#/view/update/checkVersion/{{vo.id}}/edit" ng-show="permission.review && vo.isnew == 'Update Package'">
+                                    <li><i class="glyphicon glyphicon-hand-up"></i> Review</li>
+                                </a>
+                                <a href="#/view/update/newHotfix/{{vo.id}}/edit/{{appName}}/{{packageName}}" ng-show="vo.status == 'Unapproved' && permission.update && vo.isnew == 'Hotfix'">
+                                    <li><i class="glyphicon glyphicon-pencil"></i> Edit</li>
+                                </a>
+                                <a href="#/view/update/checkHotfix/{{appName}}/{{vo.id}}/edit" ng-show="permission.review && vo.isnew == 'Hotfix'">
                                     <li><i class="glyphicon glyphicon-hand-up"></i> Review</li>
                                 </a>
                             </ul>

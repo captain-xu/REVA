@@ -43,10 +43,10 @@
                 </p>
             </li>
         </ul>
-        <h4>Average Clicks Ratio at Different Time of the Day <span>{{dateRange}}</span></h4>
+        <h4>Average Clicks at Different Time of the Day <span>{{dateRange}}</span></h4>
         <div class="content-wripper">
             <div class="average" id="bar"></div>
-            <p>Different push time makes different Clicks Ratio.</p>
+            <p>Different push time makes different Clicks.</p>
             <p>Why not have a try to push your notification during following period?</p>
             <p class="data-detail"><b ng-repeat="time in topClick">{{time.dataHour - 1}}:00-{{time.dataHour}}:00;&nbsp;</b></p>
         </div>
@@ -78,6 +78,7 @@
                         <ol>
                             <li ng-repeat="i in nums" ng-class="{true: 'active'}[channel.clickRate/10 >= i]"><i class="fa fa-mobile"></i></li>
                         </ol>
+                        <span><b>{{channel.clickRate}}%</b></span>
                     </li>
                 </ul>
             </div>

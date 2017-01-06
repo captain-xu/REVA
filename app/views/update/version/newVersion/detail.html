@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <input type="text" class="form-control" ng-model="detail.fullpackage" placeholder="Please select the full update package" readonly>
             </div>
-            <button type="file" ngf-select="uploadFull($file, $invalidFiles)" accept=".apk" name="file" class="btn btn-primary" ng-hide="btnDisabled">Upload</button>
+            <button type="file" ngf-select="uploadFull($file, $invalidFiles)" accept=".apk" name="file" class="btn btn-primary">Upload</button>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">App Name:</label>
@@ -45,14 +45,14 @@
             <div class="col-sm-1 img">
                 <img ngf-thumbnail="picFile">
                 <img ng-src="{{detail.appicon}}" ng-show="showPic">
-                <button type="file" ngf-select="uploadImg($file, $invalidFiles)" accept="image/png, image/jpeg, image/gif" name="file" class="btn btn-primary upload-img" ng-hide="btnDisabled">Upload</button>
+                <button type="file" ngf-select="uploadImg($file, $invalidFiles)" accept="image/png, image/jpeg, image/gif" name="file" class="btn btn-primary upload-img">Upload</button>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Update Note:<em>&#42;</em>
             </label>
             <div class="col-sm-7">
-                <textarea class="form-control" ng-model="detail.updatenote" ng-readonly="btnDisabled"></textarea>
+                <textarea class="form-control" ng-model="detail.updatenote"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -70,7 +70,7 @@
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" placeholder="Please select a incremental package" ng-model="incremental.pack" readonly>
                             </div>
-                            <button type="file" ngf-select="uploadInc($file, $invalidFiles,incremental)" class="btn btn-primary" ng-hide="btnDisabled">Upload</button>
+                            <button type="file" ngf-select="uploadInc($file, $invalidFiles,incremental)" class="btn btn-primary">Upload</button>
                         </div>
                         <div class="form-group">
                             <span class="col-sm-2 control-label">Version Code :</span>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="panel-footer" ng-show="isShow">
-                        <span ng-click="addInc()" ng-hide="btnDisabled"> + Add a package</span>
+                        <span ng-click="addInc()"> + Add a package</span>
                     </div>
                 </div>
             </div>

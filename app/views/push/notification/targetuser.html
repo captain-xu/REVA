@@ -3,9 +3,9 @@
         <div class="form-group clearfix">
             <label class="col-sm-2">Campaign Name:<em>&#42;</em></label>
             <div class="col-xs-6">
-                <input name="campaign" type="text" ng-model="receiver.campaignName" placeholder="Used to identify information" ng-change="campSum()" ng-focus="removeValidate('campaign')" maxlength="50">
+                <input name="campaign" type="text" ng-model="receiver.campaignName" placeholder="Used to identify information" ng-focus="removeValidate('campaign')" maxlength="50">
                 <ins class="warn" ng-show="validateParam.campWarn"><i class="fa fa-close"></i>This field is required.</ins>
-                <label class="word-sum">{{campLen}}</label>
+                <label class="word-sum">{{50 - receiver.campaignName.length}}</label>
             </div>
         </div>
         <div class="form-group clearfix">

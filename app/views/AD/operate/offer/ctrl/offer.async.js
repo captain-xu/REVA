@@ -90,7 +90,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                     advertiserId: vo.advertiserId
                 }
                 serviceAPI.delData(url,paramId).then(function(result){
-                    if (result.status == 0 && result.result == 0) {
+                    if (result.result == 200) {
                         $scope.loadList();
                     } else {
                         ModalAlert.popup({msg: result.msg}, 2500)

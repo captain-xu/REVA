@@ -21,21 +21,13 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
             return {
                 "messageId": '',
                 "title": $scope.targetApp,
-                "titleLen": 50 - $scope.targetApp.length,
                 "templet": 1,
                 "content": "",
-                "msgLen": 240,
                 "imageUrl": "",
                 "displayType": 1,
                 "postImgUrl": "",
                 "videoUrl": "",
-                "action": function() {
-                    if ($scope.targetApp == "System") {
-                        return 2;
-                    } else {
-                        return 1;
-                    }
-                }(),
+                "action": 1,
                 "customdata": [],
                 "sound": 1,
                 "vibrate": 1,
@@ -65,9 +57,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                             } else if ($scope.notification[i].customdata || $scope.notification[i].customdata == "") {
                                 $scope.notification[i].customdata = [];
                             };
-                            if ($scope.targetApp == "System") {
-                                $scope.notification[i].action = 2;
-                            }
                             if ($scope.notification[i].videoUrl) {
                                 $scope.notification[i].video = $scope.notification[i].videoUrl;
                                 $scope.notification[i].videoUrl = $sce.trustAsResourceUrl($scope.notification[i].videoUrl);
@@ -79,12 +68,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                                 $scope.notification[i].urlEnd = $scope.notification[i].url.substring(urlIndex, urlLength);
                             } else {
                                 $scope.notification[i].urlStart = 'http://';
-                            }
-                            $scope.notification[i].titleLen = 50 - $scope.notification[i].title.length;
-                            if ($scope.notification[i].content) {
-                                $scope.notification[i].msgLen = 240 - $scope.notification[i].content.length;
-                            } else {
-                                $scope.notification[i].msgLen = 240;
                             }
                         };
                         $scope.setOrder();
@@ -191,12 +174,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
             };
 
         };
-        $scope.titleSum = function() {
-            $scope.receiver.titleLen = 50 - $scope.receiver.title.length;
-        };
-        $scope.msgSum = function() {
-            $scope.receiver.msgLen = 240 - $scope.receiver.content.length;
-        };
         $scope.targetNum = function(num1, num2, num3, total) {
             var addNum = 100 - Number(total);
             var targetUser = 0;
@@ -259,13 +236,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                             $scope.receiver.video = '';
                             $scope.receiver.postImgUrl = '';
                             $scope.receiver.options = 0;
-                            $scope.receiver.action = function() {
-                                if ($scope.targetApp == "System") {
-                                    return 2;
-                                } else {
-                                    return 1;
-                                }
-                            }();
+                            $scope.receiver.action = 1;
                             $scope.receiver.activity = "";
                             $scope.receiver.customdata = [];
                             $scope.receiver.sound = 1;
@@ -279,6 +250,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                                 $scope.receiver.action = 2;
                             } else {
                                 $scope.receiver.triggerTime = 0;
+                                $scope.receiver.action = 1;
                             }
                             $scope.getValidate();
                         }
@@ -291,13 +263,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                         $scope.receiver.action = 2;
                     } else {
                         $scope.receiver.triggerTime = 0;
-                        $scope.receiver.action = function() {
-                            if ($scope.targetApp == "System") {
-                                return 2;
-                            } else {
-                                return 1;
-                            }
-                        }();
+                        $scope.receiver.action = 1;
                     }
                     $scope.getValidate();
                 }
@@ -387,9 +353,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
 
         };
         $scope.actionData = function(num) {
-            if ($scope.targetApp != "System") {
-                $scope.receiver.action = num;
-            }
+            $scope.receiver.action = num;
         };
         $scope.optionClick = function() {
             if ($scope.receiver.options == 0) {

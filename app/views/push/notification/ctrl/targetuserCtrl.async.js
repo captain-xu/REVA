@@ -17,12 +17,6 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             serviceAPI.loadData(urlAPI.pushSetReceiver, { "pushId": $scope.pushId }).then(function(result) {
                 $scope.receiver = result.data.receiver;
                 $scope.appNames = result.data.appnames;
-                if ($scope.receiver.campaignName) {
-                    $scope.campLen = 50 - $scope.receiver.campaignName.length;
-                } else {
-                    $scope.campLen = 50;
-                }
-
                 if ($scope.receiver.allUsers == "") {
                     $scope.receiver.allUsers = 100;
                 };
@@ -56,10 +50,6 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             };
         };
 
-        /*Page change begin*/
-        $scope.campSum = function() {
-            $scope.campLen = 50 - $scope.receiver.campaignName.length;
-        };
         //选择appName
         $scope.appData = function(app) {
             $scope.receiver.targetAppName = app.appName;

@@ -17,6 +17,8 @@ require('../js/directive/pullRefresh');
 //update directive
 require('app/views/update/version/newVersion/segment');
 require('app/views/update/check/checkVersion/checkSegment');
+require('app/views/update/version/segments/segments');
+require('app/views/update/check/checkSegments/checkSegments');
 
 //admin
 require('app/views/admin/api/adminAPI');
@@ -909,6 +911,30 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/check/checkVersion/checkVersionCtrl') }
             }
         })
+        .state('update.newHotfix', {
+            url: "/newHotfix/:id/:param/:app/:package",
+            templateUrl: 'app/views/update/version/newHotfix/hotfix.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/version/newHotfix/hotfixCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/version/newHotfix/hotfixCtrl') }
+            }
+        })
+        .state('update.checkHotfix', {
+            url: "/checkHotfix/:app/:id/:param",
+            templateUrl: 'app/views/update/check/checkHotfix/checkHotfix.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/check/checkHotfix/checkHotfixCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/check/checkHotfix/checkHotfixCtrl') }
+            }
+        })
         .state('update.newExtend', {
             url: "/newExtend/:id/:name/:param/:package",
             templateUrl: 'app/views/update/extends/newExtend/newExtend.html',
@@ -1010,30 +1036,30 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelConfigCtrl') }
             }
         })
-        .state('xscreen.service', {
-            url: "/service",
-            templateUrl: 'app/views/xscreen/service/serviceList.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/service/serviceCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceCtrl') }
-            }
-        })
-        .state('xscreen.serviceConfig', {
-            url: "/serviceConfig/:id/:name/:param",
-            templateUrl: 'app/views/xscreen/service/serviceConfig.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/service/serviceConfigCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceConfigCtrl') }
-            }
-        })
+        // .state('xscreen.service', {
+        //     url: "/service",
+        //     templateUrl: 'app/views/xscreen/service/serviceList.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/service/serviceCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceCtrl') }
+        //     }
+        // })
+        // .state('xscreen.serviceConfig', {
+        //     url: "/serviceConfig/:id/:name/:param",
+        //     templateUrl: 'app/views/xscreen/service/serviceConfig.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/service/serviceConfigCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceConfigCtrl') }
+        //     }
+        // })
         .state('xscreen.configUrl', {
             url: "/configUrl/:id/:cardid/:name",
             templateUrl: 'app/views/xscreen/configUrl/configUrl.html',

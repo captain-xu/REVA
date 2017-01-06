@@ -42,7 +42,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                     status: num
                 }
                 serviceAPI.updateData(urlAPI.campaign_owner_state,statusParam).then(function(result) {
-                    if (result.status == 0 && result.result == 0) {
+                    if (result.result == 200) {
                         vo.status = num;
                     } else {
                         ModalAlert.popup({
@@ -64,7 +64,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
                     id: vo.id
                 }
                 serviceAPI.delData(url,paramId).then(function(result){
-                    if (result.status == 0 && result.result == 0) {
+                    if (result.result == 200) {
                         $scope.loadList();
                     } else {
                         ModalAlert.popup({msg: result.msg}, 2500)

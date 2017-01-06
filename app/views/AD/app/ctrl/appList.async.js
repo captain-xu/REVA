@@ -138,7 +138,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","$state", "serviceAPI"
         if ($scope.detailVO.name != "" && $scope.detailVO.packageName != "" && $scope.detailVO.type != "" && $scope.detailVO.version != "" && $scope.detailVO.company != "") {
             $scope.resubmit = true;
             serviceAPI.saveData(url, $scope.detailVO).then(function(result) {
-                if (result.status == 0) {
+                if (result.result == 200) {
                     history.go(-1);
                 } else {
                     $scope.resubmit = false;

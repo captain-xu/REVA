@@ -782,7 +782,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 // 请求后台服务器 
                 serviceAPI.loadData(urlAPI.campaign_operate_offer, $scope.offerParam).then(function(result){
                     $scope.offerParam.currentPage ++;
-                    if (result.status == 0) {
+                    if (result.result == 200) {
                         $scope.busy = false;
                         $scope.firstReq = false;
                         if (!$scope.allName) {
@@ -995,7 +995,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 };
                 $scope.resubmit = true;
                 serviceAPI.saveData(url, $scope.detailNET).then(function(result) {
-                    if (result.status == 0) {
+                    if (result.result == 200) {
                         history.go(-1);
                     } else {
                         $scope.resubmit = false;

@@ -257,7 +257,7 @@ var scope = ["$scope", "ModalAlert", '$state', "serviceAPI",'$stateParams', 'url
         if ($scope.detail.name != "" && $scope.detail.imp != "" && $scope.detail.click != "" && $scope.detail.startDate != "" && $scope.detail.app != "" && $scope.detail.version != "" && $scope.detail.groupId != "" && $scope.detail.placeId != "") {
             $scope.resubmit = true;
             serviceAPI.saveData(urlAPI.campaign_offer_edit,$scope.detail).then(function(result) {
-                if (result.status == 0) {
+                if (result.result == 200) {
                     history.go(-1);
                 } else {
                     $scope.resubmit = false;

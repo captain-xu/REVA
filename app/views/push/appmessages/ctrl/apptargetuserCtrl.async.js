@@ -24,11 +24,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                         }
                     });
                     $scope.detail = result.data.receiver;
-                    if ($scope.detail.campaignName) {
-                        $scope.campLen = 50 - $scope.detail.campaignName.length;
-                    } else {
-                        $scope.campLen = 50;
-                    }
                     if ($scope.detail.allUsers == "") {
                         $scope.detail.allUsers = 100;
                     };
@@ -64,14 +59,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
                 $scope.status.single = 0;
             };
         };
-        /*Page change begin*/
-        $scope.campSum = function() {
-            $scope.campLen = 50 - $scope.detail.campaignName.length;
-        };
         $scope.setParam = function() {
             $scope.detail.targetAppName = $scope.appName.name;
-            $scope.getDevices();
-            $scope.getSegments();
+            if ($scope.detail.targetAppName) {
+                $scope.getDevices();
+                $scope.getSegments();
+            }
         };
         $scope.getSegments = function(){
             serviceAPI.loadData(urlAPI.pushGetSegment, { "packageName": $scope.appName.id }).then(function(result) {

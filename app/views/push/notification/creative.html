@@ -25,14 +25,14 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2">Tittle:<em>&#42;</em></label>
-                        <input class="col-xs-8" name="title" type="text" ng-model="receiver.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" ng-change="titleSum()" maxlength="50">
-                        <span class="word-sum">{{receiver.titleLen}}</span>
+                        <input class="col-xs-8" name="title" type="text" ng-model="receiver.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" maxlength="50">
+                        <span class="word-sum">{{50 - receiver.title.length}}</span>
                         <img src="app/style/less/images/icon_i.png" popover-placement="left" popover-is-open="titleOpen" ng-mouseenter="titleOpen=true" ng-mouseleave="titleOpen=false" uib-popover="Shown to end users as the notification titile.">
                     </div>
                     <div class="form-group message">
                         <label class="col-sm-2">Message:<em>&#42;</em></label>
-                        <textarea class="col-xs-8" ng-model="receiver.content" ng-focus="validateParam.msgWarn=false" ng-change="msgSum()" maxlength="240"></textarea>
-                        <span class="word-sum">{{receiver.msgLen}}</span>
+                        <textarea class="col-xs-8" ng-model="receiver.content" ng-focus="validateParam.msgWarn=false" maxlength="240"></textarea>
+                        <span class="word-sum">{{240 - receiver.content.length}}</span>
                     </div>
                     <div class="form-group warn-container" ng-show="validateParam.msgWarn">
                         <label class="col-sm-2"></label>

@@ -5,9 +5,7 @@ var scope = ["$scope", "serviceAPI", '$location', "ModalAlert", 'urlAPI', "$anch
             return {
                 "messageId": '',
                 "title": $scope.targetApp,
-                "titleLen": 50 - $scope.targetApp.length,
                 "content": "",
-                "msgLen": 240,
                 "options": 0,
                 "customdata": [],
                 "sound": 1,
@@ -16,7 +14,6 @@ var scope = ["$scope", "serviceAPI", '$location', "ModalAlert", 'urlAPI', "$anch
                 "target": num,
                 "inTitle": "",
                 "inContent": "",
-                "inmsgLen": 3000,
                 "network": 0,
                 "inMessageType": "NO UI",
                 "inMessageId": '',
@@ -47,17 +44,6 @@ var scope = ["$scope", "serviceAPI", '$location', "ModalAlert", 'urlAPI', "$anch
                             }
                             if (!$scope.notification[i].title) {
                                 $scope.notification[i].title = $scope.targetApp;
-                            }
-                            $scope.notification[i].titleLen = 50 - $scope.notification[i].title.length;
-                            if ($scope.notification[i].content) {
-                                $scope.notification[i].msgLen = 240 - $scope.notification[i].content.length;
-                            } else {
-                                $scope.notification[i].msgLen = 240;
-                            }
-                            if ($scope.notification[i].inContent) {
-                                $scope.notification[i].inmsgLen = 3000 - $scope.notification[i].inContent.length;
-                            } else {
-                                $scope.notification[i].inmsgLen = 3000;
                             }
                         };
                         $scope.setOrder();
@@ -119,7 +105,6 @@ var scope = ["$scope", "serviceAPI", '$location', "ModalAlert", 'urlAPI', "$anch
         $scope.msgTitle = function() {
             if ($scope.detail.title == "") {
                 $scope.detail.title = $scope.targetApp;
-                $scope.detail.titleLen = $scope.targetApp.length;
             }
         };
         // 计算百分比
@@ -231,15 +216,6 @@ var scope = ["$scope", "serviceAPI", '$location', "ModalAlert", 'urlAPI', "$anch
                     }
                 }
             });
-        };
-        $scope.titleSum = function() {
-            $scope.detail.titleLen = 50 - $scope.detail.title.length;
-        };
-        $scope.msgSum = function() {
-            $scope.detail.msgLen = 240 - $scope.detail.content.length;
-        };
-        $scope.inmsgSum = function() {
-            $scope.detail.inmsgLen = 3000 - $scope.detail.inContent.length;
         };
         //保存
         $scope.flag = 1;

@@ -188,14 +188,14 @@
                             <tr ng-repeat="net in list">
                                 <td>{{net.id}}</td>
                                 <td ng-click="detailList(2, net.id)"><a href="javascript:void(0)">{{net.name}}</a></td>
-                                <td>{{net.CPX==''?'--':net.CPX}}</td>
-                                <td>{{net.advertiserName==''?'--':net.advertiserName}}</td>
-                                <td>{{net.appName==''?'--':net.appName}}</td>
+                                <td>{{net.CPX}}</td>
+                                <td>{{net.advertiserName}}</td>
+                                <td>{{net.appName}}</td>
                                 <td>{{net.imp==''?'--':net.imp}}</td>
                                 <td>{{net.click==''?'--':net.click}}</td>
-                                <td>{{net.ctr==''?'--':net.ctr}}</td>
+                                <td>{{net.ctr==''?'--':net.ctr + '%'}}</td>
                                 <td>{{net.conversion==''?'--':net.conversion}}</td>
-                                <td>{{net.cvr==''?'--':net.cvr}}</td>
+                                <td>{{net.cvr==''?'--':net.cvr + '%'}}</td>
                                 <td>{{net.revenue==''?'--':net.revenue}}</td>
                                 <td>{{net.eCPM==''?'--':net.eCPM}}</td>
                                 <td>
@@ -289,14 +289,14 @@
                         <tbody>
                             <tr ng-repeat="as in aslist">
                                 <td style="min-width: 100px;">{{as.offerId}}</td>
-                                <td><a href="#/view/campaign/offer/view/{{as.advertiserId}}/{{as.offerId}}/{{as.rtb}}">{{as.offerName==''?'--':as.offerName}}</a></td>
-                                <td>{{as.CPX==''?'--':as.CPX}}</td>
-                                <td>{{as.advertiserName==''?'--':as.advertiserName}}</td>
+                                <td><a href="#/view/campaign/offer/view/{{as.advertiserId}}/{{as.offerId}}/{{as.rtb}}">{{as.offerName}}</a></td>
+                                <td>{{as.CPX}}</td>
+                                <td>{{as.advertiserName}}</td>
                                 <td>{{as.payout==''?'--':as.payout}}</td>
                                 <td>{{as.imp==''?'--':as.imp}}</td>
                                 <td>{{as.click==''?'--':as.click}}</td>
-                                <td>{{as.ctr==''?'--':as.ctr}}</td>
-                                <td>{{as.cvr==''?'--':as.cvr}}</td>
+                                <td>{{as.ctr==''?'--':as.ctr + '%'}}</td>
+                                <td>{{as.cvr==''?'--':as.cvr + '%'}}</td>
                                 <td>{{as.conversion==''?'--':as.conversion}}</td>
                                 <td>{{as.revenue==''?'--':as.revenue}}</td>
                                 <td>{{as.eCPM==''?'--':as.eCPM}}</td>
@@ -308,11 +308,11 @@
         </div>
         <div class="footer">
             <div class="btn-group">
-                <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadData()">20</button>
-                <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadData()">50</button>
-                <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadData()">100</button>
+                <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+                <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+                <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadList()">100</button>
             </div>
-            <ul uib-pagination ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadData()"></ul>
+            <ul uib-pagination ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
         </div>
     </div>
 </div>

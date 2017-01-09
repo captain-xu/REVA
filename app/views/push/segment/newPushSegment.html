@@ -55,11 +55,11 @@
 					                <li ng-click="item.judge='is'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is</li>
 					                <li ng-click="item.judge='is not'" ng-if="item.factor=='Location' || item.factor=='Language' || item.factor=='Notification' || item.factor=='GPS'">is not</li>
 					                <li ng-click="item.judge='is above'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version'">is above</li>
-					                <li ng-click="item.judge='is between'" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version' || item.factor=='The open time'">is between</li>
+					                <li ng-click="item.judge='is between';item.factorValue2=''" ng-if="item.factor=='Android Version' || item.factor=='OS Version' || item.factor=='Push Version' || item.factor=='App Version' || item.factor=='The open time'">is between</li>
 					                <li ng-click="item.judge='is more than'" ng-if="item.factor=='Created Time' || item.factor=='The open time'">is more than</li>
 					                <li ng-click="item.judge='is less than'" ng-if="item.factor=='The open time'">is less than</li>
 					                <li ng-click="item.judge='is active'" ng-if="item.factor=='User'">is active</li>
-					                <li ng-click="item.judge='is inactive'" ng-if="item.factor=='User'">is inactive</li>
+					                <!-- <li ng-click="item.judge='is inactive'" ng-if="item.factor=='User'">is inactive</li> -->
 					            </ul>
 					        </div>
 					    </div>
@@ -71,7 +71,10 @@
 					                <input type="text" class="form-control" ng-model="item.factorValue1" readonly><span class="caret"></span>
 					            </div>
 					            <ul class="dropdown-menu" ng-if="item.factor=='Android Version'">
-					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue1=option">{{option}}</li>
+					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue1=option;item.factorValue2=''">{{option}}</li>
+					            </ul>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Push Version'">
+					                <li ng-repeat="option in pushVersion" ng-click="item.factorValue1=option;item.factorValue2=''">{{option}}</li>
 					            </ul>
 					            <ul class="dropdown-menu" ng-if="item.factor=='Location'">
 					                <li ng-repeat="option in areas" ng-click="item.factorValue1=option.country">{{option.country}}</li>
@@ -88,7 +91,10 @@
 					                <input type="text" class="form-control" ng-model="item.factorValue2" readonly><span class="caret"></span>
 					            </div>
 					            <ul class="dropdown-menu" ng-if="item.factor=='Android Version'">
-					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue2=option">{{option}}</li>
+					                <li ng-repeat="option in androidVersion" ng-click="item.factorValue2=option" ng-if="option > item.factorValue1">{{option}}</li>
+					            </ul>
+					            <ul class="dropdown-menu" ng-if="item.factor=='Push Version'">
+					                <li ng-repeat="option in pushVersion" ng-click="item.factorValue2=option" ng-if="option > item.factorValue1">{{option}}</li>
 					            </ul>
 					            <ul class="dropdown-menu" ng-if="item.factor=='Location'" ng-repeat="one in areas | filter:{country: item.factorValue1}">
 					                <li ng-repeat="option in one.state" ng-click="item.factorValue2=option">{{option}}</li>
@@ -105,6 +111,7 @@
 					    <span class="item-text" ng-if="item.factor=='Created Time' || item.factor=='User' || item.factor=='The open time'">days</span>
 					    <i class="glyphicon glyphicon-plus-sign" ng-show="$last && item.factor!='Choose…' && segmDetail.constraint.length<4" ng-click="addItem(item)"></i>
 					    <i class="glyphicon glyphicon-minus-sign" ng-show="item.factor!='Choose…' && segmDetail.constraint.length>1" ng-click="removeItem(item,$index)"></i>
+					    <ins class="warn seg-warn" ng-show="validateParam.constraintWarn"><i class="fa fa-close"></i>Please complete all conditions.</ins>
 		            </div>
 	            </div>
 	        </div>

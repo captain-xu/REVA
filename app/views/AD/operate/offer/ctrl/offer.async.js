@@ -25,6 +25,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
     };
     $scope.tabList = function(num){
         $scope.activeTab = num;
+        $scope.seachParam.currentPage = 1;
         $scope.seachParam.order = 0;
         $scope.loadList();
     };

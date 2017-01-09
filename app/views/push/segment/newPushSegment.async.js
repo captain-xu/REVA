@@ -1,6 +1,6 @@
 var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 	function($scope, serviceAPI, urlAPI, $stateParams, ModalAlert) {
-		$scope.segment = ['Android Version', 'Location', 'Push Version', 'Created Time'];
+		$scope.segment = ['Android Version', 'Location', 'Push Version', 'User'];
         $scope.segmentId = Number($stateParams.id);
         $scope.getDetail = function() {
         	if ($scope.segmentId == 0) {
@@ -41,12 +41,14 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 
             serviceAPI.loadData(urlAPI.push_segmentCondition).then(function(result) {
                 $scope.androidVersion = result.data.androidVersion;
+                $scope.pushVersion = result.data.pushVersion;
                 $scope.areas = result.data.countryState;
             });
         };
         $scope.validateParam = {
             segmentWarn: false,
-            appWarn: false
+            appWarn: false,
+            constraintWarn: false
         };
         $scope.appData = function(app){
         	$scope.segmDetail.appName = app.appName;
@@ -56,6 +58,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 			if (item.factor != 'Choose…') {
 				$scope.segment.push(item.factor);
 			}
+			$scope.validateParam.constraintWarn = false;
 			item.factor = seg;
         	switch (seg){
         		case 'Location':
@@ -69,10 +72,10 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 				break;
         		case 'Push Version':
 					item.judge = 'is above';
-					item.factorValue1 = $scope.androidVersion[0];
+					item.factorValue1 = $scope.pushVersion[0];
 				break;
-        		case 'Created Time':
-					item.judge = 'is more than';
+        		case 'User':
+					item.judge = 'is active';
 					item.factorValue1 = '1';
 				break;
         	}
@@ -118,6 +121,10 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 				$scope.validateParam.appWarn = true;
 				return;
 			}
+			if ($scope.segmDetail.constraint.length == 1 && $scope.segmDetail.constraint[0].factor == 'Choose…') {
+				$scope.validateParam.constraintWarn = true;
+				return;
+			}
 			if ($scope.segmentId == 0) {
 				var url = urlAPI.push_segmentNew;
 			} else {
@@ -149,14 +156,9 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
             				item.factorValueNum = 2;
         				}
 					break;
-	        		case 'Created Time':
-						if (item.judge == "is more than") {
-        					item.factorValue = item.factorValue1;
-            				item.factorValueNum = 1;
-        				} else {
-	            			item.factorValue = item.factorValue1 + ';' + item.factorValue2;
-            				item.factorValueNum = 2;
-        				}
+	        		case 'User':
+    					item.factorValue = item.factorValue1;
+        				item.factorValueNum = 1;
 					break;
 					case 'Choose…':
 						delete item;

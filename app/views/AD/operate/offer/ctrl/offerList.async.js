@@ -8,7 +8,8 @@ var scope = ["$scope", "ModalAlert", '$state', "serviceAPI",'$stateParams', 'url
         $('#datarange').val('');
         var param = {
             offerId: $stateParams.offerId,
-            advertiserId: $stateParams.id
+            advertiserId: $stateParams.id,
+            rtb: $stateParams.rtb
         }
         serviceAPI.loadData(urlAPI.campaign_offer_detail,param).then(function(result) {
             $scope.detailVO = result.offer;

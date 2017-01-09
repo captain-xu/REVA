@@ -157,25 +157,25 @@
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('ctr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='ctr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th>Conversion
-                                    <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('conversion', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !!seachParam.order]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !seachParam.order]"></i>
-                                    </div>
-                                </th>
                                 <th>CVR
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('cvr', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !!seachParam.order]"></i>
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('cvr', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='cvr' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th>Revenue
+                                <th>Conversion
+                                    <div class="icon-order">
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('conversion', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !seachParam.order]"></i>
+                                    </div>
+                                </th>
+                                <th>Revenue($)
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('revenue', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !!seachParam.order]"></i>
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th>eCPM
+                                <th>eCPM($)
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('eCPM', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !!seachParam.order]"></i>
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !seachParam.order]"></i>
@@ -194,8 +194,8 @@
                                 <td>{{net.imp==''?'--':net.imp}}</td>
                                 <td>{{net.click==''?'--':net.click}}</td>
                                 <td>{{net.ctr==''?'--':net.ctr + '%'}}</td>
-                                <td>{{net.conversion==''?'--':net.conversion}}</td>
                                 <td>{{net.cvr==''?'--':net.cvr + '%'}}</td>
+                                <td>{{net.conversion==''?'--':net.conversion}}</td>
                                 <td>{{net.revenue==''?'--':net.revenue}}</td>
                                 <td>{{net.eCPM==''?'--':net.eCPM}}</td>
                                 <td>
@@ -272,13 +272,13 @@
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('conversion', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='conversion' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th>Revenue
+                                <th>Revenue($)
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('revenue', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !!seachParam.order]"></i>
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('revenue', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='revenue' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
-                                <th>eCPM
+                                <th>eCPM($)
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('eCPM', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !!seachParam.order]"></i>
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('eCPM', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='eCPM' &amp;&amp; !seachParam.order]"></i>

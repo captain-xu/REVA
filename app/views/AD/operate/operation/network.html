@@ -117,18 +117,14 @@
                                     <li class="except">
                                         <span class="title">Area:</span>
                                         <div class="dropdown area-dropdown">
-                                            <p ng-click="areaClick($event)" class="dropdown-toggle" data-toggle="dropdown">
-                                                {{detailNET.area}}
-                                                <span class="caret"></span>
-                                            </p>
+                                            <input ng-focus="areaStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.area">
+                                            <span class="caret"></span>
                                             <ul class="dropdown-menu area-date" role="menu">
-                                                <li ng-click="allArea(detailNET,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-all icon-area"></i>All
-                                                    <span style="display: none;">ALL</span>
+                                                <li ng-click="allArea()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-allArea icon-area"></i>ALL
                                                 </li>
-                                                <li ng-repeat="area in areaList" ng-click="areaData(area,$event)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-area"></i>{{area.name}}
-                                                    <span style="display: none;">{{area.code}}</span>
+                                                <li ng-repeat="area in areaList" ng-click="areaData(area)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-area" ng-class="{true: 'active'}[area.isSelect]"></i>{{area.name}}
                                                 </li>
                                             </ul>
                                         </div>
@@ -167,6 +163,88 @@
                                         <span class="title">Except:</span>
                                         <input type="text" ng-model="detailNET.languageExcept" ng-readonly="{1: 'true'}[detailNET.status]">
                                     </li>
+
+
+                                    <!-- <li class="except">
+                                        <span class="title">Device:</span>
+                                        <div class="dropdown area-dropdown">
+                                            <input ng-focus="deviceStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.device">
+                                            <span class="caret"></span>
+                                            <ul class="dropdown-menu device-date" role="menu">
+                                                <li ng-click="allDevice()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-alldevice icon-device"></i>ALL
+                                                </li>
+                                                <li ng-repeat="dev in deviceList" ng-click="devData(dev)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-device" ng-class="{true: 'active'}[dev.isSelect]"></i>{{dev.name}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Device Except:</span>
+                                        <input type="text" ng-model="detailNET.deviceExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Model:</span>
+                                        <div class="dropdown area-dropdown">
+                                            <input ng-focus="modelStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.model">
+                                            <span class="caret"></span>
+                                            <ul class="dropdown-menu model-date" role="menu">
+                                                <li ng-click="allModel()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-allmodel icon-model"></i>ALL
+                                                </li>
+                                                <li ng-repeat="model in modelList" ng-click="modelData(model)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-model" ng-class="{true: 'active'}[model.isSelect]"></i>{{model.name}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Model Except:</span>
+                                        <input type="text" ng-model="detailNET.modelExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">OS Version:</span>
+                                        <div class="dropdown area-dropdown">
+                                            <input ng-focus="osStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.osVersion">
+                                            <span class="caret"></span>
+                                            <ul class="dropdown-menu osVersion-date" role="menu">
+                                                <li ng-click="allOS()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-allosVersion icon-osVersion"></i>ALL
+                                                </li>
+                                                <li ng-repeat="osVersion in osVersionList" ng-click="osVersionData(osVersion)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-osVersion" ng-class="{true: 'active'}[osVersion.isSelect]"></i>{{osVersion.name}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">OS Version Except:</span>
+                                        <input type="text" ng-model="detailNET.osVersionExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Language:</span>
+                                        <div class="dropdown area-dropdown">
+                                            <input ng-focus="languageStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.language">
+                                            <span class="caret"></span>
+                                            <ul class="dropdown-menu language-date" role="menu">
+                                                <li ng-click="allLanguage()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-alllanguage icon-language"></i>ALL
+                                                </li>
+                                                <li ng-repeat="lgu in languageList" ng-click="languageData(lgu)" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-language" ng-class="{true: 'active'}[lgu.isSelect]"></i>{{lgu.name}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Language Except:</span>
+                                        <input type="text" ng-model="detailNET.languageExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                    </li> -->
+
+
+
+
                                     <li class="except">
                                         <span class="title">Network:</span>
                                         <input type="text" ng-model="detailNET.network" ng-readonly="{1: 'true'}[detailNET.status]">
@@ -197,101 +275,6 @@
                                         <span class="title">Except:</span>
                                         <input type="text" ng-model="detailNET.appVerExcept" ng-readonly="{1: 'true'}[detailNET.status]">
                                     </li>
-
-
-
-                                    <!-- <li class="except">
-                                        <span class="title">Device:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <p ng-click="deviceClick($event)" class="dropdown-toggle" data-toggle="dropdown">
-                                                {{detailNET.device}}
-                                                <span class="caret"></span>
-                                            </p>
-                                            <ul class="dropdown-menu device-date" role="menu">
-                                                <li ng-click="allDevice(detailNET,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-alldevice icon-device"></i>All
-                                                    <span style="display: none;">ALL</span>
-                                                </li>
-                                                <li ng-repeat="dev in deviceList" ng-click="devData(dev,$event)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-device"></i>{{dev}}
-                                                    <span style="display: none;">{{dev}}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Device Except:</span>
-                                        <input type="text" ng-model="detailNET.deviceExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Model:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <p ng-click="modelClick($event)" class="dropdown-toggle" data-toggle="dropdown">
-                                                {{detailNET.model}}
-                                                <span class="caret"></span>
-                                            </p>
-                                            <ul class="dropdown-menu model-date" role="menu">
-                                                <li ng-click="allModel(detailNET,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-allmodel icon-model"></i>All
-                                                    <span style="display: none;">ALL</span>
-                                                </li>
-                                                <li ng-repeat="model in modelList" ng-click="modelData(model,$event)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-model"></i>{{model}}
-                                                    <span style="display: none;">{{model}}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Model Except:</span>
-                                        <input type="text" ng-model="detailNET.modelExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">OS Version:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <p ng-click="osClick($event)" class="dropdown-toggle" data-toggle="dropdown">
-                                                {{detailNET.osVersion}}
-                                                <span class="caret"></span>
-                                            </p>
-                                            <ul class="dropdown-menu osVersion-date" role="menu">
-                                                <li ng-click="allOS(detailNET,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-allosVersion icon-osVersion"></i>All
-                                                    <span style="display: none;">ALL</span>
-                                                </li>
-                                                <li ng-repeat="osVersion in osList" ng-click="osVersionData(osVersion,$event)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-osVersion"></i>{{osVersion}}
-                                                    <span style="display: none;">{{osVersion}}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">OS Version Except:</span>
-                                        <input type="text" ng-model="detailNET.osVersionExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Language:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <p ng-click="languageClick($event)" class="dropdown-toggle" data-toggle="dropdown">
-                                                {{detailNET.language}}
-                                                <span class="caret"></span>
-                                            </p>
-                                            <ul class="dropdown-menu language-date" role="menu">
-                                                <li ng-click="allLanguage(detailNET,$event)" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-alllanguage icon-language"></i>All
-                                                    <span style="display: none;">ALL</span>
-                                                </li>
-                                                <li ng-repeat="lgu in languageList" ng-click="languageData(lgu,$event)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-language"></i>{{lgu}}
-                                                    <span style="display: none;">{{lgu}}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Language Except:</span>
-                                        <input type="text" ng-model="detailNET.languageExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
-                                    </li>
                                     <li class="except">
                                         <span class="title">IMEI:</span>
                                         <input type="text" ng-model="detailNET.imei" ng-readonly="{1: 'true'}[detailNET.status]">
@@ -303,7 +286,7 @@
                                         <input type="text" ng-model="detailNET.network" ng-readonly="{1: 'true'}[detailNET.status]">
                                         <span class="title">Network Except:</span>
                                         <input type="text" ng-model="detailNET.networkExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li> -->
+                                    </li>
 
 
                                     

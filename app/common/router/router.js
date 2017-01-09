@@ -662,7 +662,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('campaign.offer.detail', {
-            url: "/detail/:id/:offerId",
+            url: "/detail/:id/:offerId/:rtb",
             templateUrl: 'app/views/AD/operate/offer/offerList.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/AD/operate/offer/ctrl/offerList.async.js', function(ctrl) {

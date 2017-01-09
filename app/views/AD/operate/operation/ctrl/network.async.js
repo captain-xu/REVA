@@ -162,21 +162,40 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 $scope.CPX = result.CPX;
             });
             serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
-                $scope.areaList = result.countries;
+                $scope.areaList = result.countries.map(function(data) {
+                    return {
+                        name: data.name,
+                        code: data.code,
+                        isSelect: false
+                    };
+                });
             });
+            // serviceAPI.loadData(urlAPI.campaign_operate_device).then(function(result) {
+            //     $scope.deviceList = result.deviceInfo.map(function(data) {
+            //         return {
+            //             name: data,
+            //             isSelect: false
+            //         };
+            //     });
+            // });
+            // serviceAPI.loadData(urlAPI.campaign_operate_os).then(function(result) {
+            //     $scope.osVersionList = result.osVersionInfo.map(function(data) {
+            //         return {
+            //             name: data,
+            //             isSelect: false
+            //         };
+            //     });
+            // });
+            // serviceAPI.loadData(urlAPI.campaign_operate_language).then(function(result) {
+            //     $scope.languageList = result.languageInfo.map(function(data) {
+            //         return {
+            //             name: data,
+            //             isSelect: false
+            //         };
+            //     });
+            // }).
+            //  catch(function(result) {});
 
-/*
-            serviceAPI.loadData(urlAPI.campaign_operate_device).then(function(result) {
-                $scope.deviceList = result.deviceInfo.split(',');
-            });
-            serviceAPI.loadData(urlAPI.campaign_operate_os).then(function(result) {
-                $scope.osList = result.osVersionInfo;
-            });
-            serviceAPI.loadData(urlAPI.campaign_operate_language).then(function(result) {
-                $scope.languageList = result.languageInfo;
-            }).
-             catch(function(result) {});
-*/
         }
         /*加载编辑页面app数据*/
         $scope.getAppList = function() {
@@ -313,38 +332,52 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             }
         };
         //Area 下拉框
-         $scope.areaClick = function(dom) {
+         $scope.areaStatus = function() {
             var area = $scope.detailNET.area;
             if (area == "ALL") {
-                $(dom.target).next().find('.icon-area').addClass('active');
+                for (var i = 0; i < $scope.areaList.length; i++) {
+                    $scope.areaList[i].isSelect = true;
+                };
+                $(".icon-allArea").addClass('active');
             } else if(area == "") {
-                $(dom.target).next().find('.icon-area').removeClass('active');
+                for (var i = 0; i < $scope.areaList.length; i++) {
+                    $scope.areaList[i].isSelect = false;
+                };
+                $(".icon-allArea").removeClass('active');
             } else {
-                for (var i = 0; i < $('.area-date li').length; i++) {
-                    var areaStr = $('.area-date li').eq(i).find('span').text();
+                for (var i = 0; i < $scope.areaList.length; i++) {
+                    var areaStr = $scope.areaList[i].code;
                     if (area.indexOf(areaStr) > -1) {
-                        $('.area-date li').eq(i).find('.icon-area').addClass('active');
-                    };
+                        $scope.areaList[i].isSelect = true;
+                    } else {
+                        $scope.areaList[i].isSelect = false;
+                    }
                 };
             };
          };
         //地域选择
-        $scope.allArea = function(detailNET,dom){
+        $scope.allArea = function(){
             if ($scope.detailNET.area == "ALL") {
                 $scope.detailNET.area = "";
-                $('.icon-area').removeClass('active');
+                for (var i = 0; i < $scope.areaList.length; i++) {
+                    $scope.areaList[i].isSelect = false;
+                };
+                $(".icon-allArea").removeClass('active');
                 $scope.detailNET.areaExcept = "";
             } else {
                 $scope.detailNET.area = "ALL";
-                $('.icon-area').addClass('active');
+                for (var i = 0; i < $scope.areaList.length; i++) {
+                    $scope.areaList[i].isSelect = true;
+                };
+                $(".icon-allArea").addClass('active');
             }
         };
-        $scope.areaData = function(area, dom) {
+        $scope.areaData = function(area) {
             if ($scope.detailNET.area == "ALL") {
                 if ($scope.detailNET.areaExcept == "") {
                     $scope.detailNET.areaExcept = area.code + ',';
-                    $(dom.target).find('i').removeClass('active');
-                    $('.icon-all').removeClass('active');
+                    area.isSelect = false;
+                    $('.icon-allArea').removeClass('active');
                 } else {
                     var arr = $scope.detailNET.areaExcept.split(',');
                     if (arr[arr.length - 1] == "") {
@@ -354,23 +387,23 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').addClass('active');
-                        $(dom.target).siblings().first().find('i').removeClass('active');
+                        area.isSelect = true;
+                        $('.icon-allArea').removeClass('active');
                     } else {
                         arr.push(area.code);
-                        $(dom.target).find('i').removeClass('active');
+                        area.isSelect = false;
                     }
                     $scope.detailNET.areaExcept = arr.toString();
                     if ($scope.detailNET.areaExcept == "") {
-                        $('.icon-all').addClass('active');
+                        $('.icon-allArea').addClass('active');
                     } else {
-                        $('.icon-all').removeClass('active');
+                        $('.icon-allArea').removeClass('active');
                     };
                 }
             } else {
                 if ($scope.detailNET.area == "") {
                     $scope.detailNET.area = area.code + ',';
-                    $(dom.target).find('i').addClass('active');
+                    area.isSelect = true;
                 } else {
                     var arr = $scope.detailNET.area.split(',');
                     if (arr[arr.length - 1] == "") {
@@ -380,78 +413,97 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').removeClass('active');
+                        area.isSelect = false;
                     } else {
                         arr.push(area.code);
-                        $(dom.target).find('i').addClass('active');
+                        area.isSelect = true;
                     }
                     $scope.detailNET.area = arr.toString();
                 }
             };
         };
 
-/*        
+        
         $scope.loadModel = function(){
             var modelParam = {
                 device: $scope.detailNET.device
             }
             serviceAPI.loadData(urlAPI.campaign_operate_device,modelParam).then(function(result) {
-                $scope.modelList = result.modelInfo.split(',');
+                $scope.modelList = result.modelInfo.map(function(data) {
+                    return {
+                        name: data,
+                        isSelect: false
+                    };
+                });
             });
         };
 
-*/
+
 
 //定向测试
 
 
-/*       //device 下拉框
-         $scope.deviceClick = function(dom) {
+       //device 下拉框
+         $scope.deviceStatus = function() {
             var device = $scope.detailNET.device;
             if (device == "ALL") {
-                $(dom.target).next().find('.icon-device').addClass('active');
+                for (var i = 0; i < $scope.deviceList.length; i++) {
+                    $scope.deviceList[i].isSelect = true;
+                };
+                $(".icon-alldevice").addClass('active');
             } else if(device == "") {
-                $(dom.target).next().find('.icon-device').removeClass('active');
+                for (var i = 0; i < $scope.deviceList.length; i++) {
+                    $scope.deviceList[i].isSelect = false;
+                };
+                $(".icon-alldevice").removeClass('active');
             } else {
-                for (var i = 0; i < $('.device-date li').length; i++) {
-                    var deviceStr = $('.device-date li').eq(i).find('span').text();
+                for (var i = 0; i < $scope.deviceList.length; i++) {
+                    var deviceStr = $scope.deviceList[i].name;
                     if (device.indexOf(deviceStr) > -1) {
-                        $('.device-date li').eq(i).find('.icon-device').addClass('active');
-                    };
+                        $scope.deviceList[i].isSelect = true;
+                    } else {
+                        $scope.deviceList[i].isSelect = false;
+                    }
                 };
             };
          };
         //设备选择
-        $scope.allDevice = function(detailNET,dom){
+        $scope.allDevice = function(){
             if ($scope.detailNET.device == "ALL") {
                 $scope.detailNET.device = "";
-                $('.icon-device').removeClass('active');
+                for (var i = 0; i < $scope.deviceList.length; i++) {
+                    $scope.deviceList[i].isSelect = false;
+                };
+                $(".icon-alldevice").removeClass('active');
                 $scope.detailNET.deviceExcept = "";
             } else {
                 $scope.detailNET.device = "ALL";
-                $('.icon-device').addClass('active');
+                for (var i = 0; i < $scope.deviceList.length; i++) {
+                    $scope.deviceList[i].isSelect = true;
+                };
+                $(".icon-alldevice").addClass('active');
             }
         };
-        $scope.devData = function(device, dom) {
+        $scope.devData = function(device) {
             if ($scope.detailNET.device == "ALL") {
                 if ($scope.detailNET.deviceExcept == "") {
-                    $scope.detailNET.deviceExcept = device + ',';
-                    $(dom.target).find('i').removeClass('active');
+                    $scope.detailNET.deviceExcept = device.name + ',';
+                    device.isSelect = false;
                     $('.icon-alldevice').removeClass('active');
                 } else {
                     var arr = $scope.detailNET.deviceExcept.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(device);
+                    var index = arr.indexOf(device.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').addClass('active');
-                        $(dom.target).siblings().first().find('i').removeClass('active');
+                        device.isSelect = true;
+                        $('.icon-alldevice').removeClass('active');
                     } else {
-                        arr.push(device);
-                        $(dom.target).find('i').removeClass('active');
+                        arr.push(device.name);
+                        device.isSelect = false;
                     }
                     $scope.detailNET.deviceExcept = arr.toString();
                     if ($scope.detailNET.deviceExcept == "") {
@@ -462,21 +514,21 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
             } else {
                 if ($scope.detailNET.device == "") {
-                    $scope.detailNET.device = device + ',';
-                    $(dom.target).find('i').addClass('active');
+                    $scope.detailNET.device = device.name + ',';
+                    device.isSelect = true;
                 } else {
                     var arr = $scope.detailNET.device.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(device);
+                    var index = arr.indexOf(device.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').removeClass('active');
+                        device.isSelect = false;
                     } else {
-                        arr.push(device);
-                        $(dom.target).find('i').addClass('active');
+                        arr.push(device.name);
+                        device.isSelect = true;
                     }
                     $scope.detailNET.device = arr.toString();
                 }
@@ -484,52 +536,66 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.loadModel();
         };
         //model 下拉框
-         $scope.modelClick = function(dom) {
+         $scope.modelStatus = function() {
             var model = $scope.detailNET.model;
             if (model == "ALL") {
-                $(dom.target).next().find('.icon-model').addClass('active');
+                for (var i = 0; i < $scope.modelList.length; i++) {
+                    $scope.modelList[i].isSelect = true;
+                };
+                $(".icon-allmodel").addClass('active');
             } else if(model == "") {
-                $(dom.target).next().find('.icon-model').removeClass('active');
+                for (var i = 0; i < $scope.modelList.length; i++) {
+                    $scope.modelList[i].isSelect = false;
+                };
+                $(".icon-allmodel").removeClass('active');
             } else {
-                for (var i = 0; i < $('.model-date li').length; i++) {
-                    var modelStr = $('.model-date li').eq(i).find('span').text();
+                for (var i = 0; i < $scope.modelList.length; i++) {
+                    var modelStr = $scope.modelList[i].name;
                     if (model.indexOf(modelStr) > -1) {
-                        $('.model-date li').eq(i).find('.icon-model').addClass('active');
-                    };
+                        $scope.modelList[i].isSelect = true;
+                    } else {
+                        $scope.modelList[i].isSelect = false;
+                    }
                 };
             };
          };
         //model 选择
-        $scope.allModel = function(detailNET,dom){
+        $scope.allModel = function(){
             if ($scope.detailNET.model == "ALL") {
                 $scope.detailNET.model = "";
-                $('.icon-model').removeClass('active');
+                for (var i = 0; i < $scope.modelList.length; i++) {
+                    $scope.modelList[i].isSelect = false;
+                };
+                $(".icon-allmodel").removeClass('active');
                 $scope.detailNET.modelExcept = "";
             } else {
                 $scope.detailNET.model = "ALL";
-                $('.icon-model').addClass('active');
+                for (var i = 0; i < $scope.modelList.length; i++) {
+                    $scope.modelList[i].isSelect = true;
+                };
+                $(".icon-allmodel").addClass('active');
             }
         };
-        $scope.modelData = function(model, dom) {
+        $scope.modelData = function(model) {
             if ($scope.detailNET.model == "ALL") {
                 if ($scope.detailNET.modelExcept == "") {
-                    $scope.detailNET.modelExcept = model + ',';
-                    $(dom.target).find('i').removeClass('active');
+                    $scope.detailNET.modelExcept = model.name + ',';
+                    model.isSelect = false;
                     $('.icon-allmodel').removeClass('active');
                 } else {
                     var arr = $scope.detailNET.modelExcept.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(model);
+                    var index = arr.indexOf(model.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').addClass('active');
-                        $(dom.target).siblings().first().find('i').removeClass('active');
+                        model.isSelect = true;
+                        $('.icon-allmodel').removeClass('active');
                     } else {
-                        arr.push(model);
-                        $(dom.target).find('i').removeClass('active');
+                        arr.push(model.name);
+                        model.isSelect = false;
                     }
                     $scope.detailNET.modelExcept = arr.toString();
                     if ($scope.detailNET.modelExcept == "") {
@@ -540,73 +606,87 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
             } else {
                 if ($scope.detailNET.model == "") {
-                    $scope.detailNET.model = model + ',';
-                    $(dom.target).find('i').addClass('active');
+                    $scope.detailNET.model = model.name + ',';
+                    model.isSelect = true;
                 } else {
                     var arr = $scope.detailNET.model.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(model);
+                    var index = arr.indexOf(model.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').removeClass('active');
+                        model.isSelect = false;
                     } else {
-                        arr.push(model);
-                        $(dom.target).find('i').addClass('active');
+                        arr.push(model.name);
+                        model.isSelect = true;
                     }
                     $scope.detailNET.model = arr.toString();
                 }
-            };
+            }
         };
         //osVersion 下拉框
-         $scope.osClick = function(dom) {
+         $scope.osStatus = function() {
             var osVersion = $scope.detailNET.osVersion;
             if (osVersion == "ALL") {
-                $(dom.target).next().find('.icon-osVersion').addClass('active');
-            } else if(osVersion == "") {
-                $(dom.target).next().find('.icon-osVersion').removeClass('active');
-            } else {
-                for (var i = 0; i < $('.osVersion-date li').length; i++) {
-                    var osVersionStr = $('.osVersion-date li').eq(i).find('span').text();
-                    if (osVersion.indexOf(osVersionStr) > -1) {
-                        $('.osVersion-date li').eq(i).find('.icon-osVersion').addClass('active');
-                    };
+                for (var i = 0; i < $scope.osVersionList.length; i++) {
+                    $scope.osVersionList[i].isSelect = true;
                 };
-            };
+                $(".icon-allosVersion").addClass('active');
+            } else if(osVersion == "") {
+                for (var i = 0; i < $scope.osVersionList.length; i++) {
+                    $scope.osVersionList[i].isSelect = false;
+                };
+                $(".icon-allosVersion").removeClass('active');
+            } else {
+                for (var i = 0; i < $scope.osVersionList.length; i++) {
+                    var osVersionStr = $scope.osVersionList[i].name;
+                    if (osVersion.indexOf(osVersionStr) > -1) {
+                        $scope.osVersionList[i].isSelect = true;
+                    } else {
+                        $scope.osVersionList[i].isSelect = false;
+                    }
+                };
+            }
          };
         //OS选择
-        $scope.allOS = function(detailNET,dom){
+        $scope.allOS = function(){
             if ($scope.detailNET.osVersion == "ALL") {
                 $scope.detailNET.osVersion = "";
-                $('.icon-osVersion').removeClass('active');
+                for (var i = 0; i < $scope.osVersionList.length; i++) {
+                    $scope.osVersionList[i].isSelect = false;
+                };
+                $(".icon-allosVersion").removeClass('active');
                 $scope.detailNET.osVersionExcept = "";
             } else {
                 $scope.detailNET.osVersion = "ALL";
-                $('.icon-osVersion').addClass('active');
+                for (var i = 0; i < $scope.osVersionList.length; i++) {
+                    $scope.osVersionList[i].isSelect = true;
+                };
+                $(".icon-allosVersion").addClass('active');
             }
         };
-        $scope.osVersionData = function(osVersion, dom) {
+        $scope.osVersionData = function(osVersion) {
             if ($scope.detailNET.osVersion == "ALL") {
                 if ($scope.detailNET.osVersionExcept == "") {
-                    $scope.detailNET.osVersionExcept = osVersion + ',';
-                    $(dom.target).find('i').removeClass('active');
+                    $scope.detailNET.osVersionExcept = osVersion.name + ',';
+                    osVersion.isSelect = false;
                     $('.icon-allosVersion').removeClass('active');
                 } else {
                     var arr = $scope.detailNET.osVersionExcept.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(osVersion);
+                    var index = arr.indexOf(osVersion.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').addClass('active');
-                        $(dom.target).siblings().first().find('i').removeClass('active');
+                        osVersion.isSelect = true;
+                        $('.icon-allosVersion').removeClass('active');
                     } else {
-                        arr.push(osVersion);
-                        $(dom.target).find('i').removeClass('active');
+                        arr.push(osVersion.name);
+                        osVersion.isSelect = false;
                     }
                     $scope.detailNET.osVersionExcept = arr.toString();
                     if ($scope.detailNET.osVersionExcept == "") {
@@ -617,73 +697,87 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
             } else {
                 if ($scope.detailNET.osVersion == "") {
-                    $scope.detailNET.osVersion = osVersion + ',';
-                    $(dom.target).find('i').addClass('active');
+                    $scope.detailNET.osVersion = osVersion.name + ',';
+                    osVersion.isSelect = true;
                 } else {
                     var arr = $scope.detailNET.osVersion.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(osVersion);
+                    var index = arr.indexOf(osVersion.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').removeClass('active');
+                        osVersion.isSelect = false;
                     } else {
-                        arr.push(osVersion);
-                        $(dom.target).find('i').addClass('active');
+                        arr.push(osVersion.name);
+                        osVersion.isSelect = true;
                     }
                     $scope.detailNET.osVersion = arr.toString();
                 }
-            };
+            }
         };
         //language 下拉框
-         $scope.languageClick = function(dom) {
+         $scope.languageStatus = function() {
             var language = $scope.detailNET.language;
             if (language == "ALL") {
-                $(dom.target).next().find('.icon-language').addClass('active');
-            } else if(language == "") {
-                $(dom.target).next().find('.icon-language').removeClass('active');
-            } else {
-                for (var i = 0; i < $('.language-date li').length; i++) {
-                    var languageStr = $('.language-date li').eq(i).find('span').text();
-                    if (language.indexOf(languageStr) > -1) {
-                        $('.language-date li').eq(i).find('.icon-language').addClass('active');
-                    };
+                for (var i = 0; i < $scope.languageList.length; i++) {
+                    $scope.languageList[i].isSelect = true;
                 };
-            };
+                $(".icon-alllanguage").addClass('active');
+            } else if(language == "") {
+                for (var i = 0; i < $scope.languageList.length; i++) {
+                    $scope.languageList[i].isSelect = false;
+                };
+                $(".icon-alllanguage").removeClass('active');
+            } else {
+                for (var i = 0; i < $scope.languageList.length; i++) {
+                    var languageStr = $scope.languageList[i].name;
+                    if (language.indexOf(languageStr) > -1) {
+                        $scope.languageList[i].isSelect = true;
+                    } else {
+                        $scope.languageList[i].isSelect = false;
+                    }
+                };
+            }
          };
         //language 选择
-        $scope.allLanguage = function(detailNET,dom){
+        $scope.allLanguage = function(){
             if ($scope.detailNET.language == "ALL") {
                 $scope.detailNET.language = "";
-                $('.icon-language').removeClass('active');
+                for (var i = 0; i < $scope.languageList.length; i++) {
+                    $scope.languageList[i].isSelect = false;
+                };
+                $(".icon-alllanguage").removeClass('active');
                 $scope.detailNET.languageExcept = "";
             } else {
                 $scope.detailNET.language = "ALL";
-                $('.icon-language').addClass('active');
+                for (var i = 0; i < $scope.languageList.length; i++) {
+                    $scope.languageList[i].isSelect = true;
+                };
+                $(".icon-alllanguage").addClass('active');
             }
         };
-        $scope.languageData = function(language, dom) {
+        $scope.languageData = function(language) {
             if ($scope.detailNET.language == "ALL") {
                 if ($scope.detailNET.languageExcept == "") {
-                    $scope.detailNET.languageExcept = language + ',';
-                    $(dom.target).find('i').removeClass('active');
+                    $scope.detailNET.languageExcept = language.name + ',';
+                    language.isSelect = false;
                     $('.icon-alllanguage').removeClass('active');
                 } else {
                     var arr = $scope.detailNET.languageExcept.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(language);
+                    var index = arr.indexOf(language.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').addClass('active');
-                        $(dom.target).siblings().first().find('i').removeClass('active');
+                        language.isSelect = true;
+                        $('.icon-alllanguage').removeClass('active');
                     } else {
-                        arr.push(language);
-                        $(dom.target).find('i').removeClass('active');
+                        arr.push(language.name);
+                        language.isSelect = false;
                     }
                     $scope.detailNET.languageExcept = arr.toString();
                     if ($scope.detailNET.languageExcept == "") {
@@ -694,27 +788,27 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
             } else {
                 if ($scope.detailNET.language == "") {
-                    $scope.detailNET.language = language + ',';
-                    $(dom.target).find('i').addClass('active');
+                    $scope.detailNET.language = language.name + ',';
+                    language.isSelect = true;
                 } else {
                     var arr = $scope.detailNET.language.split(',');
                     if (arr[arr.length - 1] == "") {
                         arr.length = arr.length - 1;
                     };
-                    var index = arr.indexOf(language);
+                    var index = arr.indexOf(language.name);
                     if (index >= 0) {
                         arr = arr.slice(0, index).concat(arr.slice(index + 1))
                         arr.sort();
-                        $(dom.target).find('i').removeClass('active');
+                        language.isSelect = false;
                     } else {
-                        arr.push(language);
-                        $(dom.target).find('i').addClass('active');
+                        arr.push(language.name);
+                        language.isSelect = true;
                     }
                     $scope.detailNET.language = arr.toString();
                 }
-            };
+            }
         };
-*/
+
 //定向测试结束
 
         //rtb请求

@@ -1127,7 +1127,12 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 		$scope.roleSave = function() {
 
-			if (!$scope.checkParameter()) return;
+			$scope.resubmit = true;
+
+			if (!$scope.checkParameter()) {
+				$scope.resubmit = false;
+				return;
+			}
 
 			$scope.permitOrderList.sort(adminAPI.compareById(adminAPI.str.sequence));
 
@@ -1163,15 +1168,13 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 			serviceAPI.saveData(url, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
 					$location.path('/view' + urlAPI.admin_role_view);
-
 				} else if (result.status == -1 && result.code == 80100501) {
 					adminAPI.comfirmPopup("Role name was aready existed!");
-					return;
-					// ModalAlert.comfirm({
-					// 	value: "Role name was aready existed!",
-					// 	closeBtnValue: "OK"
-					// });
+				} else {
+					adminAPI.comfirmPopup(result.msg);
 				}
+
+				$scope.resubmit = false;
 			});
 
 		};
@@ -1179,13 +1182,11 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.checkParameter = function() {
 
 			if (adminAPI.isNullOrEmpty($scope.role.name)) {
-				// alert("role name is invalid!");
 				adminAPI.comfirmPopup("Role name is invalid!");
 				return false;
 			}
 
 			if ($scope.role.name.length > 20) {
-				// alert("role name is too long!");
 				adminAPI.comfirmPopup("Role name is too long!");
 				return false;
 			}

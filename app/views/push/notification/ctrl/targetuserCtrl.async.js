@@ -55,12 +55,27 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             $scope.receiver.targetAppName = app.appName;
             $scope.getDevices(app.packageName, 0);
             $scope.getSegments(app.packageName, 0);
-
+            var segItem = {
+                segmentId: 0,
+                segmentName: ''
+            };
+            $scope.selectSegment(segItem);
         };
         $scope.getSegments = function(param, num){
             serviceAPI.loadData(urlAPI.pushGetSegment, { "packageName": param }).then(function(result) {
                 if (result.status == 1 && result.code == 200) {
                     $scope.segmentList = result.data;
+                    if (num) {
+                        var allSegment = result.data.map(function(data) {
+                            return data.segmentId;
+                        }).join(",");
+                        var indexSegment = allSegment.indexOf($scope.receiver.segmentId);
+                        if (indexSegment < 0) {
+                            $scope.receiver.segmentId = 0;
+                            $scope.receiver.segmentName = '';
+                        }
+
+                    }
                 }
             });
         };

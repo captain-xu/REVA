@@ -70,9 +70,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                             item.value2 = value[1];
                         }
                     break;
-                    case "Location": 
-                        item.value1 = item.value;
-                    break;
                     case "Client ID": 
                         item.value1 = item.value;
                     break;
@@ -141,7 +138,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         $scope.detail.fullpackage = result.data.filePath;
                         var fileName = file.name;
                         var index1 = fileName.indexOf('_'),
-                            index2 = fileName.indexOf('_', fileName.indexOf('_')+1),
+                            index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
                             index3 = fileName.indexOf('.');
                         $scope.fileCode = fileName.slice(index1 + 1, index2);
                         $scope.detail.hotfixCode = Number(fileName.slice(index2 + 1, index3));
@@ -177,9 +174,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         } else {
                             item.value = item.value1 + ',' + item.value2;
                         }
-                    break;
-                    case "Location": 
-                        item.value = item.value1;
                     break;
                     case "Client ID": 
                         item.value = item.value1;

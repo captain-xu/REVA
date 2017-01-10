@@ -29,7 +29,6 @@ angular.module('app.services').factory('adminAPI', [
 				active: "active",
 	        	create: "create",
 	        	update: "update",
-	        	delete: "delete",
 				timezone: "UTC",
 				language: "English",
 				checkbox: "checkbox",
@@ -144,7 +143,7 @@ angular.module('app.services').factory('adminAPI', [
 			comfirmPopup: function(msg) {
 				ModalAlert.comfirm({
 					value: msg,
-					okBtnValue: "OK"
+					closeBtnValue: "OK"
 				});
 			},
 

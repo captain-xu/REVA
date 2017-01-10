@@ -944,9 +944,14 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 		// };
 
-		$scope.groupUpdate = function() {
+		$scope.groupSave = function() {
 
-			if (!$scope.checkParameter()) return;
+			$scope.resubmit = true;
+
+			if (!$scope.checkParameter()) {
+				$scope.resubmit = false;
+				return;
+			}
 
 			$scope.permitOrderList.sort(adminAPI.compareById(adminAPI.str.sequence));
 
@@ -980,19 +985,16 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 			serviceAPI.updateData(url, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
-					// $location.path('/view/admin/group/view');
 					$location.path('/view' + urlAPI.admin_group_view);
-
 				} else if (result.status == -1 && result.code == 80100101) {
 					adminAPI.comfirmPopup("Group name was aready existed!");
-					return;
 				} else if (result.status == -1 && result.code == 80101101) {
 					adminAPI.comfirmPopup("Group of user name was aready existed!");
-					return;
 				} else {
 					adminAPI.comfirmPopup(result.msg);
-					return;
 				}
+				
+				$scope.resubmit = false;
 			});
 		};
 

@@ -216,11 +216,15 @@
                     background: @state-compeleted;
                 }
             }
-            &.extendstext{
+            &.extendstext,
+            &.note-text {
                 max-width: 600px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+            }
+            &.note-text {
+                max-width: 120px;
             }
         }
         td:last-child {

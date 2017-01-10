@@ -46,8 +46,8 @@
                 <tbody>
                     <tr ng-repeat="vo in segmList | orderBy: orderField:desc">
                         <td>{{vo.appName}}</td>
-                        <td>{{vo.segmentName}}</td>
-                        <td>{{vo.description}}</td>
+                        <td class="tolong-ellipsis" title="{{vo.segmentName}}">{{vo.segmentName}}</td>
+                        <td class="tolong-ellipsis" title="{{vo.description}}">{{vo.description}}</td>
                         <td>{{vo.createTime}}</td>
                         <td>{{vo.updateTime}}</td>
                         <td>

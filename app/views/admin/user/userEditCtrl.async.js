@@ -29,7 +29,6 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.initEditView = function() {
 			$scope.user = adminAPI.getUser();
 			if (!$scope.user || !$scope.user.action || $scope.user.groupId == undefined || $scope.user.groupId == null) {
-				// alert("paramter is invalid!");
 				adminAPI.comfirmPopup("paramter is invalid!");
 				return;
 			}
@@ -229,19 +228,16 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.checkParameter = function() {
 
 			if (adminAPI.isNullOrEmpty($scope.user.userName)) {
-	    		// alert("user name is invalid!");
 				adminAPI.comfirmPopup("User name is invalid!");
 	    		return false;
 	    	}
 
 	    	if (adminAPI.isNullOrEmpty($scope.user.email)) {
-	    		// alert("user email is invalid!");
 				adminAPI.comfirmPopup("User email is invalid!");
 	    		return false;
 	    	}
 
 			if ($scope.user.userName.length > 64) {
-				// alert("user name is too long!");
 				adminAPI.comfirmPopup("User name is too long!");
 				return false;
 			}
@@ -253,7 +249,6 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 	    	var regExp = new RegExp(adminAPI.str.email);
 	    	if (!regExp.test($scope.user.email)) {
-	    		// alert("user email is invalid!");
 				adminAPI.comfirmPopup("User email is invalid!");
 	    		return false;
 	    	}
@@ -275,7 +270,12 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 		$scope.userSave = function() {
 
-			if (!$scope.checkParameter()) return;
+			$scope.resubmit = true;
+
+			if (!$scope.checkParameter()) {
+				$scope.resubmit = false;
+				return;
+			}
 
 			$scope.paramData.userInfo.userName = $scope.user.userName;
 			$scope.paramData.userInfo.realName = $scope.user.realName;
@@ -301,15 +301,13 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 	    	serviceAPI.saveData(url, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
 					$location.path('/view' + urlAPI.admin_user_view);
-
 				} else if (result.status == -1 && result.code == 80101101) {
 					adminAPI.comfirmPopup("User name was aready existed!");
-					return;
-					// ModalAlert.comfirm({
-					// 	value: "User name was aready existed!",
-					// 	okBtnValue: "OK"
-					// });
+				} else {
+					adminAPI.comfirmPopup(result.msg);
 				}
+
+				$scope.resubmit = false;
 			});
 
 		};

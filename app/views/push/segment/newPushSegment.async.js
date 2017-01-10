@@ -75,7 +75,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 					item.factorValue1 = $scope.pushVersion[0];
 				break;
         		case 'User':
-					item.judge = 'is active';
+					item.judge = 'is inactive';
 					item.factorValue1 = '1';
 				break;
         	}
@@ -102,6 +102,12 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
 				}
 				$scope.segment.push(item.factor);
 			}
+		};
+		$scope.checkNum = function(item) {
+			if (isNaN(Number(item.factorValue1)) || Number(item.factorValue1) < 1) {
+				item.factorValue1 = 1;
+			}
+			item.factorValue1 = parseInt(item.factorValue1);
 		};
         $scope.removeValidate = function(str) {
             switch (str) {
@@ -138,24 +144,20 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', '$stateParams', 'ModalAlert',
             			item.factorValue = item.factorValue1 + ';' + item.factorValue2;
             			item.factorValueNum = 2;
         			break;
-        			case 'Android Version':
+        			case 'Android Version': 
+        			case 'Push Version':
         				if (item.judge == "is above") {
         					item.factorValue = item.factorValue1;
             				item.factorValueNum = 1;
         				} else {
+        					if (item.factorValue2 == '') {
+        						$scope.validateParam.constraintWarn = true;
+								return;
+        					}
 	            			item.factorValue = item.factorValue1 + ';' + item.factorValue2;
             				item.factorValueNum = 2;
         				}
         			break;
-	        		case 'Push Version':
-						if (item.judge == "is above") {
-        					item.factorValue = item.factorValue1;
-            				item.factorValueNum = 1;
-        				} else {
-	            			item.factorValue = item.factorValue1 + ';' + item.factorValue2;
-            				item.factorValueNum = 2;
-        				}
-					break;
 	        		case 'User':
     					item.factorValue = item.factorValue1;
         				item.factorValueNum = 1;

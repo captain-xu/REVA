@@ -47,9 +47,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
                             item.value2 = value[1];
                         }
                     break;
-                    case "Location": 
-                        item.value1 = item.value;
-                    break;
                     case "Client ID": 
                         item.value1 = item.value;
                     break;

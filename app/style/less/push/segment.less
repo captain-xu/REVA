@@ -84,6 +84,12 @@
             td {
                 height: 37px;
                 vertical-align: middle;
+                &.tolong-ellipsis {
+                    max-width: 120px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
             }
             td:last-child {
                 padding: 0px;
@@ -180,7 +186,7 @@
                     }
                     .caret {
                         position: absolute;
-                        right: 10px;
+                        right: 8px;
                         top: 16px;
                     }
                     .dropdown-menu {
@@ -237,6 +243,7 @@
                             .form-control {
                                 background: #fff;
                                 border: 0;
+                                padding-right: 20px;
                             }
                         }
                         .item-text{

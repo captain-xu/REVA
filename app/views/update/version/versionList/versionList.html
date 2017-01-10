@@ -49,7 +49,7 @@
                 <td>{{vo.size}}</td>
                 <td>{{vo.isnew}}</td>
                 <td>{{vo.activeuser}}</td>
-                <td>{{vo.updatenote}}</td>
+                <td class="note-text" title="{{vo.updatenote}}">{{vo.updatenote}}</td>
                 <td>{{vo.fronttime}}</td>
                 <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Approved':'approved', 'Unapproved': 'unapproved','Checking':'checking'}[vo.status]">{{vo.status}}</span></td>
                 <td>

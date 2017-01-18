@@ -182,6 +182,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 delete item.value1;
                 delete item.value2;
                 delete item.value3;
+                delete item.$$hashKey;
             }
             return vo;
             

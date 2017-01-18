@@ -183,7 +183,7 @@ angular.module('app.services').factory("urlAPI", [
             campaign_network_edit: "/campaign/operate/7015",
             campaign_operate_delete: "/campaign/operate/7016",
             campaign_operate_img: "/campaign/util/2010",
-            campaign_operate_area: "/campaign/util/2011",
+            campaign_operate_area: "/campaign/operate/7008",
             campaign_operate_device: "/campaign/operate/7009",
             campaign_operate_os: "/campaign/operate/7010",
             campaign_operate_language: "/campaign/operate/7011",

@@ -81,7 +81,7 @@
                     <input type="text" ng-model="detailVO.wTime">
                 </li>
                 <li><span class="files edit-key">Creative:</span>
-                    <ol class="creative-files">
+                    <ol class="creative-files" ng-if="detailVO.creative_files">
                         <li ng-repeat="file in detailVO.creative_files">
                             <span>{{$index+1}}</span>
                             <span class="file-title">Link:</span>

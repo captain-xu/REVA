@@ -196,6 +196,10 @@
 	    td {
             height: 24px;
             line-height: 24px;
+            &:last-child {
+                cursor: pointer;
+                min-width: 112px;
+            }
             img{
                 width: 30px;
                 height: 30px;
@@ -226,10 +230,6 @@
             &.note-text {
                 max-width: 120px;
             }
-        }
-        td:last-child {
-            cursor: pointer;
-            min-width: 110px;
         }
         td .dropdown {
             width: 100%;

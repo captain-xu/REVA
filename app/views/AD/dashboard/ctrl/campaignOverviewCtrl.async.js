@@ -205,7 +205,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
     // top five chart init
     var campChart = echarts.init(document.getElementById('camp-chart'));
     var brandChart = echarts.init(document.getElementById('brand-chart'));
-    $scope.getRevanueChart = function(x,str,len){
+    $scope.getRevanueChart = function(x,str){
         var option = {
             tooltip : {
                 trigger: 'axis',
@@ -231,12 +231,12 @@ var scope = ["$scope", "serviceAPI","urlAPI",
                 {
                     type: 'bar',
                     barWidth: '30',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'insideRight'
-                        }
-                    },
+                    // label: {
+                    //     normal: {
+                    //         show: true,
+                    //         position: 'insideRight'
+                    //     }
+                    // },
                     itemStyle: {
                         normal: {
                             color: function(params) {
@@ -272,7 +272,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
     };
 //unique List start
     $scope.uniquePage = 1;
-    $scope.uniqueField = 'appId';
+    $scope.uniqueField = 'appName';
     $scope.loadUniqueList = function(){
         var uniqueParam = {
             startDate: $scope.startTime,
@@ -281,8 +281,14 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             orderBy: $scope.uniqueField
         };
         serviceAPI.loadData(urlAPI.campaign_dashboard_unique,uniqueParam).then(function(result){
-            $scope.uniqueList = result.dataList;
-            $scope.uniqueCount = result.totalCount;
+            var pageStart = (($scope.uniquePage - 1) * 10); 
+            var pageEnd = $scope.uniquePage * 10; 
+            var sortBy = function(x, y) {
+                return (x[$scope.uniqueField] < y[$scope.uniqueField]) ? 1 : -1;
+
+            };
+            $scope.uniqueList = result.dataList.sort(sortBy).slice(pageStart, pageEnd);
+            $scope.uniqueCount = result.dataList.length;
         });
 
     };

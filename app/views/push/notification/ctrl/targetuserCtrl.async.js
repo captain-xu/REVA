@@ -69,8 +69,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
                         var allSegment = result.data.map(function(data) {
                             return data.segmentId;
                         }).join(",");
-                        var indexSegment = allSegment.indexOf($scope.receiver.segmentId);
-                        if (indexSegment < 0) {
+                        if (allSegment.indexOf($scope.receiver.segmentId) < 0) {
                             $scope.receiver.segmentId = 0;
                             $scope.receiver.segmentName = '';
                         }
@@ -320,6 +319,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI',
             }
             $scope.receiver.pushId = $scope.pushId;
             $scope.receiver.pushType = 0;
+            $scope.receiver.testDeviceIds = 0;
             if (($scope.receiver.targetDevices instanceof Array)) {
                 $scope.receiver.targetDevices = $scope.receiver.targetDevices.toString();
             };

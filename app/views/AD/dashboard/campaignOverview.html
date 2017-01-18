@@ -99,7 +99,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>App<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('appId')" ng-class="{'appId': 'active'}[uniqueField]"></i></th>
+                        <th>App<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('appName')" ng-class="{'appName': 'active'}[uniqueField]"></i></th>
                         <th>Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('request')" ng-class="{'request': 'active'}[uniqueField]"></i></th>
                         <th>Unique Request<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('uniqueRequest')" ng-class="{'uniqueRequest': 'active'}[uniqueField]"></i></th>
                         <th>IMP<i class="glyphicon glyphicon-triangle-bottom" ng-click="orderUnique('imp')" ng-class="{'imp': 'active'}[uniqueField]"></i></th>
@@ -147,7 +147,7 @@
                         <span class="caret"></span>
                     </p>
                     <ul class="dropdown-menu" role="menu">
-                        <li  ng-click="channel1Data('All')">All</li>
+                        <li  ng-click="channelData(1, 'All')">All</li>
                         <li ng-repeat="channel1 in channel1List" ng-click="channelData(1, channel1)">{{channel1}}</li>
                     </ul>
                 </div>
@@ -157,7 +157,7 @@
                         <span class="caret"></span>
                     </p>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-click="">All</li>
+                        <li ng-click="channelData(0, 'All')">All</li>
                         <li ng-repeat="channel2 in channel2List" ng-click="channelData(0, channel2)">{{channel2}}</li>
                     </ul>
                 </div>

@@ -38,6 +38,7 @@
                                     <th>ID</th>
                                     <th>Card Name</th>
                                     <th>Show Name</th>
+                                    <th>Channel</th>
                                     <th>Display</th>
                                     <th>On/Off</th>
                                     <th>Sort Operation</th>
@@ -49,6 +50,7 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{list.name}}</td>
                                     <td><input type="text" name="showname" ng-model="list.showname"></td>
+                                    <td>{{list.channel}}</td>
                                     <td>
                                         <a href="javascript:void(0)" ng-hide="list.display" ng-click="changeDisplay(list,1)">Shown</a>
                                         <a href="javascript:void(0)" ng-show="list.display" ng-click="changeDisplay(list,0)">Hidden</a>
@@ -82,6 +84,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Card Name</th>
+                                <th>Channel</th>
                                 <th>On/Off</th>
                             </tr>
                             </thead>
@@ -89,6 +92,7 @@
                             <tr ng-repeat="list in closeList">
                                 <td>{{$index+1}}</td>
                                 <td>{{list.name}}</td>
+                                <td>{{list.channel}}</td>
                                 <td><a href="javascript:void(0)" ng-click="changeCard(list,$index,1)">On</a></td>
                             </tr>
                             </tbody>

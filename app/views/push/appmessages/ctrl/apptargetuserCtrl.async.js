@@ -313,6 +313,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", 'Upload', 'urlAPI',
             }
             $scope.detail.pushId = $scope.pushId;
             $scope.detail.pushType = 1;
+            $scope.detail.testDeviceIds = 0;
             if (($scope.detail.targetDevices instanceof Array)) {
                 $scope.detail.targetDevices = $scope.detail.targetDevices.toString();
             };

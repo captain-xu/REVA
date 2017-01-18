@@ -82,7 +82,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                             }
                         });
                     });
-                    //$scope.loadModel();
+                    // $scope.loadModel();
                     $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
                     
                 }).
@@ -141,7 +141,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 $scope.allNames = "";
                 $scope.allIds = "";
                 $('#datarangeNet').val('');
-                //$scope.loadModel();
+                // $scope.loadModel();
                 var adverParam = {
                     rtb: $scope.detailNET.rtb
                 };
@@ -162,7 +162,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 $scope.CPX = result.CPX;
             });
             serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
-                $scope.areaList = result.countries.map(function(data) {
+                $scope.areaList = result.areaInfo.map(function(data) {
                     return {
                         name: data.name,
                         code: data.code,
@@ -425,17 +425,19 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
 
         
         $scope.loadModel = function(){
-            var modelParam = {
-                device: $scope.detailNET.device
-            }
-            serviceAPI.loadData(urlAPI.campaign_operate_device,modelParam).then(function(result) {
-                $scope.modelList = result.modelInfo.map(function(data) {
-                    return {
-                        name: data,
-                        isSelect: false
-                    };
+            if ($scope.detailNET.device) {
+                var modelParam = {
+                    device: $scope.detailNET.device
+                }
+                serviceAPI.loadData(urlAPI.campaign_operate_device,modelParam).then(function(result) {
+                    $scope.modelList = result.modelInfo.map(function(data) {
+                        return {
+                            name: data,
+                            isSelect: false
+                        };
+                    });
                 });
-            });
+            }
         };
 
 

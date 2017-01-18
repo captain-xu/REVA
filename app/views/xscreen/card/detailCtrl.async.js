@@ -20,11 +20,21 @@ var scope = ["$scope", "serviceAPI", 'urlAPI','$stateParams','$location',
                 if (result.status == 0 && result.code == 0) {
                     $scope.openList = result.data.openinfo;
                     $scope.closeList = result.data.closeinfo;
+                    $scope.exchangeChannel($scope.openList);
+                    $scope.exchangeChannel($scope.closeList);
                     $scope.param = result.data;
                 }
             })
         };
-
+        $scope.exchangeChannel = function(item) {
+            for (var i = 0; i < item.length; i++) {
+                if (item[i].owner === '0') {
+                    item[i].channel = '--';
+                } else {
+                    item[i].channel = item[i].owner === '1' ? 'Le Tang' : 'News Dog';
+                }
+            }
+        };
         $scope.changeDisplay = function(list,num){
             if ($scope.statu == 'edit') {
                 list.display = num;

@@ -23,22 +23,20 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Package Name:</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="detail.packagename" readonly>
+                <input type="text" class="form-control" ng-model="detail.packagename" readonly placeholder="This field will be automatically loaded from the upload package">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Version Code:</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="detail.version_code" readonly>
+                <input type="text" class="form-control" ng-model="detail.version_code" readonly placeholder="This field will be automatically loaded from the upload package">
             </div>
-            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="codeOpen" ng-mouseenter="codeOpen=true" ng-mouseleave="codeOpen=false" uib-popover="The version code should be an integer, such as ‘100’.">
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Version Name:</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="detail.version_name" readonly>
+                <input type="text" class="form-control" ng-model="detail.version_name" readonly placeholder="This field will be automatically loaded from the upload package">
             </div>
-            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="nameOpen" ng-mouseenter="nameOpen=true" ng-mouseleave="nameOpen=false" uib-popover="This reveals the version number of the selected app.">
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">App Icon:</label>

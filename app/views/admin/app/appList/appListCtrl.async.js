@@ -24,7 +24,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI',
 		$scope.loadList = function(){
 			serviceAPI.loadData(urlAPI.update_applist,$scope.params).then(function(result){
 				$scope.list = result.data.result;
-             	$scope.totalItems = result.data.totalpage;
+             	$scope.totalItems = result.data.totalcount;
 				for (var i = 0; i < $scope.list.length; i++) {
 					if ($scope.list[i].status == 0 ) {
 						$scope.list[i].status = 'Unapproved';

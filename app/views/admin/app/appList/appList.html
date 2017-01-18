@@ -16,10 +16,8 @@
                         <th>App Name</th>
                         <th>Version</th>
                         <th>Size</th>
-                        <th>Type</th>
                         <th>Submit Time</th>
                         <th>Status</th>
-                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -28,22 +26,8 @@
                         <td>{{vo.app}}</td>
                         <td>{{vo.version_name}}</td>
                         <td>{{vo.size}}</td>
-                        <td>{{vo.isnew}}</td>
                         <td>{{vo.fronttime}}</td>
                         <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Approved':'approved', 'Unapproved': 'unapproved','Checking':'checking'}[vo.status]">{{vo.status}}</span></td>
-                        <!-- <td>
-                            <div class="dropdown">
-                                <p data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</p>
-                                <div class="dropdown-menu">
-                                    <div class="triangle-top">
-                                        <i class="arrow"></i>
-                                    </div>
-                                    <ul>
-                                        <a href="#/view/update/checkVersion/{{vo.id}}/edit"><li ng-click="editDetail(vo,'edit')"><i class="glyphicon glyphicon-pencil"></i> Edit</li></a>
-                                    </ul>
-                                </div>
-                            </div>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>

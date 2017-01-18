@@ -418,7 +418,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", 'urlAPI', '$sce',"$
                     $scope.flag = 0;
                     serviceAPI.saveData(url,receiver).then(function(result) {
                         if (result.status == 1 && result.code == 200) {
-                            $scope.goLIst();
+                            $scope.goList();
                         } else {
                             ModalAlert.popup({ msg: result.msg }, 2500);
                         }

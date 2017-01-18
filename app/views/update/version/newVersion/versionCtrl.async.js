@@ -320,7 +320,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             } else {
                 $scope.getDetail();
                 $scope.detail.appid = $stateParams.id;
-                $scope.getImg($stateParams.id);
+                $scope.getImg($stateParams.package);
             };
             $scope.loadDevice();
             $scope.loadCountry();

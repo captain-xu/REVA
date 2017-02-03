@@ -1,6 +1,7 @@
 var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'urlAPI', '$state',
     function($scope, serviceAPI, ModalAlert, Upload, $stateParams, urlAPI, $state) {
         $scope.appName = $stateParams.app;
+        $scope.pacState = false;
         $scope.getDetail = function() {
             $scope.detail = {
                 "app": $stateParams.package,
@@ -82,7 +83,10 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         $scope.loadTargetVersion = function() {
             serviceAPI.loadData(urlAPI.update_hotfixVer, {app : $stateParams.package}).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    $scope.targetVersions = result.data;
+                    var sortBy = function(pre, next) {
+                        return (pre < next) ? 1 : -1;
+                    };
+                    $scope.targetVersions = result.data.sort(sortBy);
                 }
             });
         };
@@ -128,12 +132,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         }
         $scope.uploadPatch = function(file, errFiles) {
             if (file) {
+                $scope.pacState = true;
                 Upload.upload({
                     url: urlAPI.update_uploadfile,
                     data: { file: file }
                     // , idType: 1
                 }).then(function(result) {
                     var result = result.data;
+                    $scope.pacState = false;
                     if (result.status == 0 && result.code == 0) {
                         $scope.detail.fullpackage = result.data.filePath;
                         var fileName = file.name;

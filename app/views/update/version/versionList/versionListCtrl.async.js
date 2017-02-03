@@ -7,9 +7,11 @@ var scope = ["$scope", "serviceAPI",'urlAPI', "$stateParams",
 			pagesize: 10,
             appName: $scope.packageName,
             status: [],
-            query: ''
+            query: '',
+            type: 0
 
 		};
+        $scope.type = "Type";
         $scope.status = [];
         $scope.pushStatus = [{
             "id": "Approved",
@@ -49,6 +51,11 @@ var scope = ["$scope", "serviceAPI",'urlAPI', "$stateParams",
             $scope.timer = setTimeout(function() {
                 $scope.loadList();
             }, 1000);
+        };
+        $scope.typeFilter = function(num, str) {
+            $scope.params.type = num;
+            $scope.type = str;
+            $scope.loadList();
         };
         $scope.changeStatus = function(str) {
             var arr = [];

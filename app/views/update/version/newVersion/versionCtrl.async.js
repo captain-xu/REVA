@@ -27,6 +27,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         };
         $scope.showPic = true;
         $scope.isShow = true;
+        $scope.fullState = false;
+        $scope.incState = false;
         $scope.loadDetail = function(id) {
             serviceAPI.loadData(urlAPI.update_appdetail, { "id": id }).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
@@ -90,7 +92,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 $scope.detail.incrementalpack = arr.slice(0, index).concat(arr.slice(index + 1, length));
             };
             if (id) {
-                serviceAPI.delData(urlAPI.update_delincrepack, {id: id}).then(function(result) {
+                serviceAPI.delData(urlAPI.update_delincrepack, { id: id }).then(function(result) {
                     if (result.status == 0 && result.code == 0) {
                         $scope.androidVersion = result.data;
                     }
@@ -136,12 +138,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         };
         $scope.uploadFull = function(file, errFiles) {
             if (file) {
+                $scope.fullState = true;
                 Upload.upload({
                     url: urlAPI.update_uploadfile,
                     data: { file: file }
                     // , idType: 1
                 }).then(function(result) {
                     var result = result.data;
+                    $scope.fullState = false;
                     if (result.status == 0 && result.code == 0) {
                         $scope.detail.fullpackage = result.data.filePath;
                         $scope.detail.packagename = result.data.packageName;
@@ -155,12 +159,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         };
         $scope.uploadInc = function(file, errFiles, vo) {
             if (file) {
+                $scope.incState = true;
                 Upload.upload({
                     url: urlAPI.update_uploadfile,
                     data: { file: file, id: vo.id }
                     // , idType: 1
                 }).then(function(result) {
                     var result = result.data;
+                    $scope.incState = false;
                     if (result.status == 0 && result.code == 0) {
                         vo.pack = result.data.filePath;
                         if (result.data.versionCode) {
@@ -259,8 +265,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     break;
                 case "Client ID":
                     if (vo.where == "are") {
+                        if (vo.value1 == "") {
+                            ModalAlert.popup({ msg: "Please upload  Client ID" }, 2500)
+                            return false;
+                        };
                         where = " $_clientid in " + "(" + vo.value1 + ") ";
-                    } else{
+                    } else {
                         where = " $_clientid = " + "'" + vo.value1 + "' ";
                         if (vo.where != "is") {
                             where = " not(" + where + ")";
@@ -282,7 +292,13 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     where += str;
                 };
                 if (wherepart[i].param) {
-                    where += $scope.sigleSegment(wherepart[i].param);
+                    var param=$scope.sigleSegment(wherepart[i].param);
+                    if(param){
+                         where += param;
+                     }else{
+                        return false;
+                     }
+                   
                 } else {
                     where += "(" + $scope.setSegment(wherepart[i]) + ")";
                 }
@@ -297,7 +313,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 ModalAlert.popup({ msg: "The updatenote is required" }, 2500)
                 return false;
             }
-            $scope.detail.segment = $scope.setSegment($scope.detail.frontsql);
+            var param=$scope.setSegment($scope.detail.frontsql);
+            if(param){
+               $scope.detail.segment = param;
+            }else{
+                return false;
+            }
             $scope.frontsql = $scope.detail.frontsql;
             // $scope.detail.incrementalpack = JSON.stringify($scope.detail.incrementalpack);
             $scope.detail.frontsql = JSON.stringify($scope.detail.frontsql);

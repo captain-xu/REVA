@@ -10,7 +10,7 @@ angular.module('app.controller').controller('parentCtr', [
         $scope.img_url = "";
         $scope.initView = function() {
             $scope.getLoginUser();
-            $scope.loadMenu();
+            // $scope.loadMenu();
             $scope.loadTitle();
         };
         $scope.logout = function() {

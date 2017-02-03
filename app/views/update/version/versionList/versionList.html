@@ -2,10 +2,11 @@
     <div class="search-bar">
         <div class="dropdown os_filter">
             <div class="dropdown-toggle" data-toggle="dropdown">
-                <p class="form-control">Type</p><span class="caret"></span></div>
+                <p class="form-control">{{type}}</p><span class="caret"></span></div>
             <ul class="dropdown-menu">
-                <li>Update Package</li>
-                <li>Hot Fix</li>
+                <li ng-click="typeFilter(0, 'All')">All</li>
+                <li ng-click="typeFilter(1, 'Update Package')">Update Package</li>
+                <li ng-click="typeFilter(2, 'Hot Fix')">Hot Fix</li>
             </ul>
         </div>
         <div multi-select datalists="pushStatus" datavalue="status" confirm="setParam()"></div>
@@ -35,7 +36,6 @@
                 <th>Version</th>
                 <th>Size</th>
                 <th>Type</th>
-                <th>Active Users(%)</th>
                 <th>Update Note</th>
                 <th>Update Time</th>
                 <th>Status</th>
@@ -48,7 +48,6 @@
                 <td>{{vo.version_name}}</td>
                 <td>{{vo.size}}</td>
                 <td>{{vo.isnew}}</td>
-                <td>{{vo.activeuser}}</td>
                 <td class="note-text" title="{{vo.updatenote}}">{{vo.updatenote}}</td>
                 <td>{{vo.fronttime}}</td>
                 <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Approved':'approved', 'Unapproved': 'unapproved','Checking':'checking'}[vo.status]">{{vo.status}}</span></td>

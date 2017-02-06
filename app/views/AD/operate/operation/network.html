@@ -310,7 +310,7 @@
                                     <li>
                                         <span class="title">Advertiser:</span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]" >
-                                            <textarea readonly ng-click="adverClick($event)" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown"></textarea>
+                                            <input readonly ng-click="adverClick($event)" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu adver" role="menu">
                                                 <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[ad.isSelect]"></i>
@@ -324,7 +324,7 @@
                                     <li ng-show="detailNET.rtb">
                                         <span class="title">All List:<em>&#42;</em></span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
-                                            <textarea readonly ng-click="offerClick()" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
+                                            <input readonly ng-click="offerClick()" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu offer-name" role="menu" pull-refresh="loadMore()">
                                                 <li ng-repeat="all in allName" ng-click="offerData(all)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[all.isSelect]"></i>{{all.offerName}}
@@ -337,7 +337,7 @@
                                     <li ng-show="!detailNET.rtb && showChannel">
                                         <span class="title">Channel:<em>&#42;</em></span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
-                                            <textarea readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown"></textarea>
+                                            <input readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu" role="menu">
                                                 <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[channel.isSelect]"></i>{{channel.name}}

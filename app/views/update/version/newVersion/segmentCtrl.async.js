@@ -98,6 +98,10 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
     };
     $scope.uploadClient = function(file, errFiles, item) {
         if (file) {
+            if (file.type !== 'text/plain') {
+                ModalAlert.popup({ msg: 'The file type is illegal!' }, 2500);
+                return false;
+            }
             Upload.upload({
                 url: urlAPI.update_uploadfile,
                 data: { file: file }
@@ -106,8 +110,10 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
                 if (result.status == 0 && result.code == 0) {
                     item.param.value1 = result.data.clientid;
                     ModalAlert.success({ msg: 'upload successed' }, 2500);
+                } else if (result.status == -1 && result.code == 112) {
+                    ModalAlert.error({ msg: 'Invalid client ID has been found in the uploaded file, please recheck the file.' }, 2500);
                 } else {
-                    ModalAlert.error({ msg: result.msg }, 2500);
+                    ModalAlert.error({ msg: 'Client ID can not be empty!' }, 2500);
                 }
             });
         }

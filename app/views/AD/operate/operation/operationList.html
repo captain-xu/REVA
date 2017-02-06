@@ -103,7 +103,7 @@
                                     <!-- <span class="a-upload" ng-hide="detailVO.status">
                                          <input type="file" ngf-select="uploadPic(vo,$file, $invalidFiles)" accept="image/png, image/jpeg" ngf-max-size="1MB">
                                          Select Files -->
-                                        <button type="file" ngf-select="uploadPic(vo,$file, $invalidFiles)" accept="image/png, image/jpeg" class="btn btn-primary" ng-hide="detailVO.status">Upload</button>
+                                        <button type="file" ngf-select="uploadPic(vo,$file, $invalidFiles)" accept="image/png, image/jpeg, image/gif" class="btn btn-primary" ng-hide="detailVO.status">Upload</button>
                                     <!-- </span> -->
                                     <div class="div_img" ng-show="vo.imageUrlForShow || vo.begin_upload">
                                         <uib-progressbar max="100" value="dynamic" ng-show="vo.begin_upload" class="progress-striped active"><b>{{dynamic}}%</b></uib-progressbar>

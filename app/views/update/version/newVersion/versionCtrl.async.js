@@ -265,10 +265,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     break;
                 case "Client ID":
                     if (vo.where == "are") {
-                        if (vo.value1 == "") {
-                            ModalAlert.popup({ msg: "Please upload  Client ID" }, 2500)
-                            return false;
-                        };
                         where = " $_clientid in " + "(" + vo.value1 + ") ";
                     } else {
                         where = " $_clientid = " + "'" + vo.value1 + "' ";
@@ -309,15 +305,32 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             if (!$scope.detail.fullpackage || $scope.detail.fullpackage == '') {
                 ModalAlert.popup({ msg: "Please upload a package" }, 2500)
                 return false;
-            } else if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
+            }
+            if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
                 ModalAlert.popup({ msg: "The updatenote is required" }, 2500)
                 return false;
             }
-            var param=$scope.setSegment($scope.detail.frontsql);
-            if(param){
+            for (var i = 0; i < $scope.detail.frontsql.params.length; i++) {
+                var item = $scope.detail.frontsql.params[i];
+                if (item.param.name === "Client ID") {
+                    if (item.param.value1 === "") {
+                        ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500)
+                        return false;
+                    }
+                    if (item.param.where !== "are") {
+                        if (item.param.value1.length < 32 || item.param.value1.length > 93) {
+                            ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500)
+                            return false;
+                        };
+                    }
+                }
+
+            }
+            var param = $scope.setSegment($scope.detail.frontsql);
+            if (param) {
                $scope.detail.segment = param;
-            }else{
-                return false;
+            } else {
+                $scope.detail.segment = '';
             }
             $scope.frontsql = $scope.detail.frontsql;
             // $scope.detail.incrementalpack = JSON.stringify($scope.detail.incrementalpack);

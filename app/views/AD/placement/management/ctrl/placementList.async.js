@@ -1,10 +1,20 @@
 var scope = ["$scope", "$state", "serviceAPI", "urlAPI",'$stateParams',
   function($scope, $state, serviceAPI, urlAPI, $stateParams) {
+    $scope.channelNames = '';
     $scope.getDetail = function() {
             $('.native-cont.timeset').find('i').removeClass('active');
             var param = {
                 operationId : $stateParams.id
-            }
+            };
+            serviceAPI.loadData(urlAPI.campaign_operate_adver,{rtb: 1}).then(function(result) {
+                $scope.channelList = result.advertisers.map(function(data) {
+                    return {
+                        name: data.name,
+                        id: data.id,
+                        isSelect: false
+                    }
+                });
+            });
             serviceAPI.loadData(urlAPI.campaign_placement_detail,param).then(function(result) {
                 $scope.detailVO = result.operation;
                 $scope.rtb = result.rtb;
@@ -34,6 +44,20 @@ var scope = ["$scope", "$state", "serviceAPI", "urlAPI",'$stateParams',
                 }else if (timeSet.length == 24) {
                     $('.icon-check').addClass('active');
                 };
+                if ($scope.detailVO.channel) {
+                    var channelIds = $scope.detailVO.channel;
+                    for (var i = 0; i < $scope.channelList.length; i++) {
+                        var eqId = $scope.channelList[i].id;
+                        if (channelIds.indexOf(eqId) > -1) {
+                            $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                        }
+                    }
+                } else {
+                    $scope.detailVO.channel = '';
+                }
+                if ($scope.detailVO.advertiserName.indexOf('LeWa') > -1) {
+                    $scope.showChannel = true;
+                }
                 $('#datarange').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
                 $('#publishtime').val(moment($scope.detailVO.publishTimeStart).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.publishTimeEnd).format('YYYY/MM/DD'));
             }).

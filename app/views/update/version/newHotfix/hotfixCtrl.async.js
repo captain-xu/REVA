@@ -132,6 +132,10 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         }
         $scope.uploadPatch = function(file, errFiles) {
             if (file) {
+                if (file.name.indexOf('.pac') === -1) {
+                    ModalAlert.error({ msg: "Illegal format" }, 2500);
+                    return;
+                }
                 $scope.pacState = true;
                 Upload.upload({
                     url: urlAPI.update_uploadfile,
@@ -146,6 +150,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         var index1 = fileName.indexOf('_'),
                             index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
                             index3 = fileName.indexOf('.');
+                        $scope.fileAppname = fileName.slice(0, index1);
                         $scope.fileCode = fileName.slice(index1 + 1, index2);
                         $scope.detail.hotfixCode = Number(fileName.slice(index2 + 1, index3));
                     } else {
@@ -181,7 +186,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                             item.value = item.value1 + ',' + item.value2;
                         }
                     break;
-                    case "Client ID": 
+                    case "Client ID":
                         item.value = item.value1;
                     break;
                 }
@@ -200,9 +205,29 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             } else if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
                 ModalAlert.popup({ msg: "The updatenote is required" }, 2500);
                 return false;
+            } else if ($scope.appName !== $scope.fileAppname) {
+                ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);
+                return false;
             } else if ($scope.detail.versionCode != $scope.fileCode) {
                 ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);
                 return false;
+            }
+            //client id 长度校验 与 非空校验
+            for (var i = 0; i < $scope.detail.segment.params.length; i++) {
+                var item = $scope.detail.segment.params[i];
+                if (item.key === "Client ID") {
+                    if (item.value1 === "") {
+                        ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500)
+                        return false;
+                    }
+                    if (item.condition !== "are") {
+                        if (item.value1.length < 32 || item.value1.length > 93) {
+                            ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500)
+                            return false;
+                        };
+                    }
+                }
+
             }
             $scope.segment = $scope.detail.segment;
             $scope.detail.segment = JSON.stringify($scope.setSegment($scope.detail.segment));

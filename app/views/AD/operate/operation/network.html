@@ -308,10 +308,14 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <span class="title">Advertiser:</span>
+                                        <span class="title">Advertiser:<em ng-show="!detailNET.rtb">&#42;</em></span>
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]" >
-                                            <input readonly ng-click="adverClick($event)" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown">
+                                            <input readonly ng-click="adverClick()" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu adver" role="menu">
+                                                <li ng-show="!detailNET.rtb" ng-click="adverAll()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[adAllSelect]"></i>
+                                                    All
+                                                </li>
                                                 <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[ad.isSelect]"></i>
                                                     {{ad.name}}
@@ -339,6 +343,10 @@
                                         <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
                                             <input readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="channelAll()" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[chanAllSelect]"></i>
+                                                    All
+                                                </li>
                                                 <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[channel.isSelect]"></i>{{channel.name}}
                                                 </li>

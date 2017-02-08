@@ -128,7 +128,9 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
         };
         $scope.checkTarget = function() {
-            if (!$scope.detail.target || $scope.detail.target == 0) {
+            if (!$scope.detail.target || $scope.detail.target <= 0) {
+                $scope.detail.target = 1;
+            } else if (isNaN(Number($scope.detail.target))) {
                 $scope.detail.target = 1;
             }
             $scope.detail.target = parseInt($scope.detail.target);

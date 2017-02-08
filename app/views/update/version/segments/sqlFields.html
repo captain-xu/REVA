@@ -55,7 +55,7 @@
     <div class="col-sm-2" ng-if="item.condition=='between' &#38;&#38; item.key=='Create Time'">
         <input type="text" class="form-control"  ng-model="item.value2">
     </div>
-    <div class="col-sm-2" ng-if="(item.value2 || item.condition=='between' ) &#38;&#38; item.key!='Create Time'">
+    <div class="col-sm-2" ng-if="((item.value2 &#38;&#38; item.key!=='Android Version') || item.condition=='between' ) &#38;&#38; item.key!='Create Time'">
          <div class="dropdown os_filter">
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value2" readonly><span class="caret"></span>
@@ -69,7 +69,7 @@
                 <li ng-repeat="option in one.state" ng-click="setValue(item, 'value2', option)">{{option}}</li>
             </ul>
             <ul class="dropdown-menu" ng-if="item.key=='Android Version'">
-                <li ng-repeat="option in androidVersion" ng-click="setValue(item, 'value2', option)">{{option}}</li>
+                <li ng-repeat="option in androidVersion" ng-if="option >= item.value1" ng-click="setValue(item, 'value2', option)">{{option}}</li>
             </ul>
         </div>
     </div>

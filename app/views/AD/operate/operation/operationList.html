@@ -30,6 +30,21 @@
                         </li>
                     </ul>
                 </li>
+                <li ng-hide="detailVO.inServer">
+                    <span class="edit-key">ad to reva offer:<em>&#42;</em></span>
+                    <ul class="native-cont">
+                        <li ng-click="changeInput(1)">
+                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{1:'active'}[detailVO.input]"></i> Yes
+                        </li>
+                        <li ng-click="changeInput(0)">
+                            <i class="fa fa-dot-circle-o icon-radio" ng-class="{0:'active'}[detailVO.input]"></i> No
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="edit-key">Payout:</span>
+                    <input type="text" ng-model="detailVO.payout" ng-readonly="{1: 'true'}[detailVO.status]">
+                </li>
                 <li>
                     <span class="edit-key">Date:<em>&#42;</em></span>
                     <input id="datarange" name="datarange" type="text" date-unlimited data-start="startDate" data-end="endDate" readonly>

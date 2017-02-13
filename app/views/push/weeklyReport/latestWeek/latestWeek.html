@@ -1,10 +1,10 @@
 <div class="push-weekly">
     <div class="header">
-        <span class="head-name"><a href="#/view/push/list">Weekly Push Report > </a></span><span class="head-name">Latest Report</span>
+        <span>Weekly Push Report > </span><span class="head-name">Latest Report</span>
         <ul class="pull-right">
-            <li><i class="fa fa-file-pdf-o"></i></li>
+            <!-- <li><i class="fa fa-file-pdf-o"></i></li> -->
             <li ng-click="printPage()"><i class="fa fa-print"></i></li>
-            <li><a href="#/view/push/historyWeeks"><i class="fa fa-file-text-o"></i></a></li>
+            <li ng-click="linkTo(tohistory)"><a href="#/view/push/historyWeeks"><i class="fa fa-file-text-o"></i></a></li>
         </ul>
     </div>
     <div class="weekly-container" id="weeklyReport">
@@ -19,8 +19,8 @@
                 <p class="info-head"><b>Total Push Arrived</b></p>
                 <p class="info-content">{{basicInfo.arrive}}</p>
                 <p class="info-foot" ng-if="basicInfo">
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <i class="glyphicon glyphicon-arrow-up" ng-if="basicInfo.arriveDifferent > 0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-if="basicInfo.arriveDifferent > 0"></i>
                     <span>{{basicInfo.arriveDifferent}} ({{basicInfo.arriveDifferentPercent}})</span>
                 </p>
             </li>
@@ -28,8 +28,8 @@
                 <p class="info-head"><b>Total Push Displayed</b></p>
                 <p class="info-content">{{basicInfo.display}}</p>
                 <p class="info-foot" ng-if="basicInfo">
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <i class="glyphicon glyphicon-arrow-up" ng-if="basicInfo.displayDifferent > 0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-if="basicInfo.displayDifferent > 0"></i>
                     <span>{{basicInfo.displayDifferent}} ({{basicInfo.displayDifferentPercent}})</span>
                 </p>
             </li>
@@ -37,18 +37,19 @@
                 <p class="info-head"><b>Total Push Clicked</b></p>
                 <p class="info-content">{{basicInfo.click}}</p>
                 <p class="info-foot" ng-if="basicInfo">
-                    <i class="glyphicon glyphicon-arrow-up"></i>
-                    <i class="glyphicon glyphicon-arrow-down"></i>
+                    <i class="glyphicon glyphicon-arrow-up" ng-if="basicInfo.clickDifferent > 0"></i>
+                    <i class="glyphicon glyphicon-arrow-down" ng-if="basicInfo.clickDifferent > 0"></i>
                     <span>{{basicInfo.clickDifferent}} ({{basicInfo.clickDifferentPercent}})</span>
                 </p>
             </li>
         </ul>
-        <h4>Average Clicks at Different Time of the Day <span>{{dateRange}}</span></h4>
+        <h4>Average Clicks at Different Time of a Day <span>{{dateRange}}</span></h4>
         <div class="content-wripper">
             <div class="average" id="bar"></div>
-            <p>Different push time makes different Clicks.</p>
+            <p>Different push time makes different clicks.</p>
             <p>Why not have a try to push your notification during following period?</p>
-            <p class="data-detail"><b ng-repeat="time in topClick">{{time.dataHour - 1}}:00-{{time.dataHour}}:00;&nbsp;</b></p>
+            <p ng-show="topClick.length==0" style="color: #9d9d9d">(No reported data)</p>
+            <p class="data-detail"><b ng-repeat="time in topClick">{{time.dataHour - 1}}:00-{{time.dataHour}}:00<span ng-hide="$last">,</span>&nbsp;</b></p>
         </div>
         <h4>Clicks Ratio:Top apps <span>{{dateRange}}</span></h4>
         <div class="content-wripper">
@@ -60,14 +61,14 @@
                     </li>
                 </ul>
             </div>
-            <p>In this week, users are more interested in Clicking the messages pushed from following apps</p>
-            <p class="data-detail"><b ng-repeat="app in appClick">{{app.appName}}({{app.clickRate}}%);&nbsp;</b></p>
+            <p>In this week, users are more interested in clicking the messages pushed from following apps: </p>
+            <p class="data-detail"><b ng-repeat="app in appClick">{{app.appName}}({{app.clickRate}}%)<span ng-hide="$last">,</span>&nbsp;</b></p>
         </div>
         <h4>Clicks Ratio:Top areas <span>{{dateRange}}</span></h4>
         <div class="content-wripper">
             <div class="map" id="map"></div>
-            <p>The top five areas that have the higest Clicks Ratios are:</p>
-            <p class="data-detail"><b ng-repeat="area in areaClick">{{area.state}}({{area.clickRate}}%);&nbsp;</b></p>
+            <p>The top areas that have the higest Clicks Ratios are:</p>
+            <p class="data-detail"><b ng-repeat="area in areaClick">{{area.state}}({{area.clickRate}}%)<span ng-hide="$last">,</span>&nbsp;</b></p>
         </div>
         <h4>Clicks Ratio:Top Chanels <span>{{dateRange}}</span></h4>
         <div class="content-wripper">
@@ -82,7 +83,7 @@
                     </li>
                 </ul>
             </div>
-            <p>In this week, the users of <b ng-repeat="channel in channelClick">{{channel.channel}}({{channel.clickRate}}%);&nbsp;</b> </p>
+            <p>In this week, the users of <b ng-repeat="channel in channelClick">{{channel.channel}}({{channel.clickRate}}%)<span ng-hide="$last">,</span>&nbsp;</b> </p>
             <p class="data-detail">show more positive attitude to click the push messages.</p>
         </div>
         <div class="weekly-footer">

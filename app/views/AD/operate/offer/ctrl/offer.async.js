@@ -1,6 +1,7 @@
 var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'urlAPI',
  function($scope, ModalAlert, serviceAPI, $state, $stateParams, urlAPI) {
-    $scope.seachParam.order = 0;
+    $scope.seachParam.order = 3;
+    $scope.seachParam.orderBy = "";
     $scope.activeTab = 0;
     $scope.loadList = function() {
         if ($scope.activeTab) {
@@ -26,7 +27,7 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
     $scope.tabList = function(num){
         $scope.activeTab = num;
         $scope.seachParam.currentPage = 1;
-        $scope.seachParam.order = 0;
+        $scope.seachParam.order = 3;
         $scope.loadList();
     };
     $scope.loadSelectList = function() {
@@ -72,11 +73,12 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
         $scope.filterParam.countryfilter = vo.name;
         $scope.loadList();
     };
-    $scope.orderBy = function(num) {
+    $scope.orderBy = function(num, str) {
         if ($scope.seachParam.order == num) {
             return;
         }
         $scope.seachParam.order = num;
+        $scope.seachParam.orderBy = str;
         $scope.loadList();
     };
     $scope.deleteItem = function(vo) {

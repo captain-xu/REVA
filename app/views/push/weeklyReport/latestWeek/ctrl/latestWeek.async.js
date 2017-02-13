@@ -1,8 +1,11 @@
 var scope = ["$scope", "serviceAPI", "$stateParams", 'urlAPI',
     function($scope, serviceAPI, $stateParams, urlAPI) {
-	    	
+        $scope.tohistory = {url: "/view/push/historyWeeks"};
     	$scope.loadData = function(){
-    		serviceAPI.loadData(urlAPI.push_weeklyReport).then(function(result){
+    		if (!$stateParams.id) {
+    			$stateParams.id = '';
+    		}
+    		serviceAPI.loadData(urlAPI.push_weeklyReport, {wekrepId: $stateParams.id}).then(function(result){
     			if (result.code == 200 && result.status == 1) {
     				var startDate = moment(result.data.weeklyTime.startTime).format('YYYY.MM.DD');
     				var endDate = moment(result.data.weeklyTime.endTime).format('YYYY.MM.DD');
@@ -85,6 +88,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams", 'urlAPI',
 			/***********************map chart start***********************/
 			var mapChart = echarts.init(document.getElementById('map'));
 			var colorList = [
+			        '#2E46A1','#FD5922','#2FBE58','#695CB1','#695CB1',
 			        '#2E46A1','#FD5922','#2FBE58','#695CB1','#695CB1'
 			];
 			var mapOption = {

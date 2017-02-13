@@ -68,7 +68,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/overview/ctrl/pushOverviewCtrl') }
             }
         }).state('push.latestWeek', {
-            url: '/latestWeek',
+            url: '/latestWeek/:id',
             templateUrl: 'app/views/push/weeklyReport/latestWeek/latestWeek.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/push/weeklyReport/latestWeek/ctrl/latestWeek.async.js', function(ctrl) {

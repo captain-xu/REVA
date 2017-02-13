@@ -70,6 +70,7 @@ angular.module('app.services').factory("urlAPI", [
             push_segmentUpdate: push + "updateSegment",
             push_segmentCondition: push + "segmentCondition",
             push_weeklyReport: push + "weeklyReport",
+            push_weeklyHistory: push + "weeklyHistoryListPage",
             /*update接口*/
             update_data: update + "data",
             update_permission: update + "permission",

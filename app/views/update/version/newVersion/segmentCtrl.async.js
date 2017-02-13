@@ -17,22 +17,11 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
     $scope.setValue = function(item, str, value, num) {
         item.param[str] = value;
         $scope.clientStatus();
-        if (value == 'All Devices') {
-            $scope.OSList = [];
-        }
         if (item.param.name == 'Client ID') {
             item.param.value1 = '';
         }
         if (num) {
-            var osParam = {
-                channel: item.param.value1,
-                model: value
-            }
-            serviceAPI.loadData(urlAPI.update_getOSVersion, osParam).then(function(result) {
-                if (result.status == 0 && result.code == 0) {
-                    $scope.OSList = result.data;
-                }
-            });
+            item.param.value3 = 'All OS Versions';
         }
     };
 
@@ -43,7 +32,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
                 param: {
                     "name": "Device",
                     "where": "is",
-                    "value1": $scope.devices[0].chl,
+                    "value1": $scope.devices[0].channel,
                     "value2": "All Devices",
                     "value3": "All OS Versions"
                 },
@@ -62,7 +51,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
         switch (vo.name) {
             case "Device":
                 vo.where = "is";
-                vo.value1 = $scope.devices[0].chl;
+                vo.value1 = $scope.devices[0].channel;
                 vo.value2 = "All Devices";
                 vo.value3 = "All OS Versions";
                 break;
@@ -139,7 +128,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
             param: {
                 "name": "Device",
                 "where": "is",
-                "value1": $scope.devices[0].chl,
+                "value1": $scope.devices[0].channel,
                 "value2": "All Devices",
                 "value3": "All OS Versions"
             }

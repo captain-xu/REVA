@@ -61,7 +61,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (result.status == 0 && result.code == 0) {
                     var arr = [];
                     for (var i = 0; i < result.data.length; i++) {
-                        if (result.data[i].chl && result.data[i].chl != "") {
+                        if (result.data[i].channel && result.data[i].channel != "") {
                             arr.push(result.data[i]);
                         }
                     };

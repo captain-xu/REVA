@@ -16,70 +16,140 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                         isSelect: false
                     }
                 });
-            });
-            if ($scope.dataState == 'edit') {
-                var param = {
-                    operationId: $stateParams.id
-                }
-                serviceAPI.loadData(urlAPI.campaign_operate_detail,param).then(function(result) {
-                    $scope.detailNET = result.operation;
-                    $scope.detailNET.operationId = $stateParams.id;
-                    $scope.detailNET.app = result.operationRes.appId;
-                    $scope.detailNET.appName = result.operationRes.appName;
-                    $scope.detailNET.groupId = result.operationRes.groupId;
-                    $scope.detailNET.groupName = result.operationRes.groupName;
-                    $scope.detailNET.placeId = result.operationRes.placementId;
-                    $scope.detailNET.placeName = result.operationRes.placementName;
-                    $scope.detailNET.version = result.operationRes.version;
-                    $scope.detailNET.startDate = $scope.detailNET.startDateForShow;
-                    $scope.detailNET.endDate = $scope.detailNET.endDateForShow;
-                    $scope.detailNET.rtb = result.rtb;
-                    $scope.detailNET.offerInfoList = [
-                        {
-                            "advertiserName": result.operation.advertiserName,
-                            "advertiserId": result.operation.advertiserId,
-                            "offerName": result.operation.offerName,
-                            "offerId": result.operation.offerId
-                        }
-                    ];
-                    $scope.startDate = $scope.detailNET.startDate;
-                    $scope.endDate = $scope.detailNET.endDate;
-                    $scope.allNames = $scope.detailNET.offerName;
-                    $scope.allIds = $scope.detailNET.offerId;
-                    if ($scope.detailNET.channel) {
-                        var channelIds = $scope.detailNET.channel;
-                        if (channelIds === "All") {
-                            $scope.chanAllSelect = true;
-                            for (var i = 0; i < $scope.channelList.length; i++) {
-                                $scope.channelList[i].isSelect = true;
-                                $scope.channelNames = 'All';
+                if ($scope.dataState == 'edit') {
+                    var param = {
+                        operationId: $stateParams.id
+                    }
+                    serviceAPI.loadData(urlAPI.campaign_operate_detail,param).then(function(result) {
+                        $scope.detailNET = result.operation;
+                        $scope.detailNET.operationId = $stateParams.id;
+                        $scope.detailNET.app = result.operationRes.appId;
+                        $scope.detailNET.appName = result.operationRes.appName;
+                        $scope.detailNET.groupId = result.operationRes.groupId;
+                        $scope.detailNET.groupName = result.operationRes.groupName;
+                        $scope.detailNET.placeId = result.operationRes.placementId;
+                        $scope.detailNET.placeName = result.operationRes.placementName;
+                        $scope.detailNET.version = result.operationRes.version;
+                        $scope.detailNET.startDate = $scope.detailNET.startDateForShow;
+                        $scope.detailNET.endDate = $scope.detailNET.endDateForShow;
+                        $scope.detailNET.rtb = result.rtb;
+                        $scope.detailNET.offerInfoList = [
+                            {
+                                "advertiserName": result.operation.advertiserName,
+                                "advertiserId": result.operation.advertiserId,
+                                "offerName": result.operation.offerName,
+                                "offerId": result.operation.offerId
                             }
-                        } else {
-                            for (var i = 0; i < $scope.channelList.length; i++) {
-                                var eqId = $scope.channelList[i].id;
-                                if (channelIds.indexOf(eqId) > -1) {
+                        ];
+                        $scope.startDate = $scope.detailNET.startDate;
+                        $scope.endDate = $scope.detailNET.endDate;
+                        $scope.allNames = $scope.detailNET.offerName;
+                        $scope.allIds = $scope.detailNET.offerId;
+                        $('.icon-check').removeClass('active');
+                        var timeSet = $scope.detailNET.timeSet.split(',');
+                        for (var i = 0; i < timeSet.length; i++) {
+                            var num = Number(timeSet[i]);
+                            $('.timecheck:nth(' + num + ')').find('i').addClass('active');
+                        };
+                        if ($scope.detailNET.timeSet == "") {
+                            $('.icon-check').removeClass('active');
+                        }else if (timeSet.length == 24) {
+                            $('.icon-check').addClass('active');
+                        }
+                        if ($scope.detailNET.advertiserName === "ALL" || $scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
+                            $scope.showChannel = true;
+                        }
+                        var adverParam = {
+                            rtb: $scope.detailNET.rtb
+                        };
+                        serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
+                            $scope.adverList = result.advertisers.map(function(data) {
+                                return {
+                                    name: data.name,
+                                    id: data.id,
+                                    isSelect: false
+                                }
+                            });
+                        });
+                        // $scope.loadModel();
+                        $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
+                        if ($scope.detailNET.channel) {
+                            var channelIds = $scope.detailNET.channel;
+                            if (channelIds === "ALL") {
+                                $scope.chanAllSelect = true;
+                                for (var i = 0; i < $scope.channelList.length; i++) {
                                     $scope.channelList[i].isSelect = true;
-                                    $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                                    $scope.channelNames = 'ALL';
+                                }
+                            } else {
+                                for (var i = 0; i < $scope.channelList.length; i++) {
+                                    var eqId = $scope.channelList[i].id;
+                                    if (channelIds.indexOf(eqId) > -1) {
+                                        $scope.channelList[i].isSelect = true;
+                                        $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                                    }
                                 }
                             }
+                        } else {
+                            $scope.detailNET.channel = '';
                         }
-                    } else {
-                        $scope.detailNET.channel = '';
-                    }
-                    $('.icon-check').removeClass('active');
-                    var timeSet = $scope.detailNET.timeSet.split(',');
-                    for (var i = 0; i < timeSet.length; i++) {
-                        var num = Number(timeSet[i]);
-                        $('.timecheck:nth(' + num + ')').find('i').addClass('active');
+                    }).
+                    catch(function(result) {});
+                } else {
+                    $('.select').show();
+                    $scope.status = 0;
+                    $scope.detailNET = {
+                        "name": "",
+                        "cpx": "",
+                        "startDate": "",
+                        "endDate": "",
+                        "app": "",
+                        "appName": "",
+                        "version": "",
+                        "groupId": "",
+                        "groupName": "",
+                        "placeId": "",
+                        "placeName": "",
+                        "imp": "",
+                        "click": "",
+                        "area": "ALL",
+                        "areaExcept": "",
+                        "device": "",
+                        "deviceExcept": "",
+                        "imei": "",
+                        "imeiExcept": "",
+                        "model": "",
+                        "modelExcept": "",
+                        "osVersion": "",
+                        "osVersionExcept": "",
+                        "language": "",
+                        "languageExcept": "",
+                        "network": "",
+                        "networkExcept": "",
+                        "channel1": "",
+                        "channel1Except": "",
+                        "channel2": "",
+                        "channel2Except": "",
+                        "channel3": "",
+                        "channel3Except": "",
+                        "appVer": "",
+                        "appVerExcept": "",
+                        "status":0,
+                        "timeSet": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24",
+                        "rtb": 0,
+                        "offerInfoList":[],
+                        "offerName":'',
+                        "offerId":'',
+                        "advertiserName": '',
+                        "advertiserId": '',
+                        "channel": ''
                     };
-                    if ($scope.detailNET.timeSet == "") {
-                        $('.icon-check').removeClass('active');
-                    }else if (timeSet.length == 24) {
-                        $('.icon-check').addClass('active');
-                    }
-                    if ($scope.detailNET.advertiserName === "All" || $scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
-                        $scope.showChannel = true;
-                    }
+                    $scope.startDate = '';
+                    $scope.endDate = '';
+                    $scope.allNames = "";
+                    $scope.allIds = "";
+                    $('#datarangeNet').val('');
+                    // $scope.loadModel();
                     var adverParam = {
                         rtb: $scope.detailNET.rtb
                     };
@@ -89,82 +159,11 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                                 name: data.name,
                                 id: data.id,
                                 isSelect: false
-                            }
+                            };
                         });
                     });
-                    // $scope.loadModel();
-                    $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
-                    
-                }).
-                catch(function(result) {});
-            } else {
-                $('.select').show();
-                $scope.status = 0;
-                $scope.detailNET = {
-                    "name": "",
-                    "cpx": "",
-                    "startDate": "",
-                    "endDate": "",
-                    "app": "",
-                    "appName": "",
-                    "version": "",
-                    "groupId": "",
-                    "groupName": "",
-                    "placeId": "",
-                    "placeName": "",
-                    "imp": "",
-                    "click": "",
-                    "area": "ALL",
-                    "areaExcept": "",
-                    "device": "",
-                    "deviceExcept": "",
-                    "imei": "",
-                    "imeiExcept": "",
-                    "model": "",
-                    "modelExcept": "",
-                    "osVersion": "",
-                    "osVersionExcept": "",
-                    "language": "",
-                    "languageExcept": "",
-                    "network": "",
-                    "networkExcept": "",
-                    "channel1": "",
-                    "channel1Except": "",
-                    "channel2": "",
-                    "channel2Except": "",
-                    "channel3": "",
-                    "channel3Except": "",
-                    "appVer": "",
-                    "appVerExcept": "",
-                    "status":0,
-                    "timeSet": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24",
-                    "rtb": 0,
-                    "offerInfoList":[],
-                    "offerName":'',
-                    "offerId":'',
-                    "advertiserName": '',
-                    "advertiserId": '',
-                    "channel": ''
-                };
-                $scope.startDate = '';
-                $scope.endDate = '';
-                $scope.allNames = "";
-                $scope.allIds = "";
-                $('#datarangeNet').val('');
-                // $scope.loadModel();
-                var adverParam = {
-                    rtb: $scope.detailNET.rtb
-                };
-                serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
-                    $scope.adverList = result.advertisers.map(function(data) {
-                        return {
-                            name: data.name,
-                            id: data.id,
-                            isSelect: false
-                        };
-                    });
-                });
-            }
+                }
+            });
             if (!$scope.app || $scope.app.length == 0) {
                 $scope.getAppList();
             };
@@ -846,7 +845,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             var adver = $scope.detailNET.advertiserName;
             if (adver === '') {
                 adver = [];
-            } else if (adver === 'All') {
+            } else if (adver === 'ALL') {
                 $scope.adAllSelect = true;
                 for (var i = 0; i < $scope.adverList.length; i++) {
                     $scope.adverList[i].isSelect = true;
@@ -934,8 +933,8 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     $scope.adverList[i].isSelect = false;
                 }
             } else {
-                $scope.detailNET.advertiserName = "All";
-                $scope.detailNET.advertiserId = "All";
+                $scope.detailNET.advertiserName = "ALL";
+                $scope.detailNET.advertiserId = "ALL";
                 $scope.showChannel = true;
                 for (var i = 0; i < $scope.adverList.length; i++) {
                     $scope.adverList[i].isSelect = true;
@@ -951,7 +950,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 $scope.detailNET.advertiserName = ad.name + ',';
                 ad.isSelect = true;
             } else {
-                if ($scope.detailNET.advertiserName === "All") {
+                if ($scope.detailNET.advertiserName === "ALL") {
                     var arr = [];
                     var arrName = [];
                     for (var i = 0; i < $scope.adverList.length; i++) {
@@ -964,6 +963,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 }
                 if (arr[arr.length - 1] == "") {
                     arr.length = arr.length - 1;
+                    arrName.length = arrName.length - 1;
                 };
                 var numStr = String(ad.id); 
                 var index = arr.indexOf(numStr);
@@ -995,9 +995,11 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.detailNET.offerInfoList = [];
             $scope.detailNET.offerId = "";
             $scope.adAllSelect = false;
-            for (var i = 0; i < $scope.allName.length; i++) {
-                $scope.allName[i].isSelect = false;
-            };
+            if ($scope.allName) {
+                for (var i = 0; i < $scope.allName.length; i++) {
+                    $scope.allName[i].isSelect = false;
+                }
+            }
          };
         //选择All Name值
          $scope.offerData = function(all) {
@@ -1050,8 +1052,8 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     $scope.channelList[i].isSelect = false;
                 }
             } else {
-                $scope.channelNames = "All";
-                $scope.detailNET.channel = "All";
+                $scope.channelNames = "ALL";
+                $scope.detailNET.channel = "ALL";
                 for (var i = 0; i < $scope.channelList.length; i++) {
                     $scope.channelList[i].isSelect = true;
                 }
@@ -1065,7 +1067,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 $scope.channelNames = channel.name + ',';
                 $scope.detailNET.channel = channel.id + ',';
             } else {
-                if ($scope.channelNames === "All") {
+                if ($scope.channelNames === "ALL") {
                     var channelName = [];
                     var channelId = [];
                     for (var i = 0; i < $scope.channelList.length; i++) {
@@ -1121,7 +1123,7 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                 };
                 if ($scope.detailNET.rtb == 0) {
                     $scope.detailNET.offerInfoList = [];
-                    if ($scope.detailNET.advertiserName === 'All' || $scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
+                    if ($scope.detailNET.advertiserName === 'ALL' || $scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
                         if ($scope.detailNET.channel == '') {
                             ModalAlert.popup({msg:"The Channel value is necessary"}, 2500);
                             return;

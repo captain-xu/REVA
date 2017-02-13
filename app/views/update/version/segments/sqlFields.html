@@ -8,7 +8,7 @@
                 <li ng-click="changeName(item,'Device')">Device</li>
                 <li ng-click="changeName(item,'Android Version')">Android Version</li>
                 <li ng-click="changeName(item,'Location')">Location</li>
-                <li ng-click="changeName(item,'Create Time')">Create Time</li>
+                <!-- <li ng-click="changeName(item,'Create Time')">Create Time</li> -->
                 <li ng-click="changeName(item,'Client ID')">Client ID</li>
             </ul>
         </div>
@@ -35,7 +35,7 @@
             </div>
             <ul class="dropdown-menu" ng-if="item.key=='Device'">
                <!--  <li ng-click="changeValue(item, 'All Devices')">All Devices</li> -->
-                <li ng-repeat="option in devices" ng-click="changeValue(item,option.chl)">{{option.chl}}</li>
+                <li ng-repeat="option in devices" ng-click="changeValue(item,option.channel)">{{option.channel}}</li>
             </ul>
             <ul class="dropdown-menu" ng-if="item.key=='Location'">
             <!--    <li ng-click="changeValue(item, 'All Country')">All Country</li> -->
@@ -60,11 +60,11 @@
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value2" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu" ng-if="item.key=='Device'" ng-repeat="one in devices | filter:{chl: item.value1}">
-                <li ng-click="setValue(item, 'value2', 'All Devices')">All Devices</li>
-                <li ng-repeat="option in one.mod" ng-click="setValue(item, 'value2', option, 1)">{{option}}</li>
+            <ul class="dropdown-menu" ng-if="item.key=='Device'" ng-repeat="one in devices | filter:{channel: item.value1}:true">
+                <li ng-click="setValue(item, 'value2', 'All Devices', 1)">All Devices</li>
+                <li ng-repeat="option in one.models" ng-click="setValue(item, 'value2', option.model, 1)">{{option.model}}</li>
             </ul>
-            <ul class="dropdown-menu" ng-if="item.key=='Location'" ng-repeat="one in areas | filter:{country: item.value1}">
+            <ul class="dropdown-menu" ng-if="item.key=='Location'" ng-repeat="one in areas | filter:{country: item.value1}:true">
                <li ng-click="setValue(item, 'value2', 'All States')">All States</li>
                 <li ng-repeat="option in one.state" ng-click="setValue(item, 'value2', option)">{{option}}</li>
             </ul>
@@ -78,9 +78,11 @@
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value3" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu" ng-if="item.key=='Device'">
+            <ul class="dropdown-menu" ng-if="item.key=='Device'" ng-repeat="two in devices | filter:{channel: item.value1}:true">
                 <li ng-click="setValue(item, 'value3', 'All OS Versions')">All OS Versions</li>
-                <li ng-repeat="os in OSList" ng-click="setValue(item, 'value3' ,os)" title="{{os}}">{{os}}</li>
+                <ol ng-repeat="osList in two.models | filter:{model: item.value2}:true">
+                    <li ng-repeat="os in osList.osversions" ng-click="setValue(item, 'value3' ,os)" title="{{os}}">{{os}}</li>
+                </ol>
             </ul>
         </div>
     </div>

@@ -45,7 +45,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a data-target="#place" aria-controls="home" role="tab" data-toggle="tab">Placement</a></li>
                             <li role="presentation"><a data-target="#target" aria-controls="profile" role="tab" data-toggle="tab">Targeting</a></li>
-                            <li role="presentation" ng-hide="detailNET.placeId==''"><a data-target="#adver" aria-controls="messages" role="tab" data-toggle="tab">Advertiser</a>
+                            <li role="presentation" ng-hide="detailNET.placeId==''"><a data-target="#asver" aria-controls="messages" role="tab" data-toggle="tab">Advertiser</a>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -298,7 +298,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="adver">
+                            <div role="tabpanel" class="tab-pane" id="asver">
                                 <ul>
                                     <li>
                                         <span class="title">RTB:</span>
@@ -314,7 +314,7 @@
                                             <ul class="dropdown-menu adver" role="menu">
                                                 <li ng-show="!detailNET.rtb" ng-click="adverAll()" class="advercheck" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[adAllSelect]"></i>
-                                                    All
+                                                    ALL
                                                 </li>
                                                 <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[ad.isSelect]"></i>
@@ -345,7 +345,7 @@
                                             <ul class="dropdown-menu" role="menu">
                                                 <li ng-click="channelAll()" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[chanAllSelect]"></i>
-                                                    All
+                                                    ALL
                                                 </li>
                                                 <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-offer" ng-class="{true:'active'}[channel.isSelect]"></i>{{channel.name}}

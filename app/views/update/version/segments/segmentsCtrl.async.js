@@ -17,22 +17,11 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
     $scope.setValue = function(item, str, value, num) {
         item[str] = value;
         $scope.clientStatus();
-        if (value == 'All Devices') {
-            $scope.OSList = [];
-        }
         if (item.key == 'Client ID') {
             item.value1 = '';
         }
         if (num) {
-            var osParam = {
-                channel: item.value1,
-                model: value
-            }
-            serviceAPI.loadData(urlAPI.update_getOSVersion, osParam).then(function(result) {
-                if (result.status == 0 && result.code == 0) {
-                    $scope.OSList = result.data;
-                }
-            });
+            item.value3 = 'All OS Versions';
         }
     };
 
@@ -42,7 +31,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
             $scope.segments.params.push({
                 "key": "Device",
                 "condition": "is",
-                "value1": $scope.devices[0].chl,
+                "value1": $scope.devices[0].channel,
                 "value2": "All Devices",
                 "value3": "All OS Versions"
             });
@@ -58,7 +47,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
         switch (vo.key) {
             case "Device":
                 vo.condition = "is";
-                vo.value1 = $scope.devices[0].chl;
+                vo.value1 = $scope.devices[0].channel;
                 vo.value2 = "All Devices";
                 vo.value3 = "All OS Versions";
                 break;
@@ -135,7 +124,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
     //         param: {
     //             "key": "Device",
     //             "condition": "is",
-    //             "value1": $scope.devices[0].chl,
+    //             "value1": $scope.devices[0].channel,
     //             "value2": "All Devices",
     //             "value3": "All OS Versions"
     //         }

@@ -74,8 +74,8 @@
                                 <th>CPX</th>
                                 <th>Payout
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy(1)" ng-class="{1: 'icon-color'}[seachParam.order]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy(0)" ng-class="{0: 'icon-color'}[seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy(1, 'payout')" ng-class="{true: 'icon-color'}[seachParam.order == 1  &amp;&amp; seachParam.orderBy == 'payout']"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy(0, 'payout')" ng-class="{true: 'icon-color'}[seachParam.order == 0  &amp;&amp; seachParam.orderBy == 'payout']"></i>
                                     </div>
                                 </th>
                                 <th>Action</th>
@@ -108,8 +108,8 @@
                                 <th>CPX</th>
                                 <th>Payout
                                     <div class="icon-order">
-                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy(1)" ng-class="{1: 'icon-color'}[seachParam.order]"></i>
-                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy(0)" ng-class="{0: 'icon-color'}[seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy(1, 'payout')" ng-class="{true: 'icon-color'}[seachParam.order == 1  &amp;&amp; seachParam.orderBy == 'payout']"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy(0, 'payout')" ng-class="{true: 'icon-color'}[seachParam.order == 0  &amp;&amp; seachParam.orderBy == 'payout']"></i>
                                     </div>
                                 </th>
                                 <th>Action</th>

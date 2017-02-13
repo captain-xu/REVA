@@ -1,5 +1,6 @@
 var scope = ["$scope", 'ModalAlert', '$http','urlAPI',
     function($scope, ModalAlert, $http,urlAPI) {
+        $scope.tolist = {url: "/view/push/list"};
         $scope.time = "Days";
         $scope.setTime = function(time, param) {
             $scope[param] = time;

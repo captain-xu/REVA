@@ -95,7 +95,7 @@
                         <td>{{vo.showType}}</td>
                         <td>{{vo.placementTypeName}}</td>
                         <td>{{vo.app}}</td>
-                        <td>{{vo.placementId}}</td>
+                        <td>{{vo.placementId}} <span class="placState" ng-class="{0: 'inactive', 1: 'active'}[vo.activeStatus]">&nbsp;{{vo.activeStatus == 0 ? 'inactive' : 'active'}}</span></td>
                         <td>{{vo.createTime}}</td>
                         <td>
                             <span ng-class="{1: 'turn-on', 0: 'turn-off'}[vo.placeStatus]" ng-click="changeState(vo)"></span>

@@ -2,6 +2,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
     function($scope, serviceAPI, ModalAlert, Upload, $stateParams, urlAPI, $state) {
         $scope.appName = $stateParams.app;
         $scope.pacState = false;
+        $scope.checkNum = false;
         $scope.getDetail = function() {
             $scope.detail = {
                 "app": $stateParams.package,
@@ -95,7 +96,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (result.status == 0 && result.code == 0) {
                     var arr = [];
                     for (var i = 0; i < result.data.length; i++) {
-                        if (result.data[i].chl && result.data[i].chl != "") {
+                        if (result.data[i].channel && result.data[i].channel != "") {
                             arr.push(result.data[i]);
                         }
                     };
@@ -125,22 +126,36 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
         };
         $scope.checkTarget = function() {
-            if (!$scope.detail.target || $scope.detail.target <= 0) {
-                $scope.detail.target = 1;
-            } else if (isNaN(Number($scope.detail.target))) {
-                $scope.detail.target = 1;
+            if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN(Number($scope.detail.target))) {
+                $scope.checkNum = true;
             }
-            $scope.detail.target = parseInt($scope.detail.target);
-        }
+        };
+        $scope.removeTarget = function() {
+            $scope.checkNum = false;
+        };
         $scope.uploadPatch = function(file, errFiles) {
             if (file) {
-                if (file.name.indexOf('.pac') === -1) {
+                var fileName = file.name;
+                var index1 = fileName.indexOf('_'),
+                    index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
+                    index3 = fileName.indexOf('.');
+                $scope.fileAppname = fileName.slice(0, index1);
+                $scope.fileCode = fileName.slice(index1 + 1, index2);
+                $scope.hotfixCode = Number(fileName.slice(index2 + 1, index3));
+                if (fileName.indexOf('.pac') === -1) {
                     ModalAlert.error({ msg: "Illegal format" }, 2500);
                     return;
-                } else if (file.name.indexOf($scope.appName) === -1) {
-                    ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);
+                } else if ($scope.fileAppname !== $scope.appName) {
+                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
+                    return false;
+                } else if (isNaN(Number($scope.fileCode)) || Number($scope.fileCode) !== $scope.detail.versionCode) {
+                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
+                    return false;
+                } else if (isNaN($scope.hotfixCode) || $scope.hotfixCode == 0 || $scope.hotfixCode > 2147483647) {
+                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
                     return false;
                 }
+                $scope.detail.hotfixCode = $scope.hotfixCode;
                 $scope.pacState = true;
                 Upload.upload({
                     url: urlAPI.update_uploadfile,
@@ -151,13 +166,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     $scope.pacState = false;
                     if (result.status == 0 && result.code == 0) {
                         $scope.detail.fullpackage = result.data.filePath;
-                        var fileName = file.name;
-                        var index1 = fileName.indexOf('_'),
-                            index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
-                            index3 = fileName.indexOf('.');
-                        $scope.fileAppname = fileName.slice(0, index1);
-                        $scope.fileCode = fileName.slice(index1 + 1, index2);
-                        $scope.detail.hotfixCode = Number(fileName.slice(index2 + 1, index3));
                     } else {
                         ModalAlert.popup({ msg: result.msg }, 2500);
                     }
@@ -212,6 +220,9 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 return false;
             } else if ($scope.detail.versionCode != $scope.fileCode) {
                 ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);
+                return false;
+            } else if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN(Number($scope.detail.target))) {
+                $scope.checkNum = true;
                 return false;
             }
             //client id 长度校验 与 非空校验

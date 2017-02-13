@@ -59,7 +59,8 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                 $scope.detailVO = {
                     "name": "",
                     "priority": "",
-                    "inServer": "1",
+                    "inServer": 1,
+                    "input": 0,
                     "startDate": "",
                     "endDate": "",
                     "app": "",
@@ -252,6 +253,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     }).
                     catch(function(result) {});
                 } else {
+                    $scope.detailVO.input = 0;
                     $scope.detailVO.imageList = [];
                     $scope.detailVO.titleList = [];
                 }
@@ -266,6 +268,9 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                 };
             }).
             catch(function(result) {});
+        };
+        $scope.changeInput = function(num) {
+            $scope.detailVO.input = num;
         };
         //获取operation 详情页 category 数据
         $scope.getCategory = function() {
@@ -390,6 +395,8 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                 }).then(function(result) {
                     vo.imageUrlForShow = result.data.viewUrl;
                     vo.imageUrl = result.data.url;
+                    vo.width = result.data.width;
+                    vo.height = result.data.height;
                     $scope.dynamic = 100;
                     vo.begin_upload = false;
                     if (file.size >= 300000 ) {

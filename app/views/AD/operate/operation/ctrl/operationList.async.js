@@ -26,6 +26,12 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     $scope.endDate = $scope.detailVO.endDate;
                     $scope.publishTimeStart = $scope.detailVO.publishTimeStart;
                     $scope.publishTimeEnd = $scope.detailVO.publishTimeEnd;
+                    $('#datarange').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
+                    if ($scope.detailVO.publishTimeStart) {
+                        $('#publishtime').val(moment($scope.detailVO.publishTimeStartForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.publishTimeEndForShow).format('YYYY/MM/DD')); 
+                   }else{
+                        $('#publishtime').val('');
+                   }
                     if ($scope.detailVO.inServer) {
                         $scope.getCategory();
                     };
@@ -33,22 +39,19 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     /*获取下拉数据*/
                     $scope.getSelects();
                     $('.icon-check').removeClass('active');
-                    var timeSet = $scope.detailVO.timeSet.split(',');
-                    for (var i = 0; i < timeSet.length; i++) {
-                        var num = Number(timeSet[i]);
-                        $('.timecheck:nth(' + num + ')').find('i').addClass('active');
-                    };
-                    if ($scope.detailVO.timeSet == "") {
+                    if ($scope.detailVO.timeSet) {
+                        var timeSet = $scope.detailVO.timeSet.split(',');
+                        for (var i = 0; i < timeSet.length; i++) {
+                            var num = Number(timeSet[i]);
+                            $('.timecheck:nth(' + num + ')').find('i').addClass('active');
+                        }
+                        if (timeSet.length === 24) {
+                            $('.icon-check').addClass('active');
+                        }
+                    } else {
+                        $scope.detailVO.timeSet = '';
                         $('.icon-check').removeClass('active');
-                    }else if (timeSet.length == 24) {
-                        $('.icon-check').addClass('active');
-                    };
-                    $('#datarange').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
-                    if ($scope.detailVO.publishTimeStart) {
-                        $('#publishtime').val(moment($scope.detailVO.publishTimeStartForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.publishTimeEndForShow).format('YYYY/MM/DD')); 
-                   }else{
-                        $('#publishtime').val('');
-                   }
+                    }
                     
                 }).
                 catch(function(result) {});
@@ -72,7 +75,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     "placeName": "",
                     "imp": "",
                     "click": "",
-                    "area": "",
+                    "area": "ALL",
                     "areaExcept": "",
                     "device": "",
                     "deviceExcept": "",
@@ -116,7 +119,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                 };
             }
             serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
-                $scope.areaList = result.countries;
+                $scope.areaList = result.areaInfo;
             })
         };
         /*加载编辑页面app数据*/
@@ -288,6 +291,8 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                         imageUrl: data.imageUrl,
                         imageName: data.imageName,
                         imageUrlForShow: data.imageUrlForShow,
+                        width: data.width,
+                        height: data.height,
                         begin_upload: false
                     }
                 });
@@ -498,7 +503,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
             history.go(-1);
          };
         //保存operation数据
-        $scope.saveData = function(detailVO) {
+        $scope.saveData = function() {
             // Non null check
             if (regexAPI.objRegex($scope.detailVO, ["name", "priority", "inServer", "imp", "click", "appName", "version", "groupName", "placeName"])) {
                 if ($scope.detailVO.imageList.length > 0) {

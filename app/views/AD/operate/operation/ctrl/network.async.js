@@ -43,18 +43,22 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                         ];
                         $scope.startDate = $scope.detailNET.startDate;
                         $scope.endDate = $scope.detailNET.endDate;
+                        $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
                         $scope.allNames = $scope.detailNET.offerName;
                         $scope.allIds = $scope.detailNET.offerId;
                         $('.icon-check').removeClass('active');
-                        var timeSet = $scope.detailNET.timeSet.split(',');
-                        for (var i = 0; i < timeSet.length; i++) {
-                            var num = Number(timeSet[i]);
-                            $('.timecheck:nth(' + num + ')').find('i').addClass('active');
-                        };
-                        if ($scope.detailNET.timeSet == "") {
+                        if ($scope.detailNET.timeSet) {
+                            var timeSet = $scope.detailNET.timeSet.split(',');
+                            for (var i = 0; i < timeSet.length; i++) {
+                                var num = Number(timeSet[i]);
+                                $('.timecheck:nth(' + num + ')').find('i').addClass('active');
+                            }
+                            if (timeSet.length === 24) {
+                                $('.icon-check').addClass('active');
+                            }
+                        } else {
+                            $scope.detailNET.timeSet = '';
                             $('.icon-check').removeClass('active');
-                        }else if (timeSet.length == 24) {
-                            $('.icon-check').addClass('active');
                         }
                         if ($scope.detailNET.advertiserName === "ALL" || $scope.detailNET.advertiserName.indexOf('LeWa') > -1) {
                             $scope.showChannel = true;
@@ -72,7 +76,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                             });
                         });
                         // $scope.loadModel();
-                        $('#datarangeNet').val(moment($scope.detailNET.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailNET.endDateForShow).format('YYYY/MM/DD'));
                         if ($scope.detailNET.channel) {
                             var channelIds = $scope.detailNET.channel;
                             if (channelIds === "ALL") {

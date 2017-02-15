@@ -56,7 +56,12 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
                 priority:1,
                 status: 0,
                 trackedBy: "",
-                version: ""
+                version: "",
+                fbId: "",
+                admobId: "",
+                fbRatio: 0,
+                admobRatio: 0,
+                revaRatio: 100
             };
             serviceAPI.loadData(urlAPI.campaign_place_type).then(function(result) {
                 $scope.placeType = result.placementTypes;
@@ -161,6 +166,18 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
             detailVO.trackedBy = trackedBy.join(",");
         }
     };
+    $scope.checkId = function(dom, str) {
+        if (dom.target.value === "") {
+            $scope.detailVO[str] = 0
+        }
+    };
+    // $scope.checkRatio = function(str) {
+    //     if (str === 'fb') {
+    //         if ($scope.detailVO.revaRatio > 0) {
+    //             $scope.detailVO.revaRatio = 100 - $scope.detailVO.fbRatio - $scope.detailVO.admobRatio;
+    //         }
+    //     }
+    // };
     $scope.uploadPic = function() {
         var file = $scope.picFile;
         $scope.begin_upload = true;
@@ -214,9 +231,18 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
         if($scope.detailVO.countdown === 0 && $scope.detailVO.showSeconds==''){
             ModalAlert.popup({
                 msg:"The Max show seconds value is necessary"
-            });
+            }, 2500);
             return;
         };
+        $scope.detailVO.fbRatio = Number($scope.detailVO.fbRatio);
+        $scope.detailVO.admobRatio = Number($scope.detailVO.admobRatio);
+        $scope.detailVO.revaRatio = Number($scope.detailVO.revaRatio);
+        if ($scope.detailVO.fbRatio < 0 || $scope.detailVO.admobRatio < 0 || $scope.detailVO.revaRatio < 0 || $scope.detailVO.fbRatio + $scope.detailVO.admobRatio + $scope.detailVO.revaRatio !== 100) {
+            ModalAlert.popup({
+                msg:"Mediation format error"
+            }, 2500);
+            return;
+        }
         if ($scope.detailVO.placementType == 0) {
             $scope.detailVO.position = '';
         } else if ($scope.detailVO.placementType == 3) {

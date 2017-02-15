@@ -31,7 +31,7 @@
                     </ul>
                 </li>
                 <li ng-hide="detailVO.inServer">
-                    <span class="edit-key">ad to reva offer:<em>&#42;</em></span>
+                    <span class="edit-key">Add to reva offer:<em>&#42;</em></span>
                     <ul class="native-cont">
                         <li ng-click="changeInput(1)">
                             <i class="fa fa-dot-circle-o icon-radio" ng-class="{1:'active'}[detailVO.input]"></i> Yes
@@ -293,7 +293,7 @@
                 </li>
                 <li class="edit-footer">
                     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-                    <button class="btn btn-default save" ng-click="saveData(detailVO)" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
+                    <button class="btn btn-default save" ng-click="saveData()" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
                 </li>
             </ul>
         </div>

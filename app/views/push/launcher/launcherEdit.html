@@ -1,0 +1,82 @@
+<div class="editpush">
+    <div class="header">
+        <span class="head-name">Launcher Push</span>
+    </div>
+    <div class="targetuesrs">
+        <div class="targetuesrs-container">
+            <div class="form-group clearfix">
+                <label class="col-sm-2">Campaign Name:<em>&#42;</em></label>
+                <div class="col-xs-6">
+                    <input name="campaign" type="text" ng-model="receiver.campaignName" placeholder="Used to identify information" ng-focus="removeValidate('campaign')" maxlength="50">
+                    <ins class="warn" ng-show="validateParam.campWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                    <label class="word-sum">{{50 - receiver.campaignName.length}}</label>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label class="col-sm-2">Message:<em>&#42;</em></label>
+                <div class="col-xs-6">
+                    <textarea class="launcher-msg" placeholder="Please enter the message content" maxlength="2000"></textarea>
+                    <label class="word-sum">{{2000 - receiver.message.length}}</label>
+                </div>
+            </div>
+            <div class="form-group" ng-hide="receiver.messageType">
+                <label class="col-sm-2">Target Users:<em>&#42;</em></label>
+                <div class="col-xs-6">
+                    <ul class="user-select">
+                        <li ng-class="{true:'active'}[status.taegetNum == 0]">
+                            <p ng-click="userSelect(0)" ng-class="{true:'bold'}[status.taegetNum == 0]">
+                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 0]"></i> All Users
+                            </p>
+                            <p class="user-content" ng-show="status.taegetNum == 0">
+                                Deliver this message to <b>{{receiver.allUsers}}%</b> of all eligible users on selected devices.
+                            </p>
+                            <p class="user-content" ng-show="status.taegetNum == 0">
+                                Targeting
+                                <input type="text" ng-model="receiver.allUsers" ng-blur="checkNum(receiver.allUsers)"> % of All Users
+                            </p>
+                        </li>
+                        <li ng-class="{true:'active'}[status.taegetNum == 1]">
+                            <p ng-click="userSelect(1)" ng-class="{true:'bold'}[status.taegetNum == 1]">
+                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 1]"></i> Single Device
+                            </p>
+                            <p class="user-content" ng-show="status.taegetNum == 1" ng-click="singleList(0)">
+                                <input name="single" type="text" class="single-user" ng-model="receiver.deviceId" ng-show="!status.single" placeholder="Please enter a Client ID" ng-focus="removeValidate('single')">
+                                <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="sinOpen" ng-mouseenter="sinOpen=true" ng-mouseleave="sinOpen=false" uib-popover="Unique device identifier for the target user.">
+                                <br>
+                                <ins class="warn" ng-show="validateParam.singleWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                            </p>
+                        </li>
+                        <li ng-class="{true:'active'}[status.taegetNum == 2]">
+                            <p ng-click="userSelect(2)" ng-class="{true:'bold'}[status.taegetNum == 2]">
+                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.taegetNum == 2]"></i> Specific Devices
+                            </p>
+                            <div class="user-content" ng-show="status.taegetNum == 2">
+                                <div class="dropdown clearfix">
+                                    <input type="text" name="segmentName" placeholder="Please select a segment for targeting" class="dropdown-toggle" data-toggle="dropdown" ng-model="receiver.segmentName" readonly>
+                                    <span class="caret"></span>
+                                    <ul class="dropdown-menu device-menu">
+                                        <li ng-repeat="item in segmentList" class="cursor" ng-click="selectSegment(item)">
+                                            {{item.segmentName}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="left-btn">
+                <button type="button" class="btn btn-default draft" ng-click="saveDraft()">Save as Draft</button>
+            </div>
+            <div class="right-btn">
+                <a href="#/view/push/list">
+                    <button type="button" class="btn btn-default cancle">Cancel</button>
+                </a>
+                <button type="button" class="btn btn-default save" ng-click="saveDetail()">Activate</button>
+            </div>
+        </div>
+    </div>
+</div>

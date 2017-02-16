@@ -158,23 +158,23 @@
                 </li>
                 <li>
                     <span class="edit-key">FN ID:</span>
-                    <input type="text" ng-model="detailVO.fbId" ng-blur="checkId($event, 'fbRatio')" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%">
+                    <input type="text" ng-model="detailVO.fbaPlaceId" ng-blur="checkId($event, 'fbaRatio')" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%">
                 </li>
                 <li>
                     <span class="edit-key">Admob ID:</span>
-                    <input type="text" ng-model="detailVO.admobId" ng-blur="checkId($event, 'admobRatio')" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%">
+                    <input type="text" ng-model="detailVO.adMobPlaceId" ng-blur="checkId($event, 'admobRatio')" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%">
                 </li>
                 <li>
                     <span class="edit-key">Mediation:<em>&#42;</em></span>
-                    <!-- <input type="text" ng-model="detailVO.admobId" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%"> -->
+                    <!-- <input type="text" ng-model="detailVO.adMobPlaceId" ng-readonly="{1: 'true'}[detailVO.status]" style="width: 24%"> -->
                     <ol class="edit-mediat">
                         <li>
                             <span>FN</span>
-                            <input type="text" ng-model="detailVO.fbRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.fbId]"><span class="right-span">%</span>
+                            <input type="text" ng-model="detailVO.fbaRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.fbaPlaceId]"><span class="right-span">%</span>
                         </li>
                         <li>
                             <span>Admob</span>
-                            <input type="text" ng-model="detailVO.admobRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.admobId]"><span class="right-span">%</span>
+                            <input type="text" ng-model="detailVO.admobRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.adMobPlaceId]"><span class="right-span">%</span>
                         </li>
                         <li>
                             <span>Reva</span>

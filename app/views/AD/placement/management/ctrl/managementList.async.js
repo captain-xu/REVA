@@ -57,9 +57,9 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
                 status: 0,
                 trackedBy: "",
                 version: "",
-                fbId: "",
-                admobId: "",
-                fbRatio: 0,
+                fbaPlaceId: "",
+                adMobPlaceId: "",
+                fbaRatio: 0,
                 admobRatio: 0,
                 revaRatio: 100
             };
@@ -171,13 +171,6 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
             $scope.detailVO[str] = 0
         }
     };
-    // $scope.checkRatio = function(str) {
-    //     if (str === 'fb') {
-    //         if ($scope.detailVO.revaRatio > 0) {
-    //             $scope.detailVO.revaRatio = 100 - $scope.detailVO.fbRatio - $scope.detailVO.admobRatio;
-    //         }
-    //     }
-    // };
     $scope.uploadPic = function() {
         var file = $scope.picFile;
         $scope.begin_upload = true;
@@ -234,10 +227,10 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
             }, 2500);
             return;
         };
-        $scope.detailVO.fbRatio = Number($scope.detailVO.fbRatio);
+        $scope.detailVO.fbaRatio = Number($scope.detailVO.fbaRatio);
         $scope.detailVO.admobRatio = Number($scope.detailVO.admobRatio);
         $scope.detailVO.revaRatio = Number($scope.detailVO.revaRatio);
-        if ($scope.detailVO.fbRatio < 0 || $scope.detailVO.admobRatio < 0 || $scope.detailVO.revaRatio < 0 || $scope.detailVO.fbRatio + $scope.detailVO.admobRatio + $scope.detailVO.revaRatio !== 100) {
+        if ($scope.detailVO.fbaRatio < 0 || $scope.detailVO.admobRatio < 0 || $scope.detailVO.revaRatio < 0 || $scope.detailVO.fbaRatio + $scope.detailVO.admobRatio + $scope.detailVO.revaRatio !== 100) {
             ModalAlert.popup({
                 msg:"Mediation format error"
             }, 2500);

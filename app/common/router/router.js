@@ -29,20 +29,25 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         .state('error', {
             url: '/view/error',
             templateUrl: 'app/views/error/error.html'
-        }).state('changePassword', {
+        })
+        .state('changePassword', {
             url: '/changePassword',
             templateUrl: 'app/views/user/changePassword.html'
-        }).state('userBasicInfo', {
+        })
+        .state('userBasicInfo', {
             url: '/view/stub/userBasicInfo',
             templateUrl: 'app/views/stub/userBasicInfo.html'
-        }).state('insertApp', {
+        })
+        .state('insertApp', {
             url: '/view/stub/appActive',
             templateUrl: 'app/views/stub/insertApp.html'
-        }).state('push', {
+        })
+        .state('push', {
             url: '/view/push',
             templateUrl: 'app/views/main/layout.html',
             params: { activeTitle: "push" }
-        }).state('push.list', {
+        })
+        .state('push.list', {
             url: '/list',
             templateUrl: 'app/views/push/list/list.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -53,10 +58,12 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/list/listCtrl'); }
             }
-        }).state('push.empty', {
+        })
+        .state('push.empty', {
             url: '/empty',
             templateUrl: 'app/views/push/list/empty.html'
-        }).state('push.overview', {
+        })
+        .state('push.overview', {
             url: '/overview/:id',
             templateUrl: 'app/views/push/overview/pushOverview.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -67,7 +74,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/overview/ctrl/pushOverviewCtrl') }
             }
-        }).state('push.latestWeek', {
+        })
+        .state('push.latestWeek', {
             url: '/latestWeek/:id',
             templateUrl: 'app/views/push/weeklyReport/latestWeek/latestWeek.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -78,7 +86,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weeklyReport/latestWeek/ctrl/latestWeek') }
             }
-        }).state('push.historyWeeks', {
+        })
+        .state('push.historyWeeks', {
             url: '/historyWeeks',
             templateUrl: 'app/views/push/weeklyReport/historyWeeks/historyWeeks.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -89,7 +98,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/weeklyReport/historyWeeks/ctrl/historyWeeks') }
             }
-        }).state('push.segments', {
+        })
+        .state('push.segments', {
             url: "/segments",
             templateUrl: 'app/views/push/segment/pushSegment.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -100,7 +110,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/segment/pushSegment') }
             }
-        }).state('push.segmentDetail', {
+        })
+        .state('push.segmentDetail', {
             url: "/segmentDetail/:id",
             templateUrl: 'app/views/push/segment/newPushSegment.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -111,7 +122,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/segment/newPushSegment') }
             }
-        }).state('push.edit', {
+        })
+        .state('push.edit', {
             url: '/edit/:id',
             templateUrl: 'app/views/push/pushedit/edit.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -123,7 +135,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/pushedit/edit') }
             }
-        }).state('push.edit.targetuser', {
+        })
+        .state('push.edit.targetuser', {
             url: '/targetuser',
             templateUrl: 'app/views/push/notification/targetuser.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -148,7 +161,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/notification/ctrl/creativeCtrl') }
             }
-        }).state('push.edit.scheduling', {
+        })
+        .state('push.edit.scheduling', {
             url: '/scheduling',
             templateUrl: 'app/views/push/notification/scheduling.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -160,7 +174,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/notification/ctrl/schedulingCtrl') }
             }
-        }).state('push.edit.confirm', {
+        })
+        .state('push.edit.confirm', {
             url: "/confirm",
             templateUrl: 'app/views/push/notification/confirm.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -172,7 +187,8 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/notification/ctrl/confirmCtrl') }
             }
-        }).state('push.editApp', {
+        })
+        .state('push.editApp', {
             url: '/editApp/:id',
             templateUrl: 'app/views/push/pushedit/edit.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
@@ -235,6 +251,30 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             params: { step: 4 },
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/appmessages/ctrl/appconfirmCtrl') }
+            }
+        })
+        .state('push.launcher', {
+            url: '/launcher',
+            templateUrl: 'app/views/push/launcher/launcher.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/push/launcher/launcherCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/launcherCtrl/launcherCtrl') }
+            }
+        })
+        .state('push.launcherEdit', {
+            url: '/launcherEdit',
+            templateUrl: 'app/views/push/launcher/launcherEdit.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/push/launcher/launcherEditCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/launcher/launcherEditCtrl') }
             }
         })
         .state('push.settings', {

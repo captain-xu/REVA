@@ -71,6 +71,11 @@ angular.module('app.services').factory("urlAPI", [
             push_segmentCondition: push + "segmentCondition",
             push_weeklyReport: push + "weeklyReport",
             push_weeklyHistory: push + "weeklyHistoryListPage",
+            push_launcherList: push + "launcherPushList",
+            push_launcherDetail: push + "setLauncherPush",
+            push_launcherEdit: push + "saveLauncherPush",
+            push_launcherDevices: push + "launcherDevices",
+            push_launcherTokens: push + "uploadTokens",
             /*update接口*/
             update_data: update + "data",
             update_permission: update + "permission",

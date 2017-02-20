@@ -128,6 +128,9 @@
                     color: #000;
                 }
 			}
+			&.offerOn {
+			    min-width: 100px;
+			}
 		}
 		.table-bordered > thead > tr > th:first-child{
 			width:80px;
@@ -152,12 +155,28 @@
 			  cursor: pointer;
 			  outline: none;
 			}
+			&.placeId {
+				position: relative;
+				padding-left: 76px;
+				white-space: nowrap;
+			}
 			.placState {
+				display: inline-block;
+				position: absolute;
+				left: 14px;
+				width: 60px;
+				text-align: center;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				user-select:none;
+				.border-radius(3px);
 				&.active {
-					color: #50c336;
+					color: #fff;
+					background: #4B5D83;
 				}
 				&.inactive {
-					color: red;
+					border: 1px solid #4B5D83;
+					color: #4B5D83;
 				}
 			}
 		}

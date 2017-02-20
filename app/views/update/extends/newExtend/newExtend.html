@@ -23,7 +23,7 @@
                         <p>{{device}}<span class="caret"></span></p>
                     </div>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="dev in deviceList" ng-click="deviceData(dev)">{{dev}}</li>
+                        <li ng-repeat="dev in deviceList" ng-click="deviceData(dev.model)">{{dev.model}}</li>
                     </ul>
                 </div>
             </div>

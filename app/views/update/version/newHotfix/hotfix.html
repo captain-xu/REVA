@@ -23,10 +23,12 @@
             <div class="col-sm-6">
                 <div class="dropdown os_filter">
                     <div class="dropdown-toggle" data-toggle="dropdown">
-                        <input name="packagename" ng-model="detail.versionCode" class="form-control" placeholder="Please select a Version Code" readonly><span class="caret"></span>
+                        <input name="packagename" ng-model="versionDetail" class="form-control" placeholder="Please select a Version Code" readonly><span class="caret"></span>
                     </div>
                     <ul class="dropdown-menu">
-                        <li ng-repeat="ver in targetVersions" ng-click="detail.versionCode = ver">{{ver}}</li>
+                        <li ng-repeat="ver in targetVersions" ng-click="changeCode(ver)">
+                            version_name:{{ver.version_name}};&nbsp;version_code:{{ver.version_code}};&nbsp;id:{{ver.id}}
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'urlAPI', '$state',
     function($scope, serviceAPI, ModalAlert, Upload, $stateParams, urlAPI, $state) {
+        $scope.checkNum = false;
         $scope.getDetail = function() {
             $scope.detail = {
                 "appicon": "",
@@ -128,13 +129,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
         };
         $scope.checkTarget = function() {
-            if (!$scope.detail.target || $scope.detail.target <= 0) {
-                $scope.detail.target = 1;
-            } else if (isNaN(Number($scope.detail.target))) {
-                $scope.detail.target = 1;
+            $scope.detail.target = Number($scope.detail.target);
+            if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN($scope.detail.target)) {
+                $scope.checkNum = true;
             }
-            $scope.detail.target = parseInt($scope.detail.target);
-        }
+        };
+        $scope.removeTarget = function() {
+            $scope.checkNum = false;
+        };
         $scope.changePriority = function(str, num) {
             $scope.detail[str] = num;
         };
@@ -310,6 +312,11 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
             if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
                 ModalAlert.popup({ msg: "The updatenote is required" }, 2500)
+                return false;
+            }
+            $scope.detail.target = Number($scope.detail.target);
+            if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN(Number($scope.detail.target))) {
+                $scope.checkNum = true;
                 return false;
             }
             for (var i = 0; i < $scope.detail.frontsql.params.length; i++) {

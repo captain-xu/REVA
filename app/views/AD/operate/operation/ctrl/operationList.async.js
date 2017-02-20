@@ -63,7 +63,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     "name": "",
                     "priority": "",
                     "inServer": 1,
-                    "input": 0,
+                    "input": 1,
                     "startDate": "",
                     "endDate": "",
                     "app": "",
@@ -228,7 +228,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
             if ($scope.detailVO.status == 0) {
                 $scope.detailVO.inServer = num;
                 $scope.getCategory();
-                if (num == 0) {
+                if (num == 0 && $scope.detailVO.placeId) {
                     var imgParam = {
                         placeId: $scope.detailVO.placeId
                     };
@@ -256,7 +256,7 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
                     }).
                     catch(function(result) {});
                 } else {
-                    $scope.detailVO.input = 0;
+                    $scope.detailVO.input = 1;
                     $scope.detailVO.imageList = [];
                     $scope.detailVO.titleList = [];
                 }
@@ -264,13 +264,15 @@ var scope = ["$scope", "ModalAlert", "Upload", "regexAPI","serviceAPI", '$state'
             var placeParam = {
                 groupId: $scope.detailVO.groupId
             }
-            serviceAPI.loadData(urlAPI.campaign_offer_place, placeParam).then(function(result) {
-                $scope.place = result.placeList;
-                if ($scope.detailVO.inServer == 1) {
-                    $scope.place.unshift({placementId:"ALL",name:'All'})
-                };
-            }).
-            catch(function(result) {});
+            if ($scope.detailVO.groupId) {
+                serviceAPI.loadData(urlAPI.campaign_offer_place, placeParam).then(function(result) {
+                    $scope.place = result.placeList;
+                    if ($scope.detailVO.inServer == 1) {
+                        $scope.place.unshift({placementId:"ALL",name:'All'})
+                    };
+                }).
+                catch(function(result) {});
+            }
         };
         $scope.changeInput = function(num) {
             $scope.detailVO.input = num;

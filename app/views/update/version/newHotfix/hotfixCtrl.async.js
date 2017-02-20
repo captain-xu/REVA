@@ -84,10 +84,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         $scope.loadTargetVersion = function() {
             serviceAPI.loadData(urlAPI.update_hotfixVer, {app : $stateParams.package}).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    var sortBy = function(pre, next) {
-                        return (pre < next) ? 1 : -1;
-                    };
-                    $scope.targetVersions = result.data.sort(sortBy);
+                    $scope.targetVersions = result.data;
+                    for (var i = 0; i < $scope.targetVersions.length; i++) {
+                        if ($scope.detail.vid == $scope.targetVersions[i].id) {
+                            var item = $scope.targetVersions[i];
+                            $scope.versionDetail = "version_name:" + item.version_name + "; " + "version_code:" + item.version_code + "; " + "id:" + item.id;
+                        }
+                        
+                    }
                 }
             });
         };
@@ -118,6 +122,11 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 }
             })
         };
+        $scope.changeCode = function(ver) {
+            $scope.detail.versionCode = ver.version_code;
+            $scope.detail.vid = ver.id;
+            $scope.versionDetail = "version_name:" + ver.version_name + "; " + "version_code:" + ver.version_code + "; " + "id:" + ver.id;
+        };
         $scope.changeTarget = function() {
             if ($scope.detail.target == 100) {
                 $scope.detail.target = 99;
@@ -126,7 +135,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
         };
         $scope.checkTarget = function() {
-            if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN(Number($scope.detail.target))) {
+            $scope.detail.target = Number($scope.detail.target);
+            if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN($scope.detail.target)) {
                 $scope.checkNum = true;
             }
         };
@@ -212,6 +222,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             
         };
         $scope.saveDetail = function() {
+            $scope.detail.target = Number($scope.detail.target);
             if (!$scope.detail.fullpackage || $scope.detail.fullpackage == '') {
                 ModalAlert.popup({ msg: "Please upload a package" }, 2500);
                 return false;
@@ -221,7 +232,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             } else if ($scope.detail.versionCode != $scope.fileCode) {
                 ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);
                 return false;
-            } else if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN(Number($scope.detail.target))) {
+            } else if (!$scope.detail.target || $scope.detail.target <= 0 || isNaN($scope.detail.target)) {
                 $scope.checkNum = true;
                 return false;
             }

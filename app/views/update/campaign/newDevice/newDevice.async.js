@@ -46,7 +46,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI',
         }
     };
     $scope.deviceData = function(dev){
-        $scope.devDetail.device = dev.chl;
+        $scope.devDetail.device = dev.channel;
         var searchParam = {
             device: $scope.devDetail.device,
             appname: $scope.packageName

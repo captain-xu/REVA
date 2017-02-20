@@ -8,17 +8,17 @@ var scope = ["$scope", "serviceAPI", "$stateParams", 'urlAPI', 'JSONFormatterCon
         if ($scope.state == 'new') {
             serviceAPI.getData(urlAPI.update_getDevice).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    var deviceList = [];
-                    for (var i = 0, len = result.data.length; i < len; i++) {
-                        deviceList = deviceList.concat(result.data[i].mod);
-                    }
                     $scope.deviceList = [];
-                    for (var i = 0, listlen = deviceList.length; i < listlen; i++) {
-                        deviceList.sort();
-                        if (deviceList[i] != deviceList[i-1] && deviceList[i]) {
-                            $scope.deviceList.push(deviceList[i]);
-                        }
+                    for (var i = 0, len = result.data.length; i < len; i++) {
+                        $scope.deviceList = $scope.deviceList.concat(result.data[i].models);
                     }
+                    // $scope.deviceList = [];
+                    // for (var i = 0, listlen = deviceList.length; i < listlen; i++) {
+                    //     deviceList.sort();
+                    //     if (deviceList[i] != deviceList[i-1] && deviceList[i]) {
+                    //         $scope.deviceList.push(deviceList[i]);
+                    //     }
+                    // }
                 }
             })
         } else {

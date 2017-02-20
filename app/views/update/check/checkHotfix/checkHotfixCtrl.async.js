@@ -12,6 +12,18 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
                 if (result.status == 0 && result.code == 0) {
                     $scope.detail = result.data;
                     $scope.detail.segment = $scope.getSegment(JSON.parse($scope.detail.segment));
+                    serviceAPI.loadData(urlAPI.update_hotfixVer, {app : result.data.app}).then(function(result) {
+                        if (result.status == 0 && result.code == 0) {
+                            $scope.targetVersions = result.data;
+                            for (var i = 0; i < $scope.targetVersions.length; i++) {
+                                if ($scope.detail.vid == $scope.targetVersions[i].id) {
+                                    var item = $scope.targetVersions[i];
+                                    $scope.versionDetail = "version_name:" + item.version_name + "; " + "version_code:" + item.version_code + "; " + "id:" + item.id;
+                                }
+                                
+                            }
+                        }
+                    });
                 }
             })
         };

@@ -73,7 +73,7 @@
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='app' &amp;&amp; desc]"></i>
                             </div>
                         </th>
-                        <th ng-click="orderBy('campaignCount')">#offer/on
+                        <th ng-click="orderBy('campaignCount')" class="offerOn">#offer/on
                             <div class="icon-order">
                                 <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='campaignCount' &amp;&amp; !desc]"></i>
                                 <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='campaignCount' &amp;&amp; desc]"></i>
@@ -102,7 +102,7 @@
                         <td>{{vo.placementTypeName}}</td>
                         <td>{{vo.app}}</td>
                         <td>{{vo.campaignCount}}</td>
-                        <td>{{vo.placementId}} <span class="placState" ng-class="{0: 'inactive', 1: 'active'}[vo.activeStatus]">&nbsp;{{vo.activeStatus == 0 ? 'inactive' : 'active'}}</span></td>
+                        <td class="placeId"><span class="placState" ng-class="{0: 'inactive', 1: 'active'}[vo.activeStatus]">&nbsp;{{vo.activeStatus == 0 ? 'Inactive' : 'Active'}}</span> {{vo.placementId}}</td>
                         <td>{{vo.createTime}}</td>
                         <td>
                             <span ng-class="{1: 'turn-on', 0: 'turn-off'}[vo.placeStatus]" ng-click="changeState(vo)"></span>

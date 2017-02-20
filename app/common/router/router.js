@@ -266,7 +266,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('push.launcherEdit', {
-            url: '/launcherEdit',
+            url: '/launcherEdit/:pushId',
             templateUrl: 'app/views/push/launcher/launcherEdit.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/push/launcher/launcherEditCtrl.async.js', function(ctrl) {

@@ -66,7 +66,7 @@
             </ul>
             <ul class="dropdown-menu" ng-if="item.key=='Location'" ng-repeat="one in areas | filter:{country: item.value1}:true">
                <li ng-click="setValue(item, 'value2', 'All States')">All States</li>
-                <li ng-repeat="option in one.state" ng-click="setValue(item, 'value2', option)">{{option}}</li>
+                <li ng-repeat="option in one.states" ng-click="setValue(item, 'value2', option.state)">{{option.state}}</li>
             </ul>
             <ul class="dropdown-menu" ng-if="item.key=='Android Version'">
                 <li ng-repeat="option in androidVersion" ng-if="option >= item.value1" ng-click="setValue(item, 'value2', option)">{{option}}</li>

@@ -30,6 +30,10 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             url: '/view/error',
             templateUrl: 'app/views/error/error.html'
         })
+        .state('setupPassword', {
+            url: '/setupPassword',
+            templateUrl: 'app/views/user/setupPassword.html'
+        })
         .state('changePassword', {
             url: '/changePassword',
             templateUrl: 'app/views/user/changePassword.html'

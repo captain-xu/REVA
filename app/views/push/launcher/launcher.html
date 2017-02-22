@@ -74,11 +74,12 @@
                                     <i class="arrow"></i>
                                 </div>
                                 <ul>
-                                    <li ng-show="vo.status == 'Completed' || vo.status == 'Inactive' || vo.status == 'Active'" ng-click="editDetail(vo,'report')"><i class="fa fa-bar-chart"></i> Report</li>
+                                    <!-- <li ng-show="vo.status == 'Completed' || vo.status == 'Inactive' || vo.status == 'Active'" ng-click="editDetail(vo,'report')"><i class="fa fa-bar-chart"></i> Report</li> -->
                                     <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'edit')"><i class="glyphicon glyphicon-pencil"></i> Edit</li>
                                     <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'del')"><i class="glyphicon glyphicon-trash"></i> Detele</li>
                                     <li ng-hide="vo.status == 'Error'" ng-click="editDetail(vo,'duplicate')"><i class="glyphicon glyphicon-duplicate"></i> Duplicate</li>
-                                    <li ng-show="vo.status == 'Active'" ng-click="editDetail(vo,'inactive')"><i class="glyphicon glyphicon-remove"></i> Inactive</li>
+                                    <li ng-show="vo.status == 'Draft'" ng-click="editDetail(vo,'active')"><i class="glyphicon glyphicon-remove"></i> Activate</li>
+                                    <!-- <li ng-show="vo.status == 'Active'" ng-click="editDetail(vo,'inactive')"><i class="glyphicon glyphicon-remove"></i> Inactive</li> -->
                                 </ul>
                             </div>
                         </div>

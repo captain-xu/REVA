@@ -16,10 +16,10 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 "silenceinstall": 0,
                 "target": 100,
                 "updatepriority": 0,
-                "segment": "where 1=1",
+                "frontsql": "where 1=1",
                 "requiresandroid": "",
                 "incrementalpack": [],
-                "frontsql": {
+                "segment": {
                     "isAnd": 1,
                     "isTrue": 1,
                     "params": []
@@ -35,14 +35,14 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (result.status == 0 && result.code == 0) {
                     $scope.detail = result.data;
                     $scope.detail.appName = result.data.app;
-                    if (!$scope.detail.frontsql || $scope.detail.frontsql == '') {
-                        $scope.detail.frontsql = {
+                    if (!$scope.detail.segment || $scope.detail.segment == '') {
+                        $scope.detail.segment = {
                             "isAnd": 1,
                             "isTrue": 1,
                             "params": []
                         }
                     } else {
-                        $scope.detail.frontsql = JSON.parse($scope.detail.frontsql);
+                        $scope.detail.segment = JSON.parse($scope.detail.segment);
                     };
                     if ($scope.detail.incrementalpack.length >= 3) {
                         $scope.isShow = false;
@@ -319,8 +319,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 $scope.checkNum = true;
                 return false;
             }
-            for (var i = 0; i < $scope.detail.frontsql.params.length; i++) {
-                var item = $scope.detail.frontsql.params[i];
+            for (var i = 0; i < $scope.detail.segment.params.length; i++) {
+                var item = $scope.detail.segment.params[i];
                 if (item.param.name === "Client ID") {
                     if (item.param.value1 === "") {
                         ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500)
@@ -335,15 +335,15 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 }
 
             }
-            var param = $scope.setSegment($scope.detail.frontsql);
+            var param = $scope.setSegment($scope.detail.segment);
             if (param) {
-               $scope.detail.segment = param;
+               $scope.detail.frontsql = param;
             } else {
-                $scope.detail.segment = '';
+                $scope.detail.frontsql = '';
             }
-            $scope.frontsql = $scope.detail.frontsql;
+            $scope.segment = $scope.detail.segment;
             // $scope.detail.incrementalpack = JSON.stringify($scope.detail.incrementalpack);
-            $scope.detail.frontsql = JSON.stringify($scope.detail.frontsql);
+            $scope.detail.segment = JSON.stringify($scope.detail.segment);
             var url = urlAPI.update_saveVersion;
             if ($stateParams.param == "edit") {
                 url = urlAPI.update_editappver;
@@ -352,7 +352,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (result.status == 0 && result.code == 0) {
                     history.go(-1);
                 } else {
-                    $scope.detail.frontsql = $scope.frontsql;
+                    $scope.detail.segment = $scope.segment;
                     ModalAlert.popup({ msg: result.msg }, 2500)
                 }
             });

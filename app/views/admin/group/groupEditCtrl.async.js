@@ -51,14 +51,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 		$scope.initTableView = function() {
 			$scope.group = adminAPI.getGroup();
-			// if (!$scope.group || !$scope.group.action || $scope.group.id == undefined || $scope.group.id == null) {
-			// 	// alert("paramter is invalid!");
-			// 	adminAPI.comfirmPopup("paramter is invalid!");
-			// 	return;
-			// }
 
 			if (adminAPI.isNullOrEmpty($scope.group) || adminAPI.isNullOrEmpty($scope.group.action)) {
-				// alert("paramter is invalid!");
 				adminAPI.comfirmPopup("paramter is invalid!");
 				return;
 			}

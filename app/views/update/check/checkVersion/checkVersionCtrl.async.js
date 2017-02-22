@@ -10,7 +10,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
             serviceAPI.loadData(urlAPI.update_appdetail, searchParam).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
                     $scope.detail = result.data;
-                    $scope.detail.frontsql=JSON.parse($scope.detail.frontsql);
+                    $scope.detail.segment=JSON.parse($scope.detail.segment);
                     if ($scope.detail.incrementalpack.length >= 3) {
                     };
                 }

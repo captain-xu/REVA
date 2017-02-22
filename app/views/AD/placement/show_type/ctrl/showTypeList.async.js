@@ -120,11 +120,11 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$state", "urlAPI",
         // var sizeArr = Object.values($scope.detailVO.size); ES7
         for (var i = 0; i < sizeArr.length; i++) {
             var item = sizeArr[i];
-            if (item.width && isNaN(Number(item.width))) {
+            if ((item.height && !item.width) || (item.width && isNaN(Number(item.width)))) {
                 ModalAlert.popup({msg: 'The Width\'s value show be a number'}, 2500);
                 return false;
             }
-            if (item.height && isNaN(Number(item.height))) {
+            if ((item.width && !item.height) || (item.height && isNaN(Number(item.height)))) {
                 ModalAlert.popup({msg: 'The Height\'s value show be a number'}, 2500);
                 return false;
             }

@@ -42,23 +42,38 @@
 
 			<div class="form-group">
 				<label class="control-label col-sm-3">Icon URL:</label>
-				<div class="col-sm-4">
+				<div class="col-sm-4" ng-show="!uploadStart">
 	                <input type="text" placeholder="Icon URL" ng-model="group.iconUrl" class="form-control" readonly/>
 	            </div>
-	            <button type="file" ngf-select="uploadIcon($file)" accept="image/png, image/jpeg" class="btn btn-primary upload">Upload</button>
+				<div class="col-sm-4" ng-show="uploadStart" class="form-control progress progress-striped active" max="100" value="dynamic">
+					<b>{{dynamic}}%</b>
+				</div>
+
+	            <button type="file" ngf-select="uploadStart=true;uploadIcon($file)" accept="image/png, image/jpeg" class="btn btn-primary upload">Upload</button>
 			</div>
 
-<!-- 			<div class="form-group">
+			<div class="form-group">
 				<label class="control-label col-sm-3">Channel:</label>
-				<div class="controls">
-					<div class="col-sm-5">
-		                <input type="text" placeholder="Channel" ng-model="group.channel" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
-		            </div>
-				</div>
-			</div> -->
+				<div class="col-sm-5">
+	                <div class="dropdown">
+	                    <input name="channelName" class="dropdown-toggle" data-toggle="dropdown" ng-model="group.channel" ng-focus="selectOnChannel('appWarn')" readonly placeholder="Please select a channel">
+	                    <span class="caret"></span>
+	                    <ul class="dropdown-menu" role="menu">
+	                        <li ng-repeat="ichannel in group.channelList" ng-click="selectChannel(ichannel)">{{ichannel.channel}}</li>
+	                    </ul>
+	                </div>
+
+	                
+
+	                <!-- <ins class="warn" ng-show="validateParam.appWarn"><i class="fa fa-close"></i>This field is required.</ins> -->
+					<!-- <input type="" name="channelName" class="dropdown-toggle ng-pristine ng-valid ng-empty ng-touched" > -->
+	                <!-- <input type="text" placeholder="Channel" ng-model="group.channel" class="form-control ng-pristine ng-valid ng-not-empty ng-touched"> -->
+	            </div>
+
+
+			</div>
 	
 		</div>
-
 
 	 	<div class="toolbar">
 	 		<button id="expandAll" ng-click="expandAllNode()" class="btn btn-default">Expand All</button>

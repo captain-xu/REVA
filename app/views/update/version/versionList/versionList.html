@@ -32,6 +32,7 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Icon</th>
                 <th>Version</th>
                 <th>Size</th>
@@ -45,6 +46,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="vo in list">
+                <td>{{vo.isnew==="Hotfix"?"H":"U"}}{{vo.id}}</td>
                 <td><img ng-src="{{vo.appicon}}"></td>
                 <td>{{vo.version_name}}</td>
                 <td>{{vo.size}}</td>

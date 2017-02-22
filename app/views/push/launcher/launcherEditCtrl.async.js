@@ -279,7 +279,7 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI', '$statePa
             };
             if ($scope.validate()) {
                 var url = urlAPI.push_launcherEdit;
-                // $scope.receiver.activate = 1;
+                $scope.receiver.activate = 1;
                 serviceAPI.saveData(url, $scope.receiver).then(function(result) {
                     if (result.status == 1 && result.code == 200) {
                         // $scope.nextStep(2, 'push.edit.creative');

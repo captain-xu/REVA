@@ -54,7 +54,7 @@ var scope = ["$scope", "ModalAlert", '$state', "serviceAPI",'$stateParams', 'url
         }).
         catch(function(result) {});
         serviceAPI.loadData(urlAPI.campaign_offer_country).then(function(result) {
-            $scope.countryList = result.countries;
+            $scope.countryList = result.areaInfo;
         }).
         catch(function(result) {});
         serviceAPI.loadData(urlAPI.campaign_offer_cpx).then(function(result) {

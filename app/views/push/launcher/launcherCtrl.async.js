@@ -89,7 +89,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
                     $location.path("/view/push/launcherEdit/" + vo.pushId);
                     break;
                 case "duplicate":
-                    serviceAPI.loadData(urlAPI.push_duplicate, { "pushId": vo.pushId }).then(function(result) {
+                    serviceAPI.loadData(urlAPI.push_launcherDuplicate, { "pushId": vo.pushId }).then(function(result) {
                         if (result.status == 1 && result.code == 200) {
                             $location.path("/view/push/launcherEdit/" + result.data.pushId);
                         } else {
@@ -103,12 +103,29 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
                         closeBtnValue: "Cancel",
                         okBtnValue: "Confirm",
                         confirm: function() {
-                            serviceAPI.loadData(urlAPI.push_delPush, { "pushId": vo.pushId }).then(function(result) {
+                            serviceAPI.loadData(urlAPI.push_launcherDelete, { "pushId": vo.pushId }).then(function(result) {
                                 if (result.status == 1 && result.code == 200) {
                                     vo.status = 'delete';
                                     ModalAlert.success({ msg: "Delete Succeeded" }, 2500)
                                 } else {
                                     ModalAlert.error({ msg: result.msg }, 2500)
+                                }
+                            })
+                        }
+                    });
+                    break;
+                case "active":
+                    ModalAlert.alert({
+                        value: "Activate this. Are you sure? ",
+                        closeBtnValue: "Cancel",
+                        okBtnValue: "Confirm",
+                        confirm: function() {
+                            serviceAPI.loadData(urlAPI.push_launcherActive, { "pushId": vo.pushId }).then(function(result) {
+                                if (result.status == 1 && result.code == 200) {
+                                    vo.status = type.replace(/(\w)/, function(v) {
+                                        return v.toUpperCase()
+                                    });
+                                    ModalAlert.success({ msg: "Activate Succeeded" }, 2500)
                                 }
                             })
                         }
@@ -129,7 +146,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
                 //             })
                 //         }
                 //     });
-                //     break
+                //     break;
             }
         };
         $scope.loadList();

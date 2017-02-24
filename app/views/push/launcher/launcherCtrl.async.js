@@ -12,10 +12,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
             "name": "Active",
             "isSelect": false
         }, {
-            "id": "Inactive",
-            "name": "Inactive",
-            "isSelect": false
-        }, {
             "id": "Completed",
             "name": "Completed",
             "isSelect": false
@@ -42,7 +38,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
                 clearTimeout($scope.timer);
                 $scope.timer = setTimeout(function() {
                     $scope.loadList();
-                }, 1500);
+                }, 500);
 
             }
         };
@@ -114,23 +110,23 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", '$location', 'urlAPI',
                         }
                     });
                     break;
-                case "active":
-                    ModalAlert.alert({
-                        value: "Activate this. Are you sure? ",
-                        closeBtnValue: "Cancel",
-                        okBtnValue: "Confirm",
-                        confirm: function() {
-                            serviceAPI.loadData(urlAPI.push_launcherActive, { "pushId": vo.pushId }).then(function(result) {
-                                if (result.status == 1 && result.code == 200) {
-                                    vo.status = type.replace(/(\w)/, function(v) {
-                                        return v.toUpperCase()
-                                    });
-                                    ModalAlert.success({ msg: "Activate Succeeded" }, 2500)
-                                }
-                            })
-                        }
-                    });
-                    break;
+                // case "active":
+                //     ModalAlert.alert({
+                //         value: "Activate this. Are you sure? ",
+                //         closeBtnValue: "Cancel",
+                //         okBtnValue: "Confirm",
+                //         confirm: function() {
+                //             serviceAPI.loadData(urlAPI.push_launcherActive, { "pushId": vo.pushId }).then(function(result) {
+                //                 if (result.status == 1 && result.code == 200) {
+                //                     vo.status = type.replace(/(\w)/, function(v) {
+                //                         return v.toUpperCase()
+                //                     });
+                //                     ModalAlert.success({ msg: "Activate Succeeded" }, 2500)
+                //                 }
+                //             })
+                //         }
+                //     });
+                //     break;
                 // case "inactive":
                 //     ModalAlert.alert({
                 //         value: "If you proceed you will stop the sending activity forcibly, and the operation is irreversible. Are you sure? ",

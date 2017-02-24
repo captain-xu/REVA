@@ -25,24 +25,31 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Hot Fix Patch:<em>&#42;</em>
+            <label class="col-sm-2 control-label">Hot Fix Patch:
             </label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" ng-model="detail.fullpackage" placeholder="Please upload the hot fix patch" readonly>
+                <input type="text" class="form-control" ng-model="detail.fullpackage" readonly>
             </div>
             <button class="btn btn-primary"><a href="{{detail.fullpackage}}">Download</a></button>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Hot Fix Version:</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="detail.hotfixCode" readonly placeholder="This field will automatically loaded from the upload patch">
+                <input type="text" class="form-control" ng-model="detail.hotfixCode" readonly>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Update Note:<em>&#42;</em>
+            <label class="col-sm-2 control-label">Version Comment:
             </label>
             <div class="col-sm-7">
-                <textarea class="form-control" ng-model="detail.updatenote" placeholder="Please enter description" readonly></textarea>
+                <textarea class="form-control" ng-model="detail.updatenote" readonly></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">What's New:
+            </label>
+            <div class="col-sm-7">
+                <textarea class="form-control" ng-model="detail.whatnew" readonly></textarea>
             </div>
         </div>
         <div class="form-group">

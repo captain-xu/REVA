@@ -31,7 +31,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI','$stateParams','$location',
                 if (item[i].owner === '0') {
                     item[i].channel = '--';
                 } else {
-                    item[i].channel = item[i].owner === '1' ? 'Le Tang' : 'News Dog';
+                    item[i].channel = item[i].owner === '1' ? 'News Dog' : 'Le Tang';
                 }
             }
         };

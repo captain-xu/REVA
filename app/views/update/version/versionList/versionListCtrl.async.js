@@ -37,7 +37,7 @@ var scope = ["$scope", "serviceAPI",'urlAPI', "$stateParams",
                         } else if ($scope.list[i].status == 1 ) {
                             $scope.list[i].status = 'Checking';
                         } else {
-                            $scope.list[i].status = 'Approved';
+                            $scope.list[i].status = 'Publishing';
                         }
                     }
                 }

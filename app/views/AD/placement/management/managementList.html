@@ -170,15 +170,15 @@
                     <ol class="edit-mediat">
                         <li>
                             <span>FN</span>
-                            <input type="text" ng-model="detailVO.fbaRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.fbaPlaceId]"><span class="right-span">%</span>
+                            <input type="text" ng-model="detailVO.fbaRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.fbaPlaceId]" maxlength="3"><span class="right-span">%</span>
                         </li>
                         <li>
                             <span>Admob</span>
-                            <input type="text" ng-model="detailVO.admobRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.adMobPlaceId]"><span class="right-span">%</span>
+                            <input type="text" ng-model="detailVO.admobRatio" ng-readonly="{true: 'true'}[detailVO.status == 1 || !detailVO.adMobPlaceId]" maxlength="3"><span class="right-span">%</span>
                         </li>
                         <li>
                             <span>Reva</span>
-                            <input type="text" ng-model="detailVO.revaRatio" ng-readonly="{1: 'true'}[detailVO.status]"><span class="right-span">%</span>
+                            <input type="text" ng-model="detailVO.revaRatio" ng-readonly="{1: 'true'}[detailVO.status]" maxlength="3"><span class="right-span">%</span>
                         </li>
                     </ol>
                 </li>

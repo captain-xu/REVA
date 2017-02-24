@@ -267,6 +267,8 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI', '$statePa
                 if (result.status == 1 && result.code == 200) {
                     // $scope.goList();
                     history.go(-1);
+                } else {
+                    ModalAlert.error({ msg: result.msg }, 2500);
                 }
             });
         };
@@ -284,6 +286,8 @@ var scope = ["$scope", "serviceAPI", "Upload", "ModalAlert", 'urlAPI', '$statePa
                     if (result.status == 1 && result.code == 200) {
                         // $scope.nextStep(2, 'push.edit.creative');
                         history.go(-1);
+                    } else {
+                        ModalAlert.error({ msg: result.msg }, 2500);
                     }
                 });
             };

@@ -4,8 +4,7 @@
         <img ng-src="{{img_url}}">
     </div>
     <ul class="nav-title lewaos-header-hidden" style="display:none">
-        <li ng-repeat="item in headerItems" ng-class="{true:'active'}[item.menuType==activeTitle]" ng-click="titleClick(item)">{{item.name}}
-            <span ng-if="item.name == 'OPERATION'">New</span></li>
+        <li ng-repeat="item in headerItems" ng-class="{true:'active'}[item.menuType==activeTitle]" ng-click="titleClick(item)">{{item.name}}</li>
     </ul>
     <ul class="nav lewaos-header-hidden" style="display:none">
         <li class="dropdown">

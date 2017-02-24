@@ -230,10 +230,12 @@ var scope = ["$scope", "ModalAlert", "Upload", "serviceAPI", '$state', 'urlAPI',
         $scope.detailVO.fbaRatio = Number($scope.detailVO.fbaRatio);
         $scope.detailVO.admobRatio = Number($scope.detailVO.admobRatio);
         $scope.detailVO.revaRatio = Number($scope.detailVO.revaRatio);
+        if (String($scope.detailVO.fbaRatio).indexOf(".") > -1 || String($scope.detailVO.admobRatio).indexOf(".") > -1 || String($scope.detailVO.revaRatio).indexOf(".") > -1) {
+            ModalAlert.popup({ msg: "Mediation format error" }, 2500);
+            return;
+        }
         if ($scope.detailVO.fbaRatio < 0 || $scope.detailVO.admobRatio < 0 || $scope.detailVO.revaRatio < 0 || $scope.detailVO.fbaRatio + $scope.detailVO.admobRatio + $scope.detailVO.revaRatio !== 100) {
-            ModalAlert.popup({
-                msg:"Mediation format error"
-            }, 2500);
+            ModalAlert.popup({ msg: "Mediation format error" }, 2500);
             return;
         }
         if ($scope.detailVO.placementType == 0) {

@@ -15,7 +15,7 @@
             <div class="form-group clearfix">
                 <label class="col-sm-2">Message:<em>&#42;</em></label>
                 <div class="col-xs-6">
-                    <textarea class="launcher-msg" placeholder="Please enter the message content" maxlength="2000" ng-model="receiver.message" ng-focus="removeValidate('massage')"></textarea>
+                    <textarea class="launcher-msg" placeholder="Please enter the message content" maxlength="2000" ng-model="receiver.message" ng-focus="removeValidate('message')"></textarea>
                     <ins class="warn" ng-show="validateParam.msgWarn"><i class="fa fa-close"></i>This field is required.</ins>
                     <label class="word-sum">{{2000 - receiver.message.length}}</label>
                 </div>
@@ -35,6 +35,36 @@
                                 Targeting
                                 <input type="text" ng-model="receiver.allUsers" ng-blur="checkNum(receiver.allUsers)"> % of All Users
                             </p>
+                        </li>
+                        <li ng-class="{true:'active'}[status.targetNum == 2]">
+                            <p ng-click="userSelect(2)" ng-class="{true:'bold'}[status.targetNum == 2]">
+                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.targetNum == 2]"></i> Specific Devices
+                            </p>
+                            <div class="user-content" ng-show="status.targetNum == 2">
+                                <div class="dropdown clearfix">
+                                    <p class="dropdown-toggle clearfix" data-toggle="dropdown" ng-click="removeValidate('device')">
+                                        <span class="span-box" ng-repeat="item in targetDevices">
+                                            <button type="button" class="close" ng-click="deleteDevice(item)">
+                                                <span aria-hidden="true">×</span>
+                                        </button>
+                                        <span>{{item.value}}</span>
+                                        </span>
+                                        <span ng-hide="targetDevices.length" class="warn-tip">Please select your target devices</span>
+                                    </p>
+                                    <span class="caret"></span>
+                                    <ul class="dropdown-menu device-menu" style="max-height: 300px;overflow: auto;">
+                                        <li ng-repeat="item in devices">
+                                            <ol>
+                                                <li style="border: none;"><span ng-click="checkedDevice(item)" self-stop-propagation><i class="fa" ng-class="{true:'fa-check-square',false:'fa-square-o'}[item.isSelect]"></i>{{item.channel}}</span></li>
+                                                <li style="padding-bottom: 0;">
+                                                    <span ng-repeat="device in item.model" ng-click="checkedDevice(device,item)" self-stop-propagation><i class="fa" ng-class="{true:'fa-check-square',false:'fa-square-o'}[device.isSelect]"></i>{{device.name}}</span>
+                                                </li>
+                                            </ol>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
+                            </div>
                         </li>
                         <li ng-class="{true:'active'}[status.targetNum == 1]">
                             <p ng-click="userSelect(1)" ng-class="{true:'bold'}[status.targetNum == 1]">
@@ -63,36 +93,6 @@
                                 <ins class="warn" ng-show="validateParam.userWarn"><i class="fa fa-close"></i>{{validateParam.userList}}</ins>
                             </p>
                         </li>
-                        <li ng-class="{true:'active'}[status.targetNum == 2]">
-                            <p ng-click="userSelect(2)" ng-class="{true:'bold'}[status.targetNum == 2]">
-                                <i class="fa fa-dot-circle-o icon-radio" ng-class="{true:'active'}[status.targetNum == 2]"></i> Specific Devices
-                            </p>
-                            <div class="user-content" ng-show="status.targetNum == 2">
-                                <div class="dropdown clearfix">
-                                    <p class="dropdown-toggle clearfix" data-toggle="dropdown" ng-click="removeValidate('device')">
-                                        <span class="span-box" ng-repeat="item in targetDevices">
-                                            <button type="button" class="close" ng-click="deleteDevice(item)">
-                                                <span aria-hidden="true">×</span>
-                                        </button>
-                                        <span>{{item.value}}</span>
-                                        </span>
-                                        <span ng-hide="targetDevices.length" class="warn-tip">Please select your target devices</span>
-                                    </p>
-                                    <span class="caret"></span>
-                                    <ul class="dropdown-menu device-menu" style="max-height: 300px;overflow: auto;">
-                                        <li ng-repeat="item in devices">
-                                            <ol>
-                                                <li><span ng-click="checkedDevice(item)" self-stop-propagation><i class="fa" ng-class="{true:'fa-check-square',false:'fa-square-o'}[item.isSelect]"></i>{{item.channel}}</span></li>
-                                                <li>
-                                                    <span ng-repeat="device in item.model" ng-click="checkedDevice(device,item)" self-stop-propagation><i class="fa" ng-class="{true:'fa-check-square',false:'fa-square-o'}[device.isSelect]"></i>{{device.name}}</span>
-                                                </li>
-                                            </ol>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <ins class="warn" ng-show="validateParam.segmentWarn"><i class="fa fa-close"></i>This field is required.</ins>
-                            </div>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <a href="javascript:history.go(-1)">
                     <button type="button" class="btn btn-default cancle">Cancel</button>
                 </a>
-                <button type="button" class="btn btn-default save" ng-click="saveDetail()">Activate</button>
+                <button type="button" class="btn btn-default save" style="background: #4896f1;color: #fff;" ng-click="saveDetail()">Activate</button>
             </div>
         </div>
     </div>

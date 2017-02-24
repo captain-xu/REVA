@@ -60,7 +60,7 @@
         </div>
         <ul class="nav nav-tabs tab-btn" role="tabList">
             <li ui-sref="update.list.version" ng-class="{'version': 'active'}[tab]"><a href="javascript:void(0)" ng-click="tabClick('version')" ng-if="permission.update || permission.review">Version Mgmt</a></li>
-            <li ui-sref="update.list.campaign.placement" ng-class="{'campaign': 'active'}[tab]" ng-if="permission.campaign"><a href="javascript:void(0)" ng-click="tabClick('campaign')">Campaign Mgmt</a></li>
+            <!-- <li ui-sref="update.list.campaign.placement" ng-class="{'campaign': 'active'}[tab]" ng-if="permission.campaign"><a href="javascript:void(0)" ng-click="tabClick('campaign')">Campaign Mgmt</a></li> -->
             <li ui-sref="update.list.extends" ng-class="{'extends': 'active'}[tab]" ng-if="permission.extends"><a href="javascript:void(0)" ng-click="tabClick('extends')">Extends</a></li>
         </ul>
         <div class="tab-content">

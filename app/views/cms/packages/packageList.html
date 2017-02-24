@@ -1,0 +1,75 @@
+<div class="package-list">
+    <div class="header">
+        <ul class="nav navbar-nav navbar-left breadcrumb">
+            <li>Update Package</li>
+            <li class="active">List</li>
+        </ul>
+        <div class="add-box">
+        	<a href="#/view/cms/packageEdit/new/0/"><button class="add-btn">Make a Hot Fix Patch</button></a>
+        </div>
+    </div>
+    <div class="list-content">
+	    <div class="search-bar">
+            <osselect datalists="appList" dataid="appName" dataplace="appplace" confirm="setParam()"></osselect>
+	        <span class="seach-input">
+	            <i class="glyphicon glyphicon-search"></i>
+	            <input type="text" class="form-control" placeholder="Search" ng-model="keywords" ng-keyup="setParam()">
+	        </span>
+	    </div>
+	    <table class="table table-bordered table-hover">
+	        <thead>
+	            <tr>
+	                <th>App Name</th>
+	                <th>Type</th>
+	                <th>Size</th>
+	                <th>Vendor</th>
+	                <th>Source Ver</th>
+	                <th>Target Ver</th>
+	                <th>Author</th>
+	                <th>Update Time</th>
+	                <th>Patching Status</th>
+	                <th>Action</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr ng-repeat="vo in list">
+	                <td>{{vo.app}}</td>
+	                <td>Hot Fix</td>
+	                <td>{{!!vo.size?vo.size:'--'}}</td>
+	                <td>{{vo.channel}}</td>
+	                <td>{{vo.base_version_name}}</td>
+	                <td>{{vo.target_version_name}}</td>
+	                <td>{{vo.operator}}</td>
+	                <td>{{vo.frontTime}}</td>
+	                <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Success':'approved', 'Failed': 'unapproved','Patching':'checking'}[vo.status]">{{vo.status}}</span></td>
+	                <td>
+	                    <div class="dropdown">
+	                        <p data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</p>
+	                        <div class="dropdown-menu">
+	                            <div class="triangle-top">
+	                                <i class="arrow"></i>
+	                            </div>
+	                            <ul>
+	                                <a href="#/view/cms/packageEdit/edit/{{vo.id}}/{{vo.app}}" ng-show="vo.status === 'Failed'">
+	                                    <li><i class="glyphicon glyphicon-pencil"></i> Edit</li>
+	                                </a>
+	                                <a href="#/view/cms/packageEdit/view/{{vo.id}}/{{vo.app}}" ng-show="vo.status !== 'Failed'">
+	                                    <li><i class="glyphicon glyphicon-eye-open"></i> View</li>
+	                                </a>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+	<div class="footer">
+	    <div class="btn-group">
+	        <button type="button" class="btn btn-default" ng-class="{true:'active'}[params.pagesize == 10]" ng-click="params.pagesize=10;loadList()">10</button>
+	        <button type="button" class="btn btn-default" ng-class="{true:'active'}[params.pagesize == 20]" ng-click="params.pagesize=20;loadList()">20</button>
+	        <button type="button" class="btn btn-default" ng-class="{true:'active'}[params.pagesize == 50]" ng-click="params.pagesize=50;loadList()">50</button>
+	    </div>
+	    <ul uib-pagination total-items="totalItems" ng-model="params.page" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="params.pagesize" ng-change="loadList()"></ul>
+	</div>
+</div>

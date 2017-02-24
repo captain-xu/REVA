@@ -15,8 +15,8 @@
         </div>
         <div>
             <span class="label-select" ng-repeat="item in status">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="changeStatus(item)">
-                    <span aria-hidden="true">&times;</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="changeStatus(item)">
+                <span aria-hidden="true">&times;</span>
             </button>
             <span>{{item}}</span>
             </span>
@@ -78,7 +78,7 @@
                                     <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'edit')"><i class="glyphicon glyphicon-pencil"></i> Edit</li>
                                     <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'del')"><i class="glyphicon glyphicon-trash"></i> Detele</li>
                                     <li ng-hide="vo.status == 'Error'" ng-click="editDetail(vo,'duplicate')"><i class="glyphicon glyphicon-duplicate"></i> Duplicate</li>
-                                    <li ng-show="vo.status == 'Draft'" ng-click="editDetail(vo,'active')"><i class="glyphicon glyphicon-remove"></i> Activate</li>
+                                    <!-- <li ng-show="vo.status == 'Draft'" ng-click="editDetail(vo,'active')"><i class="glyphicon glyphicon-remove"></i> Activate</li> -->
                                     <!-- <li ng-show="vo.status == 'Active'" ng-click="editDetail(vo,'inactive')"><i class="glyphicon glyphicon-remove"></i> Inactive</li> -->
                                 </ul>
                             </div>

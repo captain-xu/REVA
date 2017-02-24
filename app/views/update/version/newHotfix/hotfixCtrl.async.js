@@ -227,7 +227,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 ModalAlert.popup({ msg: "Please upload a package" }, 2500);
                 return false;
             } else if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
-                ModalAlert.popup({ msg: "The updatenote is required" }, 2500);
+                ModalAlert.popup({ msg: "The Version Comment is required" }, 2500);
                 return false;
             } else if ($scope.detail.versionCode != $scope.fileCode) {
                 ModalAlert.popup({ msg: "Patch is illegal!" }, 2500);

@@ -1,9 +1,10 @@
 var scope = ["$scope", "ModalAlert", "chartAPI", '$location', "serviceAPI", "urlAPI", '$stateParams',
     function($scope, ModalAlert, chartAPI, $location, serviceAPI, urlAPI, $stateParams) {
+        $scope.placementName = $stateParams.param;
         $scope.seachParam = {
             "startTime": moment().subtract(6, 'days').format('YYYY-MM-DD'),
             "endTime": moment().format('YYYY-MM-DD'),
-            "placement": $stateParams.param,
+            "placement": $stateParams.id,
             "selectDateType": "week",
             "currentPage": 0
         };
@@ -32,7 +33,8 @@ var scope = ["$scope", "ModalAlert", "chartAPI", '$location', "serviceAPI", "url
             catch(function(result) {});
         };
         $scope.typeFilter = function(vo) {
-            $scope.seachParam.placement = vo.name;
+            $scope.placementName = vo.name;
+            $scope.seachParam.placement = vo.placementId;
             $scope.loadList();
         };
         $scope.setTime = function(start, end) {

@@ -38,7 +38,7 @@
                 <th>Size</th>
                 <th>Type</th>
                 <th>Hot Fix Ver</th>
-                <th>Update Note</th>
+                <th>Version Comment</th>
                 <th>Update Time</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -54,7 +54,7 @@
                 <td>{{vo.hotfixCode==''?'--':vo.hotfixCode}}</td>
                 <td class="note-text" title="{{vo.updatenote}}">{{vo.updatenote}}</td>
                 <td>{{vo.fronttime}}</td>
-                <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Approved':'approved', 'Unapproved': 'unapproved','Checking':'checking'}[vo.status]">{{vo.status}}</span></td>
+                <td><span popover-placement="bottom" popover-is-open="tipOpen" ng-mouseenter="tipOpen=true" ng-mouseleave="tipOpen=false" uib-popover="{{vo.provetext}}" class="state" ng-class="{'Publishing':'approved', 'Unapproved': 'unapproved','Checking':'checking'}[vo.status]">{{vo.status}}</span></td>
                 <td>
                     <div class="dropdown">
                         <p data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</p>

@@ -311,7 +311,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 return false;
             }
             if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
-                ModalAlert.popup({ msg: "The updatenote is required" }, 2500)
+                ModalAlert.popup({ msg: "The Version Comment is required" }, 2500)
                 return false;
             }
             $scope.detail.target = Number($scope.detail.target);

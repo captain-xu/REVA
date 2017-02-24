@@ -490,7 +490,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('campaign.placement', {
-            url: "/placement/:param",
+            url: "/placement/:param/:id",
             templateUrl: 'app/views/AD/placement/management/placement.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/AD/placement/management/ctrl/placement.async.js', function(ctrl) {
@@ -1138,6 +1138,37 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }],
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/category/category') }
+            }
+        })
+        .state('cms', {
+            url: "/view/cms",
+            templateUrl: 'app/views/main/layout.html',
+            params: {
+                activeTitle: "cms"
+            }
+        })
+        .state('cms.packageList', {
+            url: "/packageList",
+            templateUrl: 'app/views/cms/packages/packageList.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/cms/packages/packageList.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('cms/packages/packageList') }
+            }
+        })
+        .state('cms.packageEdit', {
+            url: "/packageEdit/:status/:id/:app",
+            templateUrl: 'app/views/cms/packages/packageEdit.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/cms/packages/packageEdit.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('cms/packages/packageEdit') }
             }
         });
 });

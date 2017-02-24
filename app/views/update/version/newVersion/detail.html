@@ -49,11 +49,20 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Update Note:<em>&#42;</em>
+            <label class="col-sm-2 control-label">Version Comment:<em>&#42;</em>
             </label>
             <div class="col-sm-7">
-                <textarea class="form-control" ng-model="detail.updatenote"></textarea>
+                <textarea class="form-control" ng-model="detail.updatenote" placeholder="Please enter the comment of this release(Required)"></textarea>
             </div>
+            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="verOpen" ng-mouseenter="verOpen=true" ng-mouseleave="verOpen=false" uib-popover="Let your users know about recent updates you've made in this release of your app.">
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">What's New:
+            </label>
+            <div class="col-sm-7">
+                <textarea class="form-control" ng-model="detail.whatnew" placeholder="Please enter What's new in this release(Optional)"></textarea>
+            </div>
+            <img src="app/style/less/images/icon_i.png" popover-placement="bottom" popover-is-open="newOpen" ng-mouseenter="newOpen=true" ng-mouseleave="newOpen=false" uib-popover="Let your users know about recent updates you've made in this release of your app.">
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Incremental Package:</label>

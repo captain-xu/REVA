@@ -97,7 +97,7 @@
                 <tbody>
                     <tr ng-repeat="vo in list | orderBy:orderField:desc | limitTo:listNum">
                         <td>{{vo.id}}</td>
-                        <td><a href="#/view/campaign/placement/{{vo.name}}">{{vo.name}}</a></td>
+                        <td><a href="#/view/campaign/placement/{{vo.name}}/{{vo.placementId}}">{{vo.name}}</a></td>
                         <td>{{vo.showType}}</td>
                         <td>{{vo.placementTypeName}}</td>
                         <td>{{vo.app}}</td>

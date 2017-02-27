@@ -46,7 +46,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "$stateParams", "ModalAlert",
 						ModalAlert.success({msg: "Task is created. Patch is releasing!"}, 2500);
 					} else if (result.code === 113) {
 				        ModalAlert.alert({
-				            value: "Hot Fix Patches from Source Version" +  $scope.detail.base_version_name + "to Target Version" +  $scope.detail.target_version_name + "are already exist, click 'Confirm' button will rebuild them, ARE YOU SURE TO REBUILD？",
+				            value: "Hot Fix Patches from Source Version  " + $scope.detail.base_version_name  + "  to Target Version  " + $scope.detail.target_version_name + "   already exist, click 'Confirm' button will rebuild them, ARE YOU SURE TO REBUILD？",
 				            closeBtnValue: "Cancel",
 				            okBtnValue: "Confirm",
 				            confirm: function() {
@@ -61,7 +61,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "$stateParams", "ModalAlert",
 				        });
 					} else if (result.code === 114) {
 				        ModalAlert.comfirm({
-				            value: "Hot Fix Patches from Source Version" +  $scope.detail.base_version_name + "to Target Version" +  $scope.detail.target_version_name + "are already exist, click 'Confirm' button will rebuild them, ARE YOU SURE TO REBUILD？",
+				            value: "Hot Fix Patches from Source Version  " + $scope.detail.base_version_name + "  to Target Version  " +  $scope.detail.target_version_name + "  are already exist, click 'Confirm' button will rebuild them, ARE YOU SURE TO REBUILD？",
 				            closeBtnValue: "Cancel"
 				        });
 					}

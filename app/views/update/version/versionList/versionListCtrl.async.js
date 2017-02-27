@@ -2,6 +2,7 @@ var scope = ["$scope", "serviceAPI",'urlAPI', "$stateParams",
 	function($scope, serviceAPI, urlAPI, $stateParams) {
         $scope.appName = $stateParams.param;
         $scope.packageName = $stateParams.package;
+        $scope.showModel = false;
 		$scope.params = {
 			page: 1,
 			pagesize: 10,
@@ -70,6 +71,14 @@ var scope = ["$scope", "serviceAPI",'urlAPI', "$stateParams",
             $scope.status = arr;
             $scope.setParam();
         };
+        $scope.showSegment = function(vo) {
+            $scope.segment = JSON.parse(vo.segment);
+            $scope.showModel = true;
+        };
+        $scope.segmentBack = function() {
+            $scope.segment = "";
+            $scope.showModel = false;
+        }
 
         $scope.loadList();
 		

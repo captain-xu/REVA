@@ -1,9 +1,9 @@
-var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
-	function($scope, $location, urlAPI, serviceAPI, adminAPI) {
+var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAlert", "adminAPI",
+	function($scope, $location, urlAPI, serviceAPI, Upload, ModalAlert, adminAPI) {
 
 		$scope.group = {};
 		$scope.permissionPoolEditer = [];
-		$scope.parentId = "";
+		// $scope.parentId = "";
 
 		$scope.colsInit = [{
 			field: adminAPI.str.id
@@ -52,6 +52,10 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 		$scope.initTableView = function() {
 			$scope.group = adminAPI.getGroup();
 
+			if (!adminAPI.isNullOrEmpty($scope.group.iconUrl)) {
+				var iconfile = $scope.group.iconUrl.substring($scope.group.iconUrl.lastIndexOf("/") + 1);
+			}
+
 			if (adminAPI.isNullOrEmpty($scope.group) || adminAPI.isNullOrEmpty($scope.group.action)) {
 				adminAPI.comfirmPopup("paramter is invalid!");
 				return;
@@ -62,6 +66,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 					adminAPI.comfirmPopup("paramter is invalid!");
 					return;
 				}
+
+				$scope.iconImgUrl = "http://dev.apkstorage.revanow.com/admin_image/" + iconfile;
 			}
 
 			$scope.paramData.action = $scope.group.action;
@@ -69,6 +75,7 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 			serviceAPI.loadData(urlAPI.admin_group_edit, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
+					$scope.groupChannelList = result.data.adminChannelList;
 					$scope.adminPermissionPool = adminAPI.cloneArray(result.data.adminPermissionPool);
 					$scope.groupExistPermitList = adminAPI.cloneArray(result.data.groupExistPermitList);
 
@@ -149,7 +156,7 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 		$scope.convertPerPoolToTreeViewNode = function(permissionPool) {
 
-			var permitCurName, permitCurObj, permitCurArr, permitCurNamePath, superId;
+			var permitCurName, permitCurObj, permitCurArr, permitCurNamePath;
 
 			for (var i = 0; i < permissionPool.length; i++) {
 				if (adminAPI.isNullOrEmpty(permissionPool[i]) || !adminAPI.contains(permissionPool[i].name, ":")) continue;
@@ -171,14 +178,14 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 							active: permitCurObj.active
 						});
 
-						superId = permitCurObj.id;
-						$scope.parentId = superId;
+						// superId = permitCurObj.id;
+						// $scope.parentId = superId;
 						continue;
 
 					} else {
 						permitCurArr = permitCurNamePath.split(":");
 						$scope.addPermitNodeForTreeView(permitCurArr, $scope.permissionPoolEditer, permitCurObj);
-						$scope.parentId = permitCurObj.id;
+						// $scope.parentId = permitCurObj.id;
 					}
 
 				} else {
@@ -200,8 +207,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 						name: permitCurObj.name,
 						field: permitParentArr[m],
 						node: adminAPI.endWith(permitCurObj.name, ":*") == true ? [] : null,
-						active: permitCurObj.active,
-						parentId: $scope.parentId
+						active: permitCurObj.active
+						// parentId: $scope.parentId
 					});
 
 					return;
@@ -237,8 +244,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 					name: permitCurObj.name,
 					field: permitParentArr[m],
 					node: adminAPI.endWith(permitCurObj.name, ":*") == true ? [] : null,
-					active: permitCurObj.active,
-					parentId: $scope.parentId
+					active: permitCurObj.active
+					// parentId: $scope.parentId
 				});
 			}
 
@@ -252,7 +259,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 				permit = permissionPool[i];
 				if ($scope.isPermissionNode(permit)) {
 
-					$scope.chargeNodeAttrIndeterminateSub(permit.node);
+					$scope.chargeNodeAttrIndeterminateSub(permit, permit.node);
+					$scope.setAttributeParentId(permit, permit.node);
 
 					var status = $scope.getNodeAllCheckboxStatus(permit.node);
 					var indeterminateFlg = $scope.isIndeterminateNode(permit.node);
@@ -266,15 +274,17 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 			}
 		};
 
-		$scope.chargeNodeAttrIndeterminateSub = function(nodePermission) {
+		$scope.chargeNodeAttrIndeterminateSub = function(node, nodePermission) {
 
 			if (adminAPI.isNullOrEmpty(nodePermission)) return;
 
 			if ($scope.isPermissionNode(nodePermission)) {
 
 				for (var i = 0; i < nodePermission.length; i++) {
+					$scope.setAttributeParentId(node, nodePermission);
+					
 					var permit = nodePermission[i];
-					var status = $scope.chargeNodeAttrIndeterminateSub(permit.node);
+					var status = $scope.chargeNodeAttrIndeterminateSub(permit, permit.node);
 					if (status == adminAPI.num.int_0 || status == adminAPI.num.int_1) {
 						permit.indeterminate = false;
 					} else if (status == adminAPI.num.int_2) {
@@ -283,9 +293,16 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 				}
 
 			} else {
+				$scope.setAttributeParentId(node, nodePermission);
 				return $scope.getNodeAllCheckboxStatus(nodePermission);
 			}
 
+		};
+
+		$scope.setAttributeParentId = function(node, nodePermission) {
+			for (var i = 0; i < nodePermission.length; i++) {
+				nodePermission[i].parentId = node.id;
+			}
 		};
 
 		$scope.getPermitNodeCols = function(cols) {
@@ -818,12 +835,23 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 			var html = '<table id="' + tableId + '"></table>';
 
 			$scope.buildPermitTable($detail.html(html).find('#' + tableId), cols, rows);
+			
+			if ($scope.isExpandAllNode) {
+				$scope.expandAllNode($detail);
+			}
+			
 		};
 
 		// Click To Expand All Nodes
-		$scope.expandAllNode = function() {
+		$scope.expandAllNode = function($target) {
 
-			$tablePermission.find('tr[permit^="node"]').map(function(index, elem) {
+			$scope.isExpandAllNode = true;
+
+			if (adminAPI.isNullOrEmpty($target)) {
+				$target = $tablePermission;
+			}
+
+			$target.find('tr[permit^="node"]').map(function(index, elem) {
 				var $node = $(elem);
 				var that = $node;
 				if (!$node.next().is('tr.detail-view')) {
@@ -832,29 +860,12 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 				} else if (!$node.next().next().is('tr.detail-view')) {
 					$node.next().find('.detail-icon').click();
 				}
-
-				$scope.expandAllNodeChild(that);
 			});
-
-		};
-
-		$scope.expandAllNodeChild = function($target) {
-
-			var detailIcon;
-			if (!$target.next().is('tr.detail-view')) {
-				detailIcon = $target.find('> td > .detail-icon');
-			} else if (!$target.next().next().is('tr.detail-view')) {
-				detailIcon = $target.next().find(".detail-icon");
-			}
-
-			if (detailIcon.length > 0) {
-				detailIcon.click();
-				$scope.expandAllNodeChild($target.next());
-			}
-
 		};
 
 		$scope.collapseAllNode = function() {
+
+			$scope.isExpandAllNode = false;
 
 			$tablePermission.find('tr[permit^="node"]').map(function(index, elem) {
 				var $node = $(elem);
@@ -876,6 +887,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 			});
 		};
 
+
+
 		$scope.checkParameter = function() {
 
 			if (adminAPI.isNullOrEmpty($scope.group.name)) {
@@ -887,6 +900,11 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 				adminAPI.comfirmPopup("Group tableau user is invalid!");
 				return false;
 			}
+
+			// if (adminAPI.isNullOrEmpty($scope.group.channel)) {
+			// 	adminAPI.comfirmPopup("Group channel is invalid!");
+			// 	return false;
+			// }
 
 			if (adminAPI.str.create == $scope.group.action) {
 				if (adminAPI.isNullOrEmpty($scope.group.userName)) {
@@ -907,6 +925,16 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 
 			if ($scope.group.tableauUser.length > 8) {
 				adminAPI.comfirmPopup("Group tableau user is too long!");
+				return false;
+			}
+
+			if (!adminAPI.isNullOrEmpty($scope.group.iconUrl) && $scope.group.iconUrl.length > 64) {
+				adminAPI.comfirmPopup("Group icon URL is too long!");
+				return false;
+			}
+
+			if (!adminAPI.isNullOrEmpty($scope.group.channel) && $scope.group.channel.length > 16) {
+				adminAPI.comfirmPopup("Group channel name is too long!");
 				return false;
 			}
 
@@ -931,12 +959,46 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "adminAPI",
 			return true;
 		};
 
-		// $scope.uploadIcon = function(file) {
-		// 	if (adminAPI.isNullOrEmpty(file)) return;
+		$scope.uploadIcon = function(file) {
 
-		// 	Upload.upload({url: });
+			if (adminAPI.isNullOrEmpty(file)) {
+				$scope.uploadStart = false;
+				return;
+			}
 
-		// };
+			if (file.size >= 300000) {
+				ModalAlert.popup({
+					msg: "The logo is too big!"
+				}, 2500);
+
+				$scope.uploadStart = false;
+				return;
+			}
+
+			var url = "/admin/user/fileUpload";
+			Upload.upload({
+				url : url,
+				data: {
+					groupName: $scope.group.name,
+					file : file
+				}
+			}).then(function(result) {
+				if (result.data.status == 0 && result.data.code == 0) {
+					$scope.group.iconUrl = result.data.data.iconRealPath;
+					// 获取 window 的 URL 工具 
+					var URL = window.URL || window.webkitURL;
+					// 通过 file 生成目标 url 
+					$scope.iconImgUrl = URL.createObjectURL(file); 
+				} else {
+					adminAPI.comfirmPopup("Please upload file.");
+				}
+			});
+		};
+
+		$scope.selectChannel = function(ichannel) {
+			$scope.group.channel = ichannel.channel;
+			$scope.group.channelId = ichannel.id;
+		};
 
 		$scope.groupSave = function() {
 

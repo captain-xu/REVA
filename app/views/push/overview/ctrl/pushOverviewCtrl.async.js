@@ -270,6 +270,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanA',
                     type:'line',
+                    smooth: true,
                     data: A,
                     itemStyle:{
                         normal: {
@@ -280,6 +281,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanB',
                     type:'line',
+                    smooth: true,
                     data: B,
                     itemStyle:{
                         normal: {
@@ -290,6 +292,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanC',
                     type:'line',
+                    smooth: true,
                     data: C,
                     itemStyle:{
                         normal: {
@@ -300,6 +303,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'Total',
                     type:'line',
+                    smooth: true,
                     data: T,
                     itemStyle:{
                         normal: {
@@ -313,6 +317,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanA',
                     type:'line',
+                    smooth: true,
                     data: A,
                     itemStyle:{
                         normal: {
@@ -323,6 +328,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanB',
                     type:'line',
+                    smooth: true,
                     data: B,
                     itemStyle:{
                         normal: {
@@ -333,6 +339,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'Total',
                     type:'line',
+                    smooth: true,
                     data: T,
                     itemStyle:{
                         normal: {
@@ -346,6 +353,7 @@ var scope = ["$scope", "serviceAPI", "$stateParams",'urlAPI',
                 {
                     name:'PlanA',
                     type:'line',
+                    smooth: true,
                     data: A,
                     itemStyle:{
                         normal: {

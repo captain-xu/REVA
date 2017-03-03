@@ -4,7 +4,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		$scope.role = {};
 		$scope.permissionPoolEditer = [];
 		$scope.permissionPoolResource = [];
-		$scope.parentId = "";
+		// $scope.parentId = "";
 
 		$scope.colsInit = [{
 			field: adminAPI.str.id
@@ -102,19 +102,21 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 		};
 
 		$scope.chargeNodePermitLength = function(permissionPool) {
-			var permit;
-			for (var i = 0; i < permissionPool.length; i++) {
-				permit = permissionPool[i];
-				if ($scope.isPermissionNode(permit)) {
-
+  			var permit;
+  			for (var i = 0; i < permissionPool.length; i++) {
+  				permit = permissionPool[i];
+  				if ($scope.isPermissionNode(permit)) {
+  
+					permit.nodeLengthOrg = permit.node.length;
 					$scope.addAttrNodeLength(permit.name, permit.node.length);
 
 					$scope.chargeNodePermitLength(permit.node);
-				} else {
-					
-					$scope.addAttrNodeLength(permit.name, adminAPI.num.int_0);
-				}
-			}
+  					
+  				} else {
+  					permit.nodeLengthOrg = adminAPI.num.int_0;
+  					$scope.addAttrNodeLength(permit.name, adminAPI.num.int_0);
+  				}
+  			}
 		};
 
 		$scope.addAttrNodeLength = function(nodeName, nodeSize) {
@@ -144,7 +146,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 					superAdminPer.permissionId = $scope.adminPermissionPool[i].id;
 					superAdminPer.name = $scope.adminPermissionPool[i].name;
 					superAdminPer.sequence = $scope.adminPermissionPool[i].sequence;
-  					superAdminPer.nodeLengthOrg = $scope.adminPermissionPool[i].nodeLengthOrg;
+					superAdminPer.nodeLengthOrg = $scope.adminPermissionPool[i].nodeLengthOrg;
 					$scope.roleActivityPermits.push(superAdminPer);
 					superAdminPer = {};
 				}
@@ -157,7 +159,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 						if ($scope.roleActivityPermits[i].permissionId == $scope.adminPermissionPool[j].id) {
 							$scope.roleActivityPermits[i].name = $scope.adminPermissionPool[j].name;
 							$scope.roleActivityPermits[i].sequence = $scope.adminPermissionPool[j].sequence;
-  					        $scope.roleActivityPermits[i].nodeLengthOrg = $scope.adminPermissionPool[j].nodeLengthOrg;
+							$scope.roleActivityPermits[i].nodeLengthOrg = $scope.adminPermissionPool[j].nodeLengthOrg;
 							break;
 						}
 					}
@@ -227,6 +229,82 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 			}
 
+			// When node permit is active, but only herself.
+			var isSubNodeExist = false;
+			for (var i = 0; i < $scope.adminPermissionPool.length; i++) {
+				var inode = $scope.adminPermissionPool[i];
+				var jnode;
+				for (var j = 0; j < $scope.roleActivityPermits.length; j++) {
+					jnode = $scope.roleActivityPermits[j];
+					// if (adminAPI.endWith(jnode.name, ":*")) {
+						if (adminAPI.startWith(inode.sequence, jnode.sequence)) {
+							if (inode.id == jnode.permissionId) {
+								isSubNodeExist = true;
+								break;
+							} else {
+								isSubNodeExist = false;
+							}
+						}
+					// }
+				}
+
+				if (!isSubNodeExist) {
+					if (jnode.active == adminAPI.num.int_1) {
+						inode.active = adminAPI.num.int_1;
+					} else {
+						inode.active = adminAPI.num.int_0;
+					}
+
+					inode.permissionId = inode.id;
+					$scope.permissionPoolEditer.push(inode);
+				}
+
+			}
+			// // When node permit is active, but only herself.
+			// for (var i = 0; i < $scope.roleActivityPermits.length; i++) {
+			// 	var inode = $scope.roleActivityPermits[i];
+			// 	if (adminAPI.endWith(inode.name, ":*")) {
+			// 		for (var j = 0; j < $scope.adminPermissionPool.length; j++) {
+			// 			if (adminAPI.startWith($scope.adminPermissionPool[j].sequence, inode.sequence) && $scope.adminPermissionPool[j].id != inode.permissionId) {
+			// 				if (inode.active == adminAPI.num.int_1) {
+			// 					$scope.adminPermissionPool[j].active = adminAPI.num.int_1;
+			// 				} else {
+			// 					$scope.adminPermissionPool[j].active = adminAPI.num.int_0;
+			// 				}
+
+			// 				$scope.adminPermissionPool[j].permissionId = $scope.adminPermissionPool[j].id;
+			// 				$scope.permissionPoolEditer.push($scope.adminPermissionPool[j]);
+			// 			}
+			// 		}
+
+			// 	}
+			// }
+
+			// $scope.permissionPoolEditerTemp = [];
+			// var isSubNodeExist = false;
+
+			// for (var i = 0; i < $scope.permissionPoolEditer.length; i++) {
+			// 	var inode = $scope.permissionPoolEditer[i];
+			// 	for (var j = 0; j < $scope.roleActivityPermits.length; j++) {
+			// 		if ($scope.roleActivityPermits[j].permissionId == inode.permissionId) {
+			// 			isSubNodeExist = true;
+			// 			break;
+			// 		} else {
+			// 			isSubNodeExist = false;
+			// 		}
+			// 	}
+
+			// 	if (!isSubNodeExist) {
+			// 		$scope.permissionPoolEditerTemp.push($scope.permissionPoolEditer[i]);
+			// 	}
+			// }
+
+			$scope.roleActivityPermits = $scope.roleActivityPermits.concat($scope.permissionPoolEditer);
+			$scope.roleActivityPermits.sort(adminAPI.compareById(adminAPI.str.sequence));
+
+			$scope.permissionPoolEditer = [];
+			$scope.permissionPoolEditerTemp = [];
+
 			// Charge permit active status which will show and checked or not
 			if ($scope.roleExistPermitList.length == adminAPI.num.int_1 &&
 				$scope.roleExistPermitList[0].permissionId == adminAPI.num.int_0) {
@@ -272,7 +350,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				}
 			}
 
-			$scope.roleActivityPermits.sort(adminAPI.compareById(adminAPI.str.sequence));
+			$scope.permissionPoolEditer = [];
 
 		};
 
@@ -318,7 +396,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 
 		$scope.convertPerPoolToTreeViewNode = function(permissionPoolEditer, permissionPool) {
 
-			var permitCurName, permitCurObj, permitCurArr, permitCurNamePath, superId;
+			var permitCurName, permitCurObj, permitCurArr, permitCurNamePath;
 
 			for (var i = 0; i < permissionPool.length; i++) {
 				if (adminAPI.isNullOrEmpty(permissionPool[i]) || !adminAPI.contains(permissionPool[i].name, ":")) continue;
@@ -341,14 +419,14 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 							nodeLengthOrg: permitCurObj.nodeLengthOrg
 						});
 
-						superId = permitCurObj.permissionId;
-						$scope.parentId = superId;
+						// superId = permitCurObj.permissionId;
+						// $scope.parentId = superId;
 						continue;
 
 					} else {
 						permitCurArr = permitCurNamePath.split(":");
 						$scope.addPermitNodeForTreeView(permitCurArr, permissionPoolEditer, permitCurObj);
-						$scope.parentId = permitCurObj.permissionId;
+						// $scope.parentId = permitCurObj.permissionId;
 					}
 
 				} else {
@@ -371,7 +449,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 						field: permitParentArr[m],
 						node: adminAPI.endWith(permitCurObj.name, ":*") == true ? [] : null,
 						active: permitCurObj.active,
-						parentId: $scope.parentId,
+						// parentId: $scope.parentId,
 						nodeLengthOrg: permitCurObj.nodeLengthOrg
 					});
 
@@ -410,7 +488,7 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 					field: permitParentArr[m],
 					node: adminAPI.endWith(permitCurObj.name, ":*") == true ? [] : null,
 					active: permitCurObj.active,
-					parentId: $scope.parentId,
+					// parentId: $scope.parentId,
 					nodeLengthOrg: permitCurObj.nodeLengthOrg
 				});
 			}
@@ -425,7 +503,8 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				permit = permissionPool[i];
 				if ($scope.isPermissionNode(permit)) {
 
-					$scope.chargeNodeAttrIndeterminateSub(permit.node);
+					$scope.chargeNodeAttrIndeterminateSub(permit, permit.node);
+					$scope.setAttributeParentId(permit, permit.node);
 
 					var status = $scope.getNodeAllCheckboxStatus(permit.node);
 					var indeterminateFlg = $scope.isIndeterminateNode(permit.node);
@@ -439,15 +518,17 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 			}
 		};
 
-		$scope.chargeNodeAttrIndeterminateSub = function(nodePermission) {
+		$scope.chargeNodeAttrIndeterminateSub = function(node, nodePermission) {
 
 			if (adminAPI.isNullOrEmpty(nodePermission)) return;
 
 			if ($scope.isPermissionNode(nodePermission)) {
 
 				for (var i = 0; i < nodePermission.length; i++) {
+					$scope.setAttributeParentId(node, nodePermission);
+
 					var permit = nodePermission[i];
-					var status = $scope.chargeNodeAttrIndeterminateSub(permit.node);
+					var status = $scope.chargeNodeAttrIndeterminateSub(permit, permit.node);
 					if (status == adminAPI.num.int_0 || status == adminAPI.num.int_1) {
 						permit.indeterminate = false;
 					} else if (status == adminAPI.num.int_2) {
@@ -456,9 +537,16 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				}
 
 			} else {
+				$scope.setAttributeParentId(node, nodePermission);
 				return $scope.getNodeAllCheckboxStatus(nodePermission);
 			}
 
+		};
+
+		$scope.setAttributeParentId = function(node, nodePermission) {
+			for (var i = 0; i < nodePermission.length; i++) {
+				nodePermission[i].parentId = node.id;
+			}
 		};
 
 		$scope.chargeNodeAttrActive = function(permissionPool) {
@@ -1033,12 +1121,23 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 			var html = '<table id="' + tableId + '"></table>';
 
 			$scope.buildPermitTable($detail.html(html).find('#' + tableId), cols, rows);
+
+			if ($scope.isExpandAllNode) {
+				$scope.expandAllNode($detail);
+			}
+
 		};
 
 		// Click To Expand All Nodes
-		$scope.expandAllNode = function() {
+		$scope.expandAllNode = function($target) {
 
-			$tablePermission.find('tr[permit^="node"]').map(function(index, elem) {
+			$scope.isExpandAllNode = true;
+
+			if (adminAPI.isNullOrEmpty($target)) {
+				$target = $tablePermission;
+			}
+
+			$target.find('tr[permit^="node"]').map(function(index, elem) {
 				var $node = $(elem);
 				var that = $node;
 				if (!$node.next().is('tr.detail-view')) {
@@ -1047,29 +1146,12 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 				} else if (!$node.next().next().is('tr.detail-view')) {
 					$node.next().find('.detail-icon').click();
 				}
-
-				$scope.expandAllNodeChild(that);
 			});
-
-		};
-
-		$scope.expandAllNodeChild = function($target) {
-
-			var detailIcon;
-			if (!$target.next().is('tr.detail-view')) {
-				detailIcon = $target.find('> td > .detail-icon');
-			} else if (!$target.next().next().is('tr.detail-view')) {
-				detailIcon = $target.next().find(".detail-icon");
-			}
-
-			if (detailIcon.length > 0) {
-				detailIcon.click();
-				$scope.expandAllNodeChild($target.next());
-			}
-
 		};
 
 		$scope.collapseAllNode = function() {
+
+			$scope.isExpandAllNode = false;
 
 			$tablePermission.find('tr[permit^="node"]').map(function(index, elem) {
 				var $node = $(elem);
@@ -1178,6 +1260,8 @@ var scope = ["$scope", "$location", "ModalAlert", "urlAPI", "serviceAPI", "admin
 			});
 
 		};
+
+
 
 		$scope.checkParameter = function() {
 

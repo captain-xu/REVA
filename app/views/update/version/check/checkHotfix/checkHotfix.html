@@ -18,7 +18,7 @@
                 <input type="text" class="form-control" ng-model="detail.app" readonly>
             </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label class="col-sm-2 control-label">Target Version Code:</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" ng-model="versionDetail" readonly>
@@ -37,12 +37,37 @@
             <div class="col-sm-7">
                 <input type="text" class="form-control" ng-model="detail.hotfixCode" readonly>
             </div>
+        </div> -->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Channel:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="detail.channel" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Hot Fix Patch:
+            </label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="detail.patchname" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Source Version Name:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="detail.sourceVersion" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Target Version Name:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="detail.targetVersion" readonly>
+            </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label">Version Comment:
             </label>
             <div class="col-sm-7">
-                <textarea class="form-control" ng-model="detail.updatenote" readonly></textarea>
+                <textarea class="form-control" ng-model="detail.versionComment" readonly></textarea>
             </div>
         </div>
         <div class="form-group">

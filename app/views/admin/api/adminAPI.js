@@ -7,9 +7,10 @@ angular.module('app.services').factory('adminAPI', [
 		 'use strict';
 
 		var adminAPI = {
-			group    : undefined,
-			role     : undefined,
-			user     : undefined
+			group : undefined,
+			role  : undefined,
+			user  : undefined,
+			app   : undefined
 		};
 
 		return {
@@ -34,7 +35,8 @@ angular.module('app.services').factory('adminAPI', [
 				checkbox: "checkbox",
 				sequence: "sequence",
 				selectAll: "Select All",
-				email: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+				email: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$",
+				imageDirPath: "http://dev.apkstorage.revanow.com/admin_image/"
 	        },
 
 	        num: {
@@ -70,6 +72,13 @@ angular.module('app.services').factory('adminAPI', [
 				return adminAPI.user;
 			},
 
+			setApp: function(app) {
+				adminAPI.app = app;
+			},
+			getApp: function() {
+				return admin.app;
+			},
+
 			getPassword: function() {
 				var numword = "";
 
@@ -100,7 +109,7 @@ angular.module('app.services').factory('adminAPI', [
 				if (str1 == null || str1 == undefined || str1 == "" || str1.length == 0 
 					|| str2 == null || str2 == undefined  || str2 == "" || str2.length == 0 || str1.length < str2.length ) {
 					return false;
-				} else if (str1.substring(0, str2.length) == str2) {
+				} else if (str1.toString().substring(0, str2.toString().length) == str2.toString()) {
 					return true;
 				} else {
 					return false;
@@ -111,7 +120,7 @@ angular.module('app.services').factory('adminAPI', [
 				if (str1 == null || str1 == undefined || str1 == "" || str1.length == 0 
 					|| str2 == null || str2 == undefined  || str2 == "" || str2.length == 0 || str1.length < str2.length ) {
 					return false;
-				} else if (str1.substring(str1.length - str2.length) == str2) {
+				} else if (str1.toString().substring(str1.toString().length - str2.toString().length) == str2.toString()) {
 					return true;
 				} else {
 					return false;

@@ -88,7 +88,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI','$stateParams','$location',
             };
             serviceAPI.saveData(urlAPI.xscreen_edit, $scope.changeParam).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    $location.path('/view/xscreen/card');
+                    history.go(-1);
                 }
             })
         };

@@ -21,7 +21,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "$stateParams", "ModalAlert",
 			}).
 			catch(function(result){})
 			serviceAPI.loadData(urlAPI.cms_packageVendor).then(function(result) {
-				$scope.vendorList = result.data;
+				$scope.channelList = result.data;
 			}).
 			catch(function(result){})
 		};
@@ -29,8 +29,8 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "$stateParams", "ModalAlert",
 			$scope.appName = app.app;
 			$scope.detail.packagename = app.packagename;
 		};
-		$scope.changeVendor = function(ven) {
-			$scope.detail.channel = ven.value;
+		$scope.changeChannel = function(channel) {
+			$scope.detail.channel = channel.key;
 		};
 		$scope.saveDetail = function() {
 			if ($scope.status === "edit") {
@@ -73,7 +73,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "$stateParams", "ModalAlert",
 				ModalAlert.error({msg: "App Name is necessary."}, 2500);
 				return false;
 			} else if (!$scope.detail.channel) {
-				ModalAlert.error({msg: "Vendor is necessary."}, 2500);
+				ModalAlert.error({msg: "Channel is necessary."}, 2500);
 				return false;
 			} else if (!$scope.detail.base_version_name) {
 				ModalAlert.error({msg: "Source Version Name is necessary."}, 2500);

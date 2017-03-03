@@ -130,6 +130,7 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
                 var series = {
                     type: 'line',
                     data: [],
+                    smooth: true,
                     symbol: "circle",
                     symbol: "circle",
                     symbolSize: [10, 10]

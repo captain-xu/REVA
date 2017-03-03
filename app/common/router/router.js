@@ -16,9 +16,11 @@ require('../js/directive/pullRefresh');
 
 //update directive
 require('app/views/update/version/newVersion/segment');
-require('app/views/update/check/checkVersion/checkSegment');
+require('app/views/update/version/check/checkVersion/checkSegment');
+// require('app/views/update/check/checkVersion/checkSegment');
 require('app/views/update/version/segments/segments');
-require('app/views/update/check/checkSegments/checkSegments');
+require('app/views/update/version/check/checkSegments/checkSegments');
+// require('app/views/update/check/checkSegments/checkSegments');
 
 //admin
 require('app/views/admin/api/adminAPI');
@@ -299,17 +301,33 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             params: { activeTitle: "admin" }
         })
         .state('admin.app', {
-            url: "/app",
-            templateUrl: 'app/views/admin/app/appList/appList.html',
+            url: '/app',
+            templateUrl: 'app/views/main/main.html'
+        })
+        .state('admin.app.view', {
+            url: '/view',
+            templateUrl: 'app/views/admin/app/appView.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/admin/app/appList/appListCtrl.async.js', function(ctrl) {
+                require.async('app/views/admin/app/appViewCtrl.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });
                 })
             }],
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appList/appListCtrl') }
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appViewCtrl') }
             }
         })
+        // .state('admin.app', {
+        //     url: "/app",
+        //     templateUrl: 'app/views/admin/app/appList/appList.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/admin/app/appList/appListCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appList/appListCtrl') }
+        //     }
+        // })
         .state('admin.newApp', {
             url: "/newApp/:id/:param",
             templateUrl: 'app/views/admin/app/newApp/newApp.html',
@@ -844,7 +862,10 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 activeTitle: "osdiy"
             },
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/version/newVersion/segmentCtrl') }
+                resourceMap: function(serviceAPI) {
+                    serviceAPI.resourceMap('update/version/segments/segmentsCtrl');
+                    serviceAPI.resourceMap('update/version/newVersion/segmentCtrl'); 
+                }
             }
         })
         .state('update.list', {
@@ -893,6 +914,78 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             }],
             resolve: {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/campaign/campaignList/campaign') }
+            }
+        })
+        .state('update.list.operation', {
+            url: "/operation",
+            templateUrl: 'app/views/update/operation/xscreen/xscreen.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/xscreenCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/operation/xscreen/xscreenCtrl') }
+            }
+        })
+        .state('update.cardDetail', {
+            url: "/operation/xscreen/card-detail/:id/:name/:param",
+            templateUrl: 'app/views/update/operation/xscreen/card/detail.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/card/detailCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/card/detailCtrl') }
+            }
+        })
+        .state('update.searchConfig', {
+            url: "/operation/xscreen/searchConfig/:id/:name/:param",
+            templateUrl: 'app/views/update/operation/xscreen/search/searchConfig.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/search/searchConfigCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchConfigCtrl') }
+            }
+        })
+        .state('update.channelConfig', {
+            url: "/operation/xscreen/channelConfig/:id/:name/:param",
+            templateUrl: 'app/views/update/operation/xscreen/channel/channelConfig.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/channel/channelConfigCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelConfigCtrl') }
+            }
+        })
+        .state('update.configUrl', {
+            url: "/operation/xscreen/configUrl/:id/:cardid/:name",
+            templateUrl: 'app/views/update/operation/xscreen/configUrl/configUrl.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/configUrl/configUrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/configUrl/configUrl') }
+            }
+        })
+        .state('update.configPlace', {
+            url: "/operation/xscreen/configPlace/:id/:cardid/:name",
+            templateUrl: 'app/views/update/operation/xscreen/configPlace/configPlace.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/update/operation/xscreen/configPlace/configPlace.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/configPlace/configPlace') }
             }
         })
         .state('update.list.campaign.placement', {
@@ -945,14 +1038,14 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         })
         .state('update.checkVersion', {
             url: "/checkVersion/:id/:param",
-            templateUrl: 'app/views/update/check/checkVersion/checkDetail.html',
+            templateUrl: 'app/views/update/version/check/checkVersion/checkDetail.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/update/check/checkVersion/checkVersionCtrl.async.js', function(ctrl) {
+                require.async('app/views/update/version/check/checkVersion/checkVersionCtrl.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });
                 })
             }],
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/check/checkVersion/checkVersionCtrl') }
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/version/check/checkVersion/checkVersionCtrl') }
             }
         })
         .state('update.newHotfix', {
@@ -969,14 +1062,14 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         })
         .state('update.checkHotfix', {
             url: "/checkHotfix/:app/:id/:param",
-            templateUrl: 'app/views/update/check/checkHotfix/checkHotfix.html',
+            templateUrl: 'app/views/update/version/check/checkHotfix/checkHotfix.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/update/check/checkHotfix/checkHotfixCtrl.async.js', function(ctrl) {
+                require.async('app/views/update/version/check/checkHotfix/checkHotfixCtrl.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });
                 })
             }],
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/check/checkHotfix/checkHotfixCtrl') }
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/version/check/checkHotfix/checkHotfixCtrl') }
             }
         })
         .state('update.newExtend', {
@@ -1003,143 +1096,83 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('update/campaign/newDevice/newDevice') }
             }
         })
-        .state('xscreen', {
-            url: "/view/xscreen",
-            templateUrl: 'app/views/main/layout.html',
-            params: { activeTitle: "operation" }
-        })
-        .state('xscreen.card', {
-            url: "/card",
-            templateUrl: 'app/views/xscreen/card/cardList.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/card/listCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/card/listCtrl') }
-            }
-        })
-        .state('xscreen.cardDetail', {
-            url: "/card-detail/:id/:name/:param",
-            templateUrl: 'app/views/xscreen/card/detail.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/card/detailCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/card/detailCtrl') }
-            }
-        })
-        .state('xscreen.search', {
-            url: "/search",
-            templateUrl: 'app/views/xscreen/search/searchList.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/search/searchCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchCtrl') }
-            }
-        })
-        .state('xscreen.searchConfig', {
-            url: "/searchConfig/:id/:name/:param",
-            templateUrl: 'app/views/xscreen/search/searchConfig.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/search/searchConfigCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchConfigCtrl') }
-            }
-        })
-        .state('xscreen.channel', {
-            url: "/channel",
-            templateUrl: 'app/views/xscreen/channel/channelList.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/channel/channelCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelCtrl') }
-            }
-        })
-        .state('xscreen.channelConfig', {
-            url: "/channelConfig/:id/:name/:param",
-            templateUrl: 'app/views/xscreen/channel/channelConfig.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/channel/channelConfigCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelConfigCtrl') }
-            }
-        })
-        // .state('xscreen.service', {
-        //     url: "/service",
-        //     templateUrl: 'app/views/xscreen/service/serviceList.html',
+        // .state('xscreen', {
+        //     url: "/view/xscreen",
+        //     templateUrl: 'app/views/main/layout.html',
+        //     params: { activeTitle: "operation" }
+        // })
+        // .state('xscreen.card', {
+        //     url: "/card",
+        //     templateUrl: 'app/views/xscreen/card/cardList.html',
         //     controller: ['$scope', "$injector", function($scope, $injector) {
-        //         require.async('app/views/xscreen/service/serviceCtrl.async.js', function(ctrl) {
+        //         require.async('app/views/xscreen/card/listCtrl.async.js', function(ctrl) {
         //             $injector.invoke(ctrl, this, { '$scope': $scope });
         //         })
         //     }],
         //     resolve: {
-        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceCtrl') }
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/card/listCtrl') }
         //     }
         // })
-        // .state('xscreen.serviceConfig', {
-        //     url: "/serviceConfig/:id/:name/:param",
-        //     templateUrl: 'app/views/xscreen/service/serviceConfig.html',
+        // .state('xscreen.cardDetail', {
+        //     url: "/card-detail/:id/:name/:param",
+        //     templateUrl: 'app/views/xscreen/card/detail.html',
         //     controller: ['$scope', "$injector", function($scope, $injector) {
-        //         require.async('app/views/xscreen/service/serviceConfigCtrl.async.js', function(ctrl) {
+        //         require.async('app/views/xscreen/card/detailCtrl.async.js', function(ctrl) {
         //             $injector.invoke(ctrl, this, { '$scope': $scope });
         //         })
         //     }],
         //     resolve: {
-        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/service/serviceConfigCtrl') }
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/card/detailCtrl') }
         //     }
         // })
-        .state('xscreen.configUrl', {
-            url: "/configUrl/:id/:cardid/:name",
-            templateUrl: 'app/views/xscreen/configUrl/configUrl.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/configUrl/configUrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/configUrl/configUrl') }
-            }
-        })
-        .state('xscreen.configPlace', {
-            url: "/configPlace/:id/:cardid/:name",
-            templateUrl: 'app/views/xscreen/configPlace/configPlace.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/configPlace/configPlace.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/configPlace/configPlace') }
-            }
-        })
-        .state('xscreen.category', {
-            url: "/category",
-            templateUrl: 'app/views/xscreen/category/category.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/xscreen/category/category.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/category/category') }
-            }
-        })
+        // .state('xscreen.search', {
+        //     url: "/search",
+        //     templateUrl: 'app/views/xscreen/search/searchList.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/search/searchCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchCtrl') }
+        //     }
+        // })
+        // .state('xscreen.searchConfig', {
+        //     url: "/searchConfig/:id/:name/:param",
+        //     templateUrl: 'app/views/xscreen/search/searchConfig.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/search/searchConfigCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/search/searchConfigCtrl') }
+        //     }
+        // })
+        // .state('xscreen.channel', {
+        //     url: "/channel",
+        //     templateUrl: 'app/views/xscreen/channel/channelList.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/channel/channelCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelCtrl') }
+        //     }
+        // })
+        // .state('xscreen.channelConfig', {
+        //     url: "/channelConfig/:id/:name/:param",
+        //     templateUrl: 'app/views/xscreen/channel/channelConfig.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/xscreen/channel/channelConfigCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('xscreen/channel/channelConfigCtrl') }
+        //     }
+        // })
         .state('cms', {
             url: "/view/cms",
             templateUrl: 'app/views/main/layout.html',

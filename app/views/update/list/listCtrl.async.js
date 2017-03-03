@@ -12,8 +12,8 @@ var scope = ["$scope", "$stateParams", "$state", "$location","serviceAPI","urlAP
                     var tabArr = Object.keys($scope.permission).toString();
                     if (tabArr.indexOf('review') > -1 || tabArr.indexOf('update') > -1) {
                         $scope.tabFirst = 'version';
-                    } else if (tabArr.indexOf('campaign') > -1) {
-                        $scope.tabFirst = 'campaign';
+                    } else if (tabArr.indexOf('operation') > -1) {
+                        $scope.tabFirst = 'operation';
                     } else if (tabArr.indexOf('extends') > -1) {
                         $scope.tabFirst = 'extends';
                     } else {
@@ -32,6 +32,8 @@ var scope = ["$scope", "$stateParams", "$state", "$location","serviceAPI","urlAP
                     } else if ($scope.tabActive.indexOf('device') > -1) {
                             $state.go('update.list.campaign.device');
                             $scope.tab = 'campaign';
+                    } else if ($scope.tabActive.indexOf('operation') > -1) {
+                            $scope.tab = 'operation';
                     } else {
                             $state.go('update.list' + '.' + $scope.tabFirst);
                             $scope.tab = $scope.tabFirst;

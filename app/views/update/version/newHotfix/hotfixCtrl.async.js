@@ -5,11 +5,15 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         $scope.checkNum = false;
         $scope.getDetail = function() {
             $scope.detail = {
+                "id": 0,
                 "app": $stateParams.package,
-                "versionCode": "",
-                "fullpackage": "",
-                "hotfixCode": "",
-                "updatenote": "",
+                "channel": "",
+                "patchname": "",
+                "taskid": "",
+                "sourceVersion": "",
+                "targetVersion": "",
+                "versionComment": "",
+                "whatnew": "",
                 "target": 100,
                 "segment": {
                     "isAnd": 1,
@@ -32,13 +36,32 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     } else {
                         $scope.detail.segment = $scope.getSegment(JSON.parse($scope.detail.segment));
                     };
-                    var fileName = result.data.fullpackage;
-                    var index1 = fileName.indexOf('_'),
-                        index2 = fileName.indexOf('_', fileName.indexOf('_')+1),
-                        index3 = fileName.indexOf('.');
-                    $scope.fileCode = fileName.slice(index1 + 1, index2);
+                    // var fileName = result.data.fullpackage;
+                    // var index1 = fileName.indexOf('_'),
+                    //     index2 = fileName.indexOf('_', fileName.indexOf('_')+1),
+                    //     index3 = fileName.indexOf('.');
+                    // $scope.fileCode = fileName.slice(index1 + 1, index2);
                 }
             })
+        };
+        $scope.loadChannel = function() {
+            serviceAPI.loadData(urlAPI.cms_packageVendor).then(function(result) {
+                $scope.channelList = result.data;
+            }).
+            catch(function(result){});
+        };
+        $scope.changeChannel = function(channel) {
+            $scope.detail.channel = channel.key;
+            serviceAPI.loadData(urlAPI.update_patchList, {packagename: $stateParams.package, vendor: channel.key}).then(function(result) {
+                $scope.patchList = result.data;
+            }).
+            catch(function(result){});
+        };
+        $scope.changePatch = function(patch) {
+            $scope.detail.patchname = patch.patchname;
+            $scope.detail.taskid = patch.id;
+            $scope.detail.sourceVersion = patch.base_version_code;
+            $scope.detail.targetVersion = patch.target_version_code;
         };
         $scope.getSegment = function(vo) {
             for (var i = 0; i < vo.params.length; i++) {
@@ -81,20 +104,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             return vo;
             
         };
-        $scope.loadTargetVersion = function() {
-            serviceAPI.loadData(urlAPI.update_hotfixVer, {app : $stateParams.package}).then(function(result) {
-                if (result.status == 0 && result.code == 0) {
-                    $scope.targetVersions = result.data;
-                    for (var i = 0; i < $scope.targetVersions.length; i++) {
-                        if ($scope.detail.vid == $scope.targetVersions[i].id) {
-                            var item = $scope.targetVersions[i];
-                            $scope.versionDetail = "version_name:" + item.version_name + "; " + "version_code:" + item.version_code + "; " + "id:" + item.id;
-                        }
-                        
-                    }
-                }
-            });
-        };
         $scope.loadDevice = function() {
             serviceAPI.loadData(urlAPI.update_getDevice).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
@@ -122,11 +131,6 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 }
             })
         };
-        $scope.changeCode = function(ver) {
-            $scope.detail.versionCode = ver.version_code;
-            $scope.detail.vid = ver.id;
-            $scope.versionDetail = "version_name:" + ver.version_name + "; " + "version_code:" + ver.version_code + "; " + "id:" + ver.id;
-        };
         $scope.changeTarget = function() {
             if ($scope.detail.target == 100) {
                 $scope.detail.target = 99;
@@ -143,45 +147,63 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         $scope.removeTarget = function() {
             $scope.checkNum = false;
         };
-        $scope.uploadPatch = function(file, errFiles) {
-            if (file) {
-                var fileName = file.name;
-                var index1 = fileName.indexOf('_'),
-                    index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
-                    index3 = fileName.indexOf('.');
-                $scope.fileAppname = fileName.slice(0, index1);
-                $scope.fileCode = fileName.slice(index1 + 1, index2);
-                $scope.hotfixCode = Number(fileName.slice(index2 + 1, index3));
-                if (fileName.indexOf('.pac') === -1) {
-                    ModalAlert.error({ msg: "Illegal format" }, 2500);
-                    return;
-                } else if ($scope.fileAppname !== $scope.appName) {
-                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
-                    return false;
-                } else if (isNaN(Number($scope.fileCode)) || Number($scope.fileCode) !== $scope.detail.versionCode) {
-                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
-                    return false;
-                } else if (isNaN($scope.hotfixCode) || $scope.hotfixCode == 0 || $scope.hotfixCode > 2147483647) {
-                    ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
-                    return false;
-                }
-                $scope.detail.hotfixCode = $scope.hotfixCode;
-                $scope.pacState = true;
-                Upload.upload({
-                    url: urlAPI.update_uploadfile,
-                    data: { file: file }
-                    // , idType: 1
-                }).then(function(result) {
-                    var result = result.data;
-                    $scope.pacState = false;
-                    if (result.status == 0 && result.code == 0) {
-                        $scope.detail.fullpackage = result.data.filePath;
-                    } else {
-                        ModalAlert.popup({ msg: result.msg }, 2500);
-                    }
-                });
-            }
-        };
+        // $scope.loadTargetVersion = function() {
+        //     serviceAPI.loadData(urlAPI.update_hotfixVer, {app : $stateParams.package}).then(function(result) {
+        //         if (result.status == 0 && result.code == 0) {
+        //             $scope.targetVersions = result.data;
+        //             for (var i = 0; i < $scope.targetVersions.length; i++) {
+        //                 if ($scope.detail.vid == $scope.targetVersions[i].id) {
+        //                     var item = $scope.targetVersions[i];
+        //                     $scope.versionDetail = "version_name:" + item.version_name + "; " + "version_code:" + item.version_code + "; " + "id:" + item.id;
+        //                 }
+        //             }
+        //         }
+        //     });
+        // };
+        // $scope.changeCode = function(ver) {
+        //     $scope.detail.versionCode = ver.version_code;
+        //     $scope.detail.vid = ver.id;
+        //     $scope.versionDetail = "version_name:" + ver.version_name + "; " + "version_code:" + ver.version_code + "; " + "id:" + ver.id;
+        // };
+        // $scope.uploadPatch = function(file, errFiles) {
+        //     if (file) {
+        //         var fileName = file.name;
+        //         var index1 = fileName.indexOf('_'),
+        //             index2 = fileName.indexOf('_', fileName.indexOf('_') + 1),
+        //             index3 = fileName.indexOf('.');
+        //         $scope.fileAppname = fileName.slice(0, index1);
+        //         $scope.fileCode = fileName.slice(index1 + 1, index2);
+        //         $scope.hotfixCode = Number(fileName.slice(index2 + 1, index3));
+        //         if (fileName.indexOf('.pac') === -1) {
+        //             ModalAlert.error({ msg: "Illegal format" }, 2500);
+        //             return;
+        //         } else if ($scope.fileAppname !== $scope.appName) {
+        //             ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
+        //             return false;
+        //         } else if (isNaN(Number($scope.fileCode)) || Number($scope.fileCode) !== $scope.detail.versionCode) {
+        //             ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
+        //             return false;
+        //         } else if (isNaN($scope.hotfixCode) || $scope.hotfixCode == 0 || $scope.hotfixCode > 2147483647) {
+        //             ModalAlert.error({ msg: "Patch is illegal!" }, 2500);
+        //             return false;
+        //         }
+        //         $scope.detail.hotfixCode = $scope.hotfixCode;
+        //         $scope.pacState = true;
+        //         Upload.upload({
+        //             url: urlAPI.update_uploadfile,
+        //             data: { file: file }
+        //             // , idType: 1
+        //         }).then(function(result) {
+        //             var result = result.data;
+        //             $scope.pacState = false;
+        //             if (result.status == 0 && result.code == 0) {
+        //                 $scope.detail.fullpackage = result.data.filePath;
+        //             } else {
+        //                 ModalAlert.popup({ msg: result.msg }, 2500);
+        //             }
+        //         });
+        //     }
+        // };
         $scope.setSegment = function(vo) {
             for (var i = 0; i < vo.params.length; i++) {
                 var item = vo.params[i];
@@ -223,10 +245,11 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         };
         $scope.saveDetail = function() {
             $scope.detail.target = Number($scope.detail.target);
-            if (!$scope.detail.fullpackage || $scope.detail.fullpackage == '') {
-                ModalAlert.popup({ msg: "Please upload a package" }, 2500);
+            $scope.detail.id = Number($stateParams.id);
+            if (!$scope.detail.taskid) {
+                ModalAlert.popup({ msg: "Please select a Hot Fix Patch" }, 2500);
                 return false;
-            } else if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
+            } else if (!$scope.detail.versionComment || $scope.detail.versionComment == '') {
                 ModalAlert.popup({ msg: "The Version Comment is required" }, 2500);
                 return false;
             } else if ($scope.detail.versionCode != $scope.fileCode) {
@@ -274,7 +297,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             } else {
                 $scope.getDetail();
             };
-            $scope.loadTargetVersion();
+            $scope.loadChannel();
+            // $scope.loadTargetVersion();
             $scope.loadDevice();
             $scope.loadCountry();
             $scope.loadAndroidVersion();

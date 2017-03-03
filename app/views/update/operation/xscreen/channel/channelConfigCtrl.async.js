@@ -53,7 +53,7 @@ var scope = ["$scope", "serviceAPI", 'urlAPI', "ModalAlert", '$stateParams', '$l
             }
             serviceAPI.saveData(url, $scope.param).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    $location.path('/view/xscreen/channel');
+                    history.go(-1);
                 }
             })
         };

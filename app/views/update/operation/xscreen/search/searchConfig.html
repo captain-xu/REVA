@@ -1,7 +1,7 @@
 <div class="service-config">
     <div class="header">
         <ul class="nav breadcrumb">
-            <li><a href="#/view/xscreen/channel">Channel Settings</a></li>
+            <li><a href="javascript:history.go(-1)">Search Settings</a></li>
             <li><b>Edit</b></li>
         </ul>
     </div>
@@ -9,7 +9,6 @@
         <div class="form-group clearfix">
             <label class="col-sm-2 control-label">Device Model:<em>&#42;</em></label>
             <div class="col-sm-6" ng-show="channelDetail!='new'">{{channelName}}</div>
-            <!-- <div class="col-sm-6" ng-show="channelName==0"> -->
                 <div class="col-sm-6 dropdown os_filter" ng-show="channelDetail=='new'">
                     <div class="dropdown-toggle" data-toggle="dropdown">
                         <p>{{channelName}}<span class="caret"></span></p>
@@ -18,24 +17,21 @@
                         <li ng-repeat="channel in channelList" ng-click="channelData(channel)">{{channel.channels}}</li>
                     </ul>
                 </div>
-            <!-- </div> -->
         </div>
         <div class="form-group clearfix">
-            <label class="col-sm-2 control-label">Webeye:<em>&#42;</em></label>
-            <div class="col-sm-5">
-                <input type="text" name="channel" ng-model="webeye">
+            <label class="col-sm-2 control-label">Search Engines:<em>&#42;</em></label>
+            <div class="col-sm-6 dropdown os_filter">
+                <div class="dropdown-toggle" data-toggle="dropdown">
+                    <p>{{engineName}}<span class="caret"></span></p>
+                </div>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="engin in enginList" ng-click="engineData(engin)">{{engin.engine}}</li>
+                </ul>
             </div>
-        </div>
-        <div class="form-group clearfix">
-            <label class="col-sm-2 control-label">Accuweather:<em>&#42;</em></label>
-            <div class="col-sm-5">
-                <input type="text" name="channel" ng-model="accuweather">
-            </div>
-        </div>
     </div>
     <div class="footer">
         <div class="right-btn">
-            <a href="#/view/xscreen/channel">
+            <a href="javascript:history.go(-1)">
                 <button type="button" class="btn btn-default cancle">Cancel</button>
             </a>
             <button type="button" class="btn btn-default save" ng-click="saveData()" ng-show="statu=='edit'">Save</button> 

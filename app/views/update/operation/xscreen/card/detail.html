@@ -1,7 +1,7 @@
 <div class="card-detail">
     <div class="header">
         <ul class="nav breadcrumb">
-            <li><a href="#/view/xscreen/card">Card</a></li>
+            <li><a href="javascript:history.go(-1)">Card Settings</a></li>
             <li><b>Edit</b></li>
         </ul>
     </div>
@@ -61,9 +61,9 @@
                                         <span ng-click="downRecord(openList,$index)"><a href="javascript:void(0)">Down</a></span>
                                     </td>
                                     <td>
-                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==1" href="#/view/xscreen/configUrl/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
-                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==2" href="#/view/xscreen/configPlace/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
-                                        <!-- <a class="glyphicon glyphicon-cog" ng-if="list.type==3" href="#/view/xscreen/serviceConfig/{{channel.id}}/{{channelName}}/edit"></a> -->
+                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==1" href="#/view/update/operation/xscreen/configUrl/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
+                                        <a class="glyphicon glyphicon-cog" ng-if="list.type==2" href="#/view/update/operation/xscreen/configPlace/{{channel.id}}/{{list.cardid}}/{{list.name}}"></a>
+                                        <!-- <a class="glyphicon glyphicon-cog" ng-if="list.type==3" href="#/view/update/operation/xscreen/serviceConfig/{{channel.id}}/{{channelName}}/edit"></a> -->
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,7 +104,7 @@
     </div>
     <div class="footer">
         <div class="right-btn">
-            <a href="#/view/xscreen/card">
+            <a href="javascript:history.go(-1)">
                 <button type="button" class="btn btn-default cancle">Cancel</button>
             </a>
             <button type="button" class="btn btn-default save" ng-click="saveData()" ng-show="statu=='edit'">Save</button> 

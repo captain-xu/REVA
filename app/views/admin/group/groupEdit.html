@@ -11,6 +11,10 @@
 			<sapn>{{group.name}}</sapn>
 		</div>
 
+        <div class="icon-preview">
+        	<img ng-src="{{iconImgUrl}}">
+        </div>
+
 		<div class="edit-form detail-con form-horizontal">
 			<div class="form-group">
 				<label class="control-label col-sm-3">Group Name:<em>&#42;</em></label>
@@ -42,34 +46,19 @@
 
 			<div class="form-group">
 				<label class="control-label col-sm-3">Icon URL:</label>
-				<div class="col-sm-4" ng-show="!uploadStart">
-	                <input type="text" placeholder="Icon URL" ng-model="group.iconUrl" class="form-control" readonly/>
+				<div class="col-sm-4">
+	                <input type="text" placeholder="Please upload a icon URL" ng-model="group.iconUrl" class="form-control" readonly/>
 	            </div>
-				<div class="col-sm-4" ng-show="uploadStart" class="form-control progress progress-striped active" max="100" value="dynamic">
-					<b>{{dynamic}}%</b>
-				</div>
 
-	            <button type="file" ngf-select="uploadStart=true;uploadIcon($file)" accept="image/png, image/jpeg" class="btn btn-primary upload">Upload</button>
+	            <button type="file" ngf-select="uploadIcon($file)" accept="image/png, image/jpeg" class="btn btn-primary upload">Upload</button>
 			</div>
 
 			<div class="form-group">
 				<label class="control-label col-sm-3">Channel:</label>
+
 				<div class="col-sm-5">
-	                <div class="dropdown">
-	                    <input name="channelName" class="dropdown-toggle" data-toggle="dropdown" ng-model="group.channel" ng-focus="selectOnChannel('appWarn')" readonly placeholder="Please select a channel">
-	                    <span class="caret"></span>
-	                    <ul class="dropdown-menu" role="menu">
-	                        <li ng-repeat="ichannel in group.channelList" ng-click="selectChannel(ichannel)">{{ichannel.channel}}</li>
-	                    </ul>
-	                </div>
-
-	                
-
-	                <!-- <ins class="warn" ng-show="validateParam.appWarn"><i class="fa fa-close"></i>This field is required.</ins> -->
-					<!-- <input type="" name="channelName" class="dropdown-toggle ng-pristine ng-valid ng-empty ng-touched" > -->
-	                <!-- <input type="text" placeholder="Channel" ng-model="group.channel" class="form-control ng-pristine ng-valid ng-not-empty ng-touched"> -->
+	                <input type="text" placeholder="Channel name" ng-model="group.channel" ng-trim="true" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
 	            </div>
-
 
 			</div>
 	

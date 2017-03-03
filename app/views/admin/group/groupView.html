@@ -18,6 +18,7 @@
 			<table class="table table-bordered table-hover">
 				<thead>
 					<tr>
+						<th>Icon</th>
 						<th>Name</th>
 						<th>Tableau User</th>
 						<th>Icon URL</th>
@@ -27,6 +28,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="item in groupList">
+						<td><img ng-src="{{item.iconPath}}"></td>
 						<td>{{item.name}}</td>
 						<td>{{item.tableauUser}}</td>
 						<td>{{item.iconUrl}}</td>

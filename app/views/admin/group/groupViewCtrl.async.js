@@ -10,6 +10,14 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 			serviceAPI.loadData(urlAPI.admin_group_view, $scope.pageBar).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
 					$scope.groupList = result.data.groupList;
+
+					for (var i = 0; i < $scope.groupList.length; i++) {
+						var iconUrl = $scope.groupList[i].iconUrl;
+						if (!adminAPI.isNullOrEmpty(iconUrl)) {
+							$scope.groupList[i].iconPath = adminAPI.str.imageDirPath + iconUrl.substring(iconUrl.lastIndexOf("/") + 1);
+						}
+					}
+
 					$scope.pageBar.totalRows = result.data.totalRows;
 					adminAPI.loginUser = result.data.loginUser;
 				}
@@ -65,7 +73,6 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 
 		$scope.groupUpdate = function(item) {
 			item.action = adminAPI.str.update;
-			// item.tableauUser = adminAPI.loginUser.
 			item.userName = adminAPI.loginUser.userName;
 			item.userEmail = adminAPI.loginUser.email;
 			adminAPI.setGroup(item);

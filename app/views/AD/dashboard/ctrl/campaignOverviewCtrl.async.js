@@ -71,6 +71,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
                     return {
                             name: series.appName,
                             type: 'line',
+                            smooth: true,
                             data: series.data
                         }
                 });

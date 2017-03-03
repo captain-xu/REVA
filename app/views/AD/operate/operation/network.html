@@ -4,21 +4,21 @@
         <div class="header">
             <ol class="breadcrumb">
                 <li class="cursor" ng-click="cancel()">AdNetwork</li>
-                <li class="active" ng-show="!detailNET.status">Edit</li>
-                <li class="active" ng-show="detailNET.status">View</li>
+                <li class="active" ng-show="!detailVO.status">Edit</li>
+                <li class="active" ng-show="detailVO.status">View</li>
             </ol>
         </div>
         <div class="edit-container">
             <ul>
                 <li verification><span class="edit-key">Name:<em>&#42;</em></span>
-                    <input type="text" ng-model="detailNET.name" ng-readonly="{1: 'true'}[detailNET.status]">
+                    <input type="text" ng-model="detailVO.name" ng-readonly="{1: 'true'}[detailVO.status]">
                     <span class="msg"></span>
                 </li>
                 <li>
                     <span class="edit-key">CPX:</span>
                     <div class="dropdown cpx">
                         <p class="dropdown-toggle app-filter" data-toggle="dropdown" ng-init="appfilter = 'Please select'">
-                        {{detailNET.cpx}}
+                        {{detailVO.cpx}}
                         </p>
                         <span class="caret"></span>
                         <ul class="dropdown-menu" role="menu">
@@ -28,11 +28,11 @@
                 </li>
                 <li>
                     <span class="edit-key">Payout:</span>
-                    <input type="text" ng-model="detailNET.payout" ng-readonly="{1: 'true'}[detailNET.status]">
+                    <input type="text" ng-model="detailVO.payout" ng-readonly="{1: 'true'}[detailVO.status]">
                 </li>
                 <li>
                     <span class="edit-key">Budget:</span>
-                    <input type="text" ng-model="detailNET.budget" ng-readonly="{1: 'true'}[detailNET.status]">
+                    <input type="text" ng-model="detailVO.budget" ng-readonly="{1: 'true'}[detailVO.status]">
                 </li>
                 <li>
                     <span class="edit-key">Date:<em>&#42;</em></span>
@@ -45,7 +45,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a data-target="#place" aria-controls="home" role="tab" data-toggle="tab">Placement</a></li>
                             <li role="presentation"><a data-target="#target" aria-controls="profile" role="tab" data-toggle="tab">Targeting</a></li>
-                            <li role="presentation" ng-hide="detailNET.placeId==''"><a data-target="#asver" aria-controls="messages" role="tab" data-toggle="tab">Advertiser</a>
+                            <li role="presentation" ng-hide="detailVO.placeId==''"><a data-target="#asver" aria-controls="messages" role="tab" data-toggle="tab">Advertiser</a>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -55,7 +55,7 @@
                                     <div class="app">
                                         <div class="dropdown">
                                             <p class="dropdown-toggle" id="applist" data-toggle="dropdown">
-                                                {{detailNET.appName}}
+                                                {{detailVO.appName}}
                                                 <span class="caret"></span>
                                             </p>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="applist">
@@ -66,7 +66,7 @@
                                     <div class="app">
                                         <div class="dropdown">
                                             <p class="dropdown-toggle" id="versionlist" data-toggle="dropdown">
-                                                {{detailNET.version}}
+                                                {{detailVO.version}}
                                                 <span class="caret"></span>
                                             </p>
                                             <ul class="dropdown-menu" role="menu" aria-labelledby="versionlist">
@@ -79,7 +79,7 @@
                                     <span class="title">Group:<em>&#42;</em></span>
                                     <div class="dropdown">
                                         <p class="dropdown-toggle" id="grouplist" data-toggle="dropdown">
-                                            {{detailNET.groupName}}
+                                            {{detailVO.groupName}}
                                             <span class="caret"></span>
                                         </p>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="grouplist">
@@ -92,7 +92,7 @@
                                     <span class="title">Placement:<em>&#42;</em></span>
                                     <div class="dropdown">
                                         <p class="dropdown-toggle" id="placelist" data-toggle="dropdown">
-                                            {{detailNET.placeName}}
+                                            {{detailVO.placeName}}
                                             <span class="caret"></span>
                                         </p>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="placelist">
@@ -106,24 +106,24 @@
                                 <ul>
                                     <li verification>
                                         <span class="title">IMP Frequency:<em>&#42;</em></span>
-                                        <input type="text" ng-model="detailNET.imp" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.imp" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="msg"></span>
                                     </li>
                                     <li verification>
                                         <span class="title">Click Frequency:<em>&#42;</em></span>
-                                        <input type="text" ng-model="detailNET.click" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.click" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="msg"></span>
                                     </li>
                                     <li class="except">
                                         <span class="title">Area:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <input ng-focus="areaStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.area">
+                                        <div class="dropdown directional">
+                                            <input ng-focus="selectStatus('area', 'areaList', 'code')" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailVO.area" readonly>
                                             <span class="caret"></span>
-                                            <ul class="dropdown-menu area-date" role="menu">
-                                                <li ng-click="allArea()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-allArea icon-area"></i>ALL
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="allSelect('area', 'areaList', 'areaExcept')" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-area" ng-class="{true: 'active'}[selectAllState.area]"></i>ALL
                                                 </li>
-                                                <li ng-repeat="area in areaList" ng-click="areaData(area)" self-stop-propagation>
+                                                <li ng-repeat="area in areaList" ng-click="singleSelect(area, 'code', 'area', 'areaExcept')" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-area" ng-class="{true: 'active'}[area.isSelect]"></i>{{area.name}}
                                                 </li>
                                             </ul>
@@ -131,69 +131,37 @@
                                     </li>
                                     <li class="except">
                                         <span class="title">Area Except:</span>
-                                        <input type="text" ng-model="detailNET.areaExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                        <input type="text" ng-model="detailVO.areaExcept" ng-readonly="{1: 'true'}[detailVO.status]" class="areaexcept">
                                     </li>
                                     <li class="except">
                                         <span class="title">Device:</span>
-                                        <input type="text" ng-model="detailNET.device" ng-readonly="{1: 'true'}[detailNET.status]">
-                                        <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.deviceExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">IMEI:</span>
-                                        <input type="text" ng-model="detailNET.imei" ng-readonly="{1: 'true'}[detailNET.status]">
-                                        <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.imeiExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Model:</span>
-                                        <input type="text" ng-model="detailNET.model" ng-readonly="{1: 'true'}[detailNET.status]">
-                                        <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.modelExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">OS Version:</span>
-                                        <input type="text" ng-model="detailNET.osVersion" ng-readonly="{1: 'true'}[detailNET.status]">
-                                        <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.osVersionExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li>
-                                    <li class="except">
-                                        <span class="title">Language:</span>
-                                        <input type="text" ng-model="detailNET.language" ng-readonly="{1: 'true'}[detailNET.status]">
-                                        <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.languageExcept" ng-readonly="{1: 'true'}[detailNET.status]">
-                                    </li>
-
-
-                                    <!-- <li class="except">
-                                        <span class="title">Device:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <input ng-focus="deviceStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.device">
+                                        <div class="dropdown directional">
+                                            <input ng-focus="selectStatus('device', 'deviceList', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailVO.device" readonly>
                                             <span class="caret"></span>
-                                            <ul class="dropdown-menu device-date" role="menu">
-                                                <li ng-click="allDevice()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-alldevice icon-device"></i>ALL
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="allSelect('device', 'deviceList', 'deviceExcept')" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-device" ng-class="{true: 'active'}[selectAllState.device]"></i>ALL
                                                 </li>
-                                                <li ng-repeat="dev in deviceList" ng-click="devData(dev)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-device" ng-class="{true: 'active'}[dev.isSelect]"></i>{{dev.name}}
+                                                <li ng-repeat="device in deviceList" ng-click="singleSelect(device, 'name', 'device', 'deviceExcept')" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-device" ng-class="{true: 'active'}[device.isSelect]"></i>{{device.name}}
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                     <li class="except">
                                         <span class="title">Device Except:</span>
-                                        <input type="text" ng-model="detailNET.deviceExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                        <input type="text" ng-model="detailVO.deviceExcept" ng-readonly="{1: 'true'}[detailVO.status]" class="areaexcept">
                                     </li>
                                     <li class="except">
                                         <span class="title">Model:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <input ng-focus="modelStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.model">
+                                        <div class="dropdown directional">
+                                            <input ng-focus="selectStatus('model', 'modelList', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailVO.model" readonly>
                                             <span class="caret"></span>
-                                            <ul class="dropdown-menu model-date" role="menu">
-                                                <li ng-click="allModel()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-allmodel icon-model"></i>ALL
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="allSelect('model', 'modelList', 'modelExcept')" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-model" ng-class="{true: 'active'}[selectAllState.model]"></i>ALL
                                                 </li>
-                                                <li ng-repeat="model in modelList" ng-click="modelData(model)" self-stop-propagation>
+                                                <li ng-repeat="model in modelList" ng-click="singleSelect(model, 'name', 'model', 'modelExcept')" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-model" ng-class="{true: 'active'}[model.isSelect]"></i>{{model.name}}
                                                 </li>
                                             </ul>
@@ -201,18 +169,18 @@
                                     </li>
                                     <li class="except">
                                         <span class="title">Model Except:</span>
-                                        <input type="text" ng-model="detailNET.modelExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                        <input type="text" ng-model="detailVO.modelExcept" ng-readonly="{1: 'true'}[detailVO.status]" class="areaexcept">
                                     </li>
                                     <li class="except">
                                         <span class="title">OS Version:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <input ng-focus="osStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.osVersion">
+                                        <div class="dropdown directional">
+                                            <input ng-focus="selectStatus('osVersion', 'osVersionList', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailVO.osVersion" readonly>
                                             <span class="caret"></span>
-                                            <ul class="dropdown-menu osVersion-date" role="menu">
-                                                <li ng-click="allOS()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-allosVersion icon-osVersion"></i>ALL
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="allSelect('osVersion', 'osVersionList', 'osVersionExcept')" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-osVersion" ng-class="{true: 'active'}[selectAllState.osVersion]"></i>ALL
                                                 </li>
-                                                <li ng-repeat="osVersion in osVersionList" ng-click="osVersionData(osVersion)" self-stop-propagation>
+                                                <li ng-repeat="osVersion in osVersionList" ng-click="singleSelect(osVersion, 'name', 'osVersion', 'osVersionExcept')" self-stop-propagation>
                                                     <i class="fa fa-check-square icon-osVersion" ng-class="{true: 'active'}[osVersion.isSelect]"></i>{{osVersion.name}}
                                                 </li>
                                             </ul>
@@ -220,26 +188,56 @@
                                     </li>
                                     <li class="except">
                                         <span class="title">OS Version Except:</span>
-                                        <input type="text" ng-model="detailNET.osVersionExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                        <input type="text" ng-model="detailVO.osVersionExcept" ng-readonly="{1: 'true'}[detailVO.status]" class="areaexcept">
                                     </li>
                                     <li class="except">
                                         <span class="title">Language:</span>
-                                        <div class="dropdown area-dropdown">
-                                            <input ng-focus="languageStatus()" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailNET.language">
+                                        <div class="dropdown directional">
+                                            <input ng-focus="selectStatus('language', 'languageList', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="detailVO.language" readonly>
                                             <span class="caret"></span>
-                                            <ul class="dropdown-menu language-date" role="menu">
-                                                <li ng-click="allLanguage()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-alllanguage icon-language"></i>ALL
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li ng-click="allSelect('language', 'languageList', 'languageExcept')" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-language" ng-class="{true: 'active'}[selectAllState.language]"></i>ALL
                                                 </li>
-                                                <li ng-repeat="lgu in languageList" ng-click="languageData(lgu)" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-language" ng-class="{true: 'active'}[lgu.isSelect]"></i>{{lgu.name}}
+                                                <li ng-repeat="language in languageList" ng-click="singleSelect(language, 'name', 'language', 'languageExcept')" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-language" ng-class="{true: 'active'}[language.isSelect]"></i>{{language.name}}
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                     <li class="except">
                                         <span class="title">Language Except:</span>
-                                        <input type="text" ng-model="detailNET.languageExcept" ng-readonly="{1: 'true'}[detailNET.status]" class="areaexcept">
+                                        <input type="text" ng-model="detailVO.languageExcept" ng-readonly="{1: 'true'}[detailVO.status]" class="areaexcept">
+                                    </li>
+                                    <!-- <li class="except">
+                                        <span class="title">Device:</span>
+                                        <input type="text" ng-model="detailVO.device" ng-readonly="{1: 'true'}[detailVO.status]">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.deviceExcept" ng-readonly="{1: 'true'}[detailVO.status]">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">IMEI:</span>
+                                        <input type="text" ng-model="detailVO.imei" ng-readonly="{1: 'true'}[detailVO.status]">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.imeiExcept" ng-readonly="{1: 'true'}[detailVO.status]">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Model:</span>
+                                        <input type="text" ng-model="detailVO.model" ng-readonly="{1: 'true'}[detailVO.status]">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.modelExcept" ng-readonly="{1: 'true'}[detailVO.status]">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">OS Version:</span>
+                                        <input type="text" ng-model="detailVO.osVersion" ng-readonly="{1: 'true'}[detailVO.status]">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.osVersionExcept" ng-readonly="{1: 'true'}[detailVO.status]">
+                                    </li>
+                                    <li class="except">
+                                        <span class="title">Language:</span>
+                                        <input type="text" ng-model="detailVO.language" ng-readonly="{1: 'true'}[detailVO.status]">
+                                        <span class="title">Except:</span>
+                                        <input type="text" ng-model="detailVO.languageExcept" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li> -->
 
 
@@ -247,45 +245,45 @@
 
                                     <li class="except">
                                         <span class="title">Network:</span>
-                                        <input type="text" ng-model="detailNET.network" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.network" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.networkExcept" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.networkExcept" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">Channel1:</span>
-                                        <input type="text" ng-model="detailNET.channel1" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel1" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.channel1Except" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel1Except" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">Channel2:</span>
-                                        <input type="text" ng-model="detailNET.channel2" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel2" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.channel2Except" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel2Except" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">Channel3:</span>
-                                        <input type="text" ng-model="detailNET.channel3" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel3" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.channel3Except" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.channel3Except" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">Api Version:</span>
-                                        <input type="text" ng-model="detailNET.appVer" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.appVer" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Except:</span>
-                                        <input type="text" ng-model="detailNET.appVerExcept" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.appVerExcept" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">IMEI:</span>
-                                        <input type="text" ng-model="detailNET.imei" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.imei" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">IMEI Except:</span>
-                                        <input type="text" ng-model="detailNET.imeiExcept" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.imeiExcept" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
                                     <li class="except">
                                         <span class="title">Network:</span>
-                                        <input type="text" ng-model="detailNET.network" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.network" ng-readonly="{1: 'true'}[detailVO.status]">
                                         <span class="title">Network Except:</span>
-                                        <input type="text" ng-model="detailNET.networkExcept" ng-readonly="{1: 'true'}[detailNET.status]">
+                                        <input type="text" ng-model="detailVO.networkExcept" ng-readonly="{1: 'true'}[detailVO.status]">
                                     </li>
 
 
@@ -303,17 +301,17 @@
                                     <li>
                                         <span class="title">RTB:</span>
                                         <ul class="native-cont">
-                                            <li ng-click="rtbData(0)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{0:'active'}[detailNET.rtb]"></i>Yes</li>
-                                            <li ng-click="rtbData(1)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{1:'active'}[detailNET.rtb]"></i>No</li>
+                                            <li ng-click="rtbData(0)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{0:'active'}[detailVO.rtb]"></i>Yes</li>
+                                            <li ng-click="rtbData(1)"><i class="fa fa-dot-circle-o icon-radio" ng-class="{1:'active'}[detailVO.rtb]"></i>No</li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <span class="title">Advertiser:<em ng-show="!detailNET.rtb">&#42;</em></span>
-                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]" >
-                                            <input readonly ng-click="adverClick()" ng-model="detailNET.advertiserName"  class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="title">Advertiser:<em ng-show="!detailVO.rtb">&#42;</em></span>
+                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]" >
+                                            <input readonly ng-click="adverClick()" ng-model="detailVO.advertiserName"  class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu adver" role="menu">
-                                                <li ng-show="!detailNET.rtb" ng-click="adverAll()" class="advercheck" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[adAllSelect]"></i>
+                                                <li ng-show="!detailVO.rtb" ng-click="adverAll()" class="advercheck" self-stop-propagation>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[selectAllState.advertiser]"></i>
                                                     ALL
                                                 </li>
                                                 <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
@@ -323,11 +321,11 @@
                                             </ul>
                                             <span class="caret"></span>
                                         </div>
-                                        <input type="text" ng-model="detailNET.advertiserName" ng-show="{1: 'true'}[detailNET.status]" readonly>
+                                        <input type="text" ng-model="detailVO.advertiserName" ng-show="{1: 'true'}[detailVO.status]" readonly>
                                     </li>
-                                    <li ng-show="detailNET.rtb">
+                                    <li ng-show="detailVO.rtb">
                                         <span class="title">All List:<em>&#42;</em></span>
-                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
+                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]">
                                             <input readonly ng-click="offerClick()" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu offer-name" role="menu" pull-refresh="loadMore()">
                                                 <li ng-repeat="all in allName" ng-click="offerData(all)" self-stop-propagation>
@@ -336,15 +334,15 @@
                                             </ul>
                                             <span class="caret"></span>
                                         </div>
-                                        <input type="text" ng-model="detailNET.offerName" ng-show="{1: 'true'}[detailNET.status]" readonly>
+                                        <input type="text" ng-model="detailVO.offerName" ng-show="{1: 'true'}[detailVO.status]" readonly>
                                     </li>
-                                    <li ng-show="!detailNET.rtb && showChannel">
+                                    <li ng-show="!detailVO.rtb && showChannel">
                                         <span class="title">Channel:<em>&#42;</em></span>
-                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailNET.status]">
+                                        <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]">
                                             <input readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown">
                                             <ul class="dropdown-menu" role="menu">
                                                 <li ng-click="channelAll()" self-stop-propagation>
-                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[chanAllSelect]"></i>
+                                                    <i class="fa fa-check-square icon-offer" ng-class="{true: 'active'}[selectAllState.channel]"></i>
                                                     ALL
                                                 </li>
                                                 <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
@@ -353,7 +351,7 @@
                                             </ul>
                                             <span class="caret"></span>
                                         </div>
-                                        <input type="text" ng-model="channelNames" ng-show="{1: 'true'}[detailNET.status]" readonly>
+                                        <input type="text" ng-model="channelNames" ng-show="{1: 'true'}[detailVO.status]" readonly>
                                     </li>
                                 </ul>
                             </div>
@@ -362,7 +360,7 @@
                 </li>
                 <li class="edit-footer">
                     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
-                    <button class="btn btn-default save" ng-click="saveNetData(detailNET)" ng-if="!detailNET.status" ng-disabled="resubmit">Save</button>
+                    <button class="btn btn-default save" ng-click="saveNetData(detailVO)" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
                 </li>
             </ul>
         </div>

@@ -321,7 +321,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
             for (var i = 0; i < $scope.detail.segment.params.length; i++) {
                 var item = $scope.detail.segment.params[i];
-                if (item.param.name === "Client ID") {
+                if (item.param && item.param.name === "Client ID") {
                     if (item.param.value1 === "") {
                         ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500)
                         return false;

@@ -1,4 +1,4 @@
-#1前言
+# 1、前言
 
 本文主要介绍互联网化平台RevaNowWeb的使用说明。
 
@@ -11,7 +11,7 @@
 >>>>应用打包部署：本次主要根据fis3插件fis3-postpackager-loader生成resourcemap(具体内容详见打包生成index.html文件)，实现按单独文件夹或文件部署解决模块之间耦合问题。<br>  
 >>>>缓存文件：解决生产环境缓存问题方式由原来的md5改为时间戳方式<br>  
 
-#2具体说明
+# 2、具体说明
 
 ##2.1依赖环境搭建
 >>>>安装nodejs：开发环境依赖node运行环境，在使用之前确保已经有可用的nodejs运行环境。<br> 
@@ -36,7 +36,6 @@ bower_components：通过bower安装的前台依赖包（禁止修改）<br>
 node_modules：通过npm安装的node依赖包，主要用于页面编译（禁止修改）<br> 
 lib :js引用以及异步加载js文件<br> 
 page：前端开发环境框架（谨慎修改）<br>  
-
 app：开发人员工作目录（可修改）<br> 
 common：存放项目共用组件的地方，根据项目情况开发<br> 
 router：存放项目节点路由文件<br> 
@@ -44,7 +43,6 @@ main：项目需在inde.html 中引入的js、css文件（谨慎修改）<br>
 >>>>>>style：存放项目样式图片的地方<br> 
 >>>>>>views：项目功能节点存放地址，结构由项目团队自行决定<br> 
 >>>>>>partail：存放项目导航栏文件<br> 
-       
 ###2.2.2启动前台开发服务器
 Cmd执行：d :<br> 
 >>>>>>cd work/ RevaNowWeb<br> 
@@ -55,7 +53,6 @@ Cmd 执行：d :<br>
 >>>>>>cd work/ RevaNowWeb<br> 
 >>>>>>fis3 release dev –w(将文件部署到dev环境)<br> 
 浏览器输入：http://dev.revanow.com/<br> 
-
 ###2.2.3前台开发流程
 ####1.开发新页面流程
 >>>>在app/pages新建xxx文件夹，在文件夹中新增xxx.html<br> 
@@ -67,8 +64,8 @@ Cmd 执行：d :<br>
 定义：数据模型——$scope,网络服务——$http<br> 
 >>>>在控制层，由数据模型获得数据,如：var name = $scope.UserVO.username<br> 
 >>>>在控制层，向数据模型提交数据,如：$scope.UserVO.username ='国家主席';<br> 
->>>>在控制层进行http网络接口调用，如：$http.post('//localhost:8080/api/user', UserVO)<br> 
-#3插件介绍
+>>>>在控制层进行http网络接口调用，如：$http.post('//localhost:8080/api/user', UserVO) <br> 
+# 3、插件介绍
  fis3-hook-commonjs：fis3模块化开发工具<br> 
  fis3-postpackager-loader：静态资源前段加载器，用来分析页面中使用的和依赖的资源(js或css)，并将这些资源做一定优化后插入页面中(如将零散文件合并)<br> 
  fis-parser-less-2.x：支持less编译为css<br> 

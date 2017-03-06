@@ -46,10 +46,14 @@ var scope = ["$scope", "$state", "serviceAPI", "urlAPI",'$stateParams',
                 };
                 if ($scope.detailVO.channel) {
                     var channelIds = $scope.detailVO.channel;
-                    for (var i = 0; i < $scope.channelList.length; i++) {
-                        var eqId = $scope.channelList[i].id;
-                        if (channelIds.indexOf(eqId) > -1) {
-                            $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                    if (channelIds === 'ALL') {
+                        $scope.channelNames = 'ALL';
+                    } else {
+                        for (var i = 0; i < $scope.channelList.length; i++) {
+                            var eqId = $scope.channelList[i].id;
+                            if (channelIds.indexOf(eqId) > -1) {
+                                $scope.channelNames = $scope.channelNames.concat($scope.channelList[i].name) + ',';
+                            }
                         }
                     }
                 } else {

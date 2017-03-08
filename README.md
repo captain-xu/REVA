@@ -9,7 +9,7 @@
 >包管理器bower：管理第三方依赖，只需要一个命令即可更新。<br>  
 >css预处理器Less：使用结构化的方式管理css，自动优化开发后的css。<br>  
 >应用打包部署：本次主要根据fis3插件fis3-postpackager-loader生成resourcemap(具体内容详见打包生成index.html文件)，实现按单独文件夹或文件部署解决模块之间耦合问题。<br>  
->>缓存文件：解决生产环境缓存问题方式由原来的md5改为时间戳方式<br>  
+>缓存文件：解决生产环境缓存问题方式由原来的md5改为时间戳方式<br>  
 
 # 2、具体说明
 
@@ -43,6 +43,7 @@ cd work<br>
 >style：存放项目样式图片的地方<br> 
 >views：项目功能节点存放地址，结构由项目团队自行决定<br> 
 >partail：存放项目导航栏文件<br> 
+
 ###2.2.2启动前台开发服务器
 启动平台<br> 
 Cmd 执行：
@@ -73,3 +74,10 @@ Cmd 执行：
 >fis3-hook-releative：支持产出文件为引用相对路径 <br> 
 >fis3-deploy-skip-packed：将产出的文件过滤掉已被打包的。<br> 
 >fis3-deploy-replace：将产出的文件做文本替换<br> 
+
+# 4、功能模块介绍
+>4.1 DA：数据分析系统 <br> 
+>4.2 CAMPAIGN：广告活动系统 <br> 
+>4.1 OPERATION：平台操作系统 <br> 
+>4.1 PUSH：通知推送系统 <br> 
+>4.1 ADMIN：用户权限管理系统 <br> 

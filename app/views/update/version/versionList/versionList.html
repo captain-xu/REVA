@@ -89,10 +89,10 @@
             <h2 class="panel-header">Segment</h2>
             <div class="panel-heading">
                 <div class="form-group">
-                    <span>{{segment.isAnd == 1 ? "All" : "Any"}}&nbsp; of the following are&nbsp;{{segment.isTrue == '1' ? "True" : "False"}}</span>
+                    <span>{{segment.isAnd == 1 ? "All" : "Any"}}&nbsp; of the following are&nbsp;{{segment.isTrue == 1 ? "True" : "False"}}</span>
                 </div>
             </div>
-            <div class="panel-body" ng-repeat="item in segment.params">
+            <div class="panel-body" ng-if="segment.params" ng-repeat="item in segment.params">
                 <div class="label label-default" ng-if="$index > 0">{{segment.isAnd==1?"AND":"OR"}}</div>
                 <div ng-if="item">
                     <span ng-if="!item.param" class="panel-content">{{item.key}}&nbsp;{{item.condition}}&nbsp;{{item.value}}</span>
@@ -101,6 +101,44 @@
                         <span ng-if="item.param.name == 'Device' || (item.param.name == 'Android Version' && item.param.where == 'between') || item.param.name == 'Location' || (item.param.name == 'Create Time' && item.param.where == 'between')">&nbsp;{{item.param.value2}}</span>
                         <span ng-if="item.param.name == 'Device'">&nbsp;{{item.param.value3}}</span>
                     </span>
+                </div>
+            </div>
+            <div class="panel-body" ng-if="segment.items" ng-repeat="item in segment.items">
+                <div class="label label-default" ng-if="$index > 0">{{segment.isAnd==1?"AND":"OR"}}</div>
+                <div ng-if="!item.items">
+                    <span ng-if="!item.param" class="panel-content">{{item.key}}&nbsp;{{item.condition}}&nbsp;{{item.value}}</span>
+                    <span ng-if="item.param" class="panel-content">
+                        {{item.param.name}}&nbsp;{{item.param.where}}&nbsp;{{item.param.value1}}
+                        <span ng-if="item.param.name == 'Device' || (item.param.name == 'Android Version' && item.param.where == 'between') || item.param.name == 'Location' || (item.param.name == 'Create Time' && item.param.where == 'between')">&nbsp;{{item.param.value2}}</span>
+                        <span ng-if="item.param.name == 'Device'">&nbsp;{{item.param.value3}}</span>
+                    </span>
+                </div>
+                <div class="panel-heading"  ng-if="item.items">
+                    <div class="form-group">
+                        <span>{{segment.isAnd == 1 ? "All" : "Any"}}&nbsp; of the following are&nbsp;{{segment.isTrue == 1 ? "True" : "False"}}</span>
+                    </div>
+                </div>
+                <div  ng-if="item.items" class="panel-body" ng-if="segment.items" ng-repeat="item in segment.items">
+                    <div class="label label-default" ng-if="$index > 0">{{segment.isAnd==1?"AND":"OR"}}</div>
+                    <div ng-if="item">
+                        <span ng-if="!item.param" class="panel-content">{{item.key}}&nbsp;{{item.condition}}&nbsp;{{item.value}}</span>
+                        <span ng-if="item.param" class="panel-content">
+                            {{item.param.name}}&nbsp;{{item.param.where}}&nbsp;{{item.param.value1}}
+                            <span ng-if="item.param.name == 'Device' || (item.param.name == 'Android Version' && item.param.where == 'between') || item.param.name == 'Location' || (item.param.name == 'Create Time' && item.param.where == 'between')">&nbsp;{{item.param.value2}}</span>
+                            <span ng-if="item.param.name == 'Device'">&nbsp;{{item.param.value3}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-body" ng-if="segment.items" ng-repeat="item in segment.items">
+                    <div class="label label-default" ng-if="$index > 0">{{segment.isAnd==1?"AND":"OR"}}</div>
+                    <div ng-if="!item.items">
+                        <span ng-if="!item.param" class="panel-content">{{item.key}}&nbsp;{{item.condition}}&nbsp;{{item.value}}</span>
+                        <span ng-if="item.param" class="panel-content">
+                            {{item.param.name}}&nbsp;{{item.param.where}}&nbsp;{{item.param.value1}}
+                            <span ng-if="item.param.name == 'Device' || (item.param.name == 'Android Version' && item.param.where == 'between') || item.param.name == 'Location' || (item.param.name == 'Create Time' && item.param.where == 'between')">&nbsp;{{item.param.value2}}</span>
+                            <span ng-if="item.param.name == 'Device'">&nbsp;{{item.param.value3}}</span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="panel-footing">

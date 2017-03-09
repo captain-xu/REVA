@@ -76,7 +76,7 @@ angular.module('app.services').factory('adminAPI', [
 				adminAPI.app = app;
 			},
 			getApp: function() {
-				return admin.app;
+				return adminAPI.app;
 			},
 
 			getPassword: function() {

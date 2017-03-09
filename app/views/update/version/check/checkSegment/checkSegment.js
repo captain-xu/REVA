@@ -9,10 +9,10 @@ angular.module('app.directive').directive('checkSegment', [function() {
             isChild:"@attrChild"
         }
     }
-}]).directive('sqlCheck', [function() {
+}]).directive('segmentCheck', [function() {
     return {
         restrict: 'AE',
         replace: 'false',
-        templateUrl: __uri('checkSqlField.html')
+        templateUrl: __uri('checkSegmentField.html')
     }
 }])

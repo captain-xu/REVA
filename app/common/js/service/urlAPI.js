@@ -28,6 +28,7 @@ angular.module('app.services').factory("urlAPI", [
             admin_user_delete: admin + "user/delete",
             admin_user_disable: admin + "user/disable",
             admin_app_view: admin + "app/view",
+            admin_app_edit: admin + "app/edit",
             admin_app_create: admin + "app/create",
             admin_app_update: admin + "app/update",
             admin_app_delete: admin + "app/delete",

@@ -1,6 +1,10 @@
 var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'urlAPI', '$state',
     function($scope, serviceAPI, ModalAlert, Upload, $stateParams, urlAPI, $state) {
         $scope.checkNum = false;
+        $scope.showPic = true;
+        $scope.isShow = true;
+        $scope.fullState = false;
+        $scope.incState = false;
         $scope.getDetail = function() {
             $scope.detail = {
                 "appicon": "",
@@ -16,20 +20,15 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 "silenceinstall": 0,
                 "target": 100,
                 "updatepriority": 0,
-                "frontsql": "where 1=1",
                 "requiresandroid": "",
                 "incrementalpack": [],
                 "segment": {
                     "isAnd": 1,
                     "isTrue": 1,
-                    "params": []
+                    "items": []
                 }
             };
         };
-        $scope.showPic = true;
-        $scope.isShow = true;
-        $scope.fullState = false;
-        $scope.incState = false;
         $scope.loadDetail = function(id) {
             serviceAPI.loadData(urlAPI.update_appdetail, { "id": id }).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
@@ -39,10 +38,10 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         $scope.detail.segment = {
                             "isAnd": 1,
                             "isTrue": 1,
-                            "params": []
+                            "items": []
                         }
                     } else {
-                        $scope.detail.segment = JSON.parse($scope.detail.segment);
+                        $scope.detail.segment = $scope.getSegment(JSON.parse($scope.detail.segment));
                     };
                     if ($scope.detail.incrementalpack.length >= 3) {
                         $scope.isShow = false;
@@ -56,6 +55,56 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     $scope.detail.appicon = result.data;
                 }
             });
+        };
+        $scope.getSegment = function(vo) {
+            for (var i = 0; i < vo.items.length; i++) {
+                var item = vo.items[i];
+                if (item.items && item.items.length > 0) {
+                    item = $scope.getSegment(item);
+                } else {
+                    switch (item.key) {
+                        case "Device": 
+                            item.value1 = item.channel;
+                            item.value2 = item.model === '*' ? 'All Devices' : item.model;
+                            item.value3 = item.osVersion === '*' ? 'All OS Versions' : item.osVersion;
+                        break;
+                        case "Android Version": 
+                            if (item.condition == 'bigger') {
+                                item.value1 = item.version1;
+                            } else {
+                                item.value1 = item.version1;
+                                item.value2 = item.version2;
+                            }
+                        break;
+                        case "Location": 
+                            item.value1 = item.country;
+                            item.value2 = item.state === '*' ? 'All States' : item.state;
+                        break;
+                        case "Create Time": 
+                            if (item.condition == 'bigger') {
+                                 item.value1 = item.days1;
+                            } else {
+                                item.value1 = item.days1;
+                                item.value2 = item.days2;
+                            }
+                        break;
+                        case "Client ID":
+                            item.value1 = item.clientIds;
+                        break;
+                    }
+                    delete item.channel;
+                    delete item.model;
+                    delete item.osVersion;
+                    delete item.version1;
+                    delete item.version2;
+                    delete item.country;
+                    delete item.state;
+                    delete item.days1;
+                    delete item.days2;
+                    delete item.clientIds;
+                }
+            }
+            return vo;
         };
         $scope.loadDevice = function() {
             serviceAPI.loadData(urlAPI.update_getDevice).then(function(result) {
@@ -73,7 +122,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
         $scope.loadAndroidVersion = function() {
             serviceAPI.loadData(urlAPI.update_androidVersion).then(function(result) {
                 if (result.status == 0 && result.code == 0) {
-                    $scope.androidVersion = result.data;
+                    $scope.versions = result.data;
                 }
             })
         };
@@ -95,7 +144,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             if (id) {
                 serviceAPI.delData(urlAPI.update_delincrepack, { id: id }).then(function(result) {
                     if (result.status == 0 && result.code == 0) {
-                        $scope.androidVersion = result.data;
+                        $scope.versions = result.data;
                     }
                 })
             }
@@ -209,101 +258,53 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 }
             }
         };
-        $scope.sigleSegment = function(vo) {
-            var where = " ";
-            switch (vo.name) {
-                case "Device":
-                    if (vo.value1 != "All Devices") {
-                        where += " $_channel='" + vo.value1 + "' ";
-                    } else {
-                        where += " 1=1 "
-                    };
-                    if (vo.value2 && vo.value2 != "") {
-                        if (vo.value2 != "All Devices") {
-                            where += " and $_model='" + vo.value2 + "' ";
-                        } else {
-                            where += " and 1=1 ";
-                        };
-                    };
-                    if (vo.value3 && vo.value3 != "") {
-                        if (vo.value3 != "All OS Versions") {
-                            where += " and $_osversion='" + vo.value3 + "' ";
-                        } else {
-                            where += " and 1=1 ";
-                        };
-                    };
-                    if (vo.where != "is") {
-                        where = " not(" + where + ")";
-                    }
-                    break;
-                case "Location":
-                    if (vo.value1 != "All Country") {
-                        where += " $_country='" + vo.value1 + "' ";
-                    } else {
-                        where += " 1=1"
-                    };
-                    if (vo.value2 && vo.value2 != "") {
-                        if (vo.value2 != "All States") {
-                            where += " and $_state='" + vo.value2 + "' ";
-                        } else {
-                            where += " and 1=1 ";
-                        }
-                    };
-                    if (vo.where != "is") {
-                        where = " not(" + where + ")";
-                    }
-                    break;
-                case "Android Version":
-                    if (vo.value2 && vo.value2 != "") {
-                        where = " $_androidVersion between '" + vo.value1 + "'' and '" + vo.value2 + "' ";
-                    } else {
-                        where = " $_androidVersion >= " + vo.value1;
-                    }
-                    break;
-                case "Create Time":
-                    if (vo.value2 && vo.value2 != "") {
-                        where = " to_days($_current_time)-to_days($_serverTime) between " + vo.value1 + " and " + vo.value2;
-                    } else {
-                        where = " to_days($_current_time)-to_days($_serverTime) > " + vo.value1;
-                    }
-                    break;
-                case "Client ID":
-                    if (vo.where == "are") {
-                        where = " $_clientid in " + "(" + vo.value1 + ") ";
-                    } else {
-                        where = " $_clientid = " + "'" + vo.value1 + "' ";
-                        if (vo.where != "is") {
-                            where = " not(" + where + ")";
-                        }
-                    }
-                    break;
-            };
-            return "(" + where + ")";
-        };
         $scope.setSegment = function(vo) {
-            var where = "";
-            var str = "or";
-            if (vo.isAnd == '1') {
-                str = "and"
-            };
-            var wherepart = vo.params;
-            for (var i = 0; i < wherepart.length; i++) {
-                if (i > 0) {
-                    where += str;
-                };
-                if (wherepart[i].param) {
-                    var param=$scope.sigleSegment(wherepart[i].param);
-                    if(param){
-                         where += param;
-                     }else{
-                        return false;
-                     }
-                   
+            for (var i = 0; i < vo.items.length; i++) {
+                var item = vo.items[i];
+                if (item.items && item.items.length > 0) {
+                    item = $scope.setSegment(item);
+                    delete item.key;
+                    delete item.condition;
                 } else {
-                    where += "(" + $scope.setSegment(wherepart[i]) + ")";
+                    delete item.isAnd;
+                    delete item.isTrue;
+                    switch (item.key) {
+                        case "Device": 
+                            item.channel = item.value1;
+                            item.model = item.value2 === 'All Devices' ? '*' : item.value2;
+                            item.osVersion = item.value3 === 'All OS Versions' ? '*' : item.value3;
+                        break;
+                        case "Android Version": 
+                            if (item.condition == 'bigger') {
+                                item.version1 = item.value1;
+                            } else {
+                                item.version1 = item.value1;
+                                item.version2 = item.value2;
+                            }
+                        break;
+                        case "Location": 
+                            item.country = item.value1;
+                            item.state = item.value2 === 'All States' ? '*' : item.value2;
+                        break;
+                        case "Create Time": 
+                            if (item.condition == 'bigger') {
+                                item.days1 = item.value1;
+                            } else {
+                                item.days1 = item.value1;
+                                item.days2 = item.value2;
+                            }
+                        break;
+                        case "Client ID":
+                            item.clientIds = item.value1;
+                        break;
+                    }
                 }
+                delete item.value1;
+                delete item.value2;
+                delete item.value3;
+                delete item.$$hashKey;
             }
-            return where;
+            return vo;
         };
         $scope.saveDetail = function() {
             if (!$scope.detail.fullpackage || $scope.detail.fullpackage == '') {
@@ -311,7 +312,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 return false;
             }
             if (!$scope.detail.updatenote || $scope.detail.updatenote == '') {
-                ModalAlert.popup({ msg: "The Version Comment is required" }, 2500)
+                ModalAlert.popup({ msg: "The updatenote is required" }, 2500)
                 return false;
             }
             $scope.detail.target = Number($scope.detail.target);
@@ -319,31 +320,40 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 $scope.checkNum = true;
                 return false;
             }
-            for (var i = 0; i < $scope.detail.segment.params.length; i++) {
-                var item = $scope.detail.segment.params[i];
-                if (item.param && item.param.name === "Client ID") {
-                    if (item.param.value1 === "") {
-                        ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500)
+            for (var i = 0; i < $scope.detail.segment.items.length; i++) {
+                var item = $scope.detail.segment.items[i];
+                if (item.items) {
+                    var arr = item.items;
+                    for (var i = 0; i < arr.length; i++) {
+                        if (arr[i].key === "Client ID") {
+                            if (arr[i].value1 === "") {
+                                ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
+                                return false;
+                            }
+                            if (arr[i].where !== "are") {
+                                if (arr[i].value1.length < 32 || arr[i].value1.length > 93) {
+                                    ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
+                                    return false;
+                                };
+                            }
+                        }
+                    }
+                } else if (item.key === "Client ID") {
+                    if (item.value1 === "") {
+                        ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
                         return false;
                     }
-                    if (item.param.where !== "are") {
-                        if (item.param.value1.length < 32 || item.param.value1.length > 93) {
-                            ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500)
+                    if (item.where !== "are") {
+                        if (item.value1.length < 32 || item.value1.length > 93) {
+                            ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
                             return false;
                         };
                     }
                 }
 
             }
-            var param = $scope.setSegment($scope.detail.segment);
-            if (param) {
-               $scope.detail.frontsql = param;
-            } else {
-                $scope.detail.frontsql = '';
-            }
             $scope.segment = $scope.detail.segment;
-            // $scope.detail.incrementalpack = JSON.stringify($scope.detail.incrementalpack);
-            $scope.detail.segment = JSON.stringify($scope.detail.segment);
+            $scope.detail.segment = JSON.stringify($scope.setSegment($scope.detail.segment));
             var url = urlAPI.update_saveVersion;
             if ($stateParams.param == "edit") {
                 url = urlAPI.update_editappver;
@@ -352,7 +362,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (result.status == 0 && result.code == 0) {
                     history.go(-1);
                 } else {
-                    $scope.detail.segment = $scope.segment;
+                    $scope.detail.segment = $scope.getSegment($scope.segment);
                     ModalAlert.popup({ msg: result.msg }, 2500)
                 }
             });

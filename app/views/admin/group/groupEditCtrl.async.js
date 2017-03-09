@@ -52,10 +52,6 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 		$scope.initTableView = function() {
 			$scope.group = adminAPI.getGroup();
 
-			if (!adminAPI.isNullOrEmpty($scope.group.iconUrl)) {
-				var iconfile = $scope.group.iconUrl.substring($scope.group.iconUrl.lastIndexOf("/") + 1);
-			}
-
 			if (adminAPI.isNullOrEmpty($scope.group) || adminAPI.isNullOrEmpty($scope.group.action)) {
 				adminAPI.comfirmPopup("paramter is invalid!");
 				return;
@@ -67,7 +63,10 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 					return;
 				}
 
-				$scope.iconImgUrl = "http://dev.apkstorage.revanow.com/admin_image/" + iconfile;
+				if (!adminAPI.isNullOrEmpty($scope.group.iconUrl)) {
+					var iconfile = $scope.group.iconUrl.substring($scope.group.iconUrl.lastIndexOf("/") + 1);
+					$scope.iconImgUrl = "http://dev.apkstorage.revanow.com/admin_image/" + iconfile;
+				}
 			}
 
 			$scope.paramData.action = $scope.group.action;

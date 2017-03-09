@@ -15,12 +15,10 @@ require('../js/directive/selfDefine');
 require('../js/directive/pullRefresh');
 
 //update directive
-require('app/views/update/version/newVersion/segment');
-require('app/views/update/version/check/checkVersion/checkSegment');
-// require('app/views/update/check/checkVersion/checkSegment');
+require('app/views/update/version/segment/segment');
+require('app/views/update/version/check/checkSegment/checkSegment');
 require('app/views/update/version/segments/segments');
 require('app/views/update/version/check/checkSegments/checkSegments');
-// require('app/views/update/check/checkSegments/checkSegments');
 
 //admin
 require('app/views/admin/api/adminAPI');
@@ -316,6 +314,18 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appViewCtrl') }
             }
         })
+        .state('admin.app.edit', {
+            url: '/edit',
+            templateUrl: 'app/views/admin/app/appEdit.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/admin/app/appEditCtrl.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appEditCtrl') }
+            }
+        })
         // .state('admin.app', {
         //     url: "/app",
         //     templateUrl: 'app/views/admin/app/appList/appList.html',
@@ -328,18 +338,18 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/appList/appListCtrl') }
         //     }
         // })
-        .state('admin.newApp', {
-            url: "/newApp/:id/:param",
-            templateUrl: 'app/views/admin/app/newApp/newApp.html',
-            controller: ['$scope', "$injector", function($scope, $injector) {
-                require.async('app/views/admin/app/newApp/newAppCtrl.async.js', function(ctrl) {
-                    $injector.invoke(ctrl, this, { '$scope': $scope });
-                })
-            }],
-            resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/newApp/newAppCtrl') }
-            }
-        })
+        // .state('admin.newApp', {
+        //     url: "/newApp/:id/:param",
+        //     templateUrl: 'app/views/admin/app/newApp/newApp.html',
+        //     controller: ['$scope', "$injector", function($scope, $injector) {
+        //         require.async('app/views/admin/app/newApp/newAppCtrl.async.js', function(ctrl) {
+        //             $injector.invoke(ctrl, this, { '$scope': $scope });
+        //         })
+        //     }],
+        //     resolve: {
+        //         resourceMap: function(serviceAPI) { serviceAPI.resourceMap('admin/app/newApp/newAppCtrl') }
+        //     }
+        // })
         .state('admin.group', {
             url: '/group',
             templateUrl: 'app/views/main/main.html'
@@ -864,7 +874,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
             resolve: {
                 resourceMap: function(serviceAPI) {
                     serviceAPI.resourceMap('update/version/segments/segmentsCtrl');
-                    serviceAPI.resourceMap('update/version/newVersion/segmentCtrl'); 
+                    serviceAPI.resourceMap('update/version/segment/segmentField'); 
                 }
             }
         })
@@ -1026,7 +1036,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         })
         .state('update.newVersion', {
             url: "/newVersion/:id/:param/:app/:package",
-            templateUrl: 'app/views/update/version/newVersion/detail.html',
+            templateUrl: 'app/views/update/version/newVersion/version.html',
             controller: ['$scope', "$injector", function($scope, $injector) {
                 require.async('app/views/update/version/newVersion/versionCtrl.async.js', function(ctrl) {
                     $injector.invoke(ctrl, this, { '$scope': $scope });

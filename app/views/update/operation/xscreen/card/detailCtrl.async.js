@@ -28,10 +28,24 @@ var scope = ["$scope", "serviceAPI", 'urlAPI','$stateParams','$location',
         };
         $scope.exchangeChannel = function(item) {
             for (var i = 0; i < item.length; i++) {
-                if (item[i].owner === '0') {
-                    item[i].channel = '--';
-                } else {
-                    item[i].channel = item[i].owner === '1' ? 'News Dog' : 'Le Tang';
+                // if (item[i].owner === '0') {
+                //     item[i].channel = '--';
+                // } else {
+                //     item[i].channel = item[i].owner === '1' ? 'News Dog' : 'Le Tang';
+                // }
+                switch(item[i].owner) {
+                    case '0':
+                        item[i].channel = '--';
+                    break;
+                    case '1':
+                        item[i].channel = 'News Dog';
+                    break;
+                    case '2':
+                        item[i].channel = 'Le Tang';
+                    break;
+                    case '3':
+                        item[i].channel = 'Google';
+                    break;
                 }
             }
         };
@@ -45,11 +59,9 @@ var scope = ["$scope", "serviceAPI", 'urlAPI','$stateParams','$location',
             list.isopen = num;
             if ($scope.statu == 'edit') {
                 if (num == 0) {
-                    list.showname = '';
                     $scope.closeList.push(list);
                     $scope.openList.splice(index, 1);
                 } else {
-                    list.showname = list.name;
                     $scope.openList.push(list);
                     $scope.closeList.splice(index, 1);
                 }

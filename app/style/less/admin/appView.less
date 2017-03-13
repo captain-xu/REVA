@@ -1,0 +1,67 @@
+@import '../variables';
+.appView {
+    width: 100%;
+    height: 100%;
+    padding: 0 30px;
+    overflow-y: auto;
+    
+	.header {
+	    height: 60px;
+    	width: 100%;
+    	border: 0;
+    	border-bottom: 1px solid #c6c6c6;
+    	.breadcrumb {
+			display: inline-block;
+			padding: 0 0 0 30px;
+			line-height: 60px;
+			background: transparent;
+			margin-bottom: 0px;
+    	}
+    	.create-box {
+            float: right;
+            display: inline-block;
+            margin-top: 14px;
+            vertical-align: top;
+            .create-btn {
+                width: 160px;
+                height: 29px;
+                line-height: 29px;
+                font-size: 12px;
+                font-weight: bold;
+                color:@add-btn-color;
+                background: #fff;
+                cursor: pointer;
+                .border;
+                .border-radius;
+            }
+        }
+	}
+
+	.viewer {
+	    margin: 0px 0px 20px;
+	    .table-bordered > thead > tr > th {
+		    border-bottom-width: 1px;
+		}
+		td {
+			vertical-align: middle;
+			img {
+	            width: 30px;
+	            height: 30px;
+	            border: 0;
+			}
+		}
+	}
+
+	.footer {
+		margin: 20px 0px;
+        background: #eaeaea;
+		.btn-group {
+			vertical-align: middle;
+		}
+		.pagination {
+			margin: 0;
+			float: right;
+			vertical-align: middle;
+		}
+	}
+}

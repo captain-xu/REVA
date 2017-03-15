@@ -39,9 +39,9 @@ var scope = ["$scope", "ModalAlert", "serviceAPI", '$state','$stateParams', 'url
             $scope.adverList = result.advertisers;
              $scope.adverList.unshift({'name':'All','id':''})
         });
-        serviceAPI.loadData(urlAPI.campaign_offer_country).then(function(result) {
-            $scope.countryList = result.countries;
-             $scope.countryList.unshift({'name':'All','countryCode':''})
+        serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
+            $scope.countryList = result.areaInfo;
+             $scope.countryList.unshift({'name':'All','code':''})
         });
     };
     $scope.timer = null;

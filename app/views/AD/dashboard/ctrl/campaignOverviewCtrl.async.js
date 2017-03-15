@@ -18,18 +18,6 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         };
         serviceAPI.loadData(urlAPI.campaign_dashboard_data,dataParam).then(function(result){
             $scope.rate = result;
-            if (result.appStatistics == '') {
-                $scope.statics = {
-                    click:'-',
-                    conversion:'-',
-                    eCPM:'-',
-                    imp:'-',
-                    request:'-',
-                    revenue:'-'
-                }
-            } else {
-                $scope.statics = result.appStatistics;
-            }
         });
         serviceAPI.loadData(urlAPI.campaign_dashboard_camp,dataParam).then(function(result){
             if (!result.campData || !result.campData.data) {
@@ -319,7 +307,9 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             currentPage: $scope.reportPage,
             orderBy: $scope.reportField,
             channelId1: $scope.channel1Id,
-            channelId2: $scope.channel2Id
+            channelId2: $scope.channel2Id,
+            appId: $scope.appId,
+            placementId: $scope.placementId
         };
         serviceAPI.loadData(urlAPI.campaign_dashboard_list,reportParam).then(function(result){
             $scope.dataList = result.dataList;
@@ -343,11 +333,25 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             serviceAPI.loadData(urlAPI.campaign_report_channel1).then(function(result){
                 $scope.channel1List = result.channel1List;
             });
+            $scope.channel1Name = 'All';
+            $scope.channel2Name = 'All';
+            $scope.appId = '';
+            $scope.placementId = '';
+        } else if ($scope.channelName == 'Placement') {
+            serviceAPI.loadData(urlAPI.campaign_report_app).then(function(result){
+                $scope.appList = result.appList;
+            });
+            $scope.channel1Name = 'All';
+            $scope.channel2Name = 'All';
+            $scope.channel1Id = '';
+            $scope.channel2Id = '';
         } else {
             $scope.channel1Name = 'All';
             $scope.channel2Name = 'All';
             $scope.channel1Id = '';
             $scope.channel2Id = '';
+            $scope.appId = '';
+            $scope.placementId = '';
         }
         $scope.loadReportList();
     };
@@ -375,7 +379,62 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         }
         $scope.loadReportList();
     };
+    //
+    $scope.placementData = function(num, place) {
+        if (num) {
+            $scope.channel1Name = place.name;
+            $scope.channel2Name = 'All';
+            $scope.placementId = '';
+            if (place == 'All') {
+                $scope.channel1Name = "All";
+                $scope.appId = '';
+            } else {
+                $scope.appId = place.appId;
+            }
+            serviceAPI.loadData(urlAPI.campaign_report_placement, {appId: $scope.appId}).then(function(result){
+                $scope.placementList = result.placeList;
+            });
+        } else {
+            $scope.channel2Name = place.name;
+            if (place == 'All') {
+                $scope.channel2Name = "All";
+                $scope.placementId = '';
+            } else {
+                $scope.placementId = place.placementId;
+            }
+        }
+        $scope.loadReportList();
+    };
 //report List end
+
+// export as csv
+    $scope.exportCsv = function(str) {
+        if (str === "unique") {
+            var uniqueParam = {
+                startDate: $scope.startTime,
+                endDate: $scope.endTime
+            };
+            serviceAPI.loadData(urlAPI.campaign_report_uniqueCsv, uniqueParam).then(function(result){
+                if (result.viewUrl) {
+                    window.location = result.viewUrl;
+                }
+            }); 
+        } else {
+            var reportParam = {
+                startDate: $scope.startTime,
+                endDate: $scope.endTime,
+                type: $scope.channelName,
+                orderBy: $scope.reportField,
+                channelId1: $scope.channel1Id,
+                channelId2: $scope.channel2Id
+            };
+            serviceAPI.loadData(urlAPI.campaign_report_reportCsv, reportParam).then(function(result){
+                if (result.viewUrl) {
+                    window.location = result.viewUrl;
+                }
+            }); 
+        }
+    }
     
     $scope.init = function(){
         $scope.loadList();

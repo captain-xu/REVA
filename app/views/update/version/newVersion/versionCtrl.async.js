@@ -330,7 +330,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                                 ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
                                 return false;
                             }
-                            if (arr[i].where !== "are") {
+                            if (arr[i].condition !== "in") {
                                 if (arr[i].value1.length < 32 || arr[i].value1.length > 93) {
                                     ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
                                     return false;
@@ -343,7 +343,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                         ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
                         return false;
                     }
-                    if (item.where !== "are") {
+                    if (item.condition !== "in") {
                         if (item.value1.length < 32 || item.value1.length > 93) {
                             ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
                             return false;

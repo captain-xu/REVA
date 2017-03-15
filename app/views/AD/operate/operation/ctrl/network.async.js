@@ -77,7 +77,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                                 }
                             });
                         });
-                        $scope.loadModel();
                         if ($scope.detailVO.channel) {
                             var channelIds = $scope.detailVO.channel;
                             if (channelIds === "ALL") {
@@ -154,7 +153,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     $scope.allNames = "";
                     $scope.allIds = "";
                     $('#datarangeNet').val('');
-                    // $scope.loadModel();
                     var adverParam = {
                         rtb: $scope.detailVO.rtb
                     };
@@ -175,41 +173,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             serviceAPI.loadData(urlAPI.campaign_offer_cpx).then(function(result) {
                 $scope.CPX = result.CPX;
             });
-            serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
-                $scope.areaList = result.countries.map(function(data) {
-                    return {
-                        name: data.name,
-                        code: data.code,
-                        isSelect: false
-                    };
-                });
-            });
-            serviceAPI.loadData(urlAPI.campaign_operate_device).then(function(result) {
-                $scope.deviceList = result.deviceInfo.map(function(data) {
-                    return {
-                        name: data,
-                        isSelect: false
-                    };
-                });
-            });
-            serviceAPI.loadData(urlAPI.campaign_operate_os).then(function(result) {
-                $scope.osVersionList = result.osVersionInfo.map(function(data) {
-                    return {
-                        name: data,
-                        isSelect: false
-                    };
-                });
-            });
-            serviceAPI.loadData(urlAPI.campaign_operate_language).then(function(result) {
-                $scope.languageList = result.languageInfo.map(function(data) {
-                    return {
-                        name: data,
-                        isSelect: false
-                    };
-                });
-            }).
-            catch(function(result) {});
-
         }
         /*加载编辑页面app数据*/
         $scope.getAppList = function() {
@@ -296,43 +259,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             $scope.detailVO.rtb = 0;
             $scope.defaultAdvertiser();
         };
-        //network timeSet 编辑
-        $scope.checkNetData = function(num, dom) {
-            if (num == "All") {
-            var allSle = $(dom.target).find('i');
-            if (allSle.hasClass('active')) {
-                $scope.detailVO.timeSet = '';
-                $('.icon-check').removeClass('active');
-            }else{
-                $scope.detailVO.timeSet = '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24';
-                $('.icon-check').addClass('active');
-            };
-            return;
-            };
-            if ($scope.detailVO.timeSet == "") {
-                $scope.detailVO.timeSet = num + ',';
-                $(dom.target).find('i').addClass('active');
-            } else {
-                var arr = $scope.detailVO.timeSet.split(',');
-                if (arr[arr.length - 1] == "") {
-                    arr.length = arr.length - 1;
-                };
-                var index = arr.indexOf(num);
-                if (index >= 0) {
-                    arr = arr.slice(0, index).concat(arr.slice(index + 1))
-                    arr.sort();
-                    $(dom.target).find('i').removeClass('active');
-                    $(dom.target).siblings().first().find('i').removeClass('active');
-                } else {
-                    arr.push(num);
-                    $(dom.target).find('i').addClass('active');
-                    if (arr.length == 24) {
-                        $(dom.target).siblings().first().find('i').addClass('active');
-                    }
-                }
-                $scope.detailVO.timeSet = arr.toString();
-            }
-        };
         /*cpxData值修改*/
         $scope.cpxData = function(cpx) {
             $scope.detailVO.cpx = cpx;
@@ -346,129 +272,6 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
             }
         };
 
-
-/*************************************定向********************************/
-        //全选状态
-        $scope.selectAllState = {
-            area: false,
-            device: false,
-            model: false,
-            osVersion: false,
-            language: false,
-            advertiser: false,
-            channel: false
-        };
-        //set 下拉框 状态
-         $scope.selectStatus = function(name, list, attr) {
-            var option = $scope.detailVO[name];
-            if (option == "ALL") {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = true;
-                };
-                $scope.selectAllState[name] = true;
-            } else if(!option) {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = false;
-                };
-                $scope.selectAllState[name] = false;
-            } else {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    var optionStr = $scope[list][i][attr];
-                    if (option.indexOf(optionStr) > -1) {
-                        $scope[list][i].isSelect = true;
-                    } else {
-                        $scope[list][i].isSelect = false;
-                    }
-                };
-            };
-         };
-        //全选ALL
-        $scope.allSelect = function(name, list, except){
-            if ($scope.detailVO[name] == "ALL") {
-                $scope.detailVO[name] = "";
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = false;
-                };
-                $scope.selectAllState[name] = false;
-                $scope.detailVO[except] = "";
-            } else {
-                $scope.detailVO[name] = "ALL";
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = true;
-                };
-                $scope.selectAllState[name] = true;
-            }
-        };
-        //单选
-        $scope.singleSelect = function(option, attr, name, except) {
-            if ($scope.detailVO[name] == "ALL") {
-                if (!$scope.detailVO[except]) {
-                    $scope.detailVO[except] = option[attr] + ',';
-                    option.isSelect = false;
-                    $scope.selectAllState[name] = false;
-                } else {
-                    var arr = $scope.detailVO[except].split(',');
-                    if (arr[arr.length - 1] == "") {
-                        arr.length = arr.length - 1;
-                    };
-                    var index = arr.indexOf(option[attr]);
-                    if (index >= 0) {
-                        arr = arr.slice(0, index).concat(arr.slice(index + 1))
-                        arr.sort();
-                        option.isSelect = true;
-                        $scope.selectAllState[name] = false;
-                    } else {
-                        arr.push(option[attr]);
-                        option.isSelect = false;
-                    }
-                    $scope.detailVO[except] = arr.toString();
-                    if ($scope.detailVO[except] == "") {
-                        $scope.selectAllState[name] = true;
-                    } else {
-                        $scope.selectAllState[name] = false;
-                    };
-                }
-            } else {
-                if (!$scope.detailVO[name]) {
-                    $scope.detailVO[name] = option[attr] + ',';
-                    option.isSelect = true;
-                } else {
-                    var arr = $scope.detailVO[name].split(',');
-                    if (arr[arr.length - 1] == "") {
-                        arr.length = arr.length - 1;
-                    };
-                    var index = arr.indexOf(option[attr]);
-                    if (index >= 0) {
-                        arr = arr.slice(0, index).concat(arr.slice(index + 1))
-                        arr.sort();
-                        option.isSelect = false;
-                    } else {
-                        arr.push(option[attr]);
-                        option.isSelect = true;
-                    }
-                    $scope.detailVO[name] = arr.toString();
-                }
-            };
-            if (name === 'device') {
-                $scope.loadModel();
-            }
-        };
-        $scope.loadModel = function(){
-            if ($scope.detailVO.device) {
-                var modelParam = {
-                    device: $scope.detailVO.device
-                }
-                serviceAPI.loadData(urlAPI.campaign_operate_device,modelParam).then(function(result) {
-                    $scope.modelList = result.modelInfo.map(function(data) {
-                        return {
-                            name: data,
-                            isSelect: false
-                        };
-                    });
-                });
-            }
-        };
-/*************************************定向********************************/
 
         //rtb请求
         $scope.rtbData = function(num) {
@@ -487,6 +290,10 @@ var scope = ["$scope", "ModalAlert", "regexAPI","serviceAPI", '$state','urlAPI',
                     });
                 }
             }
+        };
+        $scope.selectAllState = {
+            advertiser: false,
+            channel: false
         };
         //Advertiser Name下拉框
         $scope.adverClick = function() {

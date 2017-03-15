@@ -1,0 +1,196 @@
+
+<ul>
+    <li verification>
+        <span class="title">IMP Frequency:<em>&#42;</em></span>
+        <input type="text" ng-model="targeting.imp" ng-readonly="{1: 'true'}[targeting.status]">
+        <span class="msg"></span>
+    </li>
+    <li verification>
+        <span class="title">Click Frequency:<em>&#42;</em></span>
+        <input type="text" ng-model="targeting.click" ng-readonly="{1: 'true'}[targeting.status]">
+        <span class="msg"></span>
+    </li>
+    <li class="except">
+        <span class="title">Area:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('area', 'areas', 'code')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.area" ng-readonly="{1: 'true'}[targeting.status]">
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('area', 'areas', 'areaExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.area]"></i>ALL
+                </li>
+                <li ng-repeat="area in areas" ng-click="singleSelect(area, 'code', 'area', 'areaExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[area.isSelect]"></i>{{area.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Area Except:</span>
+        <input type="text" ng-model="targeting.areaExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Device:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('device', 'devices', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.device" ng-change="loadModel()" ng-readonly="{1: 'true'}[targeting.status]">
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('device', 'devices', 'deviceExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.device]"></i>ALL
+                </li>
+                <li ng-repeat="device in devices" ng-click="singleSelect(device, 'name', 'device', 'deviceExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[device.isSelect]"></i>{{device.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Device Except:</span>
+        <input type="text" ng-model="targeting.deviceExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Model:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('model', 'models', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.model" readonly>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('model', 'models', 'modelExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.model]"></i>ALL
+                </li>
+                <li ng-repeat="model in models" ng-click="singleSelect(model, 'name', 'model', 'modelExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[model.isSelect]"></i>{{model.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Model Except:</span>
+        <input type="text" ng-model="targeting.modelExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">OS Version:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('osVersion', 'versions', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.osVersion" readonly>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('osVersion', 'versions', 'osVersionExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.osVersion]"></i>ALL
+                </li>
+                <li ng-repeat="osVersion in versions" ng-click="singleSelect(osVersion, 'name', 'osVersion', 'osVersionExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[osVersion.isSelect]"></i>{{osVersion.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">OS Version Except:</span>
+        <input type="text" ng-model="targeting.osVersionExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Language:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('language', 'languages', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.language" ng-readonly="{1: 'true'}[targeting.status]">
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('language', 'languages', 'languageExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.language]"></i>ALL
+                </li>
+                <li ng-repeat="language in languages" ng-click="singleSelect(language, 'name', 'language', 'languageExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[language.isSelect]"></i>{{language.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Language Except:</span>
+        <input type="text" ng-model="targeting.languageExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Channel1:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('channel1', 'channel1s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel1" ng-readonly="{1: 'true'}[targeting.status]">
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('channel1', 'channel1s', 'channel1Except')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel1]"></i>ALL
+                </li>
+                <li ng-repeat="channel1 in channel1s" ng-click="singleSelect(channel1, 'name', 'channel1', 'channel1Except')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel1.isSelect]"></i>{{channel1.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Channel1 Except:</span>
+        <input type="text" ng-model="targeting.channel1Except" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Channel2:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('channel2', 'channel2s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel2" readonly>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('channel2', 'channel2s', 'channel2Except')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel2]"></i>ALL
+                </li>
+                <li ng-repeat="channel2 in channel2s" ng-click="singleSelect(channel2, 'name', 'channel2', 'channel2Except')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel2.isSelect]"></i>{{channel2.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Channel2 Except:</span>
+        <input type="text" ng-model="targeting.channel2Except" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Channel3:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('channel3', 'channel3s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel3" readonly>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('channel3', 'channel3s', 'channel3Except')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel3]"></i>ALL
+                </li>
+                <li ng-repeat="channel3 in channel3s" ng-click="singleSelect(channel3, 'name', 'channel3', 'channel3Except')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel3.isSelect]"></i>{{channel3.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Channel3 Except:</span>
+        <input type="text" ng-model="targeting.channel3Except" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Api Version:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('appVer', 'appVers', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.appVer" readonly>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('appVer', 'appVers', 'appVerExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.appVer]"></i>ALL
+                </li>
+                <li ng-repeat="appVer in appVers" ng-click="singleSelect(appVer, 'name', 'appVer', 'appVerExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[appVer.isSelect]"></i>{{appVer.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Api Version Except:</span>
+        <input type="text" ng-model="targeting.appVerExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
+        <span class="title">Network:</span>
+        <input type="text" ng-model="targeting.network" ng-readonly="{1: 'true'}[targeting.status]">
+        <span class="title">Except:</span>
+        <input type="text" ng-model="targeting.networkExcept" ng-readonly="{1: 'true'}[targeting.status]">
+    </li>
+    <li>
+        <span class="title">Time Setting:</span>
+        <ul class="native-cont timeset" ng-init="nums=['All','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']">
+            <li ng-click="checkData(i,$event)" ng-repeat="i in nums" class="timecheck"><i class="fa fa-check-square icon-check active"></i>{{i}}</li>
+        </ul>
+    </li>
+</ul>

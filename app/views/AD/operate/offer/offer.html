@@ -87,7 +87,7 @@
                                 <td>{{vo.offerName}}</td>
                                 <td>{{vo.advertiserName}}</td>
                                 <td>{{vo.CPX}}</td>
-                                <td>{{vo.payout==''?'--':vo.payout}}</td>
+                                <td>{{vo.payout}}</td>
                                 <td>
                                     <span class="glyphicon glyphicon-pencil" ng-click="editDetail(vo)" ng-show="vo.offerStatus"></span>
                                     <span class="glyphicon glyphicon-eye-open" ng-click="viewDetail(vo)"></span>
@@ -121,7 +121,7 @@
                                 <td>{{vo.offerName}}</td>
                                 <td>{{vo.advertiserName}}</td>
                                 <td>{{vo.CPX}}</td>
-                                <td>{{vo.payout==''?'--':vo.payout}}</td>
+                                <td>{{vo.payout}}</td>
                                 <td>
                                     <span class="glyphicon glyphicon-eye-open" ng-click="viewDetail(vo)"></span>
                                     <!-- <span class="glyphicon glyphicon-trash" ng-click="deleteItem(vo)"></span> -->

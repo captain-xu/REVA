@@ -65,6 +65,18 @@
                                         <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('priority', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='priority' &amp;&amp; !seachParam.order]"></i>
                                     </div>
                                 </th>
+                                <th>Impression
+                                    <div class="icon-order">
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('imp', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('imp', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='imp' &amp;&amp; !seachParam.order]"></i>
+                                    </div>
+                                </th>
+                                <th>Click
+                                    <div class="icon-order">
+                                        <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('click', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !!seachParam.order]"></i>
+                                        <i class="glyphicon glyphicon-triangle-bottom" ng-click="orderBy('click', 0)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='click' &amp;&amp; !seachParam.order]"></i>
+                                    </div>
+                                </th>
                                 <th>Start Time
                                     <div class="icon-order">
                                         <i class="glyphicon glyphicon-triangle-top" ng-click="orderBy('startDate', 1)" ng-class="{true: 'icon-color'}[seachParam.orderBy=='startDate' &amp;&amp; !!seachParam.order]"></i>
@@ -92,6 +104,8 @@
                                 <td>{{vo.name}}</td>
                                 <td>{{vo.appName}}</td>
                                 <td>{{vo.priority}}</td>
+                                <td>{{vo.imp}}</td>
+                                <td>{{vo.click}}</td>
                                 <td>{{vo.startDate}}</td>
                                 <td>{{vo.endDate}}</td>
                                 <td>{{vo.createTime}}</td>
@@ -191,13 +205,13 @@
                                 <td>{{net.CPX}}</td>
                                 <td>{{net.advertiserName}}</td>
                                 <td>{{net.appName}}</td>
-                                <td>{{net.imp==''?'--':net.imp}}</td>
-                                <td>{{net.click==''?'--':net.click}}</td>
-                                <td>{{net.ctr==''?'--':net.ctr + '%'}}</td>
-                                <td>{{net.cvr==''?'--':net.cvr + '%'}}</td>
-                                <td>{{net.conversion==''?'--':net.conversion}}</td>
-                                <td>{{net.revenue==''?'--':net.revenue}}</td>
-                                <td>{{net.eCPM==''?'--':net.eCPM}}</td>
+                                <td>{{net.imp}}</td>
+                                <td>{{net.click}}</td>
+                                <td>{{net.ctr}}<span ng-show="net.ctr !== '--'">%</span></td>
+                                <td>{{net.cvr}}<span ng-show="net.cvr !== '--'">%</span></td>
+                                <td>{{net.conversion}}</td>
+                                <td>{{net.revenue}}</td>
+                                <td>{{net.eCPM}}</td>
                                 <td>
                                     <span ng-class="{1: 'turn-on', 0: 'turn-off'}[net.status]" ng-click="changeState(net)"></span>
                                     <span class="glyphicon" ng-class="{1: 'glyphicon-eye-open', 0: ' glyphicon-pencil'}[net.status]" ng-click="editNetList(net)"></span>
@@ -292,14 +306,14 @@
                                 <td><a href="#/view/campaign/offer/view/{{as.advertiserId}}/{{as.offerId}}/{{as.rtb}}">{{as.offerName}}</a></td>
                                 <td>{{as.CPX}}</td>
                                 <td>{{as.advertiserName}}</td>
-                                <td>{{as.payout==''?'--':as.payout}}</td>
-                                <td>{{as.imp==''?'--':as.imp}}</td>
-                                <td>{{as.click==''?'--':as.click}}</td>
-                                <td>{{as.ctr==''?'--':as.ctr + '%'}}</td>
-                                <td>{{as.cvr==''?'--':as.cvr + '%'}}</td>
-                                <td>{{as.conversion==''?'--':as.conversion}}</td>
-                                <td>{{as.revenue==''?'--':as.revenue}}</td>
-                                <td>{{as.eCPM==''?'--':as.eCPM}}</td>
+                                <td>{{as.payout}}</td>
+                                <td>{{as.imp}}</td>
+                                <td>{{as.click}}</td>
+                                <td>{{as.ctr}}<span ng-show="as.ctr !== '--'">%</span></td>
+                                <td>{{as.cvr}}<span ng-show="as.cvr !== '--'">%</span></td>
+                                <td>{{as.conversion}}</td>
+                                <td>{{as.revenue}}</td>
+                                <td>{{as.eCPM}}</td>
                             </tr>
                         </tbody>
                     </table>

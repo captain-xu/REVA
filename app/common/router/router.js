@@ -14,6 +14,9 @@ require('../js/directive/slider');
 require('../js/directive/selfDefine');
 require('../js/directive/pullRefresh');
 
+//campaign directive
+require('app/views/AD/operate/targeting/targeting');
+
 //update directive
 require('app/views/update/version/segment/segment');
 require('app/views/update/version/check/checkSegment/checkSegment');
@@ -266,7 +269,7 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 })
             }],
             resolve: {
-                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/launcherCtrl/launcherCtrl') }
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('push/launcher/launcherCtrl') }
             }
         })
         .state('push.launcherEdit', {
@@ -467,7 +470,10 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
         .state('campaign', {
             url: "/view/campaign",
             templateUrl: 'app/views/main/layout.html',
-            params: { activeTitle: "campaign" }
+            params: { activeTitle: "campaign" },
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('AD/operate/targeting/targetingCtrl') }
+            }
         })
         .state('campaign.dashboard', {
             url: "/dashboard",

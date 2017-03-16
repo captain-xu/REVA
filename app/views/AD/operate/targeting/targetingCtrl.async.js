@@ -195,7 +195,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI",
         $scope.loadChannel2 = function(){
             if ($scope.targeting.channel1) {
                 var channel2Param = {
-                    channel1: $scope.targeting.channel1
+                    channelId1: $scope.targeting.channel1
                 }
                 serviceAPI.loadData(urlAPI.campaign_operate_channel2, channel2Param).then(function(result) {
                     $scope.channel2s = result.channel2List.map(function(data) {
@@ -210,8 +210,8 @@ var scope = ["$scope", "serviceAPI", "urlAPI",
         $scope.loadChannel3 = function(){
             if ($scope.targeting.channel1 && $scope.targeting.channel2) {
                 var channel3Param = {
-                    channel1: $scope.targeting.channel1,
-                    channel2: $scope.targeting.channel2
+                    channelId1: $scope.targeting.channel1,
+                    channelId2: $scope.targeting.channel2
                 }
                 serviceAPI.loadData(urlAPI.campaign_operate_channel3, channel3Param).then(function(result) {
                     $scope.channel3s = result.channel3List.map(function(data) {

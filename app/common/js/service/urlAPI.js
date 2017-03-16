@@ -33,6 +33,7 @@ angular.module('app.services').factory("urlAPI", [
             admin_app_update: admin + "app/update",
             admin_app_delete: admin + "app/delete",
             admin_app_disable: admin + "app/disable",
+            admin_channel_exist: admin + "channel/exist",
 
             /*push 接口*/
             pushAllApp: push + "allapp",

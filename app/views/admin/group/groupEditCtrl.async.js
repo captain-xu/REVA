@@ -32,6 +32,8 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 			sequence: 0,
 			name: ""
 		};
+		
+		$scope.groupOrderChannelList = [];
 
 		$scope.paramData = {
 			action: "",
@@ -44,8 +46,11 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 				iconUrl: "",
 				channel: ""
 			},
-			groupOrderPermitList: {}
+			groupOrderPermitList: {},
+			groupOrderChannelList: {}
 		};
+
+		$scope.channelTemp = "";
 
 		var $tablePermission = $("#tb-permission");
 
@@ -57,7 +62,7 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 				return;
 			}
 
-			if ($scope.group.action == adminAPI.str.update) {
+			if (adminAPI.str.update == $scope.group.action) {
 				if (adminAPI.isNullOrEmpty($scope.group.id)) {
 					adminAPI.comfirmPopup("paramter is invalid!");
 					return;
@@ -67,10 +72,12 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 					var iconfile = $scope.group.iconUrl.substring($scope.group.iconUrl.lastIndexOf("/") + 1);
 					$scope.iconImgUrl = "http://dev.apkstorage.revanow.com/admin_image/" + iconfile;
 				}
+
+
+				$scope.paramData.groupId = $scope.group.id;
 			}
 
 			$scope.paramData.action = $scope.group.action;
-			$scope.paramData.groupId = $scope.group.id;
 
 			serviceAPI.loadData(urlAPI.admin_group_edit, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
@@ -994,9 +1001,129 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 			});
 		};
 
-		$scope.selectChannel = function(ichannel) {
-			$scope.group.channel = ichannel.channel;
-			$scope.group.channelId = ichannel.id;
+		$scope.channelAdd = function(channel) {
+
+			if (adminAPI.isNullOrEmpty(channel)) {
+				ModalAlert.popup({ msg: "The channel can not empty!" }, 2500);
+				return;
+			}
+
+			for (var i = 0; i < $scope.groupChannelList.length; i++) {
+				if ($scope.groupChannelList[i].channel == channel) {
+					ModalAlert.popup({ msg: "This channel was aready existed!" }, 2500);
+					return;
+				}
+			}
+
+			var ichannel = {};
+			ichannel.model = adminAPI.str.create;
+			ichannel.action = $scope.group.action;
+			ichannel.channel = channel;
+			// ichannel.id = adminAPI.loginUser.id;
+			ichannel.createUser = $scope.group.createUser;
+			ichannel.updateUser = $scope.group.updateUser;
+
+			if (adminAPI.str.update == $scope.group.action) {
+				ichannel.groupId = $scope.group.id;
+			}
+
+			for (var i = 0; i < $scope.groupOrderChannelList.length; i++) {
+				var iOrderChannel = $scope.groupOrderChannelList[i];
+				if (iOrderChannel.channel == ichannel.channel 
+					// && iOrderChannel.id == ichannel.id 
+					&& iOrderChannel.groupId == ichannel.groupId) {
+
+					$scope.groupChannelList.push(ichannel);
+					$scope.groupOrderChannelList.splice(i, 1);
+
+					$scope.channelTemp = "";
+					return;
+				}
+			}
+
+			var url = urlAPI.admin_channel_exist;
+
+			serviceAPI.updateData(url, ichannel).then(function(result) {
+				if (result.status == 0 && result.code == 0) {
+					$scope.groupChannelList.push(ichannel);
+					// $scope.groupOrderChannelList.push(ichannel);
+					$scope.setOrderChannelList(ichannel);
+					$scope.channelTemp = "";
+				} else if (result.status == -1 && result.code == 801013) {
+					ModalAlert.popup({ msg: "This channel was aready existed!" }, 2500);
+				} else {
+					ModalAlert.popup({ msg: result.msg }, 2500)
+				}
+			});
+		};
+
+		$scope.channelDel = function(ichannel, $index) {
+
+			if (adminAPI.str.update == $scope.group.action) {
+				ichannel.groupId = $scope.group.id;
+			}
+
+			ModalAlert.alert({
+				value: "Are you sure to delete this channel?",
+				closeBtnValue: "No",
+				okBtnValue: "Yes",
+				confirm: function() {
+					var url = urlAPI.admin_channel_exist;
+					// var param = {
+					// 	model: adminAPI.str.delete,
+					// 	action : $scope.group.action,
+					// 	groupId: groupId,
+					// 	channel: ichannel.channel
+					// }
+
+					ichannel.model = adminAPI.str.delete;
+					ichannel.action = $scope.group.action;
+
+					serviceAPI.delData(url, ichannel).then(function(result) {
+						if (result.status == 0 && result.code == 0) {
+							$scope.groupChannelList.splice($index, 1);
+							// $scope.groupOrderChannelList.push(ichannel);
+							$scope.setOrderChannelList(ichannel);
+							return;
+						} else if (result.status == -1 && result.code == 803013) {
+							ModalAlert.popup({ msg: "This channel can not be deleted!" }, 2500);
+						} else {
+							ModalAlert.popup({
+								msg: result.msg
+							}, 2500)
+						}
+					})
+				}
+			});
+		};
+
+		$scope.setOrderChannelList = function(ichannel) {
+
+			if (adminAPI.isNullOrEmpty(ichannel)) return;
+
+			if ($scope.groupOrderChannelList.length == adminAPI.num.int_0) {
+				$scope.groupOrderChannelList.push(ichannel);
+				return;
+			}
+
+			var existFlg = false;
+			for (var i = 0; i < $scope.groupOrderChannelList.length; i++) {
+				var iOrderChannel = $scope.groupOrderChannelList[i];
+				if (iOrderChannel.channel == ichannel.channel 
+					&& iOrderChannel.id == ichannel.id 
+					&& iOrderChannel.groupId == ichannel.groupId) {
+
+					iOrderChannel.action = ichannel.action;
+					iOrderChannel.model = ichannel.model;
+
+					existFlg = true;
+					break;
+				}
+			}
+
+			if (!existFlg) {
+				$scope.groupOrderChannelList.push(ichannel);
+			}
 		};
 
 		$scope.groupSave = function() {
@@ -1027,7 +1154,10 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 			$scope.paramData.groupInfo.name = $scope.group.name;
 			$scope.paramData.groupInfo.tableauUser = $scope.group.tableauUser;
 			$scope.paramData.groupInfo.iconUrl = $scope.group.iconUrl;
-			$scope.paramData.groupInfo.channel = $scope.group.channel;
+			// $scope.paramData.groupInfo.channel = $scope.group.channel;
+			$scope.paramData.groupInfo.action = $scope.group.action;
+
+			$scope.paramData.groupOrderChannelList = $scope.groupOrderChannelList;
 
 			var url;
 			if (adminAPI.str.create == $scope.group.action) {

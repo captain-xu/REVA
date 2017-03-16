@@ -28,7 +28,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-3">Tabs:</label>
 				<div class="col-sm-5">
-					<span class="tab-operation" ng-repeat="itab in adminOperationList">
+					<span class="tab-operation" ng-repeat="itab in opOptionList">
 						<input type="checkbox" name="{{itab.name}}" id="{{itab.id}}" ng-model="itab.active" ng-checked="itab.active" ng-click="chooseTabApp(itab)">
 						<label>{{itab.name}}</label>
 

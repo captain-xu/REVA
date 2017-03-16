@@ -15,7 +15,7 @@
         	<img ng-src="{{iconImgUrl}}">
         </div>
 
-		<div class="edit-form detail-con form-horizontal">
+		<div class="view-edit detail-con form-horizontal">
 			<div class="form-group">
 				<label class="control-label col-sm-3">Group Name:<em>&#42;</em></label>
 				<div class="col-sm-5">
@@ -53,12 +53,48 @@
 	            <button type="file" ngf-select="uploadIcon($file)" accept="image/png, image/jpeg" class="btn btn-primary upload">Upload</button>
 			</div>
 
+<!-- 			<div class="form-group">
+				<label class="control-label col-sm-3">Channel:</label>
+
+				<div class="col-sm-4">
+	                <input type="text" placeholder="Channel name" ng-model="group.channel" ng-trim="true" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+	            </div>
+			</div> -->
+
+
+
 			<div class="form-group">
 				<label class="control-label col-sm-3">Channel:</label>
 
-				<div class="col-sm-5">
-	                <input type="text" placeholder="Channel name" ng-model="group.channel" ng-trim="true" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+				<div class="col-sm-5 edit-channel">
+					<span class="channel-loop" ng-show="group.action=='update'" ng-repeat="iChannel in groupChannelList">
+		              <!--   <input type="text" placeholder="Please enter the Channel Name" ng-model="iChannel.channel" ng-trim="true" class="form-control ng-pristine ng-valid ng-not-empty ng-touched"> -->
+						
+						<label>{{iChannel.channel}}</label>
+						<div class="channel-item">
+		<!-- 					<i class="glyphicon glyphicon-plus-sign" ng-show="true" ng-click="channelAdd(iChannel, $index)"></i> -->
+							<i class="glyphicon glyphicon-minus-sign" ng-show="true" ng-click="channelDel(iChannel, $index)"></i>
+						</div>
+		            </span>
+
+		            <div class="channel-add">
+						<input type="text" placeholder="Please enter the Channel Name" ng-model="channelTemp" ng-trim="true" class="form-control ng-pristine ng-valid ng-not-empty ng-touched">
+
+						<!-- <i class="channel-item glyphicon glyphicon-plus-sign" ng-show="true" ng-click="channelAdd()"></i> -->
+
+						<div class="channel-item">
+							<i class="glyphicon glyphicon-plus-sign" ng-show="true" ng-click="channelAdd(channelTemp)"></i>
+						</div>
+
+		        	</div>
+
+<!-- 	                <input type="text" placeholder="Please enter the Channel Name" ng-model="group.channel" ng-trim="true" class="channel-input col-sm-4 ng-pristine ng-valid ng-not-empty ng-touched">
+					<i class="glyphicon glyphicon-plus-sign" ng-show="true" ng-click="channelAdd()"></i> -->
 	            </div>
+
+				<!-- <div class="input-channel"> -->
+<!-- 	                <input type="text" placeholder="Channel name" ng-model="group.channel" ng-trim="true" class="input-channel col-sm-4 ng-pristine ng-valid ng-not-empty ng-touched"> -->
+	            <!-- </div> -->
 
 			</div>
 	

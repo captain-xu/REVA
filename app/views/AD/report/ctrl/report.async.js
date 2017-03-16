@@ -123,33 +123,30 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
     };
     $scope.loadChart = function() {
         serviceAPI.loadData(urlAPI.campaign_report_chart,$scope.seachParam).then(function(result) {
-            var legend = [];
+            var legend = ['All', 'REVA', 'Facebook'];
             var seriesDate = [];
             var valueDate = [];
-                var vo = result.reports;
-                var series = {
-                    type: 'line',
-                    data: [],
-                    smooth: true,
-                    symbol: "circle",
-                    symbol: "circle",
-                    symbolSize: [10, 10]
-                };
-                for (var y = 0; y < vo.length; y++) {
-                    var vo1 = vo[y];
-                    var num = valueDate.indexOf(vo1.date);
-                    if (num > 0) {
-                        var arr = series.date.slice
-                        series.date = 0;
-                    } else {
-                        valueDate = setValueDate(valueDate, vo1.date);
-                        num = valueDate.indexOf(vo1.date);
-                        series.date = setSeriesDate(series.data, vo1.count, num);
-                    }
-                };
-                seriesDate.push(series);
+            var vo = result.reports;
+            var series = {
+                type: 'line',
+                data: [],
+                smooth: true
+            };
+            for (var y = 0; y < vo.length; y++) {
+                var vo1 = vo[y];
+                var num = valueDate.indexOf(vo1.date);
+                if (num > 0) {
+                    var arr = series.date.slice
+                    series.date = 0;
+                } else {
+                    valueDate = setValueDate(valueDate, vo1.date);
+                    num = valueDate.indexOf(vo1.date);
+                    series.date = setSeriesDate(series.data, vo1.count, num);
+                }
+            };
+            seriesDate.push(series);
             $scope.chart.hideLoading();
-            $scope.chart.setOption(chartAPI.getOption('', valueDate, seriesDate));
+            $scope.chart.setOption(chartAPI.getOption(legend, valueDate, seriesDate));
         }).catch(function() {
 
         })

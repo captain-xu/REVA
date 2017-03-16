@@ -70,7 +70,7 @@
     <li class="except">
         <span class="title">OS Version:</span>
         <div class="dropdown directional">
-            <input ng-focus="selectStatus('osVersion', 'versions', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.osVersion" readonly>
+            <input ng-focus="selectStatus('osVersion', 'versions', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.osVersion" ng-readonly="{1: 'true'}[targeting.status]">
             <span class="caret"></span>
             <ul class="dropdown-menu" role="menu">
                 <li ng-click="allSelect('osVersion', 'versions', 'osVersionExcept')" class="advercheck" self-stop-propagation>
@@ -165,7 +165,7 @@
     <li class="except">
         <span class="title">Api Version:</span>
         <div class="dropdown directional">
-            <input ng-focus="selectStatus('appVer', 'appVers', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.appVer" readonly>
+            <input ng-focus="selectStatus('appVer', 'appVers', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.appVer"  ng-readonly="{1: 'true'}[targeting.status]">
             <span class="caret"></span>
             <ul class="dropdown-menu" role="menu">
                 <li ng-click="allSelect('appVer', 'appVers', 'appVerExcept')" class="advercheck" self-stop-propagation>

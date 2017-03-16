@@ -10,8 +10,8 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 				name: "",
 				packageName: ""
 			},
-			adminOperationList: {},
-			adminOperationExtendsList: {}
+			opOptionList: {},
+			opOptionExtendsList: {}
 		};
 
 		$scope.initEditView = function() {
@@ -29,9 +29,9 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 
 			serviceAPI.loadData(urlAPI.admin_app_edit, $scope.paramData).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
-					$scope.adminOperationList = result.data.adminOperationList;
-					$scope.adminOperationExtendsList = result.data.adminOperationExtendsList;
-					$scope.adminAppOperationList = result.data.adminAppOperationList;
+					$scope.opOptionList = result.data.opOptionList;
+					$scope.opOptionExtendsList = result.data.opOptionExtendsList;
+					$scope.opAppOptionList = result.data.opAppOptionList;
 
 					$scope.buildViewData();
 				}
@@ -47,19 +47,19 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 
 		$scope.chargeOptAttrActive = function() {
 
-			if (adminAPI.isNullOrEmpty($scope.adminOperationList) 
-				|| adminAPI.isNullOrEmpty($scope.adminAppOperationList)) {
+			if (adminAPI.isNullOrEmpty($scope.opOptionList) 
+				|| adminAPI.isNullOrEmpty($scope.opAppOptionList)) {
 				return;
 			}
 
 			var activeFlg = false;
-			for (var i = 0; i < $scope.adminAppOperationList.length; i++) {
-				var iOperationTab = $scope.adminAppOperationList[i];
+			for (var i = 0; i < $scope.opAppOptionList.length; i++) {
+				var iOperationTab = $scope.opAppOptionList[i];
 				var jOperation;
 
-				for (var j = 0; j < $scope.adminOperationList.length; j++) {
-					jOperation = $scope.adminOperationList[j];
-					if (jOperation.id == iOperationTab.operationId) {
+				for (var j = 0; j < $scope.opOptionList.length; j++) {
+					jOperation = $scope.opOptionList[j];
+					if (jOperation.id == iOperationTab.optionId) {
 						activeFlg = true;
 						break;
 					} else {
@@ -71,8 +71,8 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 					jOperation.active = true;
 					$scope.adminOptExtendList[jOperation.name] = [];
 
-					for (var j = 0; j < $scope.adminOperationExtendsList.length; j++) {
-						var jOptExtend = $scope.adminOperationExtendsList[j];
+					for (var j = 0; j < $scope.opOptionExtendsList.length; j++) {
+						var jOptExtend = $scope.opOptionExtendsList[j];
 						if (jOptExtend.parentId == jOperation.id) {
 							$scope.adminOptExtendList[jOperation.name].push(jOptExtend);
 						}
@@ -82,7 +82,7 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 
 				for (var j = 0; j < $scope.adminOptExtendList[jOperation.name].length; j++) {
 					var jOptExtend = $scope.adminOptExtendList[jOperation.name][j];
-					if (jOptExtend.parentId == jOperation.id && jOptExtend.id == iOperationTab.operationId) {
+					if (jOptExtend.parentId == jOperation.id && jOptExtend.id == iOperationTab.optionId) {
 						jOptExtend.active = true;
 						jOptExtend.checked = true;
 
@@ -98,8 +98,8 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 
 			$scope.adminOptExtendList[iTab.name] = [];
 
-			for (var i = 0; i < $scope.adminOperationExtendsList.length; i++) {
-				var iOptExtend = $scope.adminOperationExtendsList[i];
+			for (var i = 0; i < $scope.opOptionExtendsList.length; i++) {
+				var iOptExtend = $scope.opOptionExtendsList[i];
 				if (iOptExtend.parentId == iTab.id) {
 					$scope.adminOptExtendList[iTab.name].push(iOptExtend);
 				}
@@ -110,7 +110,7 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 
 		$scope.chooseTabApp = function(item) {
 
-			if (adminAPI.isNullOrEmpty(item) || adminAPI.isNullOrEmpty($scope.adminOperationExtendsList)) return;
+			if (adminAPI.isNullOrEmpty(item) || adminAPI.isNullOrEmpty($scope.opOptionExtendsList)) return;
 
 			var activeFlg = false;
 			var itemOpt = [];
@@ -122,8 +122,8 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 					|| $scope.adminOptExtendList[item.name].length == adminAPI.num.int_0) {
 					$scope.adminOptExtendList[item.name] = [];
 					
-					for (var i = 0; i < $scope.adminOperationExtendsList.length; i++) {
-						var iOptExtend = $scope.adminOperationExtendsList[i];
+					for (var i = 0; i < $scope.opOptionExtendsList.length; i++) {
+						var iOptExtend = $scope.opOptionExtendsList[i];
 						if (iOptExtend.parentId == item.id) {
 							itemOpt.push(iOptExtend);
 						}
@@ -223,8 +223,8 @@ var scope = ["$scope", "$location", "urlAPI", "ModalAlert", "serviceAPI", "admin
 			$scope.paramData.appInfo.appName = $scope.app.appName;
 			$scope.paramData.appInfo.packageName = $scope.app.packageName;
 
-			$scope.paramData.adminOperationList = $scope.adminOperationList;
-			$scope.paramData.adminOperationExtendsList = $scope.adminOperationExtendsList;
+			$scope.paramData.opOptionList = $scope.opOptionList;
+			$scope.paramData.opOptionExtendsList = $scope.opOptionExtendsList;
 
 	    	var url;
 	    	if (adminAPI.str.create == $scope.app.action) {

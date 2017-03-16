@@ -12,51 +12,93 @@
         	<ul>
 				<li>
                     <span>Requests</span><br>
-                    <b ng-if="rate.requestOp">OP: {{rate.requestOp}}</b>
-					<b>AD: {{rate.request}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.reqFlag=='+' && rate.reqRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.reqFlag=='-' && rate.reqRate!=0"></i>
-					<p>{{rate.reqRate}}<span ng-show="rate.reqRate !== '--'">%</span></p>
+                    <div class="view-data" ng-if="rate.requestOp">
+                        <span class="view-data-number">OP: {{rate.requestOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.reqFlagOp=='+' && rate.reqRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.reqFlagOp=='-' && rate.reqRateOp!=0"></i>
+                        <span>{{rate.reqRateOp}}<span ng-show="rate.reqRateOp !== '--'">%</span></span>
+                    </div>
+					<div class="view-data">
+                        <span class="view-data-number">AD: {{rate.request}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.reqFlag=='+' && rate.reqRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.reqFlag=='-' && rate.reqRate!=0"></i>
+                        <span>{{rate.reqRate}}<span ng-show="rate.reqRate !== '--'">%</span></span>
+                    </div>
 				</li>
 				<li>
                     <span>Impressions</span><br>
-                    <b ng-if="rate.impOp">OP: {{rate.impOp}}</b>
-                    <b>AD: {{rate.imp}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.impFlag=='+' && rate.impRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.impFlag=='-' && rate.impRate!=0"></i>
-                    <p>{{rate.impRate}}<span ng-show="rate.impRate !== '--'">%</span></p>
+                    <div class="view-data" ng-if="rate.impOp">
+                        <span class="view-data-number">OP: {{rate.impOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.impFlagOp=='+' && rate.impRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.impFlagOp=='-' && rate.impRateOp!=0"></i>
+                        <span>{{rate.impRateOp}}<span ng-show="rate.impRateOp !== '--'">%</span></span>
+                    </div>
+                    <div class="view-data">
+                        <span class="view-data-number">AD: {{rate.imp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.impFlag=='+' && rate.impRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.impFlag=='-' && rate.impRate!=0"></i>
+                        <span>{{rate.impRate}}<span ng-show="rate.impRate !== '--'">%</span></span>
+                    </div>
 				</li>
 				<li>
                     <span>Clicks</span><br>
-                    <b ng-if="rate.clickOp">OP: {{rate.clickOp}}</b>
-                    <b>AD: {{rate.click}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.clickFlag=='+' && rate.clickRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.clickFlag=='-' && rate.clickRate!=0"></i>
-                    <p>{{rate.clickRate}}<span ng-show="rate.clickRate !== '--'">%</span></p>
+                    <div class="view-data" ng-if="rate.clickOp">
+                        <span class="view-data-number">OP: {{rate.clickOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.clickFlagOp=='+' && rate.clickRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.clickFlagOp=='-' && rate.clickRateOp!=0"></i>
+                        <span>{{rate.clickRateOp}}<span ng-show="rate.clickRateOp !== '--'">%</span></span>
+                    </div>
+                    <div class="view-data">
+                        <span class="view-data-number">AD: {{rate.click}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.clickFlag=='+' && rate.clickRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.clickFlag=='-' && rate.clickRate!=0"></i>
+                        <span>{{rate.clickRate}}<span ng-show="rate.clickRate !== '--'">%</span></span>
+                    </div>
 				</li>
 				<li>
                     <span>Conversions</span><br>
-                    <b ng-if="rate.conversionOp">OP: {{rate.conversionOp}}</b>
-                    <b>AD: {{rate.conversion}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.conversionFlag=='+' && rate.conversionRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.conversionFlag=='-' && rate.conversionRate!=0"></i>
-                    <p>{{rate.conversionRate}}<span ng-show="rate.conversionRate !== '--'">%</span></p>
+                    <div class="view-data" ng-if="rate.conversionOp">
+                        <span class="view-data-number">OP: {{rate.conversionOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.conversionFlagOp=='+' && rate.conversionRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.conversionFlagOp=='-' && rate.conversionRateOp!=0"></i>
+                        <span>{{rate.conversionRateOp}}<span ng-show="rate.conversionRateOp !== '--'">%</span></span>
+                    </div>
+                    <div class="view-data">
+                        <span class="view-data-number">AD: {{rate.conversion}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.conversionFlag=='+' && rate.conversionRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.conversionFlag=='-' && rate.conversionRate!=0"></i>
+                        <span>{{rate.conversionRate}}<span ng-show="rate.conversionRate !== '--'">%</span></span>
+                    </div>
 				</li>
                 <li>
                     <span>eCPM</span><br>
-                    <b ng-if="rate.eCPMOp">OP: {{rate.eCPMOp}}</b>
-                    <b>AD: {{rate.eCPM}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.eCPMFlag=='+' && rate.eCPMRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.eCPMFlag=='-' && rate.eCPMRate!=0"></i>
-                    <p>{{rate.eCPMRate}}<span ng-show="rate.eCPMRate !== '--'">%</span></p>                
+                    <div class="view-data" ng-if="rate.eCPMOp">
+                        <span class="view-data-number">OP: {{rate.eCPMOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.eCPMFlagOp=='+' && rate.eCPMRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.eCPMFlagOp=='-' && rate.eCPMRateOp!=0"></i>
+                        <span>{{rate.eCPMRateOp}}<span ng-show="rate.eCPMRateOp !== '--'">%</span></span> 
+                    </div>
+                    <div class="view-data">
+                        <span class="view-data-number">AD: {{rate.eCPM}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.eCPMFlag=='+' && rate.eCPMRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.eCPMFlag=='-' && rate.eCPMRate!=0"></i>
+                        <span>{{rate.eCPMRate}}<span ng-show="rate.eCPMRate !== '--'">%</span></span> 
+                    </div>               
                 </li>
                 <li>
                     <span>Revenue</span><br>
-                    <b ng-if="rate.revenueOp">OP: {{rate.revenueOp}}</b>
-                    <b>AD: {{rate.revenue}}</b>
-                    <i class="glyphicon glyphicon-arrow-up" ng-show="rate.revenueFlag=='+' && rate.revenueRate!=0"></i>
-                    <i class="glyphicon glyphicon-arrow-down" ng-show="rate.revenueFlag=='-' && rate.revenueRate!=0"></i>
-                    <p>{{rate.revenueRate}}<span ng-show="rate.revenueRate !== '--'">%</span></p>
+                    <div class="view-data" ng-if="rate.revenueOp">
+                        <span class="view-data-number">OP: {{rate.revenueOp}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.revenueFlagOp=='+' && rate.revenueRateOp!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.revenueFlagOp=='-' && rate.revenueRateOp!=0"></i>
+                        <span>{{rate.revenueRateOp}}<span ng-show="rate.revenueRateOp !== '--'">%</span></span>
+                    </div>
+                    <div class="view-data">
+                        <span class="view-data-number">AD: {{rate.revenue}}</span>
+                        <i class="glyphicon glyphicon-arrow-up" ng-show="rate.revenueFlag=='+' && rate.revenueRate!=0"></i>
+                        <i class="glyphicon glyphicon-arrow-down" ng-show="rate.revenueFlag=='-' && rate.revenueRate!=0"></i>
+                        <span>{{rate.revenueRate}}<span ng-show="rate.revenueRate !== '--'">%</span></span>
+                    </div>
                 </li>
         	</ul>
         </div>

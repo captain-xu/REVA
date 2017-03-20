@@ -6,11 +6,11 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
         "eventType": 'imp',
         "appId": "",
         "placeId": "",
-        "adId": "",
+        "type": 'ALL',
         "currentPage": 1,
         "pageSize": 20
     };
-    $scope.tyleLIst = [{
+    $scope.typeList = [{
         id: 'imp',
         name: "Impression",
         istitle: false
@@ -31,9 +31,23 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
         name: "Conversion",
         istitle: false
     }, {
+        id: 'request',
+        name: "Request",
+        istitle: false
+    }, {
         id: 'imp',
         name: "Impression",
         istitle: false
+    }];
+    $scope.placementList = [{
+        name: 'ALL', 
+        id: 'ALL'
+    }, {
+        name: 'REVA', 
+        id: 'REVA'
+    }, {
+        name: 'Facebook', 
+        id: 'Facebook'
     }];
     $scope.orderField = 'imp';
     $scope.desc = true;
@@ -56,28 +70,7 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
         var appParam = {
             appId: $scope.seachParam.appId
         };
-        serviceAPI.loadData(urlAPI.campaign_report_camp,appParam).then(function(result) {
-            $scope.camList = [];
-            if (result.adList) {
-                $scope.camList = result.adList.map(function(data) {
-                    return {
-                        id: data.operationId,
-                        name: data.name
-                    }
-                });
-            }
-            $scope.camList.unshift({id:'',name:'All'});
-        }).catch(function() {
-
-        });
-        $scope.loadChart();
-    };
-    $scope.camSel = function() {
-        $scope.seachParam.adId = $scope.selectVO.id;
-        var adParam = {
-            operationId: $scope.seachParam.adId
-        };
-        serviceAPI.loadData(urlAPI.campaign_creative_place,adParam).then(function(result) {
+        serviceAPI.loadData(urlAPI.campaign_creative_place,appParam).then(function(result) {
             $scope.placeList = [];
             if (result.placements) {
                 $scope.placeList = result.placements.map(function(data) {
@@ -107,6 +100,10 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
         $scope.loadChart();
         $scope.loadList();
     };
+    $scope.placementSel = function() {
+        $scope.seachParam.type = $scope.selectVO.id;
+        $scope.loadList();
+    };
     $scope.orderBy = function(str) {
         $scope.orderField = str;
         $scope.desc = !$scope.desc;
@@ -123,57 +120,26 @@ var scope = ["$scope", "chartAPI",  "serviceAPI", "urlAPI",
     };
     $scope.loadChart = function() {
         serviceAPI.loadData(urlAPI.campaign_report_chart,$scope.seachParam).then(function(result) {
-            var legend = ['All', 'REVA', 'Facebook'];
-            var seriesDate = [];
-            var valueDate = [];
-            var vo = result.reports;
-            var series = {
-                type: 'line',
-                data: [],
-                smooth: true
-            };
-            for (var y = 0; y < vo.length; y++) {
-                var vo1 = vo[y];
-                var num = valueDate.indexOf(vo1.date);
-                if (num > 0) {
-                    var arr = series.date.slice
-                    series.date = 0;
-                } else {
-                    valueDate = setValueDate(valueDate, vo1.date);
-                    num = valueDate.indexOf(vo1.date);
-                    series.date = setSeriesDate(series.data, vo1.count, num);
-                }
-            };
-            seriesDate.push(series);
+            var legend = ['ALL', 'REVA', 'Facebook'];
+            var seriesDate = result.report.series;
+            var valueDate = result.report.xAxis.data;
             $scope.chart.hideLoading();
             $scope.chart.setOption(chartAPI.getOption(legend, valueDate, seriesDate));
         }).catch(function() {
 
         })
     };
-
-    function setSeriesDate(arr, value, index) {
-        if (index == 0 && arr.length == 0) {
-            arr.push(value);
-            return arr;
-        } else if (arr.length < index) {
-            for (var i = arr.length; i < index; i++) {
-                arr.push(0);
+    $scope.exportCsv = function() {
+        var csvParam = {
+            startTime: $scope.seachParam.startTime,
+            endTime: $scope.seachParam.endTime,
+            type: $scope.seachParam.type
+        };
+        serviceAPI.loadData(urlAPI.campaign_report_csv, csvParam).then(function(result) {
+            if (result.viewUrl) {
+                window.location = result.viewUrl;
             }
-            arr.push(value);
-            return arr;
-        } else if (arr.length >= index) {
-            arr[index] = value;
-            return arr;
-        }
-    };
-
-    function setValueDate(arr, value) {
-        arr.push(value);
-        arr = arr.sort(function(a, b) {    
-            return  new Date(a)  -  new Date(b);
         });
-        return arr;
     };
     $scope.init = function() {
         $scope.loadAppList();

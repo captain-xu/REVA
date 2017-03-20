@@ -56,6 +56,15 @@ var scope = ["$scope", "serviceAPI", "urlAPI",
                 });
             }).
             catch(function(result) {});
+            serviceAPI.loadData(urlAPI.campaign_operate_label).then(function(result) {
+                $scope.labels = result.labelList.map(function(data) {
+                    return {
+                        name: data,
+                        isSelect: false
+                    };
+                });
+            }).
+            catch(function(result) {});
             setTimeout(function() {
                 if ($scope.state === 'edit') {
                     $scope.loadModel();

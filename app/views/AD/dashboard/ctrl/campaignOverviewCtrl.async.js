@@ -330,7 +330,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
         $scope.channelName = str;
         $scope.reportField = 'conversion';
         if ($scope.channelName == 'Channel') {
-            serviceAPI.loadData(urlAPI.campaign_report_channel1).then(function(result){
+            serviceAPI.loadData(urlAPI.campaign_dashboard_channel1).then(function(result){
                 $scope.channel1List = result.channel1List;
             });
             $scope.channel1Name = 'All';
@@ -366,7 +366,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
             } else {
                 $scope.channel1Id = channel;
             }
-            serviceAPI.loadData(urlAPI.campaign_report_channel2, {channelId1: $scope.channel1Id}).then(function(result){
+            serviceAPI.loadData(urlAPI.campaign_dashboard_channel2, {channelId1: $scope.channel1Id}).then(function(result){
                 $scope.channel2List = result.channel2List;
             });
         } else {
@@ -414,7 +414,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
                 startDate: $scope.startTime,
                 endDate: $scope.endTime
             };
-            serviceAPI.loadData(urlAPI.campaign_report_uniqueCsv, uniqueParam).then(function(result){
+            serviceAPI.loadData(urlAPI.campaign_dashboard_uniqueCsv, uniqueParam).then(function(result){
                 if (result.viewUrl) {
                     window.location = result.viewUrl;
                 }
@@ -428,7 +428,7 @@ var scope = ["$scope", "serviceAPI","urlAPI",
                 channelId1: $scope.channel1Id,
                 channelId2: $scope.channel2Id
             };
-            serviceAPI.loadData(urlAPI.campaign_report_reportCsv, reportParam).then(function(result){
+            serviceAPI.loadData(urlAPI.campaign_dashboard_reportCsv, reportParam).then(function(result){
                 if (result.viewUrl) {
                     window.location = result.viewUrl;
                 }

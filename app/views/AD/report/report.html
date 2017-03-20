@@ -15,25 +15,29 @@
                 <reportselect datalists="appList" confirm="appSel()"></reportselect>
             </div>
             <div class="seach">
-                <span>Campaign:</span>
-                <reportselect datalists="camList" confirm="camSel()"></reportselect>
-            </div>
-            <div class="seach">
                 <span>Placement:</span>
                 <reportselect datalists="placeList" confirm="placeSel()"></reportselect>
             </div>
             <div class="seach">
                 <span>Type:</span>
-                <osselecttitle datalists="tyleLIst" confirm="typeClick()" vo="tyleLIst[5]"></osselecttitle>
+                <osselecttitle datalists="typeList" confirm="typeClick()" vo="typeList[6]"></osselecttitle>
             </div>
         </div>
         <div class="echart-line" id="echart-line"></div>
         <div class="list">
             <div class="table-responsive">
+                <div class="list-title clearfix">
+                    <div class="place-select pull-left">
+                        <label>Placement: </label>
+                        <reportselect datalists="placementList" confirm="placementSel()"></reportselect>
+                    </div>
+                    <i class="fa fa-external-link pull-right" ng-click="exportCsv()"></i>
+                </div>
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Campaign</th>
+                            <th>Placement Id</th>
+                            <th ng-hide="seachParam.type === 'Facebook'">Placement Name</th>
                             <th ng-click="orderBy('imp')">Impression
                                 <div class="icon-order">
                                     <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='imp' &amp;&amp; !desc]"></i>
@@ -63,7 +67,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="vo in dataList | orderBy:orderField:desc">
-                            <td>{{vo.adName}}</td>
+                            <td>{{vo.placementId}}</td>
+                            <td ng-hide="seachParam.type === 'Facebook'">{{vo.placementName}}</td>
                             <td>{{vo.imp}}</td>
                             <td>{{vo.click}}</td>
                             <td>{{vo.ctr}}</td>

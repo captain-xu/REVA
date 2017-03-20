@@ -28,7 +28,7 @@ var scope = ["$scope", "ModalAlert", '$state','$stateParams',"serviceAPI", 'urlA
     $scope.loadCountry = function() {
         if (!$scope.country || $scope.country.length == 0) {
             serviceAPI.loadData(urlAPI.campaign_offer_country).then(function(result) {
-                $scope.countryList = result.countries;
+                $scope.countryList = result.areaInfo;
                 $scope.countryList.unshift({name: 'All', code: ''});
             })
         };

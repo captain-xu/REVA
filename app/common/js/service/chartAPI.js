@@ -12,11 +12,11 @@ angular.module('app.services').factory('chartAPI', [
             getOption: function(obj1, obj2, obj3) {
                 var option = {
                     tooltip: {
-                        trigger: 'axis',
-                        formatter: '{b}: {c}'
+                        trigger: 'axis'
                     },
                     legend: {
-                        data: obj1
+                        data: obj1,
+                        top: '5%'
                     },
                     color: ["#3fb1e3",
                         "#6be6c1",

@@ -182,6 +182,25 @@
         <input type="text" ng-model="targeting.appVerExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
     </li>
     <li class="except">
+        <span class="title">Label:</span>
+        <div class="dropdown directional">
+            <input ng-focus="selectStatus('label', 'labels', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.label"  ng-readonly="{1: 'true'}[targeting.status]">
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-click="allSelect('label', 'labels', 'labelExcept')" class="advercheck" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.label]"></i>ALL
+                </li>
+                <li ng-repeat="label in labels" ng-click="singleSelect(label, 'name', 'label', 'labelExcept')" self-stop-propagation>
+                    <i class="fa fa-check-square" ng-class="{true: 'active'}[label.isSelect]"></i>{{label.name}}
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="except">
+        <span class="title">Label Except:</span>
+        <input type="text" ng-model="targeting.labelExcept" ng-readonly="{1: 'true'}[targeting.status]" class="areaexcept">
+    </li>
+    <li class="except">
         <span class="title">Network:</span>
         <input type="text" ng-model="targeting.network" ng-readonly="{1: 'true'}[targeting.status]">
         <span class="title">Except:</span>

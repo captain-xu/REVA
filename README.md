@@ -1,14 +1,14 @@
 # 1、前言
 
-本文主要介绍互联网化平台RevaNowWeb的使用说明。
+本文主要介绍互联网化平台RevaNowWeb3.0的使用说明。
 
-##1.1 构建工具为fis3 ,前端框架采用Angularjs+bootstrap+less，包含以下功能：
+##1.1 构建工具为gulp ,前端框架采用Angularjs+bootstrap+less，包含以下功能：
 >构建单页面应用:单页面提供了最佳的响应速度，同时可以减轻服务器压力。<br> 
 >应用打包：开发出的功能能生成最适合访问的页面，同时对js、css文件进行压缩，使体积更小。<br>  
 >前端MVC：使客户端开发更结构化。<br>  
 >包管理器bower：管理第三方依赖，只需要一个命令即可更新。<br>  
 >css预处理器Less：使用结构化的方式管理css，自动优化开发后的css。<br>  
->应用打包部署：本次主要根据fis3插件fis3-postpackager-loader生成resourcemap(具体内容详见打包生成index.html文件)，实现按单独文件夹或文件部署解决模块之间耦合问题。<br>  
+>应用打包部署：使用gulp作为打包工具<br>  
 >缓存文件：解决生产环境缓存问题方式由原来的md5改为时间戳方式<br>  
 
 # 2、具体说明
@@ -16,7 +16,7 @@
 ##2.1依赖环境搭建
 >安装nodejs：开发环境依赖node运行环境，在使用之前确保已经有可用的nodejs运行环境。<br> 
 >安装git：开发平台bower使用git进行网页依赖库的下载，在使用之前确保已经有可用的git<br> 
->安装fis3(前台构建工具)：cmd执行 npm install –g fis3<br> 
+>安装gulp(前台构建工具)：cmd执行 npm install –g gulp<br> 
 >安装bower(前台包管理器)：cmd执行 npm install –g bower<br> 
 
 ##2.2前台开发环境安装
@@ -48,18 +48,8 @@ cd work<br>
 启动平台<br> 
 Cmd 执行：
 >cd work/ RevaNowWeb<br> 
->fis3 release dev –w(将文件部署到dev环境)<br> 
->浏览器输入：http://dev.revanow.com/<br> 
-
-###2.2.3前台开发流程
-
-####1.开发新页面流程
->在app/pages新建xxx文件夹，在文件夹中新增xxx.html<br> 
->修改app/common/router/router.js中增加URL与xxx.html文件的映射关系。<br> 
-
-####2.页面加入控制层流程
->在app/pages/xxx中新增xxx.js.<br> 
->采用按需加载方式不需要再页面中指定controller，详见router.js<br> 
+>gulp serve<br> 
+>浏览器将自动打开本地端口<br> 
 
 ####3.控制层数据模型操作
 >定义：数据模型——$scope,网络服务——$http<br> 
@@ -67,15 +57,7 @@ Cmd 执行：
 >在控制层，向数据模型提交数据,如：$scope.UserVO.username ='国家主席';<br> 
 >在控制层进行http网络接口调用，如：$http.post('//localhost:8080/api/user', UserVO) <br> 
 
-# 3、插件介绍
->fis3-hook-commonjs：fis3模块化开发工具<br> 
->fis3-postpackager-loader：静态资源前段加载器，用来分析页面中使用的和依赖的资源(js或css)，并将这些资源做一定优化后插入页面中(如将零散文件合并)<br> 
->fis-parser-less-2.x：支持less编译为css<br> 
->fis3-hook-releative：支持产出文件为引用相对路径 <br> 
->fis3-deploy-skip-packed：将产出的文件过滤掉已被打包的。<br> 
->fis3-deploy-replace：将产出的文件做文本替换<br> 
-
-# 4、功能模块介绍
+# 3、功能模块介绍
 >4.1 DA：数据分析系统 <br> 
 >4.2 CAMPAIGN：广告活动系统 <br> 
 >4.1 OPERATION：平台操作系统 <br> 

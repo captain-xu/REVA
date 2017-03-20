@@ -1,0 +1,25 @@
+<div class="middle-box text-center loginscreen animated fadeInDown reva-login" ng-controller="loginCtrl">
+    <div>
+        <div>
+            <img src="../assets/images/Reva_logo.png">
+        </div>
+        <h3>Welcome to REVA</h3>
+        <p>An operating platform based on Android OS</p>
+        <form role="form" name="signup_form" novalidate="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength ng-valid-email ng-valid-url ng-invalid-cvalid ng-submitted">
+            <div class="form-group">
+                <input type="text" placeholder="Username" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-minlength ng-valid-maxlength ng-touched" ng-model="username" name="username" required="">
+                <div class="m-t-xs text-left" ng-show="signup_form.username.$invalid &amp;&amp; signup_form.submitted">
+                    <small class="text-danger" ng-show="signup_form.username.$error.required">Please input a username</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" name="password" ng-model="password" required="">
+                <div class="m-t-xs text-left" ng-show="signup_form.password.$invalid &amp;&amp; signup_form.submitted">
+                    <small class="text-danger" ng-show="signup_form.password.$error.required">Please input a password</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b" ng-click="signupForm()">Login</button>
+        </form>
+        <p class="m-t"> <small>Copyright © 2015-2016 REVA™. All rights reserved.</small> </p>
+    </div>
+</div>

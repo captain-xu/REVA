@@ -1,0 +1,53 @@
+<div class="wrapper wrapper-content campaign-creatives" ng-controller="campaignCreativeEditCtrl">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Name:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="detailVO.name">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Width:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.width">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Height:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.height">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">ImageX:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.imageX">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">ImageY:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.imageY">
+                </div>
+                <span class="msg"></span>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Format:</label>
+                <div class="col-xs-6">
+                    <input type="text" readonly class="form-control" ng-model="picFormat">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Logo:</label>
+                <div class="col-xs-6">
+                    <img ng-src="{{img_url}}" ng-show="img_url" width="50" height="50">
+                </div>
+            </div>
+        </div>
+        <div class="ibox-footer text-center">
+            <button type="button" class="btn btn-warning fw-100 m-r-lg" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-primary fw-100" ng-click="saveData()" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="wrapper wrapper-content campaign-creatives" ng-controller="campaignCreativesCtrl">
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Campaign</label>
+                        <select chosen-select class="chosen-select" ng-change="campaignFilter(camp)" ng-model="camp" ng-options="camp.id as camp.name for camp in campaign">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Placement</label>
+                        <select chosen-select class="chosen-select" ng-change="placementFilter(place)" ng-model="place" ng-options="place.placementId as place.placement for place in placement">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group has-feedback">
+                        <label class="control-label">Search</label>
+                        <input class="form-control" type="text" placeholder="Search" ng-keyup="searchBlur()" ng-model="seachParam.searchData">
+                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content h-300" ng-class="{true:'sk-loading'}[listloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <div class="table-responsive" ng-hide="listnodata">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th ng-click="orderBy('id')">ID
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='id', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('name')">Name
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='name', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('campaign')">Campaign
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='campaign', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('placement')">Placement
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='placement', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('fileSize')">File Size (kb)
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='fileSize', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('width')">Size
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='width', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th ng-click="orderBy('createTime')">Create Time
+                                <span>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='createTime', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                </span>
+                            </th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="vo in list | orderBy: orderField:desc | limitTo:listNum">
+                            <td>{{vo.id}}</td>
+                            <td>{{vo.name}}</td>
+                            <td>{{vo.campaign}}</td>
+                            <td>{{vo.placement}}</td>
+                            <td>{{vo.fileSize}}</td>
+                            <td>{{vo.size}}</td>
+                            <td>{{vo.createTime}}</td>
+                            <td class="text-center">
+                                <span class="fa m-r-sm" ng-class="{1: 'fa-toggle-on text-success', 0: 'fa-toggle-off'}[vo.imgStatus]" ng-click="changeState(vo)"></span>
+                                <span class="fa" ng-class="{1: 'fa-eye', 0: 'fa-pencil'}[vo.imgStatus]" ng-click="getDetail(vo)"></span>
+                                <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <null-data ng-show="listnodata" class="h-200"></null-data>
+        </div>
+        <div class="ibox-footer">
+            <div class="btn-group">
+                <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+                <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+                <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+            </div>
+            <ul uib-pagination class="pull-right no-margins" ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+        </div>
+    </div>
+</div>

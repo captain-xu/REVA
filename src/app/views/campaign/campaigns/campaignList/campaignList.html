@@ -1,0 +1,234 @@
+<div class="wrapper wrapper-content" ng-controller="campaignListCtrl">
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="pull-right m-r-sm">
+                <button class="btn btn-primary fw-150" ng-click="addNet()">Add Adnetwork</button>
+            </div>
+            <div class="pull-right m-r-sm">
+                <button class="btn btn-primary fw-150" ng-click="addOp()">Add Operation</button>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">App</label>
+                        <select chosen-select class="chosen-select" ng-change="appFilter(app)" ng-model="app" ng-options="app.appId as app.name for app in appList">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group has-feedback">
+                        <label class="control-label">Search</label>
+                        <input class="form-control" type="text" placeholder="Search" ng-keyup="searchBlur()" ng-model="seachParam.searchData">
+                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content" ng-class="{true:'sk-loading'}[listloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <div class="tab-list">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-btn">
+                    <li ng-class="{0:'active'}[seachParam.adNetWork]" ng-click="detailList(0)"><a href="javascript:void(0)">Operation</a></li>
+                    <li ng-class="{1:'active'}[seachParam.adNetWork]" ng-click="detailList(1)"><a href="javascript:void(0)">AdNetwork</a></li>
+                    <li ng-class="{2:'active'}[seachParam.adNetWork]" ng-click="detailList(2)"><a href="javascript:void(0)">Ads</a></li>
+                </ul>
+                <div class="tab-content" ng-hide="listnodata">
+                    <!-- operation 列表页面 -->
+                    <div class="table-responsive tab-pane" ng-class="{0:'active'}[seachParam.adNetWork]">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th ng-click="orderBy('id')">ID
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='id', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('name')">Name
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='name', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('app')">App
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='app', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('priority')">Priority
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='priority', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('imp')">Impression
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='imp', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('click')">Click
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='click', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('startDate')">Start Time
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='startDate', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('endDate')">End Time
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='endDate', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('createDate')">Create Time
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='createDate', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vo in list">
+                                    <td>{{vo.id}}</td>
+                                    <td>{{vo.name}}</td>
+                                    <td>{{vo.appName}}</td>
+                                    <td>{{vo.priority}}</td>
+                                    <td>{{vo.imp}}</td>
+                                    <td>{{vo.click}}</td>
+                                    <td>{{vo.startDate}}</td>
+                                    <td>{{vo.endDate}}</td>
+                                    <td>{{vo.createTime}}</td>
+                                    <td class="text-center">
+                                        <span class="fa m-r-sm" ng-class="{1: 'fa-toggle-on text-success', 0: 'fa-toggle-off'}[vo.status]" ng-click="changeState(vo)"></span>
+                                        <span class="fa" ng-class="{1: 'fa-eye', 0: 'fa-pencil'}[vo.status]" ng-click="editOp(vo)"></span>
+                                        <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- netWork 列表页面 -->
+                    <div class="table-responsive tab-pane" ng-class="{1:'active'}[seachParam.adNetWork]">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th ng-click="orderBy('id')">ID
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='id', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('name')">Campaign
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='name', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('cpx')">CPX
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='cpx', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('advertiser')">AdNetwork
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='advertiser', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('app')">APP
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='app', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('imp')">Impression
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='imp', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('click')">Click
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='click', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('ctr')">CTR
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='ctr', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('cvr')">CVR
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='cvr', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('conversion')">Conversion
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='conversion', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('revenue')">Revenue($)
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='revenue', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('eCPM')">eCPM($)
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='eCPM', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="net in list">
+                                    <td>{{net.id}}</td>
+                                    <td ng-click="detailList(2, net.id)"><a href="javascript:void(0)">{{net.name}}</a></td>
+                                    <td>{{net.CPX}}</td>
+                                    <td>{{net.advertiserName}}</td>
+                                    <td>{{net.appName}}</td>
+                                    <td>{{net.imp}}</td>
+                                    <td>{{net.click}}</td>
+                                    <td>{{net.ctr}}<span ng-show="net.ctr !== '--'">%</span></td>
+                                    <td>{{net.cvr}}<span ng-show="net.cvr !== '--'">%</span></td>
+                                    <td>{{net.conversion}}</td>
+                                    <td>{{net.revenue}}</td>
+                                    <td>{{net.eCPM}}</td>
+                                    <td class="text-center">
+                                        <span class="fa m-r-sm" ng-class="{1: 'fa-toggle-on text-success', 0: 'fa-toggle-off'}[net.status]" ng-click="changeState(net)"></span>
+                                        <span class="fa" ng-class="{1: 'fa-eye', 0: 'fa-pencil'}[net.status]" ng-click="editNet(net)"></span>
+                                        <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- ads 列表页面 -->
+                    <div class="table-responsive tab-pane" ng-class="{2:'active'}[seachParam.adNetWork]">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th ng-click="orderBy('id')">ID
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='id', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('name')">Ads
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='name', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('cpx')">CPX
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='cpx', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('advertiser')">AdNetwork
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='advertiser', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('payout')">Payout
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='payout', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('imp')">Impression
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='imp', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('click')">Click
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='click', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('ctr')">CTR
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='ctr', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('cvr')">CVR
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='cvr', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('conversion')">Conversion
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='conversion', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('revenue')">Revenue($)
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='revenue', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th ng-click="orderBy('eCPM')">eCPM($)
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='eCPM', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="as in aslist">
+                                    <td style="min-width: 100px;">{{as.offerId}}</td>
+                                    <td><a href="#/view/campaign/offer/view/{{as.advertiserId}}/{{as.offerId}}/{{as.rtb}}">{{as.offerName}}</a></td>
+                                    <td>{{as.CPX}}</td>
+                                    <td>{{as.advertiserName}}</td>
+                                    <td>{{as.payout}}</td>
+                                    <td>{{as.imp}}</td>
+                                    <td>{{as.click}}</td>
+                                    <td>{{as.ctr}}<span ng-show="as.ctr !== '--'">%</span></td>
+                                    <td>{{as.cvr}}<span ng-show="as.cvr !== '--'">%</span></td>
+                                    <td>{{as.conversion}}</td>
+                                    <td>{{as.revenue}}</td>
+                                    <td>{{as.eCPM}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <null-data ng-show="listnodata" class="h-200"></null-data>
+            </div>
+        </div>
+        <div class="ibox-footer">
+            <div class="btn-group">
+                <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+                <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+                <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+            </div>
+            <ul uib-pagination class="pull-right no-margins" ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+        </div>
+    </div>
+</div>

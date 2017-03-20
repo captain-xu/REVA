@@ -1,0 +1,30 @@
+<!-- Wrapper-->
+<div id="wrapper">
+    <!-- Navigation -->
+    <div ng-include="'app/components/common/navigation.html'"></div>
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}" >
+        <!-- Page wrapper -->
+        <div ng-include="'app/components/common/topnavbar.html'"></div>
+        <!-- Main view  -->
+        <div class="row wrapper border-bottom white-bg page-heading" ng-if="$state.current.data.showTitle">
+            <div class="col-lg-5">
+                <h2>{{$state.current.data.pageTitle}}</h2>
+                <ol class="breadcrumb">
+                    <li ng-repeat="list in $state.current.data.breadcrumb track by $index">
+                        <a>{{list}}</a>
+                    </li>
+                    <li class="active">
+                        <strong>{{$state.current.data.currentPage}}</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div ui-view></div>
+        <!-- Footer -->
+        <div ng-include="'app/components/common/footer.html'"></div>
+    </div>
+    <!-- End page wrapper-->
+</div>
+<!-- End wrapper-->

@@ -1,0 +1,336 @@
+<div class="wrapper wrapper-content campaign-dashboard" ng-controller="campaignDashboardCtrl">
+    <div class="row">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-8 pull-right">
+            <div class="form-group has-feedback">
+                <input type="input" class="form-control" auto-close="true" range-date>
+                <i class="fa fa-calendar form-control-feedback"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-content" ng-class="{true:'sk-loading'}[viewloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <div class="row" ng-show="viewnodata">
+                <ul class="unstyled col-lg-12 text-center">
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>Requests</h5>
+                        <div ng-if="rate.requestOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.requestOp}}</h3>
+                            <span>{{rate.reqRateOp}}<span ng-show="rate.reqRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.reqFlagOp=='+' && rate.reqRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.reqFlagOp=='-' && rate.reqRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.request}}</h3>
+                            <span>{{rate.reqRate}}<span ng-show="rate.reqRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.reqFlag=='+' && rate.reqRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.reqFlag=='-' && rate.reqRate!=0"></i>
+                        </div>
+                    </li>
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>Impressions</h5>
+                        <div ng-if="rate.impOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.impOp}}</h3>
+                            <span>{{rate.impRateOp}}<span ng-show="rate.impRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.impFlagOp=='+' && rate.impRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.impFlagOp=='-' && rate.impRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.imp}}</h3>
+                            <span>{{rate.impRate}}<span ng-show="rate.impRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.impFlag=='+' && rate.impRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.impFlag=='-' && rate.impRate!=0"></i>
+                        </div>
+                    </li>
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>Clicks</h5>
+                        <div ng-if="rate.clickOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.clickOp}}</h3>
+                            <span>{{rate.clickRateOp}}<span ng-show="rate.clickRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.clickFlagOp=='+' && rate.clickRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.clickFlagOp=='-' && rate.clickRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.click}}</h3>
+                            <span>{{rate.clickRate}}<span ng-show="rate.clickRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.clickFlag=='+' && rate.clickRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.clickFlag=='-' && rate.clickRate!=0"></i>
+                        </div>
+                    </li>
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>Conversions</h5>
+                        <div ng-if="rate.conversionOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.conversionOp}}</h3>
+                            <span>{{rate.conversionRateOp}}<span ng-show="rate.conversionRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.conversionFlagOp=='+' && rate.conversionRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.conversionFlagOp=='-' && rate.conversionRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.conversion}}</h3>
+                            <span>{{rate.conversionRate}}<span ng-show="rate.conversionRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.conversionFlag=='+' && rate.conversionRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.conversionFlag=='-' && rate.conversionRate!=0"></i>
+                        </div>
+                    </li>
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>eCPM</h5>
+                        <div ng-if="rate.eCPMOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.eCPMOp}}</h3>
+                            <span>{{rate.eCPMRateOp}}<span ng-show="rate.eCPMRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.eCPMFlagOp=='+' && rate.eCPMRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.eCPMFlagOp=='-' && rate.eCPMRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.eCPM}}</h3>
+                            <span>{{rate.eCPMRate}}<span ng-show="rate.eCPMRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.eCPMFlag=='+' && rate.eCPMRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.eCPMFlag=='-' && rate.eCPMRate!=0"></i>
+                        </div>
+                    </li>
+                    <li class="col-lg-2 col-md-4 col-sm-6">
+                        <h5>Revenue</h5>
+                        <div ng-if="rate.revenueOp">
+                            <h3 class="inline m-r-xs">OP: {{rate.revenueOp}}</h3>
+                            <span>{{rate.revenueRateOp}}<span ng-show="rate.revenueRateOp !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.revenueFlagOp=='+' && rate.revenueRateOp!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.revenueFlagOp=='-' && rate.revenueRateOp!=0"></i>
+                        </div>
+                        <div>
+                            <h3 class="inline m-r-xs">AD: {{rate.revenue}}</h3>
+                            <span>{{rate.revenueRate}}<span ng-show="rate.revenueRate !== '--'">%</span></span>
+                            <i class="fa fa-level-up text-navy" ng-show="rate.revenueFlag=='+' && rate.revenueRate!=0"></i>
+                            <i class="fa fa-level-down text-danger" ng-show="rate.revenueFlag=='-' && rate.revenueRate!=0"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-title clearfix">
+            <div class="form-group pull-left">
+                <label>Summary By:</label>
+                <select chosen-select class="chosen-select" ng-change="typeData(type)" ng-model="type">
+                    <option label="Requests" value="request">Requests</option>
+                    <option label="Impressions" value="imp">Impressions</option>
+                    <option label="Clicks" value="click" selected>Clicks</option>
+                    <option label="Conversions" value="conversion">Conversions</option>
+                    <option label="eCPM" value="eCPM">eCPM</option>
+                    <option label="Revenue" value="revenue">Revenue</option>
+                </select>
+            </div>
+            <div class="btn-group pull-right" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-default" ng-click="changeChart($event,0)"><i class="fa fa-bar-chart"></i></button>
+                <button type="button" class="btn btn-info" ng-click="changeChart($event,1)"><i class="fa fa-line-chart"></i></button>
+                <button type="button" class="btn btn-default" ng-click="changeChart($event,2)"><i class="fa fa-pie-chart"></i></button>
+            </div>
+        </div>
+        <div class="ibox-content h-300" ng-class="{true:'sk-loading'}[summaryloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <div class="chart" id="chart-bar" style="z-index: 0;" ng-hide="summarynodata"></div>
+            <div class="chart" id="chart-line" style="z-index: 1;" ng-hide="summarynodata"></div>
+            <div class="chart" id="chart-pie" style="z-index: 0;" ng-hide="summarynodata"></div>
+            <null-data ng-show="summarynodata" class="h-200"></null-data>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <label>Campaigns (Revenue)</label>
+                </div>
+                <div class="ibox-content h-300" ng-class="{true:'sk-loading'}[camploading]">
+                    <spinner-three-bounce></spinner-three-bounce>
+                    <div class="chart" id="camp-chart" ng-hide="campnodata"></div>
+                    <null-data ng-show="campnodata" class="h-200"></null-data>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <label>Top 5 Brands & Models (Revenue)</label>
+                </div>
+                <div class="ibox-content h-300" ng-class="{true:'sk-loading'}[brandloading]">
+                    <spinner-three-bounce></spinner-three-bounce>
+                    <div class="chart" id="brand-chart" ng-hide="brandnodata"></div>
+                    <null-data ng-show="brandnodata" class="h-200"></null-data>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-title">
+            <label>Unique Users</label>
+            <i class="fa fa-external-link pull-right" ng-click="exportCsv('unique')"></i>
+        </div>
+        <div class="ibox-content" ng-class="{true:'sk-loading'}[nuiqueloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <table class="table table-bordered table-hover" ng-hide="nuiquenodata">
+                <thead>
+                    <tr>
+                        <th ng-click="orderUnique('appName')">App
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'appName': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('request')">Request
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'request': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('uniqueRequest')">Unique Request
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'uniqueRequest': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('imp')">IMP
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'imp': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('uniqueImp')">Unique IMP
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'uniqueImp': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('click')">CLK
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'click': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('uniqueClick')">Unique CLK
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'uniqueClick': 'inline'}[uniques.field]"></i>
+                        </th>
+                        <th ng-click="orderUnique('revenue')">Revenue($)
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'revenue': 'inline'}[uniques.field]"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in uniques.list">
+                        <td>{{list.appName}}</td>
+                        <td>{{list.request}}</td>
+                        <td>{{list.uniqueRequest}}</td>
+                        <td>{{list.imp}}</td>
+                        <td>{{list.uniqueImp}}</td>
+                        <td>{{list.click}}</td>
+                        <td>{{list.uniqueClick}}</td>
+                        <td>{{list.revenue}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <null-data ng-show="nuiquenodata" class="h-200"></null-data>
+        </div>
+        <div class="ibox-footer table-pagenation clearfix">
+            <ul uib-pagination class="pull-right no-margins" total-items="uniques.count" ng-model="uniques.page" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadUniqueList()"></ul>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-title clearfix">
+            <i class="fa fa-external-link pull-right" ng-click="exportCsv('report')" ng-show="reports.name === 'Campaign' || reports.name === 'AdNetwork' ||reports.name === 'Channel'"></i>
+            <div class="form-group pull-left">
+                <label>Reports By:</label>
+                <select chosen-select class="chosen-select" ng-change="reportBy(reports.name)" ng-model="reports.name">
+                    <option label="Campaign" value="Campaign" selected>Campaign</option>
+                    <option label="App" value="App">App</option>
+                    <option label="AdNetwork" value="AdNetwork">AdNetwork</option>
+                    <option label="Channel" value="Channel">Channel</option>
+                    <option label="Placement" value="Placement">Placement</option>
+                </select>
+            </div>
+            <div ng-show="reports.name==='Channel'" class="form-group pull-left">
+                <label>Channel1</label>
+                <select chosen-select class="chosen-select" ng-change="channel1Data(channel1)" ng-model="channel1" ng-options="channel1 for channel1 in channel1List">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div ng-show="reports.name==='Channel'" class="form-group pull-left">
+                <label>Channel2</label>
+                <select chosen-select class="chosen-select" ng-change="channel2Data(channel2)" ng-model="channel2" ng-options="channel2 for channel2 in channel2List">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div ng-show="reports.name==='Placement'" class="form-group pull-left">
+                <label>App</label>
+                <select chosen-select class="chosen-select" ng-change="appData(appId)" ng-model="appId" ng-options="app.appId as app.name for app in appList">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div ng-show="reports.name==='Placement'" class="form-group pull-left">
+                <label>Placement</label>
+                <select chosen-select class="chosen-select" ng-change="placementData(placementId)" ng-model="placementId" ng-options="place.placementId as place.name for place in placementList">
+                    <option value="">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="ibox-content h-200" ng-class="{true:'sk-loading'}[reportsloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <table class="table table-bordered table-hover" ng-hide="reportsnodata">
+                <thead>
+                    <tr>
+                        <th ng-show="reports.name==='Campaign'" ng-click="orderBy('adName')">Campaign
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'adName': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Placement'" ng-click="orderBy('placementName')">Placement
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'placementName': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Placement'" ng-click="orderBy('appName')">App
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'appName': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='AdNetwork'" ng-click="orderBy('advertiserName')">AdNetwork
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'advertiserName': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Channel'" ng-click="orderBy('channelId1')">Channel 1
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'channelId1': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Channel'" ng-click="orderBy('channelId2')">Channel 2
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'channelId2': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Campaign' || reports.name==='App'" ng-click="orderBy('appName')">App
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'appName': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Campaign'" ng-click="orderBy('cpx')">CPX
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'cpx': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Campaign'" ng-click="orderBy('price')">Prices($)
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'price': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-show="reports.name==='Channel' || reports.name==='Placement' || reports.name==='App'" ng-click="orderBy('request')">Request
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'request': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-click="orderBy('imp')">IMP
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'imp': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-click="orderBy('click')">CLK
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'click': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-click="orderBy('conversion')">Conversions
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'conversion': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-click="orderBy('eCPM')">eCPM
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'eCPM': 'inline'}[reports.order]"></i>
+                        </th>
+                        <th ng-click="orderBy('revenue')">Revenue($)
+                            <i class="fa fa-caret-down pace-inactive" ng-class="{'revenue': 'inline'}[reports.order]"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="list in reports.list">
+                        <td ng-show="reports.name==='Campaign'">{{list.adName}}</td>
+                        <td ng-show="reports.name==='Placement'">{{list.placementName}}</td>
+                        <td ng-show="reports.name==='Placement'">{{list.appName}}</td>
+                        <td ng-show="reports.name==='AdNetwork'">{{list.advertiserName}}</td>
+                        <td ng-show="reports.name==='Channel'">{{list.channelId1}}</td>
+                        <td ng-show="reports.name==='Channel'">{{list.channelId2}}</td>
+                        <td ng-show="reports.name==='Campaign' || reports.name=='App'">{{list.appName}}</td>
+                        <td ng-show="reports.name==='Campaign'">{{list.cpx}}</td>
+                        <td ng-show="reports.name==='Campaign'">{{list.price}}</td>
+                        <td ng-show="reports.name==='Channel' || reports.name==='Placement' || reports.name==='App'">{{list.request}}</td>
+                        <td>{{list.impression}}</td>
+                        <td>{{list.click}}</td>
+                        <td>{{list.conversion}}</td>
+                        <td>{{list.eCPM}}</td>
+                        <td>{{list.revenue}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <null-data ng-show="reportsnodata" class="h-200"></null-data>
+        </div>
+        <div class="ibox-footer">
+            <div class="table-pagenation clearfix">
+                <ul uib-pagination class="pull-right no-margins" total-items="reports.count" ng-model="reports.page" max-size="5" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="10" ng-change="loadReportList()"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,61 @@
+/* .chart {
+     width: 100%;
+     height: 300px;
+ }*/
+
+.ibox-content .null_data {
+    padding-top: 100px;
+    box-sizing: border-box;
+    z-index: 9;
+}
+
+.tooltip .tooltip-inner {
+    text-align: left;
+}
+
+.da-dashboard {
+    .page-heading {
+        .col-lg-7 {
+            padding-top: 20px;
+        }
+    }
+    .row {
+        .btn-bar {
+            .form-group {
+                margin-bottom: 0px;
+            }
+            .chosen-container {
+                z-index: 2001;
+            }
+        }
+        .ibox-tools {
+            a.btn-bar-chart {
+                margin: 0px 5px;
+            }
+        }
+        .ibox-content {
+            .tabs-container .tab-content {
+                position: relative;
+                height: 340px;
+                .tab-pane.active {
+                    z-index: 1;
+                }
+                .tab-pane {
+                    display: block;
+                    z-index: 0;
+                    position: absolute;
+                    width: 100%;
+                    .panel-body:after {
+                        content: " ";
+                        display: block;
+                    }
+                    ;
+                }
+            }
+            .null_data,
+            .chart {
+                height: 100%;
+            }
+        }
+    }
+}

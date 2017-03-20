@@ -1,0 +1,20 @@
+<div class="chosen-container chosen-container-multi" style="width: 100%;">
+    <ul class="chosen-choices">
+        <li class="search-choice" ng-repeat="item in selectItem track by $index" ng-show="selectItem.length==1"><span>{{item}}</span>
+            <a class="search-choice-close" data-option-array-index="105" ng-click="delItem($index)"></a>
+        </li>
+        <li class="search-field" ng-show="selectItem.length==0 || selectItem.length>1">
+            <input type="text" class="" autocomplete="off" ng-model="placehoderText">
+        </li>
+    </ul>
+    <div class="chosen-drop">
+        <div class="chosen-search">
+            <input type="text" autocomplete="off" tabindex="4" ng-model="filter_value">
+        </div>
+        <ul class="chosen-results">
+            <li class="active-result" ng-repeat="item in menuItems | filter:filter_value  track by $index" ng-click="isSelect($event,item)">
+                <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[selactAll||selectItem.indexOf(item)>=0]" aria-hidden="true"></i><span>{{item}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

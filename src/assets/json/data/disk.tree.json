@@ -1,0 +1,40 @@
+[{
+    "value": 40,
+    "name": "Accessibility",
+    "path": "Accessibility"
+}, {
+    "value": 180,
+    "name": "Accounts",
+    "path": "Accounts"
+
+}, {
+    "value": 1904,
+    "name": "AddressBook Plug-Ins",
+    "path": "AddressBook Plug-Ins"
+
+}, {
+    "value": 36,
+    "name": "Assistant",
+    "path": "Assistant"
+
+}, {
+    "value": 53228,
+    "name": "Automator",
+    "path": "Automator"
+
+}, {
+    "value": 2868,
+    "name": "BridgeSupport",
+    "path": "BridgeSupport"
+
+}, {
+    "value": 21988,
+    "name": "Caches",
+    "path": "Caches"
+
+}, {
+    "value": 2252,
+    "name": "ColorPickers",
+    "path": "ColorPickers"
+
+}]

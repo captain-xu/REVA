@@ -1,0 +1,187 @@
+<div class=" animated fadeInRight da-dashboard">
+    <div class="wrapper wrapper-content" ng-controller="daDashboardCtrl">
+        <div class="row ">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Total</span>
+                        <h5>Cumulative Device</h5>
+                    </div>
+                    <div class="ibox-content" ng-class="{true:'sk-loading'}[cumulativeloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <h1 class="no-margins text-center">{{cumulativeData.total}}</h1>
+                        <div class="m-t-sm text-center">Operatable : {{cumulativeData.operator}} &nbsp&nbsp&nbsp&nbsp&nbsp{{cumulativeData.rate+'%'}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Yesterday</span>
+                        <h5>New Device</h5>
+                    </div>
+                    <div class="ibox-content" ng-class="{true:'sk-loading'}[newincreseloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="stat-percent font-bold p-h-xs">{{newincreseData.rate+"%"}} <i class="fa" ng-class="{true:'fa-level-up text-navy',false:'fa-level-down text-danger'}[newincreseData.deviceIncrease>0]"></i></div>
+                        <h1 class="no-margins  text-center">{{newincreseData.deviceCount}}</h1>
+                        <div class="m-t-sm text-center">
+                            Recent 7 days : {{newincreseData.recentCount}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="ibox float-e-margins ">
+                    <div class="ibox-title ">
+                        <span class="label label-primary pull-right ">Yesterday</span>
+                        <h5>Active Device</h5>
+                    </div>
+                    <div class="ibox-content " ng-class="{true: 'sk-loading'}[dailyloading] ">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="stat-percent font-bold p-h-xs ">
+                            {{dailyData.rate+"% "}} <i class="fa " ng-class="{true: 'fa-level-up text-navy',false: 'fa-level-down text-danger'}[dailyData.dailyIncrease>0]"></i>
+                        </div>
+                        <h1 class="no-margins text-center">{{dailyData.dailyCount}}</h1>
+                        <div class="m-t-sm text-center">
+                            Recent 7 days : {{dailyData.recentDaily}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 ">
+                <div class="ibox float-e-margins ">
+                    <div class="ibox-title ">
+                        <span class="label label-primary pull-right ">Yesterday</span>
+                        <h5>Top Rising Model</h5>
+                    </div>
+                    <div class="ibox-content " ng-class="{true: 'sk-loading'}[hotmodelloading] ">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <h1 class="no-margins text-center">{{hotmodelData.count}}</h1>
+                        <div class="m-t-sm text-center">
+                            {{hotmodelData.key}}&nbsp&nbsp&nbsp&nbsp&nbsp {{hotmodelData.rate+"% "}}
+                            <i class="fa " ng-class="{true: 'fa-level-up text-navy',false: 'fa-level-down text-danger'}[hotmodelData.increase>0]"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Trending recent 60 days (New device / Operatable)</h5>
+                    </div>
+                    <div class="ibox-content fh-250" ng-class="{true:'sk-loading'}[trendloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="trendChart" ng-hide="trendnodata"></div>
+                        <null-data ng-show="trendnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Yesterday</span>
+                        <h5>Top Rising Regions</h5>
+                    </div>
+                    <div class="ibox-content h-250" ng-class="{true:'sk-loading'}[hotregionloading]" ng-show="hotregionloading">
+                        <spinner-three-bounce></spinner-three-bounce>
+                    </div>
+                    <div class="ibox-content h-250" ng-hide="hotregionloading">
+                        <div class="row p-sm">
+                            <div class="col-xs-6 text-center">
+                                <h4>State</h4>
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                <h4>New Device</h4>
+                            </div>
+                        </div>
+                        <div class="row p-sm border-top" ng-repeat="item in hotregionData.state">
+                            <div class="col-xs-6 text-center">
+                                {{item.key}}
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                {{item.count}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5> TOP 10 Model
+                        </h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[toploading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="modelChart" ng-hide="modelnodata"></div>
+                        <null-data ng-show="modelnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>TOP 10 Region </h5>
+                    </div>
+                    <div class="ibox-content  fh-300" ng-class="{true:'sk-loading'}[toploading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="regionChart" ng-hide="topnodata"></div>
+                        <null-data ng-show="regionnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Resolution</h5>
+                    </div>
+                    <div class="ibox-content fh-250" ng-class="{true:'sk-loading'}[resolutionloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="resolutionChart" ng-hide="resolutionnodata"></div>
+                        <null-data ng-show="resolutionnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Language</h5>
+                    </div>
+                    <div class="ibox-content fh-250" ng-class="{true:'sk-loading'}[languageloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="languageChart" ng-hide="languagenodata"></div>
+                        <null-data ng-show="languagenodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Operator</h5>
+                    </div>
+                    <div class="ibox-content fh-250" ng-class="{true:'sk-loading'}[operatorloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="operatorChart" ng-hide="operatornodata"></div>
+                        <null-data ng-show="operatornodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Android Version</h5>
+                    </div>
+                    <div class="ibox-content fh-250" ng-class="{true:'sk-loading'}[androidloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="androidChart" ng-hide="androidnodata"></div>
+                        <null-data ng-show="androidnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

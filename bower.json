@@ -1,32 +1,72 @@
 {
-  "name": "fis3-angular",
-  "version": "0.0.0",
-  "authors": [
-    "lvaicui <aclv@lewatek.com>"
-  ],
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular-bootstrap": "latest",
-    "angular": "~1.5.3",
-    "bootstrap": "3.3.4",
-    "angular-ui-router": "latest",
-    "angular-route": "~1.2",
-    "jquery": "2.2.4",
-    "echarts": "3.1.10",
-    "bootstrap-daterangepicker": "latest",
-    "moment": "2.14.1",
-    "font-awesome": "latest",
-    "unslider": "2.0.3",
-    "ng-file-upload-shim": "^12.0.4",
-    "ng-file-upload": "^12.0.4",
-    "angular-sanitize": "^1.5.8",
-    "json-formatter": "^0.6.0",
-    "video.js": "^5.12.4"
-  }
+    "name": "lewaos",
+    "version": "2.7.0",
+    "dependencies": {
+        "angular-animate": "~1.5.0",
+        "angular-cookies": "~1.5.0",
+        "angular-touch": "~1.5.0",
+        "angular-sanitize": "~1.5.0",
+        "angular-messages": "~1.5.0",
+        "angular-aria": "~1.5.0",
+        "jquery": "^3.1.1",
+        "angular-resource": "~1.5.0",
+        "angular-ui-router": "~0.2.15",
+        "bootstrap": "~3.3.7",
+        "angular-bootstrap": "~1.1.2",
+        "moment": "~2.10.6",
+        "ng-file-upload-shim": "^12.0.4",
+        "angular": "~1.5.4",
+        "metisMenu": "~2.0.2",
+        "fontawesome": "~4.7.0",
+        "echarts": "3.1.10",
+        "chosen": "^1.6.2",
+        "bootstrap-datepicker": "^1.6.4",
+        "angular-translate": "^2.14.0",
+        "AngularJS-Toaster": "angularjs-toaster#^2.1.0",
+        "bootstrap-daterangepicker": "^2.1.25",
+        "ngSweetAlert": "angular-sweetalert#^1.1.2",
+
+        "ng-file-upload": "~12.0.4"
+    },
+    "devDependencies": {
+        "angular-mocks": "~1.5.0"
+    },
+    "overrides": {
+        "bootstrap": {
+            "main": [
+                "less/bootstrap.less",
+                "dist/fonts/glyphicons-halflings-regular.eot",
+                "dist/fonts/glyphicons-halflings-regular.svg",
+                "dist/fonts/glyphicons-halflings-regular.ttf",
+                "dist/fonts/glyphicons-halflings-regular.woff",
+                "dist/fonts/glyphicons-halflings-regular.woff2"
+            ]
+        },
+        "fontawesome": {
+            "main": [
+                "less/font-awesome.less",
+                "fonts/fontawesome-webfont.eot",
+                "fonts/fontawesome-webfont.svg",
+                "fonts/fontawesome-webfont.ttf",
+                "fonts/fontawesome-webfont.woff",
+                "fonts/fontawesome-webfont.woff2"
+            ]
+        },
+        "pace": {
+            "main": "pace.min.js"
+        },
+        "chosen": {
+            "main": "chosen.jquery.js"
+        },
+        "echarts": {
+            "main": [
+                "dist/echarts.js",
+                "theme/macarons.js"
+            ]
+        }
+    },
+    "resolutions": {
+        "jquery": "^3.1.1",
+        "angular": "~1.5.0"
+    }
 }

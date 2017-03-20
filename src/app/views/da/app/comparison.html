@@ -1,0 +1,131 @@
+<div class=" animated fadeInRight da-dashboard">
+    <div class="wrapper wrapper-content" ng-controller="comparisonCtrl">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+                            <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Channel:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in condationData.channelLevel">{{item.channel}}</option>
+                                    </select>
+                                    <multi-select-menu placehoder-text="ALL" ng-model="paramChannel" confirm="setCondition('channel')"></multi-select-menu>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Model:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in modelList">{{item}}</option>
+                                    </select>
+                                    <multi-select-menu placehoder-text="ALL" ng-model="paramModel" confirm="updateView()"></multi-select-menu>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Country:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in condationData.countryLevel">{{item.country}}</option>
+                                    </select>
+                                    <multi-select-menu placehoder-text="ALL" ng-model="paramCountry" confirm="setCondition('country')"></multi-select-menu>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">State:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in stateList">{{item}}</option>
+                                    </select>
+                                    <multi-select-menu placehoder-text="ALL" ng-model="paramState" confirm="updateView()"></multi-select-menu>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group has-feedback">
+                                    <label class="control-label" for="status">Date Range</label>
+                                    <input type="input" class="form-control" date-time="" ng-model="sampleDate" view="year" auto-close="true" range-date>
+                                    <i class="fa fa-calendar form-control-feedback"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>New Users Trending</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[newtrendloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="newtrendChart" ng-hide="newtrendnodata"></div>
+                        <null-data ng-show="newtrendnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Active Users Trending</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[activetrendloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="activetrendChart" ng-hide="activetrendnodata"></div>
+                        <null-data ng-show="activetrendnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Active Rate Trending</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[ratetrendloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="ratetrendChart" ng-hide="ratetrendnodata"></div>
+                        <null-data ng-show="ratetrendnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Details</h5>
+                    </div>
+                    <div class="ibox-content" ng-class="{true:'sk-loading'}[tableloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <null-data ng-show="tablenodata" class="h-200"></null-data>
+                        <div class="table-responsive" ng-hide="tablenodata">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" rowspan="2">Date</th>
+                                        <th class="text-center" ng-repeat="th in titles track by $index" colspan="3">{{th}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" ng-repeat="th in subtitle">{{th}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in tdDetails">
+                                        <td class=" text-center" ng-repeat="td in item  track by $index">{{td}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" ng-hide="tablenodata">
+                            <ul class="pull-right" uib-pagination total-items="totalList" ng-model="pageNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" ng-change="setDetail()"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="profile-element">
+                    <img alt="image" src="../assets/images/Reva_logo.png" />
+                    <div uib-dropdown>
+                        <a uib-dropdown-toggle href>
+                            <span class="clear">
+                                <span class="block m-b-xs">
+                                    <strong class="font-bold">{{userInfo.realName}}</strong>
+                                    <b class="caret"></b>
+                             </span>
+                            <!--  <span class="text-muted text-xs block m-b-xs">Front end Engineer <b class="caret"></b></span>
+                            </span> -->
+                        </a>
+                        <ul uib-dropdown-menu class="animated fadeInRight m-t-xs">
+                            <li><a ui-sref="password">Change Password</a></li>
+                            <li class="divider"></li>
+                            <li ng-click="logout()"><a href="javascript:void(0)">Logout</a></li>
+                        </ul>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="logo-element">
+                    <img alt="image" src="../assets/images/Reva_logo_mini.png" />
+                </div>
+            </li>
+            <!--     <li ui-sref-active="active">
+                <a ui-sref="view.minor"><i class="fa fa-th-large"></i> <span class="nav-label">{{ 'DASHBOARD' | translate }}</span></a>
+            </li> -->
+            <li>
+                <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Data Analytics</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a href="#"><i class="fa fa-mobile-phone fa-lg" aria-hidden="true"></i>Device<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse">
+                            <li>
+                                <a ui-sref="view.deviceDashboard">
+                            {{ 'DASHBOARD' | translate }}
+                         </a>
+                            </li>
+                            <li>
+                                <a ui-sref="view.deviceSales">
+                            {{ 'SALES' | translate }}
+                        </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap"></i> App<span class="fa arrow"></span></a>
+                        <ul class="collapse nav nav-third-level" aria-expanded="true">
+                            <li>
+                                <a ui-sref="view.appOverview">Overview</a>
+                            </li>
+                            <li>
+                                <a ui-sref="view.appComparison">Comparison</a>
+                            </li>
+                            <li>
+                                <a ui-sref="view.appNewUser">APP New User</a>
+                            </li>
+                            <li>
+                                <a ui-sref="view.appActiveUser">APP Active User</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-buysellads"></i> <span class="nav-label">Campaign</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li>
+                        <a ui-sref="view.campaign.dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap"></i>Campaigns<span class="fa arrow"></span></a>
+                        <ul class="collapse nav nav-third-level" aria-expanded="true">
+                            <li>
+                                <a ui-sref="view.campaign.campaignList">Campaign List</a>
+                            </li>
+                            <li>
+                                <a ui-sref="view.campaign.creatives">Creatives</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a href="#"><i class="fa fa-sitemap"></i>Offers<span class="fa arrow"></span></a>
+                        <ul class="collapse nav nav-third-level" aria-expanded="true">
+                            <li>
+                                <a ui-sref="">AD Networks</a>
+                            </li>
+                            <li>
+                                <a ui-sref="">Offer List</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap"></i>AD Channels<span class="fa arrow"></span></a>
+                        <ul class="collapse nav nav-third-level" aria-expanded="true">
+                            <li>
+                                <a ui-sref="">Apps</a>
+                            </li>
+                            <li>
+                                <a ui-sref="">Placements</a>
+                            </li>
+                            <li>
+                                <a ui-sref="">Show Types</a>
+                            </li>
+                            <li>
+                                <a ui-sref="">Groups</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a ui-sref=""><i class="fa fa-mobile-phone fa-lg" aria-hidden="true"></i>Report</a>
+                    </li> -->
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

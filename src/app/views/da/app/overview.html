@@ -1,0 +1,113 @@
+<div class=" animated fadeInRight da-dashboard">
+    <div class="wrapper wrapper-content" ng-controller="appOverCtrl">
+        <div class="row ">
+            <div class="col-lg-3" ng-repeat="data in headData">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right ">Yesterday</span>
+                        <h5>{{data.appName}}</h5>
+                    </div>
+                    <div class="ibox-content ">
+                        <h1 class="no-margins text-center">{{data.totalUser}}</h1>
+                        <div class="m-t-sm text-center">
+                            New:{{data.newUser}} &nbsp&nbsp&nbsp&nbsp&nbsp Active:{{data.activeUser}} &nbsp&nbsp&nbsp&nbsp&nbsp {{data.activeRate}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>APPs New User</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[appnewloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="appnewChart" ng-hide="appnewnodata"></div>
+                        <null-data ng-show="appnewnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>APPs Active User</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[appactiveloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="appactiveChart" ng-hide="appactivenodata"></div>
+                        <null-data ng-show="appactivenodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>APPs Active Rate</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[apprateloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="apprateChart" ng-hide="appratenodata"></div>
+                        <null-data ng-show="appratenodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label w-250">Model/Channel Comparison APP :</label>
+                            <div class="col-sm-3 w-300">
+                                <select class="chosen-select" style="display: none;">
+                                    <option ng-repeat="app in appData track by $index">{{app}}</option>
+                                </select>
+                                <single-select placehoder-text={{appName}} ng-model="appName" confirm="changeApp()"></single-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>New User</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[modelnewloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="modelnewChart" ng-hide="modelnewnodata"></div>
+                        <null-data ng-show="modelnewnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Active User</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[modelactiveloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="modelactiveChart" ng-hide="modelactivenodata"></div>
+                        <null-data ng-show="modelactivenodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Active Rate</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[modelrateloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="modelrateChart" ng-hide="modelratenodata"></div>
+                        <null-data ng-show="modelratenodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

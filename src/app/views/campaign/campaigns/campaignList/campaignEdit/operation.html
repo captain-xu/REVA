@@ -29,14 +29,14 @@
             <div class="row m-t-md" ng-hide="detailVO.inServer">
                 <label class="col-xs-2 col-sm-3 text-right">Add to reva offer:<em>&#42;</em></label>
                 <div class="col-xs-6 col-sm-8">
-                <ul class="unstyled">
-                    <li class="inline" ng-click="changeInput(1)">
-                        <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.input]"></i> Yes
-                    </li>
-                    <li class="inline" ng-click="changeInput(0)">
-                        <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.input]"></i> No
-                    </li>
-                </ul>
+                    <ul class="unstyled">
+                        <li class="inline m-r-sm" ng-click="changeInput(1)">
+                            <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.input]"></i> Yes
+                        </li>
+                        <li class="inline" ng-click="changeInput(0)">
+                            <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.input]"></i> No
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row m-t-md">
@@ -47,14 +47,12 @@
             </div>
             <div class="row m-t-md">
                 <label class="col-xs-2 col-sm-3 text-right">Date:<em>&#42;</em></label>
-                <div class="col-xs-6 col-sm-8">
-                    <input id="datarange" class="form-control" name="datarange" type="text" date-unlimited data-start="startDate" data-end="endDate" readonly>
+                <div class="col-xs-6 col-sm-8 has-feedback">
+                    <input date-pastlimited id="datarange" class="form-control" type="text" data-start="startDate" data-end="endDate">
+                    <i class="fa fa-times form-control-feedback m-r" style="pointer-events: auto" ng-click="clearDate()"></i>
                 </div>
-                <label class="col-xs-1 col-sm-1">
-                    <i class="fa fa-times" ng-click="clearDate()"></i>
-                </label>
             </div>
-            <div>
+            <div class="m-t-md">
                 <div class="tab-list">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
@@ -70,74 +68,59 @@
                         </li>
                     </ul>
                     <!-- Tab panes -->
-                    <div class="tab-content">
+                    <div class="tab-content p-h-md table-bordered no-top-border">
                         <ul class="tab-pane" ng-class="{true: 'active'}[showTab === 'placement']">
-                            <li>
-                                <span class="title">App &amp; Version:<em>&#42;</em></span>
-                                <div class="app">
-                                    <div class="dropdown">
-                                        <p class="dropdown-toggle" id="applist" data-toggle="dropdown">
-                                            {{detailVO.appName}}
-                                            <span class="caret"></span>
-                                        </p>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="applist">
-                                            <li ng-repeat="vo in app" ng-click="appData(vo)">{{vo.name}}</li>
-                                        </ul>
-                                    </div>
+                            <li class="row m-b-md">
+                                <label class="col-xs-2 col-sm-3 text-right">App &amp; Version:<em>&#42;</em></label>
+                                <div class="col-xs-4 col-sm-4">
+                                    <select class="ng-hide">
+                                       <option ng-repeat="app in appList" value="{{app.appId}}">{{app.name}}</option>>
+                                    </select>
+                                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.appName}}" confirm="appData()"></single-select-id>
                                 </div>
-                                <div class="app">
-                                    <div class="dropdown">
-                                        <p class="dropdown-toggle" id="versionlist" data-toggle="dropdown">
-                                            {{detailVO.version}}
-                                            <span class="caret"></span>
-                                        </p>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="versionlist">
-                                            <li ng-repeat="vo in version" ng-click="versionData(vo)">{{vo.version}}</li>
-                                        </ul>
-                                    </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <select class="ng-hide">
+                                       <option ng-repeat="version in versionList">{{version.version}}</option>>
+                                    </select>
+                                    <single-select class="chosen-select" ng-model="detailVO.version" placehoder-text="{{detailVO.version}}" confirm="versionData()"></single-select>
                                 </div>
                             </li>
-                            <li>
-                                <span class="title">Group:<em>&#42;</em></span>
-                                <div class="dropdown">
-                                    <p class="dropdown-toggle" id="grouplist" data-toggle="dropdown">
-                                        {{detailVO.groupName}}
-                                        <span class="caret"></span>
-                                    </p>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="grouplist">
-                                        <li ng-repeat="vo in group" ng-click="groupData(vo)">{{vo.name}}
-                                        </li>
-                                    </ul>
+                            <li class="row m-b-md">
+                                <label class="col-xs-2 col-sm-3 text-right">Group:<em>&#42;</em></label>
+                                <div class="col-xs-4 col-sm-4">
+                                    <select class="ng-hide">
+                                       <option ng-repeat="group in groupList" value="{{group.groupId}}">{{group.name}}</option>>
+                                    </select>
+                                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.groupName}}" confirm="groupData()"></single-select-id>
                                 </div>
                             </li>
-                            <li>
-                                <span class="title">Placement:<em>&#42;</em></span>
-                                <div class="dropdown">
-                                    <p class="dropdown-toggle" id="placelist" data-toggle="dropdown">
-                                        {{detailVO.placeName}}
-                                        <span class="caret"></span>
-                                    </p>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="placelist">
-                                        <li ng-repeat="vo in place" ng-click="placeData(vo)">{{vo.name}}
-                                        </li>
-                                    </ul>
+                            <li class="row m-b-md">
+                                <label class="col-xs-2 col-sm-3 text-right">Placement:<em>&#42;</em></label>
+                                <div class="col-xs-4 col-sm-4">
+                                    <select class="ng-hide">
+                                       <option ng-repeat="place in placeList" value="{{place.placementId}}">{{place.name}}</option>>
+                                    </select>
+                                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.placeName}}" confirm="placeData()"></single-select-id>
                                 </div>
                             </li>
-                            <li class="upload_img clearfix" ng-repeat="vo in detailVO.imageList">
-                                <span class="title text-capitalize">{{vo.imageName}}</span>
-                                <button type="file" ngf-select="uploadPic(vo,$file, $invalidFiles)" accept="image/png, image/jpeg, image/gif" class="btn btn-primary" ng-hide="detailVO.status">Upload</button>
-                                <div class="div_img" ng-show="vo.imageUrlForShow || vo.begin_upload">
+                            <li class="row m-b-md" ng-repeat="vo in detailVO.imageList">
+                                <label class="col-xs-2 col-sm-3 text-right">{{vo.imageName}}</label>
+                                <div class="col-xs-2 col-sm-3 fw-100 p-xs table-bordered m-l m-r" ng-show="vo.imageUrlForShow || vo.begin_upload">
                                     <uib-progressbar max="100" value="dynamic" ng-show="vo.begin_upload" class="progress-striped active"><b>{{dynamic}}%</b></uib-progressbar>
-                                    <div class="img-container">
-                                        <img ng-src="{{vo.imageUrlForShow}}" ng-show="vo.imageUrlForShow">
-                                        <span ng-click="delete(vo)" ng-show="vo.imageUrlForShow" ng-hide="detailVO.status">&times;</span>
+                                    <div>
+                                        <img ng-src="{{vo.imageUrlForShow}}" ng-show="vo.imageUrlForShow" width="60" height="60">
+                                        <span class="pull-right cursor" ng-click="delete(vo)" ng-show="vo.imageUrlForShow" ng-hide="detailVO.status">&times;</span>
                                     </div>
                                 </div>
+                                <div class="col-xs-2 col-sm-3">
+                                    <button class="btn btn-primary fw-100" type="file" ngf-select="uploadPic(vo, $file, $invalidFiles)" accept="image/png, image/jpeg, image/gif" ng-hide="detailVO.status">Upload</button>
+                                </div>
                             </li>
-                            <li ng-repeat="vo in detailVO.titleList">
-                                <span class="title text-capitalize">{{vo.titleName}}</span>
-                                <input type="text" ng-model="vo.value" ng-readonly="{1: 'true'}[detailVO.status]">
-                                <span class="msg"></span>
+                            <li class="row m-b-md" ng-repeat="vo in detailVO.titleList">
+                                <label class="col-xs-2 col-sm-3 text-right">{{vo.titleName}}</label>
+                                <div class="col-xs-6 col-sm-8">
+                                    <input type="text" class="form-control" ng-model="vo.value" ng-readonly="{1: 'true'}[detailVO.status]">
+                                </div>
                             </li>
                         </ul>
                         <div class="tab-pane" ng-class="{true: 'active'}[showTab === 'targeting']">
@@ -145,46 +128,54 @@
                         </div>
                         <div class="tab-pane" ng-class="{true: 'active'}[showTab === 'apps']">
                             <ul ng-show="{0:'showApp'}[detailVO.inServer]">
-                                <li>
-                                    <span class="title">Target URL:</span>
-                                    <input type="text" ng-model="detailVO.targetUrl" ng-readonly="{1: 'true'}[detailVO.status]">
-                                    <span class="url">Wrong URL Format</span>
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">Target URL:</label>
+                                    <div class="col-xs-6 col-sm-8">
+                                        <input type="text" class="form-control" ng-model="detailVO.targetUrl" ng-readonly="{1: 'true'}[detailVO.status]">
+                                    </div>
                                 </li>
-                                <li>
-                                    <span class="title">Deep Linking:</span>
-                                    <select></select>
-                                    <select></select>
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">Deep Linking:</label>
+                                    <div class="col-xs-3 col-sm-4">
+                                        <single-select class="chosen-select"></single-select>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-4">
+                                        <single-select class="chosen-select"></single-select>
+                                    </div>
                                 </li>
                             </ul>
                             <ul ng-show="{1:'showApp'}[detailVO.inServer]">
-                                <li>
-                                    <span class="title">Category:</span>
-                                    <div class="dropdown">
-                                        <p class="dropdown-toggle" id="categroylist" data-toggle="dropdown">
-                                            {{detailVO.category}}
-                                            <span class="caret"></span>
-                                        </p>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="categroylist">
-                                            <li ng-repeat="vo in category" ng-click="detailVO.category=vo">{{vo}}</li>
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">Category:</label>
+                                    <div class="col-xs-6 col-sm-8">
+                                        <select class="ng-hide">
+                                           <option ng-repeat="vo in category">{{vo}}</option>>
+                                        </select>
+                                        <single-select class="chosen-select" ng-model="detailVO.category" placehoder-text="{{detailVO.category}}"></single-select>
+                                    </div>
+                                </li>
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">Publish Time:</label>
+                                    <div class="col-xs-6 col-sm-8 has-feedback">
+                                        <input date-unlimited type="text" id="publishtime" class="form-control" data-start="publishTimeStartForShow" data-end="publishTimeEndForShow">
+                                        <i class="fa fa-times form-control-feedback m-r" style="pointer-events: auto" ng-click="clearPubDate()"></i>
+                                    </div>
+                                </li>
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">Rank:</label>
+                                    <div class="col-xs-6 col-sm-8">
+                                        <ul class="unstyled">
+                                            <li class="inline m-r-sm" ng-click="detailVO.rank=0"><i class="fa fa-dot-circle-o m-r-xs" ng-class="{0:'text-success'}[detailVO.rank]"></i>Up to Down</li>
+                                            <li class="inline m-r-sm" ng-click="detailVO.rank=1"><i class="fa fa-dot-circle-o m-r-xs" ng-class="{1:'text-success'}[detailVO.rank]"></i>Down to Up</li>
+                                            <li class="inline m-r-sm" ng-click="detailVO.rank=2"><i class="fa fa-dot-circle-o m-r-xs" ng-class="{2:'text-success'}[detailVO.rank]"></i>Random</li>
                                         </ul>
                                     </div>
                                 </li>
-                                <li>
-                                    <span class="title">Publish Time:</span>
-                                    <input type="text" id="publishtime" name="publish" date-publish publish-start="publishTimeStartForShow" publish-end="publishTimeEndForShow" readonly>
-                                    <i class="glyphicon glyphicon-remove clear-data clear-pubdata" ng-click="clearPubDate($event)"></i>
-                                </li>
-                                <li>
-                                    <span class="title">Rank:</span>
-                                    <ul class="unstyled">
-                                        <li ng-click="detailVO.rank=0"><i class="fa fa-dot-circle-o" ng-class="{0:'active'}[detailVO.rank]"></i>Up to Down</li>
-                                        <li ng-click="detailVO.rank=1"><i class="fa fa-dot-circle-o" ng-class="{1:'active'}[detailVO.rank]"></i>Down to Up</li>
-                                        <li ng-click="detailVO.rank=2"><i class="fa fa-dot-circle-o" ng-class="{2:'active'}[detailVO.rank]"></i>Random</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <span class="title">App Name:</span>
-                                    <input type="text" ng-model="detailVO.targetAppName">
+                                <li class="row m-b-md">
+                                    <label class="col-xs-2 col-sm-3 text-right">App Name:</label>
+                                    <div class="col-xs-6 col-sm-8">
+                                        <input type="text" class="form-control" ng-model="detailVO.targetAppName">
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -192,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <div class="ibox-footer text-center">
+        <div class="ibox-footer text-center p-h-lg">
             <button class="btn btn-warning fw-100 m-r-lg" ng-click="cancel()">Cancel</button>
             <button class="btn btn-primary fw-100" ng-click="saveData()" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
         </div>

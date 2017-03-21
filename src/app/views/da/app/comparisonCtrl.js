@@ -16,6 +16,7 @@ angular.module('app.controller').controller('comparisonCtrl', [
             if (state == "channel") {
                 $scope.updateView();
                 $scope.modelList = [];
+                $scope.paramModel = [];
                 for (var i = 0; i < $scope.condationData.channelLevel.length; i++) {
                     if ($scope.paramChannel.indexOf($scope.condationData.channelLevel[i].channel) >= 0) {
                         var models = $scope.condationData.channelLevel[i].models;
@@ -29,6 +30,7 @@ angular.module('app.controller').controller('comparisonCtrl', [
             } else if (state == "country") {
                 $scope.updateView();
                 $scope.stateList = [];
+                $scope.paramState=[];
                 for (var i = 0; i < $scope.condationData.countryLevel.length; i++) {
                     if ($scope.paramCountry.indexOf($scope.condationData.countryLevel[i].country) >= 0) {
                         var states = $scope.condationData.countryLevel[i].states;
@@ -175,7 +177,6 @@ angular.module('app.controller').controller('comparisonCtrl', [
         };
         $scope.tableData = function(num) {
             $scope.tdDetails = [];
-
             $scope.totalList = 0;
             $scope.titles = [];
             $scope.subtitle = [];
@@ -240,4 +241,4 @@ angular.module('app.controller').controller('comparisonCtrl', [
         };
         $scope.init();
     }
-])
+]);

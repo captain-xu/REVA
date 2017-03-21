@@ -22,16 +22,24 @@ angular.module('app.controller').controller('daDashboardCtrl', [
         $scope.trendData = function() {
             $scope.getEchData(urlAPI.report_device_trend, 'trend', function(result) {
                 var option = chartOption.option();
-                option.xAxis.data = result.trendTime.map(function(data, index) {
-                    return index % 2 == 0 ? data : '\n' + data
-                });
+                option.xAxis.data = result.trendTime;
                 option.xAxis.boundaryGap=false,
+                option.xAxis.axisLabel = {
+                    formatter: function(value, index) {
+                        var date = new Date(value);
+                        var texts = [(date.getMonth() + 1), date.getDate()];
+                        if (index === 0) {
+                            texts.unshift(date.getFullYear());
+                        }
+                        return texts.join('/');
+                    }
+                };
                 option.legend = {
                     data: ["New Device", "Operatable"],
                     show: true,
                     left:'right'
                 };
-                option.grid = { bottom: "15%", left: "50px", top: "30px",right:"30px" };
+                option.grid = { bottom: "30px", left: "50px", top: "25px",right:"30px" };
                 option.series = [{
                     name: "New Device",
                     type: 'line',

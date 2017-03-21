@@ -1,12 +1,7 @@
 <div class="chosen-container chosen-container-multi" style="width: 100%;">
-    <ul class="chosen-choices">
-        <li class="search-choice" ng-repeat="item in selectItem track by $index" ng-show="selectItem.length==1"><span>{{item}}</span>
-            <a class="search-choice-close" data-option-array-index="105" ng-click="delItem($index)"></a>
-        </li>
-        <li class="search-field" ng-show="selectItem.length==0 || selectItem.length>1">
-            <input type="text" class="" autocomplete="off" ng-model="placehoderText">
-        </li>
-    </ul>
+    <div class="chosen-choices no-radius">
+        <input type="text" class="form-control no-borders" ng-model="placehoderText">
+    </div>
     <div class="chosen-drop">
         <div class="chosen-search">
             <input type="text" autocomplete="off" tabindex="4" ng-model="filter_value">

@@ -13,7 +13,7 @@ angular.module('app.controller').controller('newUserCtrl', [
             serviceAPI.loadData(urlAPI.report_app_applist_condition).then(function(result) {
                 if (result.status == 1) {
                     $scope.appList = result.data.appList;
-                    $scope.appName = $scope.appList[0].appName;
+                    $scope.appName = $scope.appList[0].app;
                     $scope.updateView();
                 }
             });
@@ -23,6 +23,7 @@ angular.module('app.controller').controller('newUserCtrl', [
             if (state == "channel") {
                 $scope.updateView();
                 $scope.modelList = [];
+                $scope.paramModel = [];
                 for (var i = 0; i < $scope.condationData.channelLevel.length; i++) {
                     if ($scope.paramChannel.indexOf($scope.condationData.channelLevel[i].channel) >= 0) {
                         var models = $scope.condationData.channelLevel[i].models;
@@ -36,6 +37,7 @@ angular.module('app.controller').controller('newUserCtrl', [
             } else if (state == "country") {
                 $scope.updateView();
                 $scope.stateList = [];
+                $scope.paramState = [];
                 for (var i = 0; i < $scope.condationData.countryLevel.length; i++) {
                     if ($scope.paramCountry.indexOf($scope.condationData.countryLevel[i].country) >= 0) {
                         var states = $scope.condationData.countryLevel[i].states;
@@ -137,7 +139,8 @@ angular.module('app.controller').controller('newUserCtrl', [
                 show: result.length > 10 ? true : false,
                 zoomLock: true,
                 left: 'right',
-                end: (10 / result.length) * 100,
+                start: 100-((10 / result.length) * 100),
+                end: 100,
                 showDetail: false,
                 showDataShadow: false
             }];
@@ -247,7 +250,7 @@ angular.module('app.controller').controller('newUserCtrl', [
                 } else {
                     $scope.thItems = result.data.details.keys;
                     $scope.detailsData = result.data.details.detail;
-                    $scope.totleData=result.data.details.detail[$scope.detailsData.length-1];
+                    $scope.totleData = result.data.details.detail[$scope.detailsData.length - 1];
                     $scope.detailsData.pop();
                     $scope.totalList = result.data.listSize;
                     $scope.setDetail();
@@ -271,8 +274,8 @@ angular.module('app.controller').controller('newUserCtrl', [
             $scope.paramModel = [];
             $scope.paramCountry = [];
             $scope.paramState = [];
-            $scope.tableNum = 1;
-            $scope.trendNum = 1;
+            $scope.tableNum = 0;
+            $scope.trendNum = 0;
             $scope.errorMsg = msgService.no_data;
             $scope.startDate = moment().subtract(30, 'days').format('YYYY/MM/DD');
             $scope.endDate = moment().subtract(1, 'days').format('YYYY/MM/DD');
@@ -280,4 +283,4 @@ angular.module('app.controller').controller('newUserCtrl', [
         };
         $scope.init();
     }
-])
+]);

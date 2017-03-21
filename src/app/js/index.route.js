@@ -27,12 +27,12 @@ angular
             .state('view.deviceDashboard', {
                 url: "/device/dashboard",
                 templateUrl: "app/views/da/device/dashboard.html",
-                data: { showTitle: true, pageTitle: "Sales Overview", breadcrumb: ["Data Analytics", 'Device'], currentPage: 'Sales Overview' }
+                data: { showTitle: true, pageTitle: "Sales Overview", breadcrumb: ["Data Analytics", 'Device'], currentPage: 'Overview' }
             })
             .state('view.deviceSales', {
                 url: "/deviceSales",
                 templateUrl: "app/views/da/device/detail.html",
-                data: { showTitle: true, pageTitle: "Sales Detail", breadcrumb: ["Data Analytics", 'Device'], currentPage: 'Sales Detail' }
+                data: { showTitle: true, pageTitle: "Sales Detail", breadcrumb: ["Data Analytics", 'Device'], currentPage: 'Detail' }
             })
             .state('view.appOverview', {
                 url: "/app/overview",

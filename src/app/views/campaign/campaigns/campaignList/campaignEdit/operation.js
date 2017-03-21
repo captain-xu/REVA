@@ -125,14 +125,18 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	        /*加载编辑页面app数据*/
 	        $scope.getAppList = function() {
 	            serviceAPI.loadData(urlAPI.campaign_detailList).then(function(result) {
-	                $scope.app = result.appList;
+	                $scope.appList = result.appList;
 	            }).
 	            catch(function(result) {});
 	        };
+	        $scope.selectData = {
+	        	name: '',
+	        	id: ''
+	        };
 	        /*app值修改获取version数据*/
-	        $scope.appData = function(vo) {
-	            $scope.detailVO.app = vo.appId;
-	            $scope.detailVO.appName = vo.name;
+	        $scope.appData = function() {
+	            $scope.detailVO.app = $scope.selectData.id;
+	            $scope.detailVO.appName = $scope.selectData.name;
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
@@ -140,39 +144,43 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	            $scope.detailVO.version = "";
 	            $scope.detailVO.imageList = [];
 	            $scope.detailVO.titleList = [];
-	            $scope.group = [];
-	            $scope.place = [];
+	            $scope.groupList = [];
+	            $scope.placeList = [];
 	            var verParam = {
 	                name: $scope.detailVO.appName
 	            }
 	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
-	                $scope.version = result.versionList;
+	                $scope.versionList = result.versionList;
 	            }).
 	            catch(function(result) {});
 	        };
 	        /*version数据修改获取group数据*/
-	        $scope.versionData = function(vo) {
-	            $scope.detailVO.version = vo.version;
+	        $scope.versionData = function() {
+	            // $scope.detailVO.version = vo.version;
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
 	            $scope.detailVO.placeName = "";
 	            $scope.detailVO.imageList = [];
 	            $scope.detailVO.titleList = [];
-	            $scope.place = [];
+	            $scope.placeList = [];
 	            var groupParam = {
 	                app: $scope.detailVO.appName,
 	                version: $scope.detailVO.version
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
-	                $scope.group = result.groupList;
+	                $scope.groupList = result.groupList;
 	            }).
 	            catch(function(result) {});
 	        };
 	        /*group数据修改获取Placement数据*/
-	        $scope.groupData = function(vo) {
-	            $scope.detailVO.groupId = vo.groupId;
-	            $scope.detailVO.groupName = vo.name;
+	        // $scope.groupSelect = {
+	        // 	name: '',
+	        // 	id: ''
+	        // };
+	        $scope.groupData = function() {
+	            $scope.detailVO.groupId = $scope.selectData.id;
+	            $scope.detailVO.groupName = $scope.selectData.name;
 	            $scope.detailVO.placeId = "";
 	            $scope.detailVO.placeName = "";
 	            $scope.detailVO.imageList = [];
@@ -181,17 +189,21 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                groupId: $scope.detailVO.groupId
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_place, placeParam).then(function(result) {
-	                $scope.place = result.placeList;
+	                $scope.placeList = result.placeList;
 	                if ($scope.detailVO.inServer == 1) {
-	                    $scope.place.unshift({placementId:"",name:'All'})
+	                    $scope.placeList.unshift({placementId:"",name:'All'})
 	                }
 	            }).
 	            catch(function(result) {});
 	        };
 	        /*Placement数据修改获取img title数据*/
-	        $scope.placeData = function(vo) {
-	            $scope.detailVO.placeId = vo.placementId;
-	            $scope.detailVO.placeName = vo.name;
+	        // $scope.groupSelect = {
+	        // 	name: '',
+	        // 	id: ''
+	        // };
+	        $scope.placeData = function() {
+	            $scope.detailVO.placeId = $scope.selectData.id;
+	            $scope.detailVO.placeName = $scope.selectData.name;
 	            $scope.detailVO.imageList = [];
 	            $scope.detailVO.titleList = [];
 	            if ($scope.detailVO.inServer == 0) {
@@ -266,9 +278,9 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	            }
 	            if ($scope.detailVO.groupId) {
 	                serviceAPI.loadData(urlAPI.campaign_offer_place, placeParam).then(function(result) {
-	                    $scope.place = result.placeList;
+	                    $scope.placeList = result.placeList;
 	                    if ($scope.detailVO.inServer == 1) {
-	                        $scope.place.unshift({placementId:"ALL",name:'All'})
+	                        $scope.placeList.unshift({placementId:"ALL",name:'All'})
 	                    };
 	                }).
 	                catch(function(result) {});
@@ -318,22 +330,22 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                name: $scope.detailVO.appName
 	            }
 	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
-	                $scope.version = result.versionList;
+	                $scope.versionList = result.versionList;
 	            });
 	            var groupParam = {
 	                app: $scope.detailVO.appName,
 	                version: $scope.detailVO.version
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
-	                $scope.group = result.groupList;
+	                $scope.groupList = result.groupList;
 	            });
 	            var placeParam = {
 	                groupId: $scope.detailVO.groupId
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_place,placeParam).then(function(result) {
-	                $scope.place = result.placeList;
+	                $scope.placeList = result.placeList;
 	                if ($scope.detailVO.inServer == 1) {
-	                    $scope.place.unshift({placementId:"ALL",name:'All'})
+	                    $scope.placeList.unshift({placementId:"ALL",name:'All'})
 	                };
 	            });
 	        };
@@ -346,16 +358,20 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	            }
 	        };
 	        //清除现有时间段
-	        $scope.clearPubDate = function(dom){
+	        $scope.clearPubDate = function(){
 	            if ($scope.detailVO.status == 0) {
 	                $scope.publishTimeStartForShow = "";
 	                $scope.publishTimeEndForShow = "";
-	                $(dom.target).prev().val('');
+	                $("#publishtime").val('');
 	            }
 	        };
 	        //上传图片
 	        $scope.uploadPic = function(vo, file, errFiles) {
 	            if (file) {
+                    if (file.size >= 300000 ) {
+                		$scope.popAlert('error', 'Error', 'The picture is too big');
+                        return;
+                    }
 	                vo.begin_upload = true;
 	                $scope.dynamic = 20;
 	                vo.imageUrlForShow = "";
@@ -363,18 +379,17 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                    url: '/campaign/util/2007',
 	                    data: { file: file }
 	                }).then(function(result) {
-	                    vo.imageUrlForShow = result.data.viewUrl;
-	                    vo.imageUrl = result.data.url;
-	                    vo.width = result.data.width;
-	                    vo.height = result.data.height;
+	                	if (result.data.result === 200) {
+	                		$scope.popAlert('success', 'Success', 'Upload Success!');
+		                    vo.imageUrlForShow = result.data.viewUrl;
+		                    vo.imageUrl = result.data.url;
+		                    vo.width = result.data.width;
+		                    vo.height = result.data.height;
+	                	} else {
+	                		$scope.popAlert('error', 'Error', result.data.msg);
+	                	}
 	                    $scope.dynamic = 100;
 	                    vo.begin_upload = false;
-	                    if (file.size >= 300000 ) {
-	                        ModalAlert.popup({
-	                            msg:"The picture is too big"
-	                        }, 2500);
-	                        return;
-	                    };
 	                }, function(result) {
 	                    vo.begin_upload = false;
 	                }, function(evt) {
@@ -388,19 +403,15 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	            vo.imageUrl = '';
 	        };
 
-	         $scope.cancel = function(){
-	            history.go(-1);
-	         };
-	        //保存operation数据
+			$scope.cancel = function(){
+				history.go(-1);
+			};
 	        $scope.saveData = function() {
-	            // Non null check
-	            if (regexAPI.objRegex($scope.detailVO, ["name", "priority", "inServer", "imp", "click", "appName", "version", "groupName", "placeName"])) {
+	            // if (regexAPI.objRegex($scope.detailVO, ["name", "priority", "inServer", "imp", "click", "appName", "version", "groupName", "placeName"])) {
 	                if ($scope.detailVO.imageList.length > 0) {
 	                    for (var i = 0; i < $scope.detailVO.imageList.length; i++) {
 	                        if ($scope.detailVO.imageList[i].imageUrl == "") {
-	                            ModalAlert.popup({
-	                                msg: "Please upload the picture"
-	                            }, 2500);
+	                			$scope.popAlert('error', 'Error', 'Please upload the picture');
 	                            return false;
 	                        }
 	                    }
@@ -408,31 +419,25 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                if ($scope.detailVO.titleList.length > 0) {
 	                    for (var i = 0; i < $scope.detailVO.titleList.length; i++) {
 	                        if (!$scope.detailVO.titleList[i].value || $scope.detailVO.titleList[i].value == "") {
-	                            ModalAlert.popup({
-	                                msg: "The title value is necessary"
-	                            }, 2500);
+	                			$scope.popAlert('error', 'Error', 'The title value is necessary');
 	                            return false;
 	                        }
 	                    }
 	                };
 	                if ($scope.detailVO.name.length > 50) {
-	                    ModalAlert.popup({
-	                        msg:"The length of the name should be less than 50"
-	                    }, 2500);
+            			$scope.popAlert('error', 'Error', 'The length of the name should be less than 50');
 	                    return;
 	                };
 	                if ($scope.detailVO.inServer == 0) {
 	                    if ($scope.detailVO.placeName == 'All') {
-	                        ModalAlert.popup({
-	                            msg:"The Placement Name should not be \"All\""
-	                        }, 2500);
+            				$scope.popAlert('error', 'Error', 'The Placement Name should not be \"All\"');
 	                        return;
 	                    }; 
 	                };
 	                $scope.detailVO.startDate = $scope.startDate;
 	                $scope.detailVO.endDate = $scope.endDate;
 	                if($scope.detailVO.startDate == "") {
-	                    ModalAlert.popup({msg:"the Data value is necessary"}, 2500);
+        				$scope.popAlert('error', 'Error', 'the Data value is necessary');
 	                    return;
 	                };
 	                //operationURL校验
@@ -442,11 +447,9 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                    var result = urlStr.match(regUrl); 
 	                }  
 	                if (urlStr && result==null) {
-	                    $('.url').show();
+	                    $scope.popAlert('error', 'Error', 'Wrong URL format');
 	                    return;
-	                } else {
-	                    $('.url').hide();
-	                };
+	                }
 	                $scope.detailVO.publishTimeStart = $scope.publishTimeStartForShow;
 	                $scope.detailVO.publishTimeEnd = $scope.publishTimeEndForShow;
 	                $scope.detailVO.operationId = $scope.detailVO.id;
@@ -461,10 +464,10 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                        history.go(-1);
 	                    } else {
 	                        $scope.resubmit = false;
-	                        ModalAlert.popup({msg: result.msg}, 2500)
+        					$scope.popAlert('error', 'Error', result.msg);
 	                    }
 	                }).catch(function() {})
-	            }
+	            // }
 
 	        };
 	        $scope.editList();

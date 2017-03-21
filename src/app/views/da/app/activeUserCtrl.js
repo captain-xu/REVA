@@ -13,7 +13,7 @@ angular.module('app.controller').controller('activeUserCtrl', [
             serviceAPI.loadData(urlAPI.report_app_applist_condition).then(function(result) {
                 if (result.status == 1) {
                     $scope.appList = result.data.appList;
-                    $scope.appName = $scope.appList[0].appName;
+                    $scope.appName = $scope.appList[0].app;
                     $scope.updateView();
                 }
             });
@@ -23,6 +23,7 @@ angular.module('app.controller').controller('activeUserCtrl', [
             if (state == "channel") {
                 $scope.updateView();
                 $scope.modelList = [];
+                $scope.paramModel = [];
                 for (var i = 0; i < $scope.condationData.channelLevel.length; i++) {
                     if ($scope.paramChannel.indexOf($scope.condationData.channelLevel[i].channel) >= 0) {
                         var models = $scope.condationData.channelLevel[i].models;
@@ -36,6 +37,7 @@ angular.module('app.controller').controller('activeUserCtrl', [
             } else if (state == "country") {
                 $scope.updateView();
                 $scope.stateList = [];
+                $scope.paramState = [];
                 for (var i = 0; i < $scope.condationData.countryLevel.length; i++) {
                     if ($scope.paramCountry.indexOf($scope.condationData.countryLevel[i].country) >= 0) {
                         var states = $scope.condationData.countryLevel[i].states;
@@ -137,7 +139,8 @@ angular.module('app.controller').controller('activeUserCtrl', [
                 show: result.length > 10 ? true : false,
                 zoomLock: true,
                 left: 'right',
-                end: (10 / result.length) * 100,
+                start: 100 - ((10 / result.length) * 100),
+                end: 100,
                 showDetail: false,
                 showDataShadow: false
             }];
@@ -157,8 +160,10 @@ angular.module('app.controller').controller('activeUserCtrl', [
         $scope.setTrendChart = function(num) {
             $scope.trendNum = num;
             var url = urlAPI.report_app_activeuser_channelTrend;
+            var rateUrl = urlAPI.report_app_activeuser_channelRate;
             if (num == 0) {
                 url = urlAPI.report_app_activeuser_modelTrend;
+                rateUrl = urlAPI.report_app_activeuser_modelRate;
             };
             $scope.getEchData(url, 'trend', function(result) {
                 if (result.trendData.length == 0) {
@@ -166,46 +171,62 @@ angular.module('app.controller').controller('activeUserCtrl', [
                     $scope.trendnodata = true;
                     return;
                 };
-                var option = chartOption.option();
-                option.xAxis.data = result.time;
-                option.xAxis.axisLabel = {
-                    formatter: function(value, index) {
-                        var date = new Date(value);
-                        var texts = [(date.getMonth() + 1), date.getDate()];
-                        if (index === 0) {
-                            texts.unshift(date.getFullYear());
-                        }
-                        return texts.join('/');
-                    }
-                };
-                option.xAxis.boundaryGap = false,
-                    option.grid = {
-                        bottom: "15%",
-                        left: "50px",
-                        top: "30px",
-                        right: "30px"
-                    };
-                option.legend = {
-                    data: result.trendData.map(function(data) {
-                        return data.key
-                    }),
-                    show: true,
-                    left: 'right'
-                };
-                option.series = result.trendData.map(function(data) {
-                    return {
-                        name: data.key,
-                        type: 'line',
-                        data: data.dataList,
-                        symbol: 'circle',
-                        symbolSize: 2,
-                        animationDelay: function(idx) {
-                            return idx * 10;
-                        }
-                    }
-                });
-                $scope.trendChart.setOption(option, true);
+                $scope.setLineOption(result, 'trendChart');
             });
+            $scope.getEchData(rateUrl, 'rate', function(result) {
+                if (result.trendData.length == 0) {
+                    $scope.errorMsg = msgService.no_data;
+                    $scope.ratenodata = true;
+                    return;
+                };
+                $scope.setLineOption(result, 'rateChart');
+            });
+        };
+        $scope.setLineOption = function(result, instance) {
+            var option = chartOption.option();
+            option.xAxis.data = result.time;
+            option.xAxis.axisLabel = {
+                formatter: function(value, index) {
+                    var date = new Date(value);
+                    var texts = [(date.getMonth() + 1), date.getDate()];
+                    if (index === 0) {
+                        texts.unshift(date.getFullYear());
+                    }
+                    return texts.join('/');
+                }
+            };
+            if (instance == 'rateChart') {
+                option.yAxis.axisLabel = {
+                    formatter: '{value}%'
+                };
+            };
+            option.xAxis.boundaryGap = false,
+                option.grid = {
+                    bottom: "15%",
+                    left: "50px",
+                    top: "30px",
+                    right: "30px"
+                };
+            option.legend = {
+                data: result.trendData.map(function(data) {
+                    return data.key
+                }),
+                show: true,
+                left: 'right'
+            };
+            option.series = result.trendData.map(function(data) {
+                return {
+                    name: data.key,
+                    type: 'line',
+                    data: data.dataList,
+                    symbol: 'circle',
+                    symbolSize: 2,
+                    animationDelay: function(idx) {
+                        return idx * 10;
+                    }
+                }
+            });
+            $scope[instance].setOption(option, true);
         };
         $scope.rankChart = function() {
             $scope.getEchData(urlAPI.report_app_activeuser_channelRank, 'channel', function(result) {
@@ -223,14 +244,15 @@ angular.module('app.controller').controller('activeUserCtrl', [
             });
         };
         $scope.tableData = function(num) {
-            $scope.tableNum = num;
-            $scope.tdDetails = [];
-            $scope.totalList = 0;
-            $scope.thItems = [];
             var url = urlAPI.report_app_activeuser_channelDetail;
-            if (num == 0) {
+            if (num == 1) {
                 url = urlAPI.report_app_activeuser_modelDetail;
             };
+            $scope.tdDetails = [];
+            $scope.totalList = 0;
+            $scope.titles = [];
+            $scope.subtitle = [];
+            $scope.detailsData = [];
             $scope.tableloading = true;
             serviceAPI.loadData(url, {
                 "appkey": $scope.appName,
@@ -241,12 +263,26 @@ angular.module('app.controller').controller('activeUserCtrl', [
                 "from": $scope.startDate,
                 "to": $scope.endDate
             }).then(function(result) {
-                if (result.data.details.keys.length == 0) {
+                if (result.data.detail.length == 0) {
                     $scope.errorMsg = msgService.no_data;
                     $scope.tablenodata = true;
                 } else {
-                    $scope.thItems = result.data.details.keys;
-                    $scope.detailsData = result.data.details.detail;
+                    for (var i = 0; i < result.data.detail.length; i++) {
+                        var vo = result.data.detail[i];
+                        $scope.titles.push(vo.key);
+                        $scope.subtitle = $scope.subtitle.concat(['Active User', 'Active Rate']);
+                        for (var y = 0; y < vo.detail.length; y++) {
+                            if (i == 0) {
+                                var trdata = [result.data.time[y]];
+                                trdata = trdata.concat(vo.detail[y]);
+                                $scope.detailsData.push(trdata);
+                            } else {
+                                var trdata = $scope.detailsData[y];
+                                trdata = trdata.concat(vo.detail[y]);
+                                $scope.detailsData[y] = trdata;
+                            }
+                        };
+                    };
                     $scope.totalList = result.data.listSize;
                     $scope.setDetail();
                 }
@@ -269,8 +305,8 @@ angular.module('app.controller').controller('activeUserCtrl', [
             $scope.paramModel = [];
             $scope.paramCountry = [];
             $scope.paramState = [];
-            $scope.tableNum = 1;
-            $scope.trendNum = 1;
+            $scope.tableNum = 0;
+            $scope.trendNum = 0;
             $scope.errorMsg = msgService.no_data;
             $scope.startDate = moment().subtract(30, 'days').format('YYYY/MM/DD');
             $scope.endDate = moment().subtract(1, 'days').format('YYYY/MM/DD');
@@ -278,4 +314,4 @@ angular.module('app.controller').controller('activeUserCtrl', [
         };
         $scope.init();
     }
-])
+]);

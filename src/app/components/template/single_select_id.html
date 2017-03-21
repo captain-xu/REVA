@@ -1,0 +1,12 @@
+<div class="chosen-container chosen-container-single" style="width: 100%;" title=""><a class="chosen-single"><span>{{placehoderText}}</span><div><b></b></div></a>
+    <div class="chosen-drop">
+        <div class="chosen-search">
+            <input type="text" autocomplete="off" ng-model="filter_value">
+        </div>
+        <ul class="chosen-results">
+            <li class="active-result" ng-repeat="item in menuItems | filter:filter_value  track by $index" ng-click="isSelect(item)">
+                <span>{{item.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

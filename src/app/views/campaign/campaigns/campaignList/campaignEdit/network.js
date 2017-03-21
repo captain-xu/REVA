@@ -4,9 +4,10 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	["$scope", "serviceAPI", '$state','urlAPI','$stateParams',
 	    function($scope, serviceAPI, $state, urlAPI, $stateParams) {
 	        $scope.resubmit = false;
+	        $scope.showTab = 'placement';
 	        $scope.channelNames = '';
 	        //net获取详情数据
-	        $scope.editNetList = function(net) {
+	        $scope.editList = function(net) {
 	            $scope.dataState = $stateParams.param;
 	            $('.msg').text('');
 	            serviceAPI.loadData(urlAPI.campaign_operate_adver,{rtb: 1}).then(function(result) {
@@ -48,7 +49,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                        }
 	                        $scope.startDate = $scope.detailVO.startDate;
 	                        $scope.endDate = $scope.detailVO.endDate;
-	                        $('#datarangeNet').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
+	                        $('#datarange').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
 	                        $scope.allNames = $scope.detailVO.offerName;
 	                        $scope.allIds = $scope.detailVO.offerId;
 	                        $('.icon-check').removeClass('active');
@@ -155,7 +156,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                    $scope.endDate = '';
 	                    $scope.allNames = "";
 	                    $scope.allIds = "";
-	                    $('#datarangeNet').val('');
+	                    $('#datarange').val('');
 	                    var adverParam = {
 	                        rtb: $scope.detailVO.rtb
 	                    };
@@ -180,7 +181,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	        /*加载编辑页面app数据*/
 	        $scope.getAppList = function() {
 	            serviceAPI.loadData(urlAPI.campaign_detailList).then(function(result) {
-	                $scope.app = result.appList;
+	                $scope.appList = result.appList;
 	            });
 	        };
 	        //恢复 Advertiser 数据 原始状态
@@ -202,10 +203,14 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                };
 	            }
 	        };
-	        /*Network编辑页面app值修改获取version数据*/
-	        $scope.appNetData = function(net) {
-	            $scope.detailVO.app = net.appId;
-	            $scope.detailVO.appName = net.name;
+	        $scope.selectData = {
+	        	name: '',
+	        	id: ''
+	        };
+	        /*work编辑页面app值修改获取version数据*/
+	        $scope.appData = function() {
+	            $scope.detailVO.app = $scope.selectData.id;
+	            $scope.detailVO.appName = $scope.selectData.name;
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
@@ -218,12 +223,11 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                name: $scope.detailVO.appName
 	            }
 	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
-	                $scope.version = result.versionList;
+	                $scope.versionList = result.versionList;
 	            });
 	        };
-	        /*Network编辑页面version数据修改获取group数据*/
-	        $scope.versionNetData = function(net) {
-	            $scope.detailVO.version = net.version;
+	        /*work编辑页面version数据修改获取group数据*/
+	        $scope.versionData = function() {
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
@@ -235,13 +239,13 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                version: $scope.detailVO.version
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
-	                $scope.group = result.groupList;
+	                $scope.groupList = result.groupList;
 	            });
 	        };
-	        /*Network编辑页面group数据修改获取Placement数据*/
-	        $scope.groupNetData = function(net) {
-	            $scope.detailVO.groupId = net.groupId;
-	            $scope.detailVO.groupName = net.name;
+	        /*work编辑页面group数据修改获取Placement数据*/
+	        $scope.groupData = function() {
+	            $scope.detailVO.groupId = $scope.selectData.id;
+	            $scope.detailVO.groupName = $scope.selectData.name;
 	            $scope.detailVO.placeId = "";
 	            $scope.detailVO.placeName = "";
 	            $scope.defaultAdvertiser();
@@ -249,29 +253,25 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                groupId: $scope.detailVO.groupId
 	            };
 	            serviceAPI.loadData(urlAPI.campaign_offer_place, placeParam).then(function(result) {
-	                $scope.place = result.placeList;
+	                $scope.placeList = result.placeList;
 	                if ($scope.detailVO.inServer == 1) {
-	                    $scope.place.unshift({placementId:"",name:'All'})
+	                    $scope.placeList.unshift({placementId:"",name:'All'})
 	                }
 	            });
 	        };
-	        /*Network编辑页面Placement数据修改获取img title数据*/
-	        $scope.placeNetData = function(net) {
-	            $scope.detailVO.placeId = net.placementId;
-	            $scope.detailVO.placeName = net.name;
+	        /*work编辑页面Placement数据修改获取img title数据*/
+	        $scope.placeData = function() {
+	            $scope.detailVO.placeId = $scope.selectData.id;
+	            $scope.detailVO.placeName = $scope.selectData.name;
 	            $scope.detailVO.rtb = 0;
 	            $scope.defaultAdvertiser();
 	        };
-	        /*cpxData值修改*/
-	        $scope.cpxData = function(cpx) {
-	            $scope.detailVO.cpx = cpx;
-	        };
 	        //清除现有时间段
-	        $scope.clearNetDate = function(dom){
+	        $scope.clearDate = function(dom){
 	            if ($scope.detailVO.status == 0) {
 	                $scope.startDate = "";
 	                $scope.endDate = "";
-	                $(dom.target).prev().val('');
+	                $("#datarange").val('');
 	            }
 	        };
 
@@ -562,7 +562,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	            history.go(-1);
 	        };
 	        //保存network数据
-	        $scope.saveNetData = function(detailVO) {
+	        $scope.saveData = function(detailVO) {
 	            // Non null check
 	            if (regexAPI.objRegex($scope.detailVO, ["name","appName", "version", "groupName", "placeName",  "imp", "click"])) {
 	                if ($scope.detailVO.name.length > 50) {
@@ -617,7 +617,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	            }
 
 	        };
-	        $scope.editNetList();
+	        $scope.editList();
 	    }
 	]
 );

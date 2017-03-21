@@ -62,15 +62,16 @@ angular.module('app.controller').controller('appOverCtrl', [
                     time: $scope.newData[0].time,
                     trendData: $scope.newData[0].trendData
                 }, 'modelnewChart');
+                $scope.getEchData(urlAPI.report_app_over_model_active, 'modelactive', function(result) {
+                    $scope.activeData = result;
+                    $scope.eachData("activeData", "modelactiveChart");
+                });
+                $scope.getEchData(urlAPI.report_app_over_model_rate, 'modelrate', function(result) {
+                    $scope.rateData = result;
+                    $scope.eachData("rateData", "modelrateChart");
+                });
             });
-            $scope.getEchData(urlAPI.report_app_over_model_active, 'modelactive', function(result) {
-                $scope.activeData = result;
-                $scope.eachData("activeData", "modelactiveChart");
-            });
-            $scope.getEchData(urlAPI.report_app_over_model_rate, 'modelrate', function(result) {
-                $scope.rateData = result;
-                $scope.eachData("rateData", "modelrateChart");
-            });
+
         };
         $scope.getOption = function(result) {
             var option = chartOption.option();

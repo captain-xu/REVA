@@ -103,42 +103,36 @@ angular.module('app.directive')
                     confirm: "&"
                 },
                 controller: function($scope) {
-                    $scope.noSelect = true;
-                    $scope.menuItems = [];
-                    $scope.selectItem = [];
                     $scope.init = function() {
                         $scope.filter_value = "";
                         $scope.menuItems = [];
                         $scope.selectItem = [];
-                        $scope.selactAll = true;
-                        $scope.noSelect = true;
                     };
-                    $scope.isSelect = function(event, value) {
+                    $scope.isSelect = function(item) {
                         $scope.operation = true;
-                        var selectValue = value;
-                        if (selectValue == "ALL" && !$scope.selactAll) {
-                            $scope.selactAll = true;
-                            $scope.selectItem = [];
+                        var selectValue = item.name;
+                        if (selectValue == "ALL" && !item.isSelect) {
+                            angular.forEach($scope.menuItems, function(data) {
+                                data.isSelect = true;
+                            });
                             $scope.placehoderText = "ALL";
                         } else if (selectValue == "ALL") {
-                            $scope.selectItem = [];
-                            $scope.selactAll = false;
+                            angular.forEach($scope.menuItems, function(data) {
+                                data.isSelect = false;
+                            });
                             $scope.placehoderText = "ALL";
                             // thisDom.siblings().find('i').addClass('fa-square-o').removeClass('fa-check-square');
                         } else {
-                            if ($scope.selactAll) {
-                                $scope.selectItem = $scope.menuItems.map(function(data) {
-                                    return data;
-                                });
-                                $scope.selectItem.shift();
-                            };
-                            var index = $scope.selectItem.indexOf(selectValue);
-                            if (index >= 0) {
-                                $scope.selectItem.splice(index, 1);
-                            } else {
-                                $scope.selectItem.push(selectValue);
-                            };
-                            $scope.selactAll = false;
+                            $scope.menuItems[0].isSelect = false;
+                            item.isSelect = !item.isSelect;
+                        };
+                        $scope.selectItem = [];
+                        if (!$scope.menuItems[0].isSelect) {
+                            angular.forEach($scope.menuItems, function(data) {
+                                if (data.isSelect) {
+                                    $scope.selectItem.push(data.name);
+                                }
+                            });
                         };
                         if ($scope.selectItem.length > 0) {
                             $scope.placehoderText = "Multiple Values";
@@ -147,7 +141,10 @@ angular.module('app.directive')
                             $scope.placehoderText = "ALL";
                         }
                     };
-                    $scope.delItem = function(index) {
+                    $scope.delItem = function() {
+                        angular.forEach($scope.menuItems, function(data) {
+                            data.isSelect = false;
+                        });
                         $scope.selectItem = [];
                         $scope.placehoderText = "ALL";
                     };
@@ -155,25 +152,29 @@ angular.module('app.directive')
                 },
                 link: function(scope, ele, attrs, ngModel) {
                     scope.selectDom = ele.siblings('select');
-                    ele.click(function() {
-                        scope.menuItems = [];
+                    ele.find('.chosen-choices').click(function() {
                         ele.addClass('chosen-with-drop chosen-container-active');
-                        scope.menuItems.push('ALL');
-                        scope.selectDom.find('option').each(function(index, dom) {
-                            if ($(dom).text() != "") {
-                                scope.menuItems.push($(dom).text());
-                            }
-                        });
-                        scope.$apply();
-                        ele.find('.chosen-results .active-result').hover(function() {
-                            $(this).addClass('highlighted');
-                            $(this).find('i').removeClass('text-navy');
-                        }).mouseleave(function() {
-                            $(this).removeClass('highlighted');
-                            $(this).find('i').addClass('text-navy');
-                        });
+                        scope.filter_value = "";
+                        if (ngModel.$viewValue.length == 0) {
+                            scope.menuItems = [];
+                            scope.menuItems.push({ name: 'ALL', isSelect: true });
+                            scope.selectDom.find('option').each(function(index, dom) {
+                                if ($(dom).text() != "") {
+                                    scope.menuItems.push({ name: $(dom).text(), isSelect: true });
+                                }
+                            });
+                            scope.$apply();
+                            ele.find('.chosen-results .active-result').hover(function() {
+                                $(this).addClass('highlighted');
+                                $(this).find('i').removeClass('text-navy');
+                            }).mouseleave(function() {
+                                $(this).removeClass('highlighted');
+                                $(this).find('i').addClass('text-navy');
+                            });
+                            scope.selectItem = [];
+                            scope.placehoderText = "ALL";
+                        };
                     });
-
                     $(document).click(function(event) {
                         var dom = $(event.target).closest('.chosen-container');
                         if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
@@ -181,7 +182,110 @@ angular.module('app.directive')
                             if (scope.operation) {
                                 ngModel.$setViewValue(scope.selectItem);
                                 scope.confirm();
-                                scope.operation=false;
+                                scope.operation = false;
+                            };
+                        }
+                    });
+                }
+            }
+        }
+    ]).directive('multiSelectId', [
+        '$timeout',
+        function($timeout) {
+            return {
+                restrict: 'AE',
+                templateUrl: "app/components/template/multi_select_id.html",
+                replace: true,
+                require: '?ngModel',
+                scope: {
+                    placehoderText: "@",
+                    confirm: "&"
+                },
+                controller: function($scope) {
+                    $scope.init = function() {
+                        $scope.filter_value = "";
+                    };
+                    $scope.isSelect = function(item) {
+                        $scope.operation = true;
+                        if ($scope.placehoderText) {
+                            $scope.placehoderText = $scope.placehoderText.split(',');
+                        } else {
+                            $scope.placehoderText = [];
+                        }
+                        var selectValue = item.name;
+                        if (selectValue == "ALL" && !item.isSelect) {
+                            angular.forEach($scope.menuItems, function(data) {
+                                data.isSelect = true;
+                            });
+                            $scope.placehoderText = ["ALL"];
+                        } else if (selectValue == "ALL") {
+                            angular.forEach($scope.menuItems, function(data) {
+                                data.isSelect = false;
+                            });
+                            $scope.placehoderText = [];
+                        } else {
+                            $scope.menuItems[0].isSelect = false;
+                            if (item.isSelect) {
+                                var index = $scope.placehoderText.indexOf(item.name);
+                                $scope.placehoderText.splice(index, 1);
+                            } else {
+                                $scope.placehoderText.push(item.name);
+                            }
+                            item.isSelect = !item.isSelect;
+                        }
+                        $scope.placehoderText = $scope.placehoderText.toString();
+                    };
+                    $scope.init();
+                },
+                link: function(scope, ele, attrs, ngModel) {
+                    scope.selectDom = ele.siblings('select');
+                    ele.find('.chosen-choices').click(function() {
+                        ele.addClass('chosen-with-drop chosen-container-active');
+                        scope.filter_value = "";
+                        if (!Array.isArray(scope.placehoderText)) {
+                            scope.menuItems = [];
+                            if (scope.placehoderText) {
+                                scope.placehoderText = scope.placehoderText.split(',');
+                            } else {
+                                scope.placehoderText = [];
+                            }
+                            if (scope.placehoderText[0] === "ALL") {
+                                scope.menuItems.push({ name: 'ALL', isSelect: true });
+                            } else {
+                                scope.menuItems.push({ name: 'ALL', isSelect: false });
+                            }
+                            scope.selectDom.find('option').each(function(index, dom) {
+                                if ($(dom).text() != "") {
+                                    if (scope.menuItems[0].isSelect) {
+                                        scope.menuItems.push({ name: $(dom).text(), isSelect: true });
+                                    } else {
+                                        if (scope.placehoderText.indexOf($(dom).text()) > -1) {
+                                            scope.menuItems.push({ name: $(dom).text(), isSelect: true });
+                                        } else {
+                                            scope.menuItems.push({ name: $(dom).text(), isSelect: false });
+                                        }
+                                    }
+                                }
+                            });
+                            scope.$apply();
+                            ele.find('.chosen-results .active-result').hover(function() {
+                                $(this).addClass('highlighted');
+                                $(this).find('i').removeClass('text-navy');
+                            }).mouseleave(function() {
+                                $(this).removeClass('highlighted');
+                                $(this).find('i').addClass('text-navy');
+                            });
+                            scope.placehoderText = scope.placehoderText.join();
+                        }
+                    });
+                    $(document).click(function(event) {
+                        var dom = $(event.target).closest('.chosen-container');
+                        if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
+                            ele.removeClass('chosen-with-drop chosen-container-active');
+                            if (scope.operation) {
+                                ngModel.$setViewValue(scope.placehoderText);
+                                scope.confirm();
+                                scope.operation = false;
                             };
                         }
                     });
@@ -225,6 +329,53 @@ angular.module('app.directive')
                         scope.placehoderText = value;
                         scope.filter_value = "";
                         ngModel.$setViewValue(scope.placehoderText);
+                        scope.confirm();
+                    };
+                    $(document).click(function(event) {
+                        var dom = $(event.target).closest('.chosen-container');
+                        if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
+                            ele.removeClass('chosen-with-drop chosen-container-active');
+                            scope.filter_value = "";
+                        };
+                    });
+                }
+            }
+        }
+    ]).directive('singleSelectId', [
+        '$timeout',
+        function($timeout) {
+            return {
+                restrict: 'AE',
+                templateUrl: "app/components/template/single_select_id.html",
+                replace: true,
+                require: '?ngModel',
+                scope: {
+                    placehoderText: "@",
+                    confirm: "&"
+                },
+                link: function(scope, ele, attrs, ngModel) {
+                    scope.filter_value = "";
+                    scope.selectDom = ele.siblings('select');
+                    ele.find('.chosen-single').click(function() {
+                        scope.menuItems = [];
+                        ele.addClass('chosen-with-drop chosen-container-active');
+                        scope.selectDom.find('option').each(function(index, dom) {
+                            if ($(dom).text() && $(dom).attr('value')) {
+                                scope.menuItems.push({ name: $(dom).text(), id: $(dom).attr('value')});
+                            }
+                        });
+                        scope.$apply();
+                        ele.find('.chosen-results .active-result').hover(function() {
+                            $(this).addClass('highlighted');
+                        }).mouseleave(function() {
+                            $(this).removeClass('highlighted');
+                        });
+                    });
+                    scope.isSelect = function(value) {
+                        ele.removeClass('chosen-with-drop chosen-container-active');
+                        scope.placehoderText = value.name;
+                        scope.filter_value = "";
+                        ngModel.$setViewValue(value);
                         scope.confirm();
                     };
                     $(document).click(function(event) {
@@ -416,6 +567,45 @@ angular.module('app.directive')
                     scope[ele.attr('data-start')] = picker.startDate.format('YYYY/MM/DD');
                     scope[ele.attr('data-end')] = picker.endDate.format('YYYY/MM/DD');
                     scope.setTime(picker.startDate.format('YYYY/MM/DD'), picker.endDate.format('YYYY/MM/DD'));
+                });
+            }
+        };
+    }]).directive('datePastlimited', [function() {
+        return {
+            restrict: 'A',
+            link: function(scope, ele, attrs) {
+                ele.daterangepicker({
+                    "locale": {
+                        "format": 'YYYY/MM/DD',
+                        "separator": ' ~ '
+                    },
+                    "minDate": moment(),
+                    "autoUpdateInput": false,
+                    "opens": "right"
+                });
+                ele.on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+                    scope[ele.attr('data-start')] = picker.startDate.format('YYYY/MM/DD');
+                    scope[ele.attr('data-end')] = picker.endDate.format('YYYY/MM/DD');
+                });
+            }
+        };
+    }]).directive('dateUnlimited', [function() {
+        return {
+            restrict: 'A',
+            link: function(scope, ele, attrs) {
+                ele.daterangepicker({
+                    "locale": {
+                        "format": 'YYYY/MM/DD',
+                        "separator": ' ~ '
+                    },
+                    "autoUpdateInput": false,
+                    "opens": "right"
+                });
+                ele.on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+                    scope[ele.attr('data-start')] = picker.startDate.format('YYYY/MM/DD');
+                    scope[ele.attr('data-end')] = picker.endDate.format('YYYY/MM/DD');
                 });
             }
         };

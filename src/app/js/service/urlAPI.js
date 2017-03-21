@@ -219,4 +219,4 @@ angular.module('app.services').factory("urlAPI", [
             campaign_report_camp: "/campaign/util/2014",
         }
     }
-])
+]);

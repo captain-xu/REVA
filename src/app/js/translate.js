@@ -22,8 +22,8 @@ function config($translateProvider) {
 
     $translateProvider.preferredLanguage('en');
 
-}
+};
 
 angular
     .module('lewaos')
-    .config(config)
+    .config(config);

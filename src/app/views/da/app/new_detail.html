@@ -9,7 +9,7 @@
                                 <div class="form-group has-feedback">
                                     <label class="control-label" for="status">APP:</label>
                                     <select class="ng-hide">
-                                       <option ng-repeat="app in appList">{{app.appName}}</option>>
+                                       <option ng-repeat="app in appList">{{app.app}}</option>>
                                     </select>
                                      <single-select placehoder-text={{appName}} ng-model="appName" confirm="updateView()"></single-select>
                                 </div>
@@ -107,8 +107,8 @@
                     </div>
                     <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[modelrankloading]">
                         <spinner-three-bounce></spinner-three-bounce>
-                        <div class="chart" init-chart data-field-name="modelrankChart" ng-hide="modelrankenodata"></div>
-                        <null-data ng-show="modelrankenodata" class="h-300"></null-data>
+                        <div class="chart" init-chart data-field-name="modelrankChart" ng-hide="modelranknodata"></div>
+                        <null-data ng-show="modelranknodata" class="h-300"></null-data>
                     </div>
                 </div>
             </div>

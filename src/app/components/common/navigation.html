@@ -35,14 +35,15 @@
                     <li>
                         <a href="#"><i class="fa fa-mobile-phone fa-lg" aria-hidden="true"></i>Device<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level collapse">
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="view.deviceDashboard">
-                            {{ 'DASHBOARD' | translate }}
-                         </a>
+                                    <!-- {{ 'DASHBOARD' | translate }} -->
+                                    Overview
+                                </a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="view.deviceSales">
-                            {{ 'SALES' | translate }}
+                            Detail
                         </a>
                             </li>
                         </ul>
@@ -50,17 +51,17 @@
                     <li>
                         <a href="#"><i class="fa fa-sitemap"></i> App<span class="fa arrow"></span></a>
                         <ul class="collapse nav nav-third-level" aria-expanded="true">
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="view.appOverview">Overview</a>
                             </li>
-                            <li>
-                                <a ui-sref="view.appComparison">Comparison</a>
+                            <li ui-sref-active="active">
+                                <a ui-sref="view.appComparison">APP Comparison</a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="view.appNewUser">New User Details</a>
                             </li>
                             <li>
-                                <a ui-sref="view.appNewUser">APP New User</a>
-                            </li>
-                            <li>
-                                <a ui-sref="view.appActiveUser">APP Active User</a>
+                                <a ui-sref="view.appActiveUser">Active User Details</a>
                             </li>
                         </ul>
                     </li>
@@ -69,16 +70,16 @@
             <li>
                 <a href="#"><i class="fa fa-buysellads"></i> <span class="nav-label">Campaign</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li>
+                    <li ui-sref-active="active">
                         <a ui-sref="view.campaign.dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-sitemap"></i>Campaigns<span class="fa arrow"></span></a>
                         <ul class="collapse nav nav-third-level" aria-expanded="true">
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="view.campaign.campaignList">Campaign List</a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="view.campaign.creatives">Creatives</a>
                             </li>
                         </ul>
@@ -86,10 +87,10 @@
                     <!-- <li>
                         <a href="#"><i class="fa fa-sitemap"></i>Offers<span class="fa arrow"></span></a>
                         <ul class="collapse nav nav-third-level" aria-expanded="true">
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">AD Networks</a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">Offer List</a>
                             </li>
                         </ul>
@@ -97,25 +98,36 @@
                     <li>
                         <a href="#"><i class="fa fa-sitemap"></i>AD Channels<span class="fa arrow"></span></a>
                         <ul class="collapse nav nav-third-level" aria-expanded="true">
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">Apps</a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">Placements</a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">Show Types</a>
                             </li>
-                            <li>
+                            <li ui-sref-active="active">
                                 <a ui-sref="">Groups</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li ui-sref-active="active">
                         <a ui-sref=""><i class="fa fa-mobile-phone fa-lg" aria-hidden="true"></i>Report</a>
                     </li> -->
                 </ul>
             </li>
+            <!-- <li>
+                <a href="#"><i class="fa fa-paper-plane"></i> <span class="nav-label">Push</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li ui-sref-active="active">
+                        <a ui-sref="view.pushMsgList"><i class="fa fa-envelope-o" aria-hidden="true"></i>Message</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a href="#"><i class="fa fa-users"></i>segments</a>
+                    </li>
+                </ul>
+            </li> -->
         </ul>
     </div>
 </nav>

@@ -16,12 +16,14 @@ angular.module('app.controller').controller('salesDetailCtrl', [
             if (state == "channel") {
                 $scope.updateView();
                 $scope.modelList = [];
+                $scope.paramModel = [];
                 for (var i = 0; i < $scope.condationData.channelLevel.length; i++) {
                     if ($scope.paramChannel.indexOf($scope.condationData.channelLevel[i].channel) >= 0) {
                         var models = $scope.condationData.channelLevel[i].models;
                         for (var y = 0; y < models.length; y++) {
                             if ($scope.modelList.indexOf(models[y]) < 0) {
                                 $scope.modelList.push(models[y]);
+
                             }
                         }
                     }
@@ -29,6 +31,7 @@ angular.module('app.controller').controller('salesDetailCtrl', [
             } else if (state == "country") {
                 $scope.updateView();
                 $scope.stateList = [];
+                $scope.paramState = [];
                 for (var i = 0; i < $scope.condationData.countryLevel.length; i++) {
                     if ($scope.paramCountry.indexOf($scope.condationData.countryLevel[i].country) >= 0) {
                         var states = $scope.condationData.countryLevel[i].states;
@@ -129,7 +132,8 @@ angular.module('app.controller').controller('salesDetailCtrl', [
                 show: result.length > 10 ? true : false,
                 zoomLock: true,
                 left: 'right',
-                end: (10 / result.length) * 100,
+                 start: 100-((10 / result.length) * 100),
+                end: 100,
                 showDetail: false,
                 showDataShadow: false
             }];
@@ -159,12 +163,20 @@ angular.module('app.controller').controller('salesDetailCtrl', [
                     return;
                 }
                 var option = chartOption.option();
-                option.xAxis.data = result.trendTime.map(function(data, index) {
-                    return index % 2 == 0 ? data : '\n' + data
-                });
+                option.xAxis.data = result.trendTime;
+                option.xAxis.axisLabel = {
+                    formatter: function(value, index) {
+                        var date = new Date(value);
+                        var texts = [(date.getMonth() + 1), date.getDate()];
+                        if (index === 0) {
+                            texts.unshift(date.getFullYear());
+                        }
+                        return texts.join('/');
+                    }
+                };
                 option.xAxis.boundaryGap = false,
                     option.grid = {
-                        bottom: "15%",
+                        bottom: "25px",
                         left: "50px",
                         top: "30px",
                         right: "30px"
@@ -215,7 +227,7 @@ angular.module('app.controller').controller('salesDetailCtrl', [
             if (num == 0) {
                 url = urlAPI.report_region_table;
             };
-            $scope.tableloading=true;
+            $scope.tableloading = true;
             serviceAPI.loadData(url, {
                 "channelkey": $scope.paramChannel.toString(),
                 "modelkey": $scope.paramModel.toString(),
@@ -225,15 +237,15 @@ angular.module('app.controller').controller('salesDetailCtrl', [
                 "to": $scope.endDate
             }).then(function(result) {
                 if (result.data.details.keys.length == 0) {
-                    $scope.errorMsg=msgService.no_data;
-                    $scope.tablenodata=true;
+                    $scope.errorMsg = msgService.no_data;
+                    $scope.tablenodata = true;
                 } else {
                     $scope.thItems = result.data.details.keys;
                     $scope.detailsData = result.data.details.detail;
                     $scope.totalList = result.data.listSize;
                     $scope.setDetail();
                 }
-                $scope.tableloading=false;
+                $scope.tableloading = false;
             })
         };
         $scope.setDetail = function() {
@@ -263,4 +275,4 @@ angular.module('app.controller').controller('salesDetailCtrl', [
         };
         $scope.init();
     }
-])
+]);

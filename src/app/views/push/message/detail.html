@@ -1,0 +1,14 @@
+<div class=" animated fadeInRight" ng-controller="msgDetailCtrl">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-12">
+            <h2 class="pull-left">{{currentStep==1?"Who should receive this push?":currentStep==2?"What will your message say?":currentStep==3?"When will this message be sent?":"Ready to go"}}</h2>
+            <ol class="breadcrumb pull-right m-t-md">
+                <li ng-click="goStep(1)"> <a ng-hide="currentStep==1">Target Users</a><strong ng-show="currentStep==1">Target Users</strong></li>
+                <li ng-click="goStep(2)"> <a ng-hide="currentStep==2">Creatives</a><strong ng-show="currentStep==2">Creatives</strong></li>
+                <li ng-click="goStep(3)"> <a ng-hide="currentStep==3">Scheduling</a><strong ng-show="currentStep==3">Scheduling</strong></li>
+                <li ng-click="goStep(4)"> <a ng-hide="currentStep==4">Confirm</a><strong ng-show="currentStep==4">Confirm</strong></li>
+            </ol>
+        </div>
+    </div>
+    <div ui-view></div>
+</div>

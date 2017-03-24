@@ -4,16 +4,16 @@
             <div class="row m-t-md">
                 <label class="col-xs-2 col-sm-3 text-right">Name:<em>&#42;</em></label>
                 <div class="col-xs-6 col-sm-8">
-                    <input type="text" class="form-control" ng-model="detailVO.name" ng-readonly="{1: 'true'}[detailVO.status]">
+                    <input type="text" class="form-control" ng-model="detailVO.name" ng-readonly="{1: 'true'}[detailVO.status]" maxlength="50">
                 </div>
             </div>
             <div class="row m-t-md">
                 <label class="col-xs-2 col-sm-3 text-right">CPX:</label>
                 <div class="col-xs-6 col-sm-8">
                     <select class="ng-hide">
-                        <option ng-repeat="cpx in CPX">{{cpx}}</option>>
+                        <option ng-repeat="cpx in CPX" value="{{cpx}}">{{cpx}}</option>>
                     </select>
-                    <single-select class="chosen-select" ng-model="detailVO.cpx" placehoder-text="{{detailVO.cpx}}"></single-select>
+                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.cpx}}" confirm="detailVO.cpx = selectData.name" read-status="detailVO.status"></single-select-id>
                 </div>
             </div>
             <div class="row m-t-md">
@@ -51,7 +51,7 @@
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content p-h-md table-bordered no-top-border">
-                        <ul class="tab-pane" ng-class="{true: 'active'}[showTab === 'placement']">
+                        <ul class="tab-pane unstyled no-padding h-250" ng-class="{true: 'active'}[showTab === 'placement']">
                             <li class="row m-b-md">
                                 <label class="col-xs-2 col-sm-3 text-right">App &amp; Version:<em>&#42;</em></label>
                                 <div class="col-xs-4 col-sm-4">
@@ -62,9 +62,9 @@
                                 </div>
                                 <div class="col-xs-4 col-sm-4">
                                     <select class="ng-hide">
-                                        <option ng-repeat="version in versionList">{{version.version}}</option>>
+                                        <option ng-repeat="version in versionList" value="{{version.version}}">{{version.version}}</option>>
                                     </select>
-                                    <single-select class="chosen-select" ng-model="detailVO.version" placehoder-text="{{detailVO.version}}" confirm="versionData()"></single-select>
+                                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.version}}" confirm="versionData()" read-status="detailVO.status"></single-select-id>
                                 </div>
                             </li>
                             <li class="row m-b-md">
@@ -86,15 +86,15 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="tab-pane" ng-class="{true: 'active'}[showTab === 'targeting']">
+                        <div class="tab-pane" ng-class="{true: 'active'}[showTab === 'targeting']" ng-if="detailVO">
                             <div targeting attr-targeting="detailVO" attr-state="dataState"></div>
                         </div>
-                        <div class="tab-pane" ng-class="{true: 'active'}[showTab === 'advertiser']">
-                            <ul>
+                        <div class="tab-pane h-250" ng-class="{true: 'active'}[showTab === 'advertiser']">
+                            <ul class="unstyled no-padding">
                                 <li class="row m-b-md">
                                     <label class="col-xs-2 col-sm-3 text-right">RTB:</label>
                                     <div class="col-xs-6 col-sm-8">
-                                        <ul class="unstyled">
+                                        <ul class="unstyled no-padding">
                                             <li class="inline m-r-sm" ng-click="rtbData(0)"><i class="fa fa-dot-circle-o m-r-xs" ng-class="{0:'text-success'}[detailVO.rtb]"></i>Yes</li>
                                             <li class="inline m-r-sm" ng-click="rtbData(1)"><i class="fa fa-dot-circle-o m-r-xs" ng-class="{1:'text-success'}[detailVO.rtb]"></i>No</li>
                                         </ul>
@@ -102,50 +102,68 @@
                                 </li>
                                 <li class="row m-b-md">
                                     <label class="col-xs-2 col-sm-3 text-right">Advertiser:<em ng-show="!detailVO.rtb">&#42;</em></label>
-                                    <!-- <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]">
-                                        <input readonly ng-click="adverClick()" ng-model="detailVO.advertiserName" class="dropdown-toggle" data-toggle="dropdown">
-                                        <ul class="dropdown-menu adver" role="menu">
-                                            <li ng-show="!detailVO.rtb" ng-click="adverAll()" class="advercheck" self-stop-propagation>
-                                                <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.advertiser]"></i> ALL
-                                            </li>
-                                            <li ng-repeat="ad in adverList" ng-click="adverData(ad)" class="advercheck" self-stop-propagation>
-                                                <i class="fa fa-check-square" ng-class="{true: 'active'}[ad.isSelect]"></i> {{ad.name}}
-                                            </li>
-                                        </ul>
-                                    </div> -->
                                     <div class="col-xs-6 col-sm-8">
-                                        <input type="text" class="form-control" ng-model="detailVO.advertiserName" ng-show="{1: 'true'}[detailVO.status]" readonly>
+                                        <div class="chosen-container chosen-container-multi" style="width: 100%;">
+                                            <div class="chosen-choices no-radius" ng-click="adverClick($event)">
+                                                <input type="text" class="form-control no-borders white-bg" ng-model="detailVO.advertiserName" readonly>
+                                            </div>
+                                            <div class="chosen-drop">
+                                                <div class="chosen-search">
+                                                    <input type="text" autocomplete="off" tabindex="4" ng-model="filter_value">
+                                                </div>
+                                                <ul class="chosen-results unstyled">
+                                                    <li class="active-result" ng-show="!detailVO.rtb" ng-click="adverAll()">
+                                                        <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[selectAllState.advertiser]" aria-hidden="true"></i><span>ALL</span>
+                                                    </li>
+                                                    <li class="active-result" ng-repeat="ad in adverList | filter:filter_value" ng-click="adverData(ad)">
+                                                        <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[ad.isSelect]" aria-hidden="true"></i><span>{{ad.name}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="row m-b-md" ng-show="detailVO.rtb">
                                     <label class="col-xs-2 col-sm-3 text-right">All List:<em>&#42;</em></label>
-                                    <!-- <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]">
-                                        <input readonly ng-click="offerClick()" ng-model="allNames" class="dropdown-toggle" data-toggle="dropdown">
-                                        <ul class="dropdown-menu offer-name" role="menu" pull-refresh="loadMore()">
-                                            <li ng-repeat="all in allName" ng-click="offerData(all)" self-stop-propagation>
-                                                <i class="fa fa-check-square" ng-class="{true:'active'}[all.isSelect]"></i>{{all.offerName}}
-                                            </li>
-                                        </ul>
-                                    </div> -->
                                     <div class="col-xs-6 col-sm-8">
-                                        <input type="text" class="form-control" ng-model="detailVO.offerName" ng-show="{1: 'true'}[detailVO.status]" readonly>
+                                        <div class="chosen-container chosen-container-multi" style="width: 100%;">
+                                            <div class="chosen-choices no-radius" ng-click="offerClick($event)">
+                                                <input type="text" class="form-control no-borders white-bg" ng-model="allNames" readonly>
+                                            </div>
+                                            <div class="chosen-drop">
+                                                <div class="chosen-search">
+                                                    <input type="text" autocomplete="off" tabindex="4" ng-model="filter_value">
+                                                </div>
+                                                <ul class="chosen-results unstyled" pull-refresh="loadMore()">
+                                                    <li class="active-result" ng-repeat="all in allName | filter:filter_value" ng-click="offerData(all)">
+                                                        <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[all.isSelect]" aria-hidden="true"></i><span>{{all.offerName}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                                 <li class="row m-b-md" ng-show="!detailVO.rtb && showChannel">
-                                    <label class="col-xs-2 col-sm-3 text-right">Channel:<em>&#42;</label>
-                                    <!-- <div class="dropdown multi-sel" ng-show="{0: 'true'}[detailVO.status]">
-                                        <input readonly ng-model="channelNames" class="dropdown-toggle" data-toggle="dropdown">
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li ng-click="channelAll()" self-stop-propagation>
-                                                <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel]"></i> ALL
-                                            </li>
-                                            <li ng-repeat="channel in channelList" ng-click="channelData(channel)" self-stop-propagation>
-                                                <i class="fa fa-check-square" ng-class="{true:'active'}[channel.isSelect]"></i>{{channel.name}}
-                                            </li>
-                                        </ul>
-                                    </div> -->
+                                    <label class="col-xs-2 col-sm-3 text-right">Channel:<em>&#42;</em></label>
                                     <div class="col-xs-6 col-sm-8">
-                                        <input type="text" class="form-control" ng-model="channelNames" ng-show="{1: 'true'}[detailVO.status]" readonly>
+                                        <div class="chosen-container chosen-container-multi" style="width: 100%;">
+                                            <div class="chosen-choices no-radius" ng-click="channelClick($event)">
+                                                <input type="text" class="form-control no-borders white-bg" ng-model="channelNames" readonly>
+                                            </div>
+                                            <div class="chosen-drop">
+                                                <div class="chosen-search">
+                                                    <input type="text" autocomplete="off" tabindex="4" ng-model="filter_value">
+                                                </div>
+                                                <ul class="chosen-results unstyled">
+                                                    <li class="active-result" ng-show="!detailVO.rtb" ng-click="channelAll()">
+                                                        <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[selectAllState.channel]" aria-hidden="true"></i><span>ALL</span>
+                                                    </li>
+                                                    <li class="active-result" ng-repeat="channel in channelList | filter:filter_value" ng-click="channelData(channel)">
+                                                        <i class="fa text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[channel.isSelect]" aria-hidden="true"></i><span>{{channel.name}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>

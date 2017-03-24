@@ -1,0 +1,323 @@
+<div class="wrapper wrapper-content" ng-controller="notifCreatveCtrl">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-md-4" ng-repeat="list in notification" ng-click="showDetail(list)">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label  m-r-sm" ng-class="{1:'label-primary',2:'label-info',3:'label-warning'}[$index+1]">{{list.order}}</span>
+                            <h5>Message{{list.order}}</h5>
+                            <div class="ibox-tools ">
+                                <a ng-click="removeMessage($index)"><i class="fa fa-times"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="stat-percent font-bold" ng-class="{1:'text-navy',2:'text-info',3:'text-warning'}[$index+1]">{{list.target}}%</div>
+                            <h3>Target Users</h3>
+                            <div class="row m-t-sm">
+                                <div class="col-lg-12">
+                                    <div slider ng-model="list.target" start=1 end=100 ng-class="{1:'bg-primary',2:'bg-info',3:'bg-warning'}[$index+1]" confirm="setPercentage(list.order)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" ng-hide="addHide == 3" ng-click="addMessage()">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content p-h-lg">
+                            <a class="m-t-sm block">
+                                <h3 class="text-center p-h-sm" ng-class="{1:'text-info',2:'text-warning'}[addHide]"><i class="fa fa-plus" aria-hidden="true"></i> Add Variants{{addHide}}</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Templet:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" name="radio" ng-checked="receiver.templet==1">
+                                        <label ng-click="templetData(1)">Default
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" name="radio" ng-checked="receiver.templet==3">
+                                        <label ng-click="templetData(3)">With Picture
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3 radio-inline radio radio-success">
+                                        <input type="radio" name="radio" ng-checked="receiver.templet==4">
+                                        <label ng-click="templetData(4)">With Video
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tittle:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="text" name="title" class="form-control" ng-model="receiver.title" ng-focus="validateParam.titleWarn=false" ng-blur="msgTitle()" maxlength="50">
+                                        <span class="input-group-addon">{{50 - receiver.title.length}}</span>
+                                        <span class="input-group-addon no-borders"><i class="fa fa-commenting-o" popover-placement="left" popover-is-open="titleOpen" ng-mouseenter="titleOpen=true" ng-mouseleave="titleOpen=false" uib-popover="Shown to end users as the notification titile."></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Message:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <textarea ng-model="receiver.content" ng-focus="validateParam.msgWarn=false" maxlength="240" class="form-control" style="resize: none;"></textarea>
+                                </div>
+                                <div class="m-t-xs" ng-show="validateParam.msgWarn">
+                                    <small class="text-danger" ng-show="signup_form.username.$error.required">This field is required.</small>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 3">
+                                <label class="col-sm-2 control-label">Display Type:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-6 radio-inline radio radio-success">
+                                        <input type="radio" class="margin-top" ng-checked="receiver.displayType==1">
+                                        <label ng-click="receiver.displayType=1">Text-Image Combination
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-5 radio-inline radio radio-success">
+                                        <input type="radio" class="margin-top" ng-checked="receiver.displayType==2">
+                                        <label ng-click="receiver.displayType=2">Text-Image Combination
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 3">
+                                <label class="col-sm-2 control-label">Image:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="fileinput fileinput-new input-group no-margins" type="file" ngf-select="uploadPic($file)" accept="image/png, image/jpeg, image/gif">
+                                        <input type="text" class="form-control" data-trigger="fileinput" placeholder="The best resolution is 864 * 480, less than 100 KB" ng-model="receiver.imageUrl">
+                                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span></span>
+                                        <div class="m-t-xs" ng-show="validateParam.imgWarn">
+                                            <small class="text-danger">{{validateParam.img}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 3 &amp;&amp; receiver.imageUrl">
+                                <label class="col-sm-2 control-label">Preview:</label>
+                                <div class="col-sm-10">
+                                    <img ng-src="{{receiver.imageUrl}}">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 4">
+                                <label class="col-sm-2 control-label">Display Type:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" ng-checked="receiver.displayType==1">
+                                        <label ng-click="receiver.displayType=1">Text-Video Combination
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" ng-checked="receiver.displayType==2">
+                                        <label ng-click="receiver.displayType=2">Text-Video Separation
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 4">
+                                <label class="col-sm-2 control-label">Poster:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="fileinput fileinput-new input-group no-margins" type="file" ngf-select="uploadPoster($file)" accept="image/png, image/jpeg, image/gif">
+                                        <input type="text" class="form-control" data-trigger="fileinput" placeholder="The best resolution is 864 * 480, less than 100 KB" ng-model="receiver.postImgUrl">
+                                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span></span>
+                                    </div>
+                                    <div class="m-t-xs" ng-show="validateParam.posterImgWarn">
+                                        <small class="text-danger">{{validateParam.posterImg}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 4">
+                                <label class="col-sm-2 control-label">Video:<em class="text-danger">&#42;</em></label>
+                                <div class="col-sm-10">
+                                    <div class="fileinput fileinput-new input-group no-margins" accept="video/mp4" type="file" ngf-select="uploadVideo($file)">
+                                        <div class="form-control" data-trigger="fileinput">{{receiver.video==""?'The best resolution is 720 * 480, less than 4 MB':receiver.video}}</div>
+                                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span></span>
+                                    </div>
+                                    <div class="m-t-xs" ng-show="validateParam.videoWarn">
+                                        <small class="text-danger">{{validateParam.video}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.templet == 4 &amp;&amp; receiver.video">
+                                <label class="col-sm-2  control-label">Preview:</label>
+                                <div class="col-sm-10">
+                                    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}" poster="{{receiver.postImgUrl}}" src="{{receiver.video}}">
+                                    </video>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form class="form-horizontal">
+                            <div class="form-group p-w-m m-t-sm">
+                                <label ng-hide="receiver.templet == 4">Notification Action:<em class="text-danger">&#42;</em></label>
+                                <label ng-show="receiver.templet == 4">Video Action<em class="text-danger">&#42;</em></label>
+                            </div>
+                            <div class="form-group p-w-m">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" ng-hide="receiver.templet == 4">
+                                        <div class="radio radio-success">
+                                            <input type="radio" name="radio" ng-checked="receiver.action==1">
+                                            <label ng-click="actionData(1)">Open App Directly</label>
+                                        </div>
+                                    </div>
+                                    <div class="panel-heading">
+                                        <div class="radio radio-success">
+                                            <input type="radio" name="radio" ng-checked="receiver.action==2">
+                                            <label ng-click="actionData(2)">URL</label>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body  border-bottom" ng-show="receiver.action==2">
+                                        <div class="input-group table-bordered">
+                                            <div class="input-group-btn border-right p-w-xs">
+                                                <select id="actionUrl" ng-model="receiver.urlStart" class="form-control w-100 no-borders">
+                                                    <option value="http://" ng-selected="receiver.urlStart == 'http://'">http://</option>
+                                                    <option value="https://" ng-selected="receiver.urlStart == 'https://'">https://</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" class="form-control no-borders" ng-model="receiver.urlEnd" ng-focus="validateParam.urlWarn=false">
+                                        </div>
+                                        <div class="m-t-xs" ng-show="validateParam.urlWarn">
+                                            <small class="text-danger">{{validateParam.url}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="panel-heading no-borders" ng-hide="receiver.templet == 4 || app=='System'">
+                                        <div class="radio radio-success">
+                                            <input type="radio" name="radio" ng-checked="receiver.action==3">
+                                            <label ng-click="actionData(3)">Activity</label>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body border-top" ng-show="receiver.action==3">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group p-w-m" ng-show="receiver.templet == 4">
+                                <label>Trigger Time<em class="text-danger">&#42;</em></label>
+                            </div>
+                            <div class="form-group p-w-m" ng-show="receiver.templet == 4">
+                                User can touch the video to trigger an activity after
+                                <span class="fw-80 inline m-r-xs m-l-xs">
+                                            <input type="text" class="form-control" ng-model="receiver.triggerTime" ng-blur="checkNum(5)"></span> Second(s)
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2">Advanced options :</label>
+                                <div class="col-sm-10 text-right">
+                                    <i class="fa" ng-class="{0:'fa-toggle-off text-gray',1:'fa-toggle-on text-navy'}[receiver.options]" style="font-size: 28px" aria-hidden="true" ng-click="optionClick()"></i>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.options">
+                                <label class="col-sm-12">Custom data<i class="fa fa-commenting-o m-l-sm" popover-placement="bottom" popover-is-open="cusOpen" ng-mouseenter="cusOpen=true" ng-mouseleave="cusOpen=false" uib-popover="Key/Value pairs will be delivered with the message to your app."></i></label>
+                            </div>
+                            <div class="form-group" ng-repeat="custom in receiver.customdata" ng-show="receiver.options">
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" placeholder="key" ng-model="custom.key" ng-focus="validateParam.customWarn=false">
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" placeholder="value" ng-model="custom.value" ng-focus="validateParam.customWarn=false">
+                                </div>
+                                <div class="col-sm-1"><i class="fa fa-minus m-t-sm" aria-hidden="true" ng-click=removeCustom($index)></i></div>
+                                <div class="m-t-xl" ng-show="validateParam.customWarn">
+                                    <small>The key and value must be submitted in pairs.</small>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.options">
+                                <div class="col-sm-5">
+                                    <button class="btn btn-default" ng-click="addCustom()" style="width: 100%"><i class="fa fa-plus"></i> &nbsp&nbsp&nbspAdd Key/Value</button>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.options">
+                                <div class="col-sm-3">
+                                    <label class="m-t-xs pull-left">Sound</label>
+                                    <div class="m-l-sm pull-left">
+                                        <i class="fa" ng-class="{0:'fa-toggle-off text-gray',1:'fa-toggle-on text-navy'}[receiver.sound]" style="font-size: 28px" aria-hidden="true" ng-click="sound(receiver)"></i>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="m-t-xs pull-left">Vibrate</label>
+                                    <div class="m-l-sm pull-left">
+                                        <i class="fa" ng-class="{0:'fa-toggle-off text-gray',1:'fa-toggle-on text-navy'}[receiver.vibrate]" style="font-size: 28px" aria-hidden="true" ng-click="vibrate(receiver)"></i>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="m-t-xs pull-left">Delay while idle<i class="fa fa-commenting-o m-l-sm" popover-placement="bottom" popover-is-open="delayOpen" ng-mouseenter="delayOpen=true" ng-mouseleave="delayOpen=false" uib-popover="Indicates that the message should not be displayed immediately if the device is idle."></i></label>
+                                    <div class="m-l-sm pull-left">
+                                        <i class="fa" ng-class="{0:'fa-toggle-off text-gray',1:'fa-toggle-on text-navy'}[receiver.delayidle]" style="font-size: 28px" aria-hidden="true" ng-click="delayidle(receiver)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="receiver.options">
+                                <label class="col-sm-2 m-t-xs">Network:</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" name="radio" ng-checked="receiver.network==0">
+                                        <label ng-click="receiver.network=0">All
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-4 radio-inline radio radio-success">
+                                        <input type="radio" name="radio" ng-checked="receiver.network==1">
+                                        <label ng-click="receiver.network=1">Only WiFi
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content push-phone pull-right">
+                    <h5 class="p-sm">
+                        <span class="label m-r-sm label-primary" ng-class="{A:'label-primary',B:'label-info',C:'label-warning'}[receiver.order]">{{receiver.order}}</span>
+                        <span>Message{{receiver.order}}</span>
+                        <span class="pull-right">Preview</span>
+                    </h5>
+                    <div class="m-t-xl p-h-xl m-l-xl">
+                        <div class="m-l-xl m-t-md"><strong>{{receiver.title}}</strong></div>
+                        <div class="m-l-xl">{{receiver.content}}</div>
+                    </div>
+                    <div class="m-l-xl m-r-xl fh-150">
+                        <img src="{{receiver.imageUrl}}" ng-show="receiver.templet == 3" class="img-thumbnail">
+                        <img src="{{receiver.postImgUrl}}" ng-show="receiver.templet == 4" class="img-thumbnail">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="ibox">
+            <div class="ibox-content p-lg">
+                <div class="form-group  no-margins">
+                    <button class="btn btn-default" type="button" ng-click="saveDetail(0)"><strong>Save as Draft</strong></button>
+                    <div class="pull-right">
+                        <button class="btn  btn-default" type="button" ui-sref="view.pushMsgList"><strong>Cancel</strong></button>
+                        <button class="btn  btn-primary" type="button" ng-click="saveDetail(1)"><strong>Save & Continue</strong></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

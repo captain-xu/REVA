@@ -199,6 +199,7 @@ angular.module('app.directive')
                 require: '?ngModel',
                 scope: {
                     placehoderText: "@",
+                    readStatus: "=",
                     confirm: "&"
                 },
                 controller: function($scope) {
@@ -224,12 +225,21 @@ angular.module('app.directive')
                             });
                             $scope.placehoderText = [];
                         } else {
-                            $scope.menuItems[0].isSelect = false;
-                            if (item.isSelect) {
+                            if ($scope.placehoderText[0] == "ALL") {
+                                $scope.menuItems[0].isSelect = false;
+                                $scope.placehoderText = $scope.menuItems.map(function(data) {
+                                    return data.name;
+                                });
                                 var index = $scope.placehoderText.indexOf(item.name);
                                 $scope.placehoderText.splice(index, 1);
+                                $scope.placehoderText.shift();
                             } else {
-                                $scope.placehoderText.push(item.name);
+                                if (item.isSelect) {
+                                    var index = $scope.placehoderText.indexOf(item.name);
+                                    $scope.placehoderText.splice(index, 1);
+                                } else {
+                                    $scope.placehoderText.push(item.name);
+                                }
                             }
                             item.isSelect = !item.isSelect;
                         }
@@ -240,53 +250,57 @@ angular.module('app.directive')
                 link: function(scope, ele, attrs, ngModel) {
                     scope.selectDom = ele.siblings('select');
                     ele.find('.chosen-choices').click(function() {
-                        ele.addClass('chosen-with-drop chosen-container-active');
-                        scope.filter_value = "";
-                        if (!Array.isArray(scope.placehoderText)) {
-                            scope.menuItems = [];
-                            if (scope.placehoderText) {
-                                scope.placehoderText = scope.placehoderText.split(',');
-                            } else {
-                                scope.placehoderText = [];
-                            }
-                            if (scope.placehoderText[0] === "ALL") {
-                                scope.menuItems.push({ name: 'ALL', isSelect: true });
-                            } else {
-                                scope.menuItems.push({ name: 'ALL', isSelect: false });
-                            }
-                            scope.selectDom.find('option').each(function(index, dom) {
-                                if ($(dom).text() != "") {
-                                    if (scope.menuItems[0].isSelect) {
-                                        scope.menuItems.push({ name: $(dom).text(), isSelect: true });
-                                    } else {
-                                        if (scope.placehoderText.indexOf($(dom).text()) > -1) {
+                        if (!scope.readStatus) {
+                            ele.addClass('chosen-with-drop chosen-container-active');
+                            scope.filter_value = "";
+                            if (!Array.isArray(scope.placehoderText)) {
+                                scope.menuItems = [];
+                                if (scope.placehoderText) {
+                                    scope.placehoderText = scope.placehoderText.split(',');
+                                } else {
+                                    scope.placehoderText = [];
+                                }
+                                if (scope.placehoderText[0] === "ALL") {
+                                    scope.menuItems.push({ name: 'ALL', isSelect: true });
+                                } else {
+                                    scope.menuItems.push({ name: 'ALL', isSelect: false });
+                                }
+                                scope.selectDom.find('option').each(function(index, dom) {
+                                    if ($(dom).text() != "") {
+                                        if (scope.menuItems[0].isSelect) {
                                             scope.menuItems.push({ name: $(dom).text(), isSelect: true });
                                         } else {
-                                            scope.menuItems.push({ name: $(dom).text(), isSelect: false });
+                                            if (scope.placehoderText.indexOf($(dom).text()) > -1) {
+                                                scope.menuItems.push({ name: $(dom).text(), isSelect: true });
+                                            } else {
+                                                scope.menuItems.push({ name: $(dom).text(), isSelect: false });
+                                            }
                                         }
                                     }
-                                }
-                            });
-                            scope.$apply();
-                            ele.find('.chosen-results .active-result').hover(function() {
-                                $(this).addClass('highlighted');
-                                $(this).find('i').removeClass('text-navy');
-                            }).mouseleave(function() {
-                                $(this).removeClass('highlighted');
-                                $(this).find('i').addClass('text-navy');
-                            });
-                            scope.placehoderText = scope.placehoderText.join();
+                                });
+                                scope.$apply();
+                                ele.find('.chosen-results .active-result').hover(function() {
+                                    $(this).addClass('highlighted');
+                                    $(this).find('i').removeClass('text-navy');
+                                }).mouseleave(function() {
+                                    $(this).removeClass('highlighted');
+                                    $(this).find('i').addClass('text-navy');
+                                });
+                                scope.placehoderText = scope.placehoderText.join();
+                            }
                         }
                     });
                     $(document).click(function(event) {
-                        var dom = $(event.target).closest('.chosen-container');
-                        if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
-                            ele.removeClass('chosen-with-drop chosen-container-active');
-                            if (scope.operation) {
-                                ngModel.$setViewValue(scope.placehoderText);
-                                scope.confirm();
-                                scope.operation = false;
-                            };
+                        if (!scope.readStatus) {
+                            var dom = $(event.target).closest('.chosen-container');
+                            if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
+                                ele.removeClass('chosen-with-drop chosen-container-active');
+                                if (scope.operation) {
+                                    ngModel.$setViewValue(scope.placehoderText);
+                                    scope.confirm();
+                                    scope.operation = false;
+                                };
+                            }
                         }
                     });
                 }
@@ -351,25 +365,28 @@ angular.module('app.directive')
                 require: '?ngModel',
                 scope: {
                     placehoderText: "@",
+                    readStatus: "=",
                     confirm: "&"
                 },
                 link: function(scope, ele, attrs, ngModel) {
                     scope.filter_value = "";
                     scope.selectDom = ele.siblings('select');
                     ele.find('.chosen-single').click(function() {
-                        scope.menuItems = [];
-                        ele.addClass('chosen-with-drop chosen-container-active');
-                        scope.selectDom.find('option').each(function(index, dom) {
-                            if ($(dom).text() && $(dom).attr('value')) {
-                                scope.menuItems.push({ name: $(dom).text(), id: $(dom).attr('value')});
-                            }
-                        });
-                        scope.$apply();
-                        ele.find('.chosen-results .active-result').hover(function() {
-                            $(this).addClass('highlighted');
-                        }).mouseleave(function() {
-                            $(this).removeClass('highlighted');
-                        });
+                        if (!scope.readStatus) {
+                            scope.menuItems = [];
+                            ele.addClass('chosen-with-drop chosen-container-active');
+                            scope.selectDom.find('option').each(function(index, dom) {
+                                if ($(dom).text() && $(dom).attr('value')) {
+                                    scope.menuItems.push({ name: $(dom).text(), id: $(dom).attr('value')});
+                                }
+                            });
+                            scope.$apply();
+                            ele.find('.chosen-results .active-result').hover(function() {
+                                $(this).addClass('highlighted');
+                            }).mouseleave(function() {
+                                $(this).removeClass('highlighted');
+                            });
+                        }
                     });
                     scope.isSelect = function(value) {
                         ele.removeClass('chosen-with-drop chosen-container-active');
@@ -379,11 +396,13 @@ angular.module('app.directive')
                         scope.confirm();
                     };
                     $(document).click(function(event) {
-                        var dom = $(event.target).closest('.chosen-container');
-                        if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
-                            ele.removeClass('chosen-with-drop chosen-container-active');
-                            scope.filter_value = "";
-                        };
+                        if (!scope.readStatus) {
+                            var dom = $(event.target).closest('.chosen-container');
+                            if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
+                                ele.removeClass('chosen-with-drop chosen-container-active');
+                                scope.filter_value = "";
+                            };
+                        }
                     });
                 }
             }
@@ -570,7 +589,93 @@ angular.module('app.directive')
                 });
             }
         };
-    }]).directive('datePastlimited', [function() {
+    }]).directive('slider', function() {
+        return {
+            restrict: 'A',
+            scope: {
+                start: '@',
+                step: '@',
+                end: '@',
+                callback: '@',
+                margin: '@',
+                ngModel: '=',
+                ngFrom: '=',
+                ngTo: '=',
+                confirm: "&"
+            },
+            link: function(scope, element, attrs) {
+                var callback, fromParsed, parsedValue, slider, toParsed;
+                slider = $(element);
+                callback = scope.callback ? scope.callback : 'slide';
+                if (scope.ngFrom != null && scope.ngTo != null) {
+                    fromParsed = null;
+                    toParsed = null;
+                    slider.noUiSlider({
+                        start: [
+                            scope.ngFrom || scope.start,
+                            scope.ngTo || scope.end
+                        ],
+                        step: parseFloat(scope.step || 1),
+                        connect: true,
+                        margin: parseFloat(scope.margin || 0),
+                        range: {
+                            min: [parseFloat(scope.start)],
+                            max: [parseFloat(scope.end)]
+                        }
+                    });
+                    slider.on(callback, function() {
+                        var from, to, _ref;
+                        _ref = slider.val(), from = _ref[0], to = _ref[1];
+                        fromParsed = parseFloat(from);
+                        toParsed = parseFloat(to);
+                        scope.$apply(function() {
+                            scope.ngFrom = fromParsed;
+                            scope.ngTo = toParsed;
+                        });
+                        scope.confirm();
+                    });
+                    scope.$watch('ngFrom', function(newVal, oldVal) {
+                        if (newVal !== fromParsed) {
+                            return slider.val([
+                                newVal,
+                                null
+                            ]);
+                        }
+                    });
+                    return scope.$watch('ngTo', function(newVal, oldVal) {
+                        if (newVal !== toParsed) {
+                            return slider.val([
+                                null,
+                                newVal
+                            ]);
+                        }
+                    });
+                } else {
+                    parsedValue = null;
+                    slider.noUiSlider({
+                        start: [scope.ngModel || scope.start],
+                        step: parseFloat(scope.step || 1),
+                        range: {
+                            min: [parseFloat(scope.start)],
+                            max: [parseFloat(scope.end)]
+                        }
+                    });
+                    slider.on(callback, function() {
+                        parsedValue = parseFloat(slider.val());
+                        scope.$apply(function() {
+                            scope.ngModel = parsedValue;
+                        });
+                        scope.confirm();
+                    });
+                    return scope.$watch('ngModel', function(newVal, oldVal) {
+                        if (newVal !== parsedValue) {
+                            return slider.val(newVal);
+                        }
+                    });
+                }
+            }
+        };
+    }).directive('datePastlimited', function() {
         return {
             restrict: 'A',
             link: function(scope, ele, attrs) {
@@ -590,7 +695,7 @@ angular.module('app.directive')
                 });
             }
         };
-    }]).directive('dateUnlimited', [function() {
+    }).directive('dateUnlimited', [function() {
         return {
             restrict: 'A',
             link: function(scope, ele, attrs) {
@@ -620,5 +725,19 @@ angular.module('app.directive')
             restrict: 'E',
             replace: true,
             template: '<div class="null_data text-center"><h3 class="margin-top margin-bottom-lg text-warning"><i class="fa fa-meh-o" aria-hidden="true"></i>  {{errorMsg}}</h3></div>'
+        }
+    }).directive('pullRefresh', function() {
+        return {
+            restrict: 'AE',
+            link: function(scope, ele, attr) {
+                ele.on('scroll', function() {
+                    var scrollTop = ele[0].scrollTop;
+                    var scrollHeight = ele[0].scrollHeight;
+                    var offsetHeight = ele[0].offsetHeight;
+                    if (scrollTop + offsetHeight >= scrollHeight) {
+                        scope.$apply(attr.pullRefresh);
+                    }
+                })
+            }
         }
     });

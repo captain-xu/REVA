@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('app.controller').controller('campaignListCtrl', 
-    ["$scope", "serviceAPI", '$state', '$stateParams', 'urlAPI', "msgService",
-        function($scope, serviceAPI, $state, $stateParams, urlAPI, msgService) {
+    ["$scope", "serviceAPI", '$state', '$stateParams', 'urlAPI', "msgService", "SweetAlert",
+        function($scope, serviceAPI, $state, $stateParams, urlAPI, msgService, SweetAlert) {
             $scope.seachParam.orderBy = 'id';
             $scope.seachParam.order = 0;
             $scope.loadList = function() {
@@ -19,7 +19,7 @@ angular.module('app.controller').controller('campaignListCtrl',
             //获取List详情页
             $scope.loadOpList = function(url) {
                 serviceAPI.loadData(url, $scope.seachParam).then(function(result) {
-                    if (!result.operList) {
+                    if (!result.operList || result.operList.length == 0) {
                         $scope.listloading = false;
                         $scope.listnodata = true;
                         $scope.errorMsg = msgService.no_data;
@@ -39,7 +39,7 @@ angular.module('app.controller').controller('campaignListCtrl',
                     var url = urlAPI.campaign_operate_allAslist;
                 }
                 serviceAPI.loadData(url, $scope.seachParam).then(function(result) {
-                    if (!result.offerList) {
+                    if (!result.offerList || result.offerList.length == 0) {
                         $scope.listloading = false;
                         $scope.listnodata = true;
                         $scope.errorMsg = msgService.no_data;
@@ -96,53 +96,64 @@ angular.module('app.controller').controller('campaignListCtrl',
             };
             /*修改operation状态*/
             $scope.changeState = function(vo) {
+                var alertValue;
                 if (vo.status == 0) {
-                    var alertValue = "Are you sure to turn it ON";
+                    alertValue = "Are you sure to turn it ON";
                 } else {
-                    var alertValue = "Are you sure to turn it OFF";
+                    alertValue = "Are you sure to turn it OFF";
                 };
-                ModalAlert.alert({
-                    value: alertValue,
-                    closeBtnValue: "No",
-                    okBtnValue: "Yes",
-                    confirm: function() {
+                SweetAlert.swal({
+                    title: alertValue,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#2ec02e",
+                    confirmButtonText: "Yes, change it!",
+                    closeOnConfirm: false
+                }, 
+                function(isConfirm){ 
+                    if (isConfirm) {
                         var num = 0;
                         if (vo.status == 0) {
                             num = 1;
-                        };
+                        }
                         var statusParam = {
                             id: vo.id,
                             status: num
-                        }
+                        };
                         serviceAPI.updateData(urlAPI.campaign_operate_state, statusParam).then(function(result) {
                             if (result.result == 200) {
                                 vo.status = num;
+                                SweetAlert.close();
                             } else {
-                                ModalAlert.popup({
-                                    msg: result.msg
-                                }, 2500);
+                                SweetAlert.warning("Warning", result.msg);
                             }
-                        }).catch(function() {})
+                        }).catch(function() {});
                     }
                 });
             };
             $scope.deleteItem = function(vo) {
-                ModalAlert.alert({
-                    value: "Are you sure to delete it?",
-                    closeBtnValue: "No",
-                    okBtnValue: "Yes",
-                    confirm: function() {
+                SweetAlert.swal({
+                    title: "Are you sure to delete it?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#2ec02e",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, 
+                function(isConfirm){ 
+                    if (isConfirm) {
                         var url = urlAPI.campaign_operate_delete;
                         var paramId = {
                             operationId: vo.id
-                        }
+                        };
                         serviceAPI.delData(url, paramId).then(function(result) {
                             if (result.result == 200) {
                                 $scope.loadList();
+                                SweetAlert.success("Success!", '');
                             } else {
-                                ModalAlert.popup({ msg: result.msg }, 2500)
+                                SweetAlert.warning("Warning", result.msg);
                             }
-                        })
+                        }).catch(function() {});
                     }
                 });
             };

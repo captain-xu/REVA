@@ -1,0 +1,144 @@
+<div class=" animated fadeInRight">
+    <div class="wrapper wrapper-content" ng-controller="msgListCtrl">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="row">
+                                    <div class="col-sm-3 m-b-xs">
+                                        <select style="display: none;">
+                                            <option ng-repeat="app in apps">{{app.appName}}</option>
+                                        </select>
+                                        <single-select placehoder-text="All Apps" ng-model="seachParam.appName" confirm="setParam()"></single-select>
+                                    </div>
+                                    <div class="col-sm-3 m-b-xs">
+                                        <select style="display: none;">
+                                            <option label="Colorado" value="2">All Types</option>
+                                            <option label="In-App" value="1">In-App</option>
+                                            <option label="Push" value="0">Push</option>
+                                        </select>
+                                        <single-select placehoder-text="All Types" ng-model="seachParam.pushType" confirm="setParam()"></single-select>
+                                    </div>
+                                    <div class="col-sm-3 m-b-xs">
+                                        <select class="chosen-select" style="display: none;">
+                                            <option label="Draft" value="string:Draft">Draft</option>
+                                            <option label="Active" value="string:Active">Active</option>
+                                            <option label="Inactive" value="string:Inactive">Inactive</option>
+                                            <option label="Completed" value=" string:Completed">Completed</option>
+                                            <option label="Error" value="string:Error">Error</option>
+                                        </select>
+                                        <multi-select-menu placehoder-text="Status Filter" ng-model="status" confirm="setParam('status')"></multi-select-menu>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Search" class="input-sm form-control" ng-model="seachParam.keywords">
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-primary" ng-click="setParam()"><i class="fa fa-search" aria-hidden="true"></i></button> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 text-right">
+                                <a class="btn btn-primary"  ui-sref="view.pushDetail.step1({id:'new'})"><i class="fa fa-plus"></i></i>&nbsp;Push Notifications</a>
+                                <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i>&nbsp;In-APP Messages</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive m-t-lg">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th ng-click="orderBy('targetAppName')">APP Name
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('campaignName')">Campaign Name
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('type')">Type
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('startTime')">Start Time
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('targetUsers')">Target Users
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('arrival')">Arrived
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('clickRate')">Clicks Ratio
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th ng-click="orderBy('status')">Status
+                                            <div class="sort-icon-group">
+                                                <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="vo in list | orderBy: orderField:desc" id={{ 'item'+vo.pushId}} ng-hide="vo.status=='delete'">
+                                        <td>{{vo.targetAppName}}</td>
+                                        <td class="campaign-name">{{vo.campaignName}}</td>
+                                        <td>{{vo.type}}</td>
+                                        <td>{{vo.startTime}}</td>
+                                        <td>{{vo.targetUsers}}</td>
+                                        <td>{{vo.arrival}}</td>
+                                        <td>{{vo.clickRate}}</td>
+                                        <td><span class="p-xxs label" ng-class="{'Error':'label-danger','Active':'label-primary','Done':'label-info','Draft':'gray-bg', 'Inactive': 'label-warning','Completed':'label-success'}[vo.status]">{{vo.status}}</span></td>
+                                        <td class="w-150 text-center">
+                                            <div uib-dropdown class="w-150">
+                                                <a uib-dropdown-toggle href>
+                                                    <span class="clear">
+                                                        <span class="block m-b-xs">
+                                                            <strong class="font-bold">...</strong>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <ul uib-dropdown-menu class="m-t-xs">
+                                                    <li ng-show="vo.status == 'Completed' || vo.status == 'Inactive' || vo.status == 'Active'" ng-click="editDetail(vo,'report')"><a><i class="fa fa-bar-chart"></i> Report</a></li>
+                                                    <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'edit')"><a><i class="glyphicon glyphicon-pencil"></i> Edit</a></li>
+                                                    <li ng-show="vo.status == 'Draft' || vo.status == 'Error'" ng-click="editDetail(vo,'del')"><a><i class="glyphicon glyphicon-trash"></i> Detele</a></li>
+                                                    <li ng-hide="vo.status == 'Error'" ng-click="editDetail(vo,'duplicate')"><a><i class="glyphicon glyphicon-duplicate"></i> Duplicate</a></li>
+                                                    <li ng-show="vo.status == 'Active'" ng-click="editDetail(vo,'inactive')"><a><i class="glyphicon glyphicon-remove"></i> Inactive</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" ng-hide="tablenodata">
+                            <ul class="pull-right" uib-pagination total-items="totalItems" ng-model="seachParam.pageNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

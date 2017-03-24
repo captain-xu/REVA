@@ -1,0 +1,107 @@
+<div class=" animated fadeInRight da-dashboard">
+    <div class="wrapper wrapper-content" ng-controller="launcherCtrl">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Channel:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in channelData">{{item}}</option>
+                                    </select>
+                                    <single-select placehoder-text="ALL" ng-model="param.channelkey" confirm="updateView()"></single-select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="product_name">Product Type:</label>
+                                    <select class="chosen-select" tabindex="4" style="display: none;">
+                                        <option ng-repeat="item in productType">{{item}}</option>
+                                    </select>
+                                    <single-select placehoder-text="ALL" ng-model="param.type" confirm="updateView()"></single-select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group has-feedback">
+                                    <label class="control-label" for="status">Date Range</label>
+                                    <input type="input" class="form-control" date-time="" ng-model="sampleDate" view="year" auto-close="true" range-date>
+                                    <i class="fa fa-calendar form-control-feedback"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Daily Revenue</h5>
+                    </div>
+                    <div class="ibox-content fh-300" ng-class="{true:'sk-loading'}[trendloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <div class="chart" init-chart data-field-name="trendChart" ng-hide="trendnodata"></div>
+                        <null-data ng-show="trendnodata" class="h-300"></null-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Details</h5>
+                    </div>
+                    <div class="ibox-content" ng-class="{true:'sk-loading'}[tableloading]">
+                        <spinner-three-bounce></spinner-three-bounce>
+                        <null-data ng-show="tablenodata" class="h-200"></null-data>
+                        <div class="table-responsive" ng-hide="tablenodata">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class=" text-center">Date</th>
+                                        <th class=" text-center">Requests</th>
+                                        <th class=" text-center">Filled</th>
+                                        <th class=" text-center">Impression</th>
+                                        <th class=" text-center">Clicks</th>
+                                        <th class=" text-center">CTR</th>
+                                        <th class=" text-center">RPM Forecast</th>
+                                        <th class=" text-center">Revenue</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in items">
+                                        <td class="text-center" >{{item.serverTime}}</td>
+                                        <td class="text-center" >{{item.request}}</td>
+                                        <td class="text-center" >{{item.filled}}</td>
+                                        <td class="text-center" >{{item.impression}}</td>
+                                        <td class="text-center" >{{item.click}}</td>
+                                        <td class="text-center" >{{item.ctr}}</td>
+                                        <td class="text-center" >{{item.forecast}}</td>
+                                        <td class="text-center" >{{item.revenue | currency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" >Total</td>
+                                        <td class="text-center" >{{total.request}}</td>
+                                        <td class="text-center" >{{total.filled}}</td>
+                                        <td class="text-center" >{{total.impression}}</td>
+                                        <td class="text-center" >{{total.click}}</td>
+                                        <td class="text-center" >{{total.ctr}}</td>
+                                        <td class="text-center" >{{total.forecast}}</td>
+                                        <td class="text-center" >{{total.revenue | currency}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" ng-hide="tablenodata">
+                            <ul class="pull-right" uib-pagination total-items="totalList" ng-model="param.pageNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" ng-change="tableData()"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

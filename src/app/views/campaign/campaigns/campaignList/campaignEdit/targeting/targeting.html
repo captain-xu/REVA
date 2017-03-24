@@ -1,5 +1,5 @@
 
-<ul>
+<ul class="unstyled no-padding">
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">IMP Frequency:<em>&#42;</em></label>
         <div class="col-xs-6 col-sm-8">
@@ -18,19 +18,8 @@
             <select class="chosen-select" tabindex="4" style="display: none;">
                 <option ng-repeat="area in areas">{{area.name}}</option>
             </select>
-            <multi-select-id placehoder-text="{{targeting.area}}" ng-model="targeting.area" confirm="singleSelect('area')"></multi-select-id>
+            <multi-select-id placehoder-text="{{targeting.area}}" ng-model="targeting.area" read-status="targeting.status"></multi-select-id>
         </div>
-        <!-- <div class="dropdown">
-            <input ng-focus="selectStatus('area', 'areas', 'code')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.area" ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('area', 'areas', 'areaExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.area]"></i>ALL
-                </li>
-                <li ng-repeat="area in areas" ng-click="singleSelect(area, 'code', 'area', 'areaExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[area.isSelect]"></i>{{area.name}}
-                </li>
-            </ul>
-        </div> -->
     </li>
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Area Except:</label>
@@ -41,18 +30,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Device:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('device', 'devices', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.device" ng-change="loadModel()" ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('device', 'devices', 'deviceExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.device]"></i>ALL
-                </li>
-                <li ng-repeat="device in devices" ng-click="singleSelect(device, 'name', 'device', 'deviceExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[device.isSelect]"></i>{{device.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="device in devices">{{device.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.device}}" ng-model="targeting.device" confirm="loadModel()" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -64,18 +45,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Model:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('model', 'models', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.model" readonly>
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('model', 'models', 'modelExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.model]"></i>ALL
-                </li>
-                <li ng-repeat="model in models" ng-click="singleSelect(model, 'name', 'model', 'modelExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[model.isSelect]"></i>{{model.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="model in models">{{model.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.model}}" ng-model="targeting.model" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -87,18 +60,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">OS Version:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('osVersion', 'versions', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.osVersion" ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('osVersion', 'versions', 'osVersionExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.osVersion]"></i>ALL
-                </li>
-                <li ng-repeat="osVersion in versions" ng-click="singleSelect(osVersion, 'name', 'osVersion', 'osVersionExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[osVersion.isSelect]"></i>{{osVersion.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="osVersion in osVersions">{{osVersion.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.osVersion}}" ng-model="targeting.osVersion" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -110,18 +75,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Language:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('language', 'languages', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.language" ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('language', 'languages', 'languageExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.language]"></i>ALL
-                </li>
-                <li ng-repeat="language in languages" ng-click="singleSelect(language, 'name', 'language', 'languageExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[language.isSelect]"></i>{{language.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="language in languages">{{language.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.language}}" ng-model="targeting.language" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -133,18 +90,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Channel1:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('channel1', 'channel1s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel1" ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('channel1', 'channel1s', 'channel1Except')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel1]"></i>ALL
-                </li>
-                <li ng-repeat="channel1 in channel1s" ng-click="singleSelect(channel1, 'name', 'channel1', 'channel1Except')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel1.isSelect]"></i>{{channel1.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="channel1 in channel1s">{{channel1.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.channel1}}" ng-model="targeting.channel1" confirm="loadChannel2()" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -156,18 +105,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Channel2:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('channel2', 'channel2s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel2" readonly>
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('channel2', 'channel2s', 'channel2Except')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel2]"></i>ALL
-                </li>
-                <li ng-repeat="channel2 in channel2s" ng-click="singleSelect(channel2, 'name', 'channel2', 'channel2Except')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel2.isSelect]"></i>{{channel2.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="channel2 in channel2s">{{channel2.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.channel2}}" ng-model="targeting.channel2" confirm="loadChannel3()" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -179,18 +120,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Channel3:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('channel3', 'channel3s', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.channel3" readonly>
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('channel3', 'channel3s', 'channel3Except')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.channel3]"></i>ALL
-                </li>
-                <li ng-repeat="channel3 in channel3s" ng-click="singleSelect(channel3, 'name', 'channel3', 'channel3Except')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[channel3.isSelect]"></i>{{channel3.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="channel3 in channel3s">{{channel3.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.channel3}}" ng-model="targeting.channel3" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -202,17 +135,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Api Version:</label>
         <div class="col-xs-6 col-sm-8">
-            <div class="dropdown">
-                <input ng-focus="selectStatus('appVer', 'appVers', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.appVer"  ng-readonly="{1: 'true'}[targeting.status]">
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-click="allSelect('appVer', 'appVers', 'appVerExcept')" class="advercheck" self-stop-propagation>
-                        <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.appVer]"></i>ALL
-                    </li>
-                    <li ng-repeat="appVer in appVers" ng-click="singleSelect(appVer, 'name', 'appVer', 'appVerExcept')" self-stop-propagation>
-                        <i class="fa fa-check-square" ng-class="{true: 'active'}[appVer.isSelect]"></i>{{appVer.name}}
-                    </li>
-                </ul>
-            </div>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="appVer in appVers">{{appVer.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.appVer}}" ng-model="targeting.appVer" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -224,18 +150,10 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Label:</label>
         <div class="col-xs-6 col-sm-8">
-            
-        </div>
-        <div class="dropdown">
-            <input ng-focus="selectStatus('label', 'labels', 'name')" class="dropdown-toggle" data-toggle="dropdown" ng-model="targeting.label"  ng-readonly="{1: 'true'}[targeting.status]">
-            <ul class="dropdown-menu" role="menu">
-                <li ng-click="allSelect('label', 'labels', 'labelExcept')" class="advercheck" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[selectAllState.label]"></i>ALL
-                </li>
-                <li ng-repeat="label in labels" ng-click="singleSelect(label, 'name', 'label', 'labelExcept')" self-stop-propagation>
-                    <i class="fa fa-check-square" ng-class="{true: 'active'}[label.isSelect]"></i>{{label.name}}
-                </li>
-            </ul>
+            <select class="chosen-select" tabindex="4" style="display: none;">
+                <option ng-repeat="label in labels">{{label.name}}</option>
+            </select>
+            <multi-select-id placehoder-text="{{targeting.label}}" ng-model="targeting.label" read-status="targeting.status"></multi-select-id>
         </div>
     </li>
     <li class="row m-b-md">
@@ -259,7 +177,7 @@
     <li class="row m-b-md">
         <label class="col-xs-2 col-sm-3 text-right">Time Setting:</label>
         <div class="col-xs-6 col-sm-8">
-            <ul class="unstyled">
+            <ul class="unstyled no-padding">
                 <li ng-click="selectTime(time)" ng-repeat="time in timeData" class="inline m-r-sm">
                     <i class="fa fa-check-square m-r-sm" ng-class="{true: 'text-success'}[time.isSelect]"></i>{{time.name}}
                 </li>

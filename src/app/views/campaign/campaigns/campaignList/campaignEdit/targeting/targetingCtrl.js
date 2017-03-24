@@ -2,9 +2,6 @@
 
 angular.module('app.controller').controller('targrtingCtrl', ["$scope", "serviceAPI", "urlAPI",
     function($scope, serviceAPI, urlAPI) {
-        $scope.param = {
-            area: [],
-        };
         $scope.loadList = function() {
             serviceAPI.loadData(urlAPI.campaign_operate_area).then(function(result) {
                 $scope.areas = result.areaInfo.map(function(data) {
@@ -26,7 +23,7 @@ angular.module('app.controller').controller('targrtingCtrl', ["$scope", "service
             }).
             catch(function(result) {});
             serviceAPI.loadData(urlAPI.campaign_operate_os).then(function(result) {
-                $scope.versions = result.osVersionInfo.map(function(data) {
+                $scope.osVersions = result.osVersionInfo.map(function(data) {
                     return {
                         name: data,
                         isSelect: false
@@ -70,130 +67,14 @@ angular.module('app.controller').controller('targrtingCtrl', ["$scope", "service
                 });
             }).
             catch(function(result) {});
-            setTimeout(function() {
-                $scope.setTime();
-                if ($scope.state === 'edit') {
-                    $scope.loadModel();
-                    $scope.loadChannel2();
-                    $scope.loadChannel3();
-                }
-            }, 500);
-        };
-
-        /*************************************定向********************************/
-        //全选状态
-        $scope.selectAllState = {
-            area: false,
-            device: false,
-            model: false,
-            osVersion: false,
-            language: false,
-            channel1: false,
-            channel2: false,
-            channel3: false,
-            appVer: false,
-            label: false,
-        };
-        //set 下拉框 状态
-        $scope.selectStatus = function(name, list, attr) {
-            var option = $scope.targeting[name];
-            if (option == "ALL") {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = true;
-                };
-                $scope.selectAllState[name] = true;
-            } else if (!option) {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = false;
-                };
-                $scope.selectAllState[name] = false;
-            } else {
-                for (var i = 0; i < $scope[list].length; i++) {
-                    var optionStr = $scope[list][i][attr];
-                    if (option.indexOf(optionStr) > -1) {
-                        $scope[list][i].isSelect = true;
-                    } else {
-                        $scope[list][i].isSelect = false;
-                    }
-                };
-            };
-        };
-        //全选ALL
-        $scope.allSelect = function(name, list, except) {
-            if ($scope.targeting[name] == "ALL") {
-                $scope.targeting[name] = "";
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = false;
-                };
-                $scope.selectAllState[name] = false;
-                $scope.targeting[except] = "";
-            } else {
-                $scope.targeting[name] = "ALL";
-                for (var i = 0; i < $scope[list].length; i++) {
-                    $scope[list][i].isSelect = true;
-                };
-                $scope.selectAllState[name] = true;
-            }
-        };
-        //单选
-        $scope.singleSelect = function(option) {
-            // if ($scope.targeting[name] == "ALL") {
-            //     if (!$scope.targeting[except]) {
-            //         $scope.targeting[except] = option[attr] + ',';
-            //         option.isSelect = false;
-            //         $scope.selectAllState[name] = false;
-            //     } else {
-            //         var arr = $scope.targeting[except].split(',');
-            //         if (arr[arr.length - 1] == "") {
-            //             arr.length = arr.length - 1;
-            //         };
-            //         var index = arr.indexOf(option[attr]);
-            //         if (index >= 0) {
-            //             arr = arr.slice(0, index).concat(arr.slice(index + 1))
-            //             arr.sort();
-            //             option.isSelect = true;
-            //             $scope.selectAllState[name] = false;
-            //         } else {
-            //             arr.push(option[attr]);
-            //             option.isSelect = false;
-            //         }
-            //         $scope.targeting[except] = arr.toString();
-            //         if ($scope.targeting[except] == "") {
-            //             $scope.selectAllState[name] = true;
-            //         } else {
-            //             $scope.selectAllState[name] = false;
-            //         };
-            //     }
-            // } else {
-            //     if (!$scope.targeting[name]) {
-            //         $scope.targeting[name] = option[attr] + ',';
-            //         option.isSelect = true;
-            //     } else {
-            //         var arr = $scope.targeting[name].split(',');
-            //         if (arr[arr.length - 1] == "") {
-            //             arr.length = arr.length - 1;
-            //         };
-            //         var index = arr.indexOf(option[attr]);
-            //         if (index >= 0) {
-            //             arr = arr.slice(0, index).concat(arr.slice(index + 1))
-            //             arr.sort();
-            //             option.isSelect = false;
-            //         } else {
-            //             arr.push(option[attr]);
-            //             option.isSelect = true;
-            //         }
-            //         $scope.targeting[name] = arr.toString();
-            //     }
-            // };
-            // $scope.targeting[option] = $scope.targeting[option].toString();
-            if (option === 'device') {
+            if ($scope.state === 'edit') {
                 $scope.loadModel();
-            } else if (option === 'channel1') {
                 $scope.loadChannel2();
-            } else if (option === 'channel2') {
                 $scope.loadChannel3();
             }
+            $scope.setTime();
         };
+
         $scope.loadModel = function() {
             if ($scope.targeting.device) {
                 var modelParam = {
@@ -240,7 +121,6 @@ angular.module('app.controller').controller('targrtingCtrl', ["$scope", "service
                 });
             }
         };
-        /*************************************定向********************************/
         //timeSet 编辑
         $scope.timeData = [{
             name: 'All',
@@ -332,6 +212,9 @@ angular.module('app.controller').controller('targrtingCtrl', ["$scope", "service
             }
         };
         $scope.selectTime = function(time) {
+            if ($scope.targeting.status) {
+                return;
+            }
             if (time.name == "All") {
                 if (time.isSelect === true) {
                     $scope.targeting.timeSet = '';

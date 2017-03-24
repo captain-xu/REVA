@@ -1,0 +1,45 @@
+<div class="wrapper wrapper-content">
+    <div class="ibox ">
+        <div class="ibox-content">
+            <p class="font-bold  alert alert-warning m-b-sm text-center">
+                To avoid user harassment, message should not be pushed to the user during {{endTimeUnitRange.timeFrom}} ~ {{endTimeUnitRange.timeTo}}
+            </p>
+            <div class="m-t-lg text-center p-h-lg">
+                <h1><strong>Message Schedule</strong></h1>
+                <span>Select a future date and time for message delivery.</span>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-4 control-label">Delivery Date：</label>
+                    <div class="input-group table-bordered col-lg-4">
+                        <div class="input-group-btn border-right p-w-xs">
+                            <select id="actionUrl" class="form-control w-100 no-borders">
+                                <option value="1" ng-selected="receiver.sendNow=1">Send Now</option>
+                                <option value="0" ng-selected="receiver.sendNow=0">Send Later</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-contr  ol no-borders">
+                            <span class="input-group-addon no-borders"><i class="fa fa-calendar "></i></span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-lg-4 control-label">Expires：</label>
+                    <div class="input-group table-bordered col-lg-4">
+                        <div class="input-group-btn border-right p-w-xs">
+                            <select id="actionUrl" class="form-control w-100 no-borders">
+                                <option value="1" ng-selected="receiver.endDefault=1">Default</option>
+                                <option value="0" ng-selected="receiver.endDefault=0">Specify</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-contr  ol no-borders">
+                            <span class="input-group-addon no-borders"><i class="fa fa-calendar "></i></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -60,6 +60,11 @@ angular.module('app.services').factory("urlAPI", [
             report_app_activeuser_regionRank:report+'/app/appActiveUserRegionRank',
             report_app_activeuser_channelDetail:report+'/app/appActiveUserModelDetail',
             report_app_activeuser_modelDetail:report+'/app/appActiveUserChannelDetail',
+            /*Revenue*/
+            report_revenue_condition:report+"/revenue/getRevenueCondition",
+            report_revenue_daily:report+"/revenue/daily",
+            report_revenue_detail :report+"/revenue/detail",
+
             /*push 接口*/
             pushAllApp: push + "allapp",
             push_delPush: push + "deletePush",

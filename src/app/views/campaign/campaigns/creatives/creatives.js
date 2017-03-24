@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('app.controller').controller('campaignCreativesCtrl', 
-    ["$scope", "serviceAPI", '$state','$stateParams', 'urlAPI', "msgService",
-        function($scope, serviceAPI, $state, $stateParams, urlAPI, msgService) {
+    ["$scope", "serviceAPI", '$state','$stateParams', 'urlAPI', "msgService", "SweetAlert",
+        function($scope, serviceAPI, $state, $stateParams, urlAPI, msgService, SweetAlert) {
             $scope.orderField = 'id';
             $scope.desc = true;
             $scope.loadList = function() {
                 $scope.listloading = true;
                 $scope.listnodata = false;
                 serviceAPI.loadData(urlAPI.campaign_creative_list,$scope.seachParam).then(function(result) {
-                    if (!result.operationImgList) {
+                    if (!result.operationImgList || result.operationImgList.length == 0) {
                         $scope.listloading = false;
                         $scope.listnodata = true;
                         $scope.errorMsg = msgService.no_data;
@@ -60,53 +60,64 @@ angular.module('app.controller').controller('campaignCreativesCtrl',
             };
             
             $scope.changeState = function(vo) {
+                var alertValue;
                 if (vo.imgStatus == 0) {
-                   var  alertValue = "Are you sure to turn it ON";
+                    alertValue = "Are you sure to turn it ON";
                 }else{
-                    var  alertValue = "Are you sure to turn it OFF";
+                    alertValue = "Are you sure to turn it OFF";
                 };
-                ModalAlert.alert({
-                    value: alertValue,
-                    closeBtnValue: "No",
-                    okBtnValue: "Yes",
-                    confirm: function() {
+                SweetAlert.swal({
+                    title: alertValue,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#2ec02e",
+                    confirmButtonText: "Yes, change it!",
+                    closeOnConfirm: false
+                }, 
+                function(isConfirm){ 
+                    if (isConfirm) {
                         var num = 0;
                         if (vo.imgStatus == 0) {
                             num = 1;
-                        };
+                        }
                         var statusParam = {
                              id: vo.id, 
                              status: num
-                        }
+                        };
                         serviceAPI.updateData(urlAPI.campaign_creative_state, statusParam).then(function(result) {
                             if (result.result == 200) {
                                 vo.imgStatus = num;
+                                SweetAlert.close();
                             } else {
-                                ModalAlert.popup({
-                                    msg: result.msg
-                                }, 2500);
+                                SweetAlert.warning("Warning", result.msg);
                             }
-                        }).catch(function() {})
+                        }).catch(function() {});
                     }
                 });
             };
             $scope.deleteItem = function(vo) {
-                ModalAlert.alert({
-                    value: "Are you sure to delete it?",
-                    closeBtnValue: "No",
-                    okBtnValue: "Yes",
-                    confirm: function() {
+                SweetAlert.swal({
+                    title: "Are you sure to delete it?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#2ec02e",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, 
+                function(isConfirm){ 
+                    if (isConfirm) {
                         var url = urlAPI.campaign_creative_delete;
                         var paramId = {
                             id: vo.id
-                        }
-                        serviceAPI.delData(url,paramId).then(function(result){
+                        };
+                        serviceAPI.delData(url, paramId).then(function(result) {
                             if (result.result == 200) {
                                 $scope.loadList();
+                                SweetAlert.success("Success!", '');
                             } else {
-                                ModalAlert.popup({msg: result.msg}, 2500)
+                                SweetAlert.warning("Warning", result.msg);
                             }
-                        })
+                        }).catch(function() {})
                     }
                 });
             };

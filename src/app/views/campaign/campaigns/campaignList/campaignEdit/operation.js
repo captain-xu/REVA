@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('app.controller').controller('campaignOperationCtrl',
-	["$scope", "Upload", "serviceAPI", '$state','urlAPI','$stateParams',
-	    function($scope, Upload, serviceAPI, $state, urlAPI, $stateParams) {
+	["$scope", "Upload", "serviceAPI", 'regexAPI', '$state','urlAPI','$stateParams',
+	    function($scope, Upload, serviceAPI, regexAPI, $state, urlAPI, $stateParams) {
 	        $scope.resubmit = false;
 	        $scope.showTab = 'placement';
 	        //operation获取详情数据
@@ -129,6 +129,30 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	            }).
 	            catch(function(result) {});
 	        };
+	        $scope.getSelects = function() {
+	            var verParam = {
+	                name: $scope.detailVO.appName
+	            }
+	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
+	                $scope.versionList = result.versionList;
+	            });
+	            var groupParam = {
+	                app: $scope.detailVO.appName,
+	                version: $scope.detailVO.version
+	            };
+	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
+	                $scope.groupList = result.groupList;
+	            });
+	            var placeParam = {
+	                groupId: $scope.detailVO.groupId
+	            };
+	            serviceAPI.loadData(urlAPI.campaign_offer_place,placeParam).then(function(result) {
+	                $scope.placeList = result.placeList;
+	                if ($scope.detailVO.inServer == 1) {
+	                    $scope.placeList.unshift({placementId:"ALL",name:'All'})
+	                };
+	            });
+	        };
 	        $scope.selectData = {
 	        	name: '',
 	        	id: ''
@@ -156,7 +180,7 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	        };
 	        /*version数据修改获取group数据*/
 	        $scope.versionData = function() {
-	            // $scope.detailVO.version = vo.version;
+	            $scope.detailVO.version = $scope.selectData.name;
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
@@ -325,30 +349,6 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                $scope.detailVO.titleList = [];
 	            };
 	        };
-	        $scope.getSelects = function() {
-	            var verParam = {
-	                name: $scope.detailVO.appName
-	            }
-	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
-	                $scope.versionList = result.versionList;
-	            });
-	            var groupParam = {
-	                app: $scope.detailVO.appName,
-	                version: $scope.detailVO.version
-	            };
-	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
-	                $scope.groupList = result.groupList;
-	            });
-	            var placeParam = {
-	                groupId: $scope.detailVO.groupId
-	            };
-	            serviceAPI.loadData(urlAPI.campaign_offer_place,placeParam).then(function(result) {
-	                $scope.placeList = result.placeList;
-	                if ($scope.detailVO.inServer == 1) {
-	                    $scope.placeList.unshift({placementId:"ALL",name:'All'})
-	                };
-	            });
-	        };
 	        //清除现有时间段
 	        $scope.clearDate = function(){
 	            if ($scope.detailVO.status == 0) {
@@ -407,10 +407,10 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 				history.go(-1);
 			};
 	        $scope.saveData = function() {
-	            // if (regexAPI.objRegex($scope.detailVO, ["name", "priority", "inServer", "imp", "click", "appName", "version", "groupName", "placeName"])) {
+	            if (regexAPI.objRegex($scope.detailVO, ["name", "priority", "appName", "version", "groupName", "placeName", "imp", "click"])) {
 	                if ($scope.detailVO.imageList.length > 0) {
 	                    for (var i = 0; i < $scope.detailVO.imageList.length; i++) {
-	                        if ($scope.detailVO.imageList[i].imageUrl == "") {
+	                        if (!$scope.detailVO.imageList[i].imageUrl) {
 	                			$scope.popAlert('error', 'Error', 'Please upload the picture');
 	                            return false;
 	                        }
@@ -418,15 +418,11 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                };
 	                if ($scope.detailVO.titleList.length > 0) {
 	                    for (var i = 0; i < $scope.detailVO.titleList.length; i++) {
-	                        if (!$scope.detailVO.titleList[i].value || $scope.detailVO.titleList[i].value == "") {
+	                        if (!$scope.detailVO.titleList[i].value) {
 	                			$scope.popAlert('error', 'Error', 'The title value is necessary');
 	                            return false;
 	                        }
 	                    }
-	                };
-	                if ($scope.detailVO.name.length > 50) {
-            			$scope.popAlert('error', 'Error', 'The length of the name should be less than 50');
-	                    return;
 	                };
 	                if ($scope.detailVO.inServer == 0) {
 	                    if ($scope.detailVO.placeName == 'All') {
@@ -436,8 +432,8 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                };
 	                $scope.detailVO.startDate = $scope.startDate;
 	                $scope.detailVO.endDate = $scope.endDate;
-	                if($scope.detailVO.startDate == "") {
-        				$scope.popAlert('error', 'Error', 'the Data value is necessary');
+	                if(!$scope.detailVO.startDate) {
+        				$scope.popAlert('error', 'Error', 'the date value is necessary');
 	                    return;
 	                };
 	                //operationURL校验
@@ -453,10 +449,11 @@ angular.module('app.controller').controller('campaignOperationCtrl',
 	                $scope.detailVO.publishTimeStart = $scope.publishTimeStartForShow;
 	                $scope.detailVO.publishTimeEnd = $scope.publishTimeEndForShow;
 	                $scope.detailVO.operationId = $scope.detailVO.id;
+	                var url;
 	                if ($scope.dataState == "edit") {
-	                    var url = urlAPI.campaign_operate_edit;
+	                    url = urlAPI.campaign_operate_edit;
 	                } else {
-	                    var url = urlAPI.campaign_operate_new;
+	                    url = urlAPI.campaign_operate_new;
 	                };
 	                $scope.resubmit = true;
 	                serviceAPI.saveData(url,$scope.detailVO).then(function(result) {
@@ -467,7 +464,7 @@ angular.module('app.controller').controller('campaignOperationCtrl',
         					$scope.popAlert('error', 'Error', result.msg);
 	                    }
 	                }).catch(function() {})
-	            // }
+	            }
 
 	        };
 	        $scope.editList();

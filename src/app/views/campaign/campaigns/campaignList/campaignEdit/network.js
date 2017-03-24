@@ -1,11 +1,19 @@
 'use strict';
 
 angular.module('app.controller').controller('campaignNetworkCtrl',
-	["$scope", "serviceAPI", '$state','urlAPI','$stateParams',
-	    function($scope, serviceAPI, $state, urlAPI, $stateParams) {
+	["$scope", "serviceAPI", 'regexAPI', '$state','urlAPI','$stateParams',
+	    function($scope, serviceAPI, regexAPI, $state, urlAPI, $stateParams) {
 	        $scope.resubmit = false;
 	        $scope.showTab = 'placement';
 	        $scope.channelNames = '';
+	        $(document).click(function(event) {
+                var dom = $(event.target).closest('.chosen-container');
+                var ele = $('.chosen-container');
+                if (ele.hasClass('chosen-with-drop') && (dom.length == 0 || !dom.is(ele))) {
+                    ele.removeClass('chosen-with-drop chosen-container-active');
+                    $scope.filter_value = "";
+                }
+            });
 	        //net获取详情数据
 	        $scope.editList = function(net) {
 	            $scope.dataState = $stateParams.param;
@@ -50,6 +58,8 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                        $scope.startDate = $scope.detailVO.startDate;
 	                        $scope.endDate = $scope.detailVO.endDate;
 	                        $('#datarange').val(moment($scope.detailVO.startDateForShow).format('YYYY/MM/DD') + ' ~ ' + moment($scope.detailVO.endDateForShow).format('YYYY/MM/DD'));
+		                    /*获取下拉数据*/
+		                    $scope.getSelects();
 	                        $scope.allNames = $scope.detailVO.offerName;
 	                        $scope.allIds = $scope.detailVO.offerId;
 	                        $('.icon-check').removeClass('active');
@@ -184,6 +194,30 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                $scope.appList = result.appList;
 	            });
 	        };
+	        $scope.getSelects = function() {
+	            var verParam = {
+	                name: $scope.detailVO.appName
+	            }
+	            serviceAPI.loadData(urlAPI.campaign_versionList, verParam).then(function(result) {
+	                $scope.versionList = result.versionList;
+	            });
+	            var groupParam = {
+	                app: $scope.detailVO.appName,
+	                version: $scope.detailVO.version
+	            };
+	            serviceAPI.loadData(urlAPI.campaign_offer_group, groupParam).then(function(result) {
+	                $scope.groupList = result.groupList;
+	            });
+	            var placeParam = {
+	                groupId: $scope.detailVO.groupId
+	            };
+	            serviceAPI.loadData(urlAPI.campaign_offer_place,placeParam).then(function(result) {
+	                $scope.placeList = result.placeList;
+	                if ($scope.detailVO.inServer == 1) {
+	                    $scope.placeList.unshift({placementId:"ALL",name:'All'})
+	                };
+	            });
+	        };
 	        //恢复 Advertiser 数据 原始状态
 	        $scope.defaultAdvertiser = function(){
 	            $scope.detailVO.advertiserName = '';
@@ -228,6 +262,7 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	        };
 	        /*work编辑页面version数据修改获取group数据*/
 	        $scope.versionData = function() {
+	            $scope.detailVO.version = $scope.selectData.name;
 	            $scope.detailVO.groupId = "";
 	            $scope.detailVO.groupName = "";
 	            $scope.detailVO.placeId = "";
@@ -274,8 +309,6 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                $("#datarange").val('');
 	            }
 	        };
-
-
 	        //rtb请求
 	        $scope.rtbData = function(num) {
 	            if ($scope.detailVO.status == 0) {
@@ -289,7 +322,13 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                        rtb: $scope.detailVO.rtb
 	                    }
 	                    serviceAPI.loadData(urlAPI.campaign_operate_adver,adverParam).then(function(result) {
-	                        $scope.adverList = result.advertisers;
+	                        $scope.adverList = result.advertisers.map(function(data) {
+	                        	return {
+	                        		name: data.name,
+	                        		id: data.id,
+	                        		isSelect: false
+	                        	};
+	                        });
 	                    });
 	                }
 	            }
@@ -299,24 +338,35 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	            channel: false
 	        };
 	        //Advertiser Name下拉框
-	        $scope.adverClick = function() {
-	            var adver = $scope.detailVO.advertiserName;
-	            if (adver === '') {
-	                adver = [];
-	            } else if (adver === 'ALL') {
-	                $scope.selectAllState.advertiser = true;
-	                for (var i = 0; i < $scope.adverList.length; i++) {
-	                    $scope.adverList[i].isSelect = true;
-	                }
-	            } else {
-	                adver = adver.split(',');
-	                for (var i = 0; i < $scope.adverList.length; i++) {
-	                    var adverStr = $scope.adverList[i].name;
-	                    if (adver.indexOf(adverStr) > -1) {
-	                        $scope.adverList[i].isSelect = true;
-	                    };
-	                }
-	            }
+	        $scope.adverClick = function(dom) {
+	        	if (!$scope.detailVO.status) {
+					$('.chosen-container').removeClass('chosen-with-drop chosen-container-active');
+	        		$(dom.target).parents('.chosen-container').toggleClass('chosen-with-drop chosen-container-active');
+					$(dom.target).parents('.chosen-container').find('.chosen-results .active-result').hover(function() {
+	                    $(this).addClass('highlighted');
+	                    $(this).find('i').removeClass('text-navy');
+	                }).mouseleave(function() {
+	                    $(this).removeClass('highlighted');
+	                    $(this).find('i').addClass('text-navy');
+	                });
+		            var adver = $scope.detailVO.advertiserName;
+		            if (adver === '') {
+		                adver = [];
+		            } else if (adver === 'ALL') {
+		                $scope.selectAllState.advertiser = true;
+		                for (var i = 0; i < $scope.adverList.length; i++) {
+		                    $scope.adverList[i].isSelect = true;
+		                }
+		            } else {
+		                adver = adver.split(',');
+		                for (var i = 0; i < $scope.adverList.length; i++) {
+		                    var adverStr = $scope.adverList[i].name;
+		                    if (adver.indexOf(adverStr) > -1) {
+		                        $scope.adverList[i].isSelect = true;
+		                    };
+		                }
+		            }
+	        	}
 	        };
 	        $scope.adverAll = function() {
 	            if ($scope.selectAllState.advertiser) {
@@ -400,20 +450,31 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	            firstReq: true
 	        };
 	         //获取 offerName 值
-	        $scope.offerClick = function(){
-	            $scope.offerParam = {
-	                "advertiserIds": $scope.detailVO.advertiserId,
-	                 "countryCodes": $scope.detailVO.area, 
-	                 "countryCodesExcept": $scope.detailVO.areaExcept, 
-	                 "placementId": $scope.detailVO.placeId,
-	                 "currentPage": $scope.offerLoad.currentPage
-	            }
-	            if ($scope.offerLoad.firstReq || $scope.offerParam.advertiserIds != $scope.oldParam.advertiserIds || $scope.offerParam.countryCodes != $scope.oldParam.countryCodes || $scope.offerParam.countryCodesExcept != $scope.oldParam.countryCodesExcept || $scope.offerParam.placementId != $scope.oldParam.placementId) {
-	                $scope.oldParam = $scope.offerParam;
-	                $scope.allName = [];
-	                $scope.offerLoad.totalPages = 1;
-	                $scope.loadMore();
-	            }
+	        $scope.offerClick = function(dom){
+	        	if (!$scope.detailVO.status) {
+					$('.chosen-container').removeClass('chosen-with-drop chosen-container-active');
+	        		$(dom.target).parents('.chosen-container').toggleClass('chosen-with-drop chosen-container-active');
+					$(dom.target).parents('.chosen-container').find('.chosen-results .active-result').hover(function() {
+	                    $(this).addClass('highlighted');
+	                    $(this).find('i').removeClass('text-navy');
+	                }).mouseleave(function() {
+	                    $(this).removeClass('highlighted');
+	                    $(this).find('i').addClass('text-navy');
+	                });
+		            $scope.offerParam = {
+		                "advertiserIds": $scope.detailVO.advertiserId,
+		                 "countryCodes": $scope.detailVO.area, 
+		                 "countryCodesExcept": $scope.detailVO.areaExcept, 
+		                 "placementId": $scope.detailVO.placeId,
+		                 "currentPage": $scope.offerLoad.currentPage
+		            }
+		            if ($scope.offerLoad.firstReq || $scope.offerParam.advertiserIds != $scope.oldParam.advertiserIds || $scope.offerParam.countryCodes != $scope.oldParam.countryCodes || $scope.offerParam.countryCodesExcept != $scope.oldParam.countryCodesExcept || $scope.offerParam.placementId != $scope.oldParam.placementId) {
+		                $scope.oldParam = $scope.offerParam;
+		                $scope.allName = [];
+		                $scope.offerLoad.totalPages = 1;
+		                $scope.loadMore();
+		            }
+		        }
 	        };
 	        $scope.loadMore = function() {
 	            if ($scope.offerParam.currentPage <= $scope.offerLoad.totalPages) {
@@ -503,6 +564,19 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                offerList.push(offer);
 	            }
 	         };
+	         $scope.channelClick = function(dom) {
+				if (!$scope.detailVO.status) {
+					$('.chosen-container').removeClass('chosen-with-drop chosen-container-active');
+	        		$(dom.target).parents('.chosen-container').toggleClass('chosen-with-drop chosen-container-active');
+					$(dom.target).parents('.chosen-container').find('.chosen-results .active-result').hover(function() {
+	                    $(this).addClass('highlighted');
+	                    $(this).find('i').removeClass('text-navy');
+	                }).mouseleave(function() {
+	                    $(this).removeClass('highlighted');
+	                    $(this).find('i').addClass('text-navy');
+	                });
+		        }
+	         };
 	         $scope.channelAll = function() {
 	            if ($scope.selectAllState.channel) {
 	                $scope.channelNames = "";
@@ -555,55 +629,50 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                $scope.detailVO.channel = channelId.toString();
 	            };
 	        };
-
-
-
 	        $scope.cancel = function(){
 	            history.go(-1);
 	        };
-	        //保存network数据
-	        $scope.saveData = function(detailVO) {
-	            // Non null check
-	            if (regexAPI.objRegex($scope.detailVO, ["name","appName", "version", "groupName", "placeName",  "imp", "click"])) {
-	                if ($scope.detailVO.name.length > 50) {
-	                    ModalAlert.popup({msg:"The length of the name should be less than 50"}, 2500);
-	                    return;
-	                };
+	        $scope.saveData = function() {
+	            if (regexAPI.objRegex($scope.detailVO, ["name", "appName", "version", "groupName", "placeName", "imp", "click"])) {
 	                var reg = new RegExp("^[0-9]+(.[0-9]{1,4})?$");
-	                var payoutStr = detailVO.payout;
-	                var budgetStr = detailVO.budget;
+	                var payoutStr = $scope.detailVO.payout;
+	                var budgetStr = $scope.detailVO.budget;
 	                if (payoutStr && !reg.test(payoutStr)) {
-	                    ModalAlert.popup({msg:"Wrong payout character or this field is too long"}, 2500);
+	                	$scope.popAlert('error', 'Error', 'Wrong payout character or this field is too long');
 	                    return;
 	                };
 	                if (budgetStr && !reg.test(budgetStr)) {
-	                    ModalAlert.popup({msg:"Wrong budget character or this field is too long"}, 2500);
+	                	$scope.popAlert('error', 'Error', 'Wrong budget character or this field is too long');
 	                    return;
 	                };
 	                if ($scope.detailVO.rtb == 0) {
 	                    $scope.detailVO.offerInfoList = [];
 	                    if ($scope.detailVO.advertiserName === 'ALL' || $scope.detailVO.advertiserName.indexOf('LeWa') > -1) {
 	                        if (!$scope.detailVO.channel) {
-	                            ModalAlert.popup({msg:"The Channel value is necessary"}, 2500);
+	                			$scope.popAlert('error', 'Error', 'The channel value is necessary');
 	                            return;
 	                        }
+	                    } else if (!$scope.detailVO.advertiserName) {
+                			$scope.popAlert('error', 'Error', 'The advertiser value is necessary');
+                            return;
 	                    }
 	                } else {
 	                    if ($scope.detailVO.offerInfoList.length == 0) {
-	                        ModalAlert.popup({msg:"The All List value is necessary"}, 2500);
+                			$scope.popAlert('error', 'Error', 'The all list value is necessary');
 	                        return;
 	                    };
 	                }
 	                $scope.detailVO.startDate = $scope.startDate;
 	                $scope.detailVO.endDate = $scope.endDate;
-	                if($scope.detailVO.startDate == "") {
-	                    ModalAlert.popup({msg:"the Data value is necessary"}, 2500);
+	                if(!$scope.detailVO.startDate) {
+            			$scope.popAlert('error', 'Error', 'The date value is necessary');
 	                    return;
 	                };
+	                var url;
 	                if ($scope.dataState == "edit") {
-	                   var url = urlAPI.campaign_network_edit;
+	                   url = urlAPI.campaign_network_edit;
 	                } else {
-	                   var url = urlAPI.campaign_network_new;
+	                   url = urlAPI.campaign_network_new;
 	                };
 	                $scope.resubmit = true;
 	                serviceAPI.saveData(url, $scope.detailVO).then(function(result) {
@@ -611,11 +680,10 @@ angular.module('app.controller').controller('campaignNetworkCtrl',
 	                        history.go(-1);
 	                    } else {
 	                        $scope.resubmit = false;
-	                        ModalAlert.popup({msg: result.msg}, 2500)
+            				$scope.popAlert('error', 'Error', result.msg);
 	                    }
 	                }).catch(function() {})
 	            }
-
 	        };
 	        $scope.editList();
 	    }

@@ -1,0 +1,130 @@
+<div class="wrapper wrapper-content campaign-creatives" ng-controller="campaignOwnerEditCtrl">
+    <div class="ibox">
+        <div class="ibox-content">
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Name:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.name" maxlength="50">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Category:</label>
+                <div class="col-xs-6">
+                    <select class="ng-hide">
+                        <option ng-repeat="vo in category" value="{{vo}}">{{vo}}</option>>
+                    </select>
+                    <single-select-id class="chosen-select" ng-model="selectData" placehoder-text="{{detailVO.category}}" confirm="detailVO.category = selectData.name" read-status="detailVO.status"></single-select-id>
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Type:<em>&#42;</em></label>
+                <div class="col-xs-6 col-sm-8">
+                    <ul class="unstyled no-padding">
+                        <li class="inline m-r-sm" ng-click="typeData(0)">
+                            <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.type]"></i> App/Brand
+                        </li>
+                        <li class="inline m-r-sm" ng-click="typeData(1)">
+                            <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.type]"></i> AdNetwork/DSP
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Postback:<em>&#42;</em></label>
+                <div class="col-xs-6 col-sm-8">
+                    <ul class="unstyled no-padding">
+                        <li class="inline m-r-sm" ng-click="postData(1)">
+                            <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.postBack]"></i> Yes
+                        </li>
+                        <li class="inline m-r-sm" ng-click="postData(0)">
+                            <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.postBack]"></i> No
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">RTB:<em>&#42;</em></label>
+                <div class="col-xs-6 col-sm-8">
+                    <ul class="unstyled no-padding">
+                        <li class="inline m-r-sm" ng-click="rtbData(0)">
+                            <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.rtb]"></i> Yes
+                        </li>
+                        <li class="inline m-r-sm" ng-click="rtbData(1)">
+                            <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.rtb]"></i> No
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Country:<em>&#42;</em></label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.country" maxlength="50">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Phone:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.phone" maxlength="50">
+                </div>
+            </div>
+            <div class="row m-t-md">
+                <label class="col-xs-2 text-right">Address:</label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.address">
+                </div>
+            </div>
+            <div class="row m-t-md" ng-show="detailVO.postBack">
+                <label class="col-xs-2 text-right">IMP Postback:<em>&#42;</em></label>
+                <div class="col-xs-6 col-sm-8">
+                    <ul class="unstyled no-padding">
+                        <li class="inline m-r-sm" ng-click="detailVO.impPostback = 1">
+                            <i class="fa fa-dot-circle-o" ng-class="{1:'text-success'}[detailVO.impPostback]"></i> Yes
+                        </li>
+                        <li class="inline m-r-sm" ng-click="detailVO.impPostback = 0">
+                            <i class="fa fa-dot-circle-o" ng-class="{0:'text-success'}[detailVO.impPostback]"></i> No
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row m-t-md" ng-show="detailVO.impPostback && detailVO.postBack">
+                <label class="col-xs-2 text-right">IMP URL:<em>&#42;</em></label>
+                <div class="col-xs-6">
+                    <input type="text" ng-readonly="detailVO.status" class="form-control" ng-model="detailVO.impUrl">
+                </div>
+            </div>
+            <div class="row m-t-md" ng-show="detailVO.postBack">
+                <label class="col-xs-2 text-right">Postback Param:<em>&#42;</em></label>
+                <ul class="col-xs-6 col-sm-8 unstyled" ng-init="postbackItems = ['imei', 'andid', 'mac', 'device_model', 'device_brand', 'network', 'longitude', 'latitude', 'ip', 'language', 'OSversion']">
+                    <li class="row m-b-sm" ng-repeat="item in postbackItems">
+                        <div class="col-xs-2 col-md-2 col-sm-4">
+                            <i class="fa fa-check-square" ng-class="{false:'text-success'}[!detailVO.postParam[item]]" ng-click="postParamData(item)"></i><span class="text-capitalize m-l-sm">{{item}}</span>
+                        </div>
+                        <div class="col-xs-4 col-md-6 col-sm-6">
+                            <input type="text" class="form-control" ng-model="detailVO.postParam[item]">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row m-t-md" ng-show="detailVO.postBack">
+                <label class="col-xs-2 text-right">White List:<em>&#42;</em></label>
+                <div class="col-xs-6 col-sm-8">
+                    <ul class="unstyled no-padding">
+                        <li ng-repeat="ip in whiteIp" class="row m-b-sm">
+                            <div class="col-xs-6 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" ng-model="ip.ip">
+                            </div>
+                            <div class="col-xs-2 col-md-2 col-sm-4">
+                                <i class="fa fa-minus m-t-sm" ng-click="deleteWhite($index)" ng-hide="whiteIp.length==1"></i>
+                                <i class="fa fa-plus m-t-sm m-l-sm" ng-show="$last" ng-click="addWhite()"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-footer text-center p-h-lg">
+            <button type="button" class="btn btn-warning fw-100 m-r-lg" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-primary fw-100" ng-click="saveData()" ng-if="!detailVO.status" ng-disabled="resubmit">Save</button>
+        </div>
+    </div>
+</div>

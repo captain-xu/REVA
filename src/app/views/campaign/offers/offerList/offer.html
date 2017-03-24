@@ -1,0 +1,129 @@
+<div class="wrapper wrapper-content" ng-controller="campaignOfferCtrl">
+    <div class="ibox">
+        <div class="ibox-title">
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <label class="control-label">Width</label>
+                    <input type="text" class="form-control" placeholder="width" ng-model="seachParam.width" ng-change="searchBlur()">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <label class="control-label">Height</label>
+                    <input type="text" class="form-control" placeholder="height" ng-model="seachParam.height" ng-change="searchBlur()">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Advertiser</label>
+                        <select chosen-select class="chosen-select" ng-change="adverFilter(adver)" ng-model="adver" ng-options="adver.id as adver.name for adver in adverList">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">CPX</label>
+                        <select chosen-select class="chosen-select" ng-change="cpxFilter(cpx)" ng-model="cpx" ng-options="cpx for cpx in CPX">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label">Country</label>
+                        <select chosen-select class="chosen-select" ng-change="countryFilter(area)" ng-model="area" ng-options="area.code as area.name for area in countryList">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="form-group has-feedback">
+                        <label class="control-label">Search</label>
+                        <input class="form-control" type="text" placeholder="Search" ng-change="searchBlur()" ng-model="seachParam.searchData">
+                        <i class="fa fa-search form-control-feedback"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ibox-content" ng-class="{true:'sk-loading'}[listloading]">
+            <spinner-three-bounce></spinner-three-bounce>
+            <div class="tab-list">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tab-btn">
+                    <li ng-click="tabList(0)" ng-class="{0:'active'}[activeTab]"><a href="javascript:void(0)">Offline Offers</a></li>
+                    <li ng-click="tabList(1)" ng-class="{1:'active'}[activeTab]"><a href="javascript:void(0)">Online Offers</a></li>
+                </ul>
+                <div class="tab-content" ng-hide="listnodata">
+                    <!-- offline 列表页面 -->
+                    <div class="table-responsive tab-pane" ng-class="{0:'active'}[activeTab]">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Offer ID</th>
+                                    <th>Offer</th>
+                                    <th>Advertiser</th>
+                                    <th>CPX</th>
+                                    <th ng-click="orderBy('payout')">Payout
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='payout', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vo in list">
+                                    <td>{{vo.offerId}}</td>
+                                    <td>{{vo.offerName}}</td>
+                                    <td>{{vo.advertiserName}}</td>
+                                    <td>{{vo.CPX}}</td>
+                                    <td>{{vo.payout}}</td>
+                                    <td class="text-center">
+                                        <span class="fa fa-pencil m-r-sm" ng-click="editDetail(vo)" ng-show="vo.offerStatus"></span>
+                                        <span class="fa fa-eye" ng-click="viewDetail(vo)"></span>
+                                        <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- online 列表页面 -->
+                    <div class="table-responsive tab-pane" ng-class="{1:'active'}[activeTab]">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Offer ID</th>
+                                    <th>Offer</th>
+                                    <th>Advertiser</th>
+                                    <th>CPX</th>
+                                    <th ng-click="orderBy('payout')">Payout
+                                        <i class="fa pace-inactive" ng-class="{'inline':seachParam.orderBy==='payout', 'fa-caret-up': !!seachParam.order, 'fa-caret-down': !seachParam.order}"></i>
+                                    </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vo in list">
+                                    <td>{{vo.offerId}}</td>
+                                    <td>{{vo.offerName}}</td>
+                                    <td>{{vo.advertiserName}}</td>
+                                    <td>{{vo.CPX}}</td>
+                                    <td>{{vo.payout}}</td>
+                                    <td class="text-center">
+                                        <span class="fa fa-eye" ng-click="viewDetail(vo)"></span>
+                                        <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <null-data ng-show="listnodata" class="h-200"></null-data>
+            </div>
+        </div>
+        <div class="ibox-footer">
+            <div class="btn-group">
+                <button class="btn btn-default" ng-class="{20:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+                <button class="btn btn-default" ng-class="{50:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+                <button class="btn btn-default" ng-class="{100:'active'}[seachParam.pageSize]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+            </div>
+            <ul uib-pagination class="pull-right no-margins" ng-if="totalItems" total-items="totalItems" ng-model="seachParam.currentPage" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+        </div>
+    </div>
+</div>

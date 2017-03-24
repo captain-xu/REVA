@@ -53,7 +53,13 @@ angular
                 url: "/app/comparison",
                 templateUrl: "app/views/da/app/comparison.html",
                 data: { showTitle: true, pageTitle: "APP Comparison", breadcrumb: ["Data Analytics", 'App'], currentPage: 'Comparison' }
-            }).state('view.pushMsgList', {
+            })
+            .state('view.revenueLauncher', {
+                url: "/revenue/launcher",
+                templateUrl: "app/views/da/revenue/launcher.html",
+                data: { showTitle: true, pageTitle: "Launcher", breadcrumb: ["Data Analytics", 'Revenue'], currentPage: 'Launcher' }
+            })
+            .state('view.pushMsgList', {
                 url: "/message/list",
                 templateUrl: "app/views/push/message/list.html",
                 data: { showTitle: true, pageTitle: "Messages List", breadcrumb: ["Push", 'message'], currentPage: 'List' }
@@ -61,14 +67,24 @@ angular
             .state('view.pushDetail', {
                 url: "/detail",
                 templateUrl: "app/views/push/message/detail.html",
-
-                data: { showTitle: false}
+                data: { showTitle: false },
+                params: { target: "view.pushDetail.step" }
             })
             .state('view.pushDetail.step1', {
                 url: "/step1",
                 templateUrl: "app/views/push/message/notif/step1.html",
-                params:{'id':{}},
-                data: { showTitle: false}
+                params: { 'id': {} },
+                data: { showTitle: false }
+            })
+            .state('view.pushDetail.step2', {
+                url: "/step2",
+                templateUrl: "app/views/push/message/notif/step2.html",
+                data: { showTitle: false }
+            })
+            .state('view.pushDetail.step3', {
+                url: "/step3",
+                templateUrl: "app/views/push/message/notif/step3.html",
+                data: { showTitle: false }
             })
             .state('view.campaign', {
                 url: "/campaign",
@@ -103,5 +119,20 @@ angular
                 url: "/creativeEdit/:id",
                 templateUrl: "app/views/campaign/campaigns/creatives/creativeEdit.html",
                 data: { showTitle:true, pageTitle: "Creative Edit", breadcrumb: ["Campaign", "Campaigns"], currentPage: 'Creative Edit' }
+            })
+            .state('view.campaign.owners', {
+                url: "/owners",
+                templateUrl: "app/views/campaign/offers/owners/owner.html",
+                data: { showTitle:true, pageTitle: "Ad Networks", breadcrumb: ["Campaign", "Offers"], currentPage: 'Ad Networks' }
+            })
+            .state('view.campaign.ownerEdit', {
+                url: "/ownerEdit/:param/:id",
+                templateUrl: "app/views/campaign/offers/owners/ownerEdit.html",
+                data: { showTitle:true, pageTitle: "Ad Network Edit", breadcrumb: ["Campaign", "Offers"], currentPage: 'Ad Network Edit' }
+            })
+            .state('view.campaign.offerList', {
+                url: "/offerList",
+                templateUrl: "app/views/campaign/offers/offerList/offer.html",
+                data: { showTitle:true, pageTitle: "Offer List", breadcrumb: ["Campaign", "Offers"], currentPage: 'Offer List' }
             })
     });

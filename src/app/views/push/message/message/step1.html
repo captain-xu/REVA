@@ -1,0 +1,157 @@
+<div class="wrapper wrapper-content" ng-controller="notifTargetCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content ng-scope">
+                    <form role="form" name="validation_form" novalidate="" class="form-horizontal" ng-click="">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Campaign Name:<em class="text-danger">&#42;</em></label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Used to identify information" class="form-control" ng-model="receiver.campaignName" name="campaign" ng-maxlength="50" required="">
+                                <div class="m-t-xs" ng-show="validation_form.campaign.$invalid &amp;&amp; validation_form.submitted">
+                                    <small class="text-danger" ng-show="validation_form.campaign.$error.required">Please input a campaignName</small>
+                                    <small class="text-danger ng-hide" ng-show="validation_form.campaign.$error.maxlength">Your username cannot be longer than 50 characters</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">APP Name:<em>&#42;</em></label>
+                            <div class="col-sm-10">
+                                <select style="display: none;" ng-model="receiver.targetAppName" name="target_app">
+                                    <option ng-repeat="app in appNames">{{app.appName}}</option>
+                                </select>
+                                <single-select placehoder-text={{receiver.targetAppName}} ng-model="receiver.targetAppName" confirm="appData()"></single-select>
+                                <div class="m-t-xs" ng-show="validation_form.target_app.$invalid &amp;&amp; validation_form.submitted">
+                                    <small class="text-danger" ng-show="validation_form.target_app.$error.required">Please select an APP</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Devices:<em>&#42;</em></label>
+                            <div class="col-sm-10">
+                                <div class="chosen-container chosen-container-multi chosen-with-drop" style="width: 100%;" uib-dropdown>
+                                    <ul class="chosen-choices" uib-dropdown-toggle>
+                                        <li class="search-choice ng-scope" ng-repeat="item in targetDevices"><span class="ng-binding">{{item.value}}</span>
+                                            <a class="search-choice-close" data-option-array-index="105" ng-click="deleteDevice(item)"></a>
+                                        </li>
+                                        <li ng-hide="targetDevices.length" class="p-xs">Please select your target devices</li>
+                                    </ul>
+                                    <div class="chosen-drop no-box-shadow" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                        <ul class="chosen-results">
+                                            <li class="active-result" ng-repeat="device in devices">
+                                                <label ng-click="checkedDevice(device)">
+                                                    <i class="fa fa-square-o text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[device.isSelect]" aria-hidden="true" style=""></i><span class="ng-binding">{{device.channel}}</span>
+                                                </label>
+                                                <p class="col-sm-12  border-bottom p-h-xs">
+                                                    <label class="checkbox-inline" ng-repeat="model in device.model" ng-click="checkedDevice(model,device)">
+                                                        <i class="fa fa-square-o text-navy" ng-class="{true:'fa-check-square',false:'fa-square-o'}[model.isSelect]" aria-hidden="true" style=""></i><span class="ng-binding">{{model.name}}</span>
+                                                    </label>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="m-t-xs" ng-show="validation_form.submitted">
+                                    <small class="text-danger" ng-show="targetDeviceWarn">Please select your target devices</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Message Type:<em>&#42;</em></label>
+                            <div class="col-sm-10">
+                                <label class="m-t-sm">
+                                    <input type="radio" ng-checked="!receiver.messageType"> Standard
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Target Users:<em>&#42;</em></label>
+                            <div class="col-sm-10">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <label ng-click="userSelect(0)">
+                                            <input type="radio" name="radio" ng-checked="status.taegetNum==0"> All Users
+                                        </label>
+                                    </div>
+                                    <div class="panel-body p-lg" ng-show="status.taegetNum==0">
+                                        <p>Deliver this message to
+                                            <label class="text-navy">100%</label> of all eligible users on selected devices.</p>
+                                        <p>Targeting
+                                            <span class="fw-80 inline m-r-xs m-l-xs">
+                                            <input type="text" class="form-control" ng-model="receiver.allUsers" ng-blur="checkNum(receiver.allUsers,100)"></span>% of All Users</p>
+                                    </div>
+                                    <div class="panel-heading border-top">
+                                        <label ng-click="userSelect(1)">
+                                            <input type="radio" name="radio" ng-checked="status.taegetNum==1"> Single Users
+                                        </label>
+                                    </div>
+                                    <div class="panel-body p-lg" ng-show="status.taegetNum==1">
+                                        <p>Deliver this message to single users. You must enter the unique Device Identifier for the target user.</p>
+                                        <div class="form-group no-margins">
+                                            <lebel class="fw-125 col-sm-2 p-xs" ng-click="singleList(0)">
+                                                <input type="radio" ng-checked="status.single==0"> Single User
+                                            </lebel>
+                                            <div class="col-sm-10">
+                                                <div class="form-group no-margins">
+                                                    <div class="fw-350  col-sm-10" ng-show="!status.single">
+                                                        <input type="text" class="form-control" ng-model="receiver.deviceId" placeholder="Please enter a Client ID">
+                                                    </div>
+                                                    <label class="fw-125 col-sm-2 p-h-xs">
+                                                        <i class="fa fa-commenting-o" aria-hidden="true" popover-placement="bottom" popover-is-open="sinOpen" ng-mouseenter="sinOpen=true" ng-mouseleave="sinOpen=false" uib-popover="Unique device identifier for the target user."></i>
+                                                    </label>
+                                                </div>
+                                                <div class="m-t-xs" ng-show="validation_form.submitted">
+                                                    <small class="text-danger" ng-show="singleWarn">Please input your target devices</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group no-margins">
+                                            <lebel class="fw-125 col-sm-2 p-xs" ng-click="singleList(1)">
+                                                <input type="radio" ng-checked="status.single==1"> User list
+                                            </lebel>
+                                            <div class="col-sm-10">
+                                                <div class="form-group no-margins">
+                                                    <div class="fw-350 col-sm-10" ng-show="status.single">
+                                                        <div class="fileinput fileinput-new input-group no-margins" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="text/plain">
+                                                            <div class="form-control" data-trigger="fileinput">{{receiver.deviceIds}}</div>
+                                                            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span></span>
+                                                        </div>
+                                                    </div>
+                                                    <lebel class="fw-125 col-sm-2 p-h-xs" ng-click="singleList(0)">
+                                                        <i class="fa fa-commenting-o" aria-hidden="true" popover-placement="bottom" popover-is-open="userOpen" ng-mouseenter="userOpen=true" ng-mouseleave="userOpen=false" uib-popover="Please upload a txt file containing up to 10,000 Device IDs, and the device ID should be separated by a semicolon."></i>
+                                                    </lebel>
+                                                </div>
+                                                <div class="m-t-xs" ng-show="validation_form.submitted">
+                                                    <small class="text-danger" ng-show="deviceWarn">The number of Client IDs should not exceed 10,000</small>
+                                                    <small class="text-danger" ng-show="userWarn">This field is required</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-heading border-top">
+                                        <label ng-click="userSelect(2)">
+                                            <input type="radio" name="radio" ng-checked="status.taegetNum==2"> Segments
+                                        </label>
+                                    </div>
+                                    <div class="panel-body p-lg" ng-show="status.taegetNum==2">
+                                        <select style="display: none;">
+                                            <option ng-repeat="item in segmentList"> {{item.segmentName}}</option>
+                                        </select>
+                                        <single-select placehoder-text={{receiver.segmentName}} ng-model="receiver.segmentName" confirm="setSegment()"></single-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group p-w-lg">
+                            <button class="btn btn-default" type="button" ng-click="saveDraft()"><strong>Save as Draft</strong></button>
+                            <div class="pull-right">
+                                <button class="btn  btn-default" type="button" ui-sref="view.pushMsgList"><strong>Cancel</strong></button>
+                                <button class="btn  btn-primary" type="button" ng-click="saveDetail()"><strong>Save & Continue</strong></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

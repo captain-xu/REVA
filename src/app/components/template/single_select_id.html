@@ -1,4 +1,8 @@
-<div class="chosen-container chosen-container-single" style="width: 100%;" title=""><a class="chosen-single"><span>{{placehoderText}}</span><div><b></b></div></a>
+<div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+    <a class="chosen-single">
+        <span>{{placehoderText}}</span>
+        <div ng-if="!readStatus"><b></b></div>
+    </a>
     <div class="chosen-drop">
         <div class="chosen-search">
             <input type="text" autocomplete="off" ng-model="filter_value">

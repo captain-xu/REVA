@@ -200,7 +200,7 @@ angular.module('app.controller').controller('activeUserCtrl', [
                     formatter: '{value}%'
                 };
             };
-            option.xAxis.boundaryGap = false,
+            option.xAxis.boundaryGap = false;
                 option.grid = {
                     bottom: "15%",
                     left: "50px",

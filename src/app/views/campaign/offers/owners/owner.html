@@ -1,19 +1,14 @@
-<div class="wrapper wrapper-content campaign-creatives" ng-controller="campaignCreativesCtrl">
+<div class="wrapper wrapper-content campaign-creatives" ng-controller="campaignOwnerCtrl">
     <div class="ibox">
         <div class="ibox-title">
+            <div class="pull-right m-r-sm">
+                <button class="btn btn-primary fw-150" ng-click="addData()">Add Advertiser</button>
+            </div>
             <div class="row">
                 <div class="col-md-2 col-sm-4">
                     <div class="form-group">
-                        <label class="control-label">Campaign</label>
-                        <select chosen-select class="chosen-select" ng-change="campaignFilter(camp)" ng-model="camp" ng-options="camp.id as camp.name for camp in campaign">
-                            <option value="">All</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label">Placement</label>
-                        <select chosen-select class="chosen-select" ng-change="placementFilter(place)" ng-model="place" ng-options="place.placementId as place.placement for place in placement">
+                        <label class="control-label">Type</label>
+                        <select chosen-select class="chosen-select" ng-change="typeFilter(type)" ng-model="type" ng-options="type.type as type.name for type in typeList">
                             <option value="">All</option>
                         </select>
                     </div>
@@ -43,24 +38,24 @@
                                     <i class="fa pace-inactive" ng-class="{'inline':orderField==='name', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
                                 </span>
                             </th>
-                            <th ng-click="orderBy('campaign')">Campaign
+                            <th ng-click="orderBy('category')">Category
                                 <span>
-                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='campaign', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='category', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
                                 </span>
                             </th>
-                            <th ng-click="orderBy('placement')">Placement
+                            <th ng-click="orderBy('type')">Type
                                 <span>
-                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='placement', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='type', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
                                 </span>
                             </th>
-                            <th ng-click="orderBy('fileSize')">File Size (kb)
+                            <th ng-click="orderBy('postBack')">Postback
                                 <span>
-                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='fileSize', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='postBack', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
                                 </span>
                             </th>
-                            <th ng-click="orderBy('width')">Size
+                            <th ng-click="orderBy('country')">Country
                                 <span>
-                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='width', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
+                                    <i class="fa pace-inactive" ng-class="{'inline':orderField==='country', 'fa-caret-up': !desc, 'fa-caret-down': desc}"></i>
                                 </span>
                             </th>
                             <th ng-click="orderBy('createTime')">Create Time
@@ -75,14 +70,14 @@
                         <tr ng-repeat="vo in list | orderBy: orderField:desc | limitTo:listNum">
                             <td>{{vo.id}}</td>
                             <td>{{vo.name}}</td>
-                            <td>{{vo.campaign}}</td>
-                            <td>{{vo.placement}}</td>
-                            <td>{{vo.fileSize}}</td>
-                            <td>{{vo.size}}</td>
+                            <td>{{vo.category}}</td>
+                            <td>{{vo.type==0?'App/Brand':'AdNetwork/DSP'}}</td>
+                            <td>{{vo.postBack==0?'No':'Yes'}}</td>
+                            <td>{{vo.country}}</td>
                             <td>{{vo.createTime}}</td>
                             <td class="text-center">
-                                <span class="fa m-r-sm" ng-class="{1: 'fa-toggle-on text-success', 0: 'fa-toggle-off'}[vo.imgStatus]" ng-click="changeState(vo)"></span>
-                                <span class="fa" ng-class="{1: 'fa-eye', 0: 'fa-pencil'}[vo.imgStatus]" ng-click="getDetail(vo)"></span>
+                                <span class="fa m-r-sm" ng-class="{1: 'fa-toggle-on text-success', 0: 'fa-toggle-off'}[vo.status]" ng-click="changeState(vo)"></span>
+                                <span class="fa" ng-class="{1: 'fa-eye', 0: 'fa-pencil'}[vo.status]" ng-click="getDetail(vo)"></span>
                                 <!-- <span class="fa fa-trash" ng-click="deleteItem(vo)"></span> -->
                             </td>
                         </tr>

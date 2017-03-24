@@ -5,7 +5,6 @@ angular.module('app.controller').controller('campaignCreativeEditCtrl',
     function($scope, $state, serviceAPI, urlAPI, $stateParams) {
         $scope.resubmit = false;
         $scope.getDetail = function() {
-            $('.msg').text('');
             var param = {
                 id: $stateParams.id
             };
@@ -16,28 +15,23 @@ angular.module('app.controller').controller('campaignCreativeEditCtrl',
             }).
             catch(function(result) {});
         };
-        $scope.validateForm = function(url) {
-            if ($scope.detailVO.name != "") {
-                $scope.resubmit = true;
-                serviceAPI.saveData(url,$scope.detailVO).then(function(result) {
-                    if (result.result == 200) {
-                        history.go(-1);
-                    } else {
-                        $scope.resubmit = false;
-                        ModalAlert.popup({msg:result.msg}, 2500);
-                    }
-                }).catch(function() {})
-            } else {
-                ModalAlert.popup({ msg: "the name value is necessary" }, 2500);
-            }
-        };
         $scope.saveData = function() {
-            var url = urlAPI.campaign_creative_edit;
-            if ($scope.detailVO.name.length > 50) {
-                ModalAlert.popup({msg:"The length of the name should be less than 50"}, 2500);
+            if (!$scope.detailVO.name) {
+                $scope.popAlert('error', 'Error', 'The name value is necessary');
                 return;
-            };
-            $scope.validateForm(url);
+            } else if ($scope.detailVO.name.length > 50) {
+                $scope.popAlert('error', 'Error', 'The length of the name should be less than 50');
+                return;
+            }
+            $scope.resubmit = true;
+            serviceAPI.saveData(urlAPI.campaign_creative_edit, $scope.detailVO).then(function(result) {
+                if (result.result == 200) {
+                    history.go(-1);
+                } else {
+                    $scope.resubmit = false;
+                    $scope.popAlert('error', 'Error', result.msg);
+                }
+            }).catch(function() {})
         };
         $scope.cancel = function(){
             history.go(-1);

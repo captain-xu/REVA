@@ -1,0 +1,39 @@
+<div class="list-card">
+    <div class="header">
+        <span class="head-name"><b>Search Settings</b></span>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#/view/xscreen/searchConfig/0/new/edit">+&nbsp;&nbsp;New Search</a></li>
+        </ul>
+    </div>
+    <div class="list-content">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Device Model</th>
+                    <th>Search Engines</th>
+                    <th>Update Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in searchList">
+                    <td>{{list.name}}</td>
+                    <td>{{list.engine}}&nbsp;{{list.url}}</td>
+                    <td>{{list.edittime}}</td>
+                    <td>
+                        <a href="#/view/xscreen/searchConfig/{{list.id}}/{{list.name}}/view" class="glyphicon glyphicon-eye-open"></a>
+                        <a href="#/view/xscreen/searchConfig/{{list.id}}/{{list.name}}/edit" class="glyphicon glyphicon-pencil"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        <!-- <div class="btn-group">
+            <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 20]" ng-click="seachParam.pageSize=20;loadList()">20</button>
+            <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 50]" ng-click="seachParam.pageSize=50;loadList()">50</button>
+            <button type="button" class="btn btn-default" ng-class="{true:'active'}[seachParam.pageSize == 100]" ng-click="seachParam.pageSize=100;loadList()">100</button>
+        </div> -->
+        <ul uib-pagination total-items="totalItems" ng-model="seachParam.pageNum" max-size="5" previous-text="<" next-text=">" boundary-link-numbers="true" items-per-page="seachParam.pageSize" ng-change="loadList()"></ul>
+    </div>
+</div>

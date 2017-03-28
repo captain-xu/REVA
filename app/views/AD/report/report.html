@@ -56,32 +56,25 @@
                                     <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='ctr' &amp;&amp; desc]"></i>
                                 </div>
                             </th>
-                            <th ng-hide="seachParam.type === 'Facebook'">Date</th>
-                            <th ng-click="orderBy('finishRate')" ng-hide="seachParam.type === 'Facebook'">Finish Rate
-                                <div class="icon-order">
-                                    <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='finishRate' &amp;&amp; !desc]"></i>
-                                    <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='finishRate' &amp;&amp; desc]"></i>
-                                </div>
-                            </th>
-                            <th ng-click="orderBy('eCPM')" ng-show="seachParam.type === 'Facebook'">eCPM
+                            <th ng-click="orderBy('eCPM')">eCPM
                                 <div class="icon-order">
                                     <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; !desc]"></i>
                                     <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='eCPM' &amp;&amp; desc]"></i>
                                 </div>
                             </th>
-                            <th ng-click="orderBy('conversion')" ng-show="seachParam.type === 'Facebook'">Conversion
+                            <th ng-click="orderBy('conversion')">Conversion
                                 <div class="icon-order">
                                     <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; !desc]"></i>
                                     <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='conversion' &amp;&amp; desc]"></i>
                                 </div>
                             </th>
-                            <th ng-click="orderBy('request')" ng-show="seachParam.type === 'Facebook'">Request
+                            <th ng-click="orderBy('request')">Request
                                 <div class="icon-order">
                                     <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='request' &amp;&amp; !desc]"></i>
                                     <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='request' &amp;&amp; desc]"></i>
                                 </div>
                             </th>
-                            <th ng-click="orderBy('revenue')" ng-show="seachParam.type === 'Facebook'">Revenue
+                            <th ng-click="orderBy('revenue')">Revenue
                                 <div class="icon-order">
                                     <i class="glyphicon glyphicon-triangle-top" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; !desc]"></i>
                                     <i class="glyphicon glyphicon-triangle-bottom" ng-class="{true: 'icon-color'}[orderField=='revenue' &amp;&amp; desc]"></i>
@@ -96,14 +89,10 @@
                             <td>{{vo.imp}}</td>
                             <td>{{vo.click}}</td>
                             <td>{{vo.ctr}}</td>
-                            <td ng-hide="seachParam.type === 'Facebook'">{{vo.date}}</td>
-                            <td ng-hide="seachParam.type === 'Facebook'">{{vo.finishRate}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.eCPM}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.conversion}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.eCPM}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.conversion}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.request}}</td>
-                            <td ng-show="seachParam.type === 'Facebook'">{{vo.revenue}}</td>
+                            <td>{{vo.eCPM}}</td>
+                            <td>{{vo.conversion}}</td>
+                            <td>{{vo.request}}</td>
+                            <td>{{vo.revenue}}</td>
                         </tr>
                     </tbody>
                 </table>

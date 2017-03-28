@@ -10,7 +10,7 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 			serviceAPI.loadData(urlAPI.admin_app_view, $scope.pageBar).then(function(result) {
 				if (result.status == 0 && result.code == 0) {
 					$scope.appList = result.data.appList;
-					$scope.appAuthorList = result.data.appAuthorList;
+//					$scope.appAuthorList = result.data.appAuthorList;
 					$scope.getAppAttrCharge($scope.appList);
 
 					$scope.pageBar.totalRows = result.data.totalRows;
@@ -20,12 +20,12 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 
 		};
 
-		$scope.getAppAttrCharge = function() {
-			for (var i = 0; i < $scope.appList.length; i++) {
-				var iapp = $scope.appList[i];
-				iapp.author = $scope.appAuthorList[iapp.id];
-			}
-		};
+//		$scope.getAppAttrCharge = function() {
+//			for (var i = 0; i < $scope.appList.length; i++) {
+//				var iapp = $scope.appList[i];
+//				iapp.author = $scope.appAuthorList[iapp.id];
+//			}
+//		};
 
 		$scope.selectPageSize = function(pageSize) {
 			$scope.pageBar.pageSize = pageSize;

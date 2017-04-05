@@ -11,7 +11,7 @@ var scope = ["$scope", "urlAPI", "ModalAlert", "serviceAPI", "adminAPI",
 				if (result.status == 0 && result.code == 0) {
 					$scope.appList = result.data.appList;
 //					$scope.appAuthorList = result.data.appAuthorList;
-					$scope.getAppAttrCharge($scope.appList);
+					// $scope.getAppAttrCharge($scope.appList);
 
 					$scope.pageBar.totalRows = result.data.totalRows;
 					adminAPI.loginUser = result.data.loginUser;

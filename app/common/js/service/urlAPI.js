@@ -228,6 +228,8 @@ angular.module('app.services').factory("urlAPI", [
             campaign_report_app: "/campaign/util/2013",
             campaign_report_placement: "/campaign/util/2020",
             campaign_report_camp: "/campaign/util/2014",
+            campaign_responds_line: "/campaign/report/8003",
+            campaign_responds_respond: "/campaign/report/8004",
             /*X-screen*/
             xscreen_list: "/xscreen/card/list",
             xscreen_detail: "/xscreen/card/detail",

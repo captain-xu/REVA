@@ -5,11 +5,11 @@
                 <input type="text" class="form-control" ng-model="item.key" readonly><span class="caret"></span>
             </div>
             <ul class="dropdown-menu">
-                <li ng-click="changeName(item,'Device')">Device</li>
-                <li ng-click="changeName(item,'Android Version')">Android Version</li>
-                <li ng-click="changeName(item,'Location')">Location</li>
+                <li ng-click="changeName(item,'device')">device</li>
+                <li ng-click="changeName(item,'androidVersion')">androidVersion</li>
+                <li ng-click="changeName(item,'location')">location</li>
                 <!-- <li ng-click="changeName(item,'Create Time')">Create Time</li> -->
-                <li ng-click="changeName(item,'Client ID')">Client ID</li>
+                <li ng-click="changeName(item,'clientId')">clientId</li>
             </ul>
         </div>
     </div>
@@ -19,29 +19,29 @@
                 <input type="text" class="form-control" ng-model="item.condition" readonly><span class="caret"></span>
             </div>
             <ul class="dropdown-menu">
-                <li ng-show="item.key=='Device' || item.key=='Location' || item.key=='Client ID'" ng-click="setValue(item, 'condition', 'is')">is</li>
-                <li ng-show="item.key=='Device' || item.key=='Location' || item.key=='Client ID'" ng-click="setValue(item, 'condition', 'not')">not</li>
-                <li ng-show="item.key=='Client ID'" ng-click="setValue(item, 'condition', 'in')" ng-if="clientAre">in</li>
-                <li ng-show="item.key=='Android Version'" ng-click="setValue(item, 'condition', 'bigger')">bigger</li>
+                <li ng-show="item.key=='device' || item.key=='location' || item.key=='clientId'" ng-click="setValue(item, 'condition', 'is')">is</li>
+                <li ng-show="item.key=='device' || item.key=='location' || item.key=='clientId'" ng-click="setValue(item, 'condition', 'not')">not</li>
+                <li ng-show="item.key=='clientId'" ng-click="setValue(item, 'condition', 'in')" ng-if="clientAre">in</li>
+                <li ng-show="item.key=='androidVersion'" ng-click="setValue(item, 'condition', 'bigger')">bigger</li>
                 <li ng-show="item.key=='Create Time'" ng-click="setValue(item, 'condition', 'bigger')">bigger</li>
-                <li ng-show="item.key=='Android Version' || item.key=='Create Time'" ng-click="setValue(item, 'condition', 'between')">between</li>
+                <li ng-show="item.key=='androidVersion' || item.key=='Create Time'" ng-click="setValue(item, 'condition', 'between')">between</li>
             </ul>
         </div>
     </div>
-    <div class="col-sm-2" ng-if="item.key !='Create Time' && item.key !='Client ID'">
+    <div class="col-sm-2" ng-if="item.key !='Create Time' && item.key !='clientId'">
         <div class="dropdown os_filter">
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value1" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu" ng-if="item.key=='Device'">
+            <ul class="dropdown-menu" ng-if="item.key=='device'">
                <!--  <li ng-click="changeValue(item, 'All Devices')">All Devices</li> -->
                 <li ng-repeat="option in devices" ng-click="changeValue(item,option.channel)">{{option.channel}}</li>
             </ul>
-            <ul class="dropdown-menu" ng-if="item.key=='Location'">
+            <ul class="dropdown-menu" ng-if="item.key=='location'">
             <!--    <li ng-click="changeValue(item, 'All Country')">All Country</li> -->
                 <li ng-repeat="option in areas" ng-click="changeValue(item,option.country)">{{option.country}}</li>
             </ul>
-            <ul class="dropdown-menu" ng-if="item.key=='Android Version'">
+            <ul class="dropdown-menu" ng-if="item.key=='androidVersion'">
                 <li ng-repeat="option in versions" ng-click="changeValue(item,option)">{{option}}</li>
             </ul>
         </div>
@@ -60,25 +60,25 @@
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value2" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu" ng-if="item.key=='Device'" ng-repeat="one in devices | filter:{channel: item.value1}:true">
+            <ul class="dropdown-menu" ng-if="item.key=='device'" ng-repeat="one in devices | filter:{channel: item.value1}:true">
                 <li ng-click="setValue(item, 'value2', 'All Devices', 1)">All Devices</li>
                 <li ng-repeat="option in one.models" ng-click="setValue(item, 'value2', option.model, 1)">{{option.model}}</li>
             </ul>
-            <ul class="dropdown-menu" ng-if="item.key=='Location'" ng-repeat="one in areas | filter:{country: item.value1}:true">
+            <ul class="dropdown-menu" ng-if="item.key=='location'" ng-repeat="one in areas | filter:{country: item.value1}:true">
                <li ng-click="setValue(item, 'value2', 'All States')">All States</li>
                 <li ng-repeat="option in one.states" ng-click="setValue(item, 'value2', option.state)">{{option.state}}</li>
             </ul>
-            <ul class="dropdown-menu" ng-if="item.key=='Android Version'">
+            <ul class="dropdown-menu" ng-if="item.key=='androidVersion'">
                 <li ng-repeat="option in versions" ng-click="setValue(item, 'value2', option)">{{option}}</li>
             </ul>
         </div>
     </div>
-    <div class="col-sm-2"  ng-if="item.key=='Device'">
+    <div class="col-sm-2"  ng-if="item.key=='device'">
          <div class="dropdown os_filter">
             <div class="dropdown-toggle" data-toggle="dropdown" ng-click="checkData()">
                 <input type="text" class="form-control" ng-model="item.value3" readonly><span class="caret"></span>
             </div>
-            <ul class="dropdown-menu" ng-if="item.key=='Device'" ng-repeat="two in devices | filter:{channel: item.value1}:true">
+            <ul class="dropdown-menu" ng-if="item.key=='device'" ng-repeat="two in devices | filter:{channel: item.value1}:true">
                 <li ng-click="setValue(item, 'value3', 'All OS Versions')">All OS Versions</li>
                 <ol ng-repeat="osList in two.models | filter:{model: item.value2}:true">
                     <li ng-repeat="os in osList.osversions" ng-click="setValue(item, 'value3' ,os)" title="{{os}}">{{os}}</li>
@@ -87,7 +87,7 @@
         </div>
     </div>
     <span class="spec" ng-if="item.key=='Create Time'">days</span>
-    <div class="col-sm-3" ng-if="item.key=='Client ID'">
+    <div class="col-sm-3" ng-if="item.key=='clientId'">
         <input type="text" class="form-control" ng-model="item.value1" ng-readonly="item.condition=='in'">
         <button type="file" ngf-select="uploadClient($file, $invalidFiles, item)" accept=".txt" name="file" class="btn btn-primary clientBtn" ng-show="item.condition=='in'">Upload</button>
     </div>

@@ -1,0 +1,25 @@
+<div class="campaign">    
+    <div class="report">
+        <div class="header">
+            <ol class="breadcrumb">
+                <li><b>Responds</b></li>
+            </ol>
+            <div class="daterange">
+                <i class="glyphicon glyphicon-calendar"></i>
+                <input type="text" class="form-control" readonly date-range>
+            </div>
+         </div>
+        <div class="seach-bar clearfix">
+            <div class="seach">
+                <span>App:</span>
+                <reportselect datalists="appList" confirm="appSel()"></reportselect>
+            </div>
+            <div class="seach">
+                <span>Placement:</span>
+                <reportselect datalists="placeList" confirm="placeSel()"></reportselect>
+            </div>
+        </div>
+        <div class="echart-line" id="responds-line"></div>
+        <div class="echart-line" id="echart-line"></div>
+    </div>
+</div>

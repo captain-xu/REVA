@@ -23,12 +23,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
                     item = $scope.getSegment(item);
                 } else {
                     switch (item.key) {
-                        case "Device": 
+                        case "device": 
                             item.value1 = item.channel;
                             item.value2 = item.model === '*' ? 'All Devices' : item.model;
                             item.value3 = item.osVersion === '*' ? 'All OS Versions' : item.osVersion;
                         break;
-                        case "Android Version": 
+                        case "androidVersion": 
                             if (item.condition == 'bigger') {
                                 item.value1 = item.version1;
                             } else {
@@ -36,7 +36,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
                                 item.value2 = item.version2;
                             }
                         break;
-                        case "Location": 
+                        case "location": 
                             item.value1 = item.country;
                             item.value2 = item.state === '*' ? 'All States' : item.state;
                         break;
@@ -48,8 +48,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "$stateParams", 'urlAPI','$st
                                 item.value2 = item.days2;
                             }
                         break;
-                        case "Client ID":
-                            item.value1 = item.clientIds;
+                        case "clientId":
+                            item.value1 = item.clientIds.join();
                         break;
                     }
                     delete item.channel;

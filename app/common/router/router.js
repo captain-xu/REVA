@@ -633,6 +633,18 @@ angular.module('LewaOS').config(function($stateProvider, $urlRouterProvider) {
                 resourceMap: function(serviceAPI) { serviceAPI.resourceMap('AD/report/ctrl/report') }
             }
         })
+        .state('campaign.responds', {
+            url: "/responds",
+            templateUrl: 'app/views/AD/responds/responds.html',
+            controller: ['$scope', "$injector", function($scope, $injector) {
+                require.async('app/views/AD/responds/ctrl/responds.async.js', function(ctrl) {
+                    $injector.invoke(ctrl, this, { '$scope': $scope });
+                })
+            }],
+            resolve: {
+                resourceMap: function(serviceAPI) { serviceAPI.resourceMap('AD/responds/ctrl/responds') }
+            }
+        })
         .state('campaign.app', {
             url: "/app",
             templateUrl: 'app/views/AD/main/main.html',

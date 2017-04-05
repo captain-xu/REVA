@@ -4,21 +4,21 @@
             <span> if</span>
             <div class="col-sm-2">
                 <select class="form-control" ng-model="segment.isAnd">
-                    <option value="1" ng-selected="segment.isAnd == 1">All</option>
-                    <option value="0" ng-selected="segment.isAnd == 0">Any</option>
+                    <option value="true" ng-selected="segment.isAnd == true">All</option>
+                    <option value="false" ng-selected="segment.isAnd == false">Any</option>
                 </select>
             </div>
             <span> of the following are</span>
             <div class="col-sm-2">
                 <select class="form-control" ng-model="segment.isTrue">
-                    <option value="1" ng-selected="segment.isTrue == 1">True</option>
-                    <option value="0" ng-selected="segment.isTrue == 0">False</option>
+                    <option value="true" ng-selected="segment.isTrue == true">True</option>
+                    <option value="false" ng-selected="segment.isTrue == false">False</option>
                 </select>
             </div>
         </div>
     </div>
     <div class="panel-body" ng-repeat="item in segment.items">
-        <div class="label label-default" ng-if="$index > 0">{{segment.isAnd == 1 ? "AND" : "OR"}}</div>
+        <div class="label label-default" ng-if="$index > 0">{{segment.isAnd == true ? "AND" : "OR"}}</div>
         <div ng-if="!item.items" segment-field>
         </div>
         <div segment attr-segment="item" ng-if="item.items" attr-child="true" attr-areas="areas" attr-devices="devices" attr-versions="versions"></div>

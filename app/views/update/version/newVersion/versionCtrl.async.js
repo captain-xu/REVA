@@ -23,8 +23,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 "requiresandroid": "",
                 "incrementalpack": [],
                 "segment": {
-                    "isAnd": 1,
-                    "isTrue": 1,
+                    "isAnd": true,
+                    "isTrue": true,
                     "items": []
                 }
             };
@@ -36,8 +36,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     $scope.detail.appName = result.data.app;
                     if (!$scope.detail.segment || $scope.detail.segment == '') {
                         $scope.detail.segment = {
-                            "isAnd": 1,
-                            "isTrue": 1,
+                            "isAnd": true,
+                            "isTrue": true,
                             "items": []
                         }
                     } else {
@@ -63,12 +63,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     item = $scope.getSegment(item);
                 } else {
                     switch (item.key) {
-                        case "Device": 
+                        case "device": 
                             item.value1 = item.channel;
                             item.value2 = item.model === '*' ? 'All Devices' : item.model;
                             item.value3 = item.osVersion === '*' ? 'All OS Versions' : item.osVersion;
                         break;
-                        case "Android Version": 
+                        case "androidVersion": 
                             if (item.condition == 'bigger') {
                                 item.value1 = item.version1;
                             } else {
@@ -76,7 +76,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                                 item.value2 = item.version2;
                             }
                         break;
-                        case "Location": 
+                        case "location": 
                             item.value1 = item.country;
                             item.value2 = item.state === '*' ? 'All States' : item.state;
                         break;
@@ -88,8 +88,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                                 item.value2 = item.days2;
                             }
                         break;
-                        case "Client ID":
-                            item.value1 = item.clientIds;
+                        case "clientId":
+                            item.value1 = item.clientIds.join();
                         break;
                     }
                     delete item.channel;
@@ -259,6 +259,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
             }
         };
         $scope.setSegment = function(vo) {
+            vo.isAnd = vo.isAnd === 'true' ? true : false;
+            vo.isTrue = vo.isTrue === 'true' ? true : false;
             for (var i = 0; i < vo.items.length; i++) {
                 var item = vo.items[i];
                 if (item.items && item.items.length > 0) {
@@ -269,12 +271,12 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                     delete item.isAnd;
                     delete item.isTrue;
                     switch (item.key) {
-                        case "Device": 
+                        case "device": 
                             item.channel = item.value1;
                             item.model = item.value2 === 'All Devices' ? '*' : item.value2;
                             item.osVersion = item.value3 === 'All OS Versions' ? '*' : item.value3;
                         break;
-                        case "Android Version": 
+                        case "androidVersion": 
                             if (item.condition == 'bigger') {
                                 item.version1 = item.value1;
                             } else {
@@ -282,7 +284,7 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                                 item.version2 = item.value2;
                             }
                         break;
-                        case "Location": 
+                        case "location": 
                             item.country = item.value1;
                             item.state = item.value2 === 'All States' ? '*' : item.value2;
                         break;
@@ -294,8 +296,8 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                                 item.days2 = item.value2;
                             }
                         break;
-                        case "Client ID":
-                            item.clientIds = item.value1;
+                        case "clientId":
+                            item.clientIds = item.value1.split(",");
                         break;
                     }
                 }
@@ -325,27 +327,27 @@ var scope = ["$scope", "serviceAPI", "ModalAlert", "Upload", "$stateParams", 'ur
                 if (item.items) {
                     var arr = item.items;
                     for (var i = 0; i < arr.length; i++) {
-                        if (arr[i].key === "Client ID") {
+                        if (arr[i].key === "clientId") {
                             if (arr[i].value1 === "") {
-                                ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
+                                ModalAlert.error({ msg: "clientId can not be empty!" }, 2500);
                                 return false;
                             }
                             if (arr[i].condition !== "in") {
                                 if (arr[i].value1.length < 32 || arr[i].value1.length > 93) {
-                                    ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
+                                    ModalAlert.error({ msg: "clientId length is not correct!" }, 2500);
                                     return false;
                                 };
                             }
                         }
                     }
-                } else if (item.key === "Client ID") {
+                } else if (item.key === "clientId") {
                     if (item.value1 === "") {
-                        ModalAlert.error({ msg: "Client ID can not be empty!" }, 2500);
+                        ModalAlert.error({ msg: "clientId can not be empty!" }, 2500);
                         return false;
                     }
                     if (item.condition !== "in") {
                         if (item.value1.length < 32 || item.value1.length > 93) {
-                            ModalAlert.error({ msg: "Client ID length is not correct!" }, 2500);
+                            ModalAlert.error({ msg: "clientId length is not correct!" }, 2500);
                             return false;
                         };
                     }

@@ -1,15 +1,15 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="form-group">
-            <span ng-show="checksegment.isAnd == 1">All</span>
-            <span ng-show="checksegment.isAnd == 0">Any</span>
+            <span ng-show="checksegment.isAnd == true">All</span>
+            <span ng-show="checksegment.isAnd == false">Any</span>
             <span>&nbsp; of the following are&nbsp;</span>
-            <span ng-show="checksegment.isTrue == 1">True</span>
-            <span ng-show="checksegment.isTrue == 0">False</span>
+            <span ng-show="checksegment.isTrue == true">True</span>
+            <span ng-show="checksegment.isTrue == false">False</span>
         </div>
     </div>
     <div class="panel-body" ng-repeat="item in checksegment.items">
-        <div class="label label-default" ng-if="$index > 0">{{checksegment.isAnd == 1 ? "AND" : "OR"}}</div>
+        <div class="label label-default" ng-if="$index > 0">{{checksegment.isAnd == true ? "AND" : "OR"}}</div>
         <div ng-if="item && !item.items" segment-check>
         </div>
         <div check-segment attr-segment="item" ng-if="item.items.length>0" attr-child="true"></div>

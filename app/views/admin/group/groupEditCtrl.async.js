@@ -1008,6 +1008,10 @@ var scope = ["$scope", "$location", "urlAPI", "serviceAPI", "Upload", "ModalAler
 				return;
 			}
 
+			if (adminAPI.isNullOrEmpty($scope.groupChannelList)) {
+				$scope.groupChannelList = [];
+			}
+  			
 			for (var i = 0; i < $scope.groupChannelList.length; i++) {
 				if ($scope.groupChannelList[i].channel == channel) {
 					ModalAlert.popup({ msg: "This channel was aready existed!" }, 2500);

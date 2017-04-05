@@ -4,7 +4,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
         $scope.setValue = function(item, str, value, num) {
             item[str] = value;
             $scope.clientStatus();
-            if (item.key == 'Client ID') {
+            if (item.key == 'clientId') {
                 item.value1 = '';
             }
             if (num) {
@@ -15,7 +15,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
         $scope.addCondition = function() {
             if ($scope.devices && $scope.devices.length != 0) {
                 $scope.segment.items.push({
-                    "key": "Device",
+                    "key": "device",
                     "condition": "is",
                     "value1": $scope.devices[0].channel,
                     "value2": "All Devices",
@@ -30,26 +30,26 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
             vo.key = str;
             vo.value2 = "";
             switch (vo.key) {
-                case "Device":
+                case "device":
                     vo.condition = "is";
                     vo.value1 = $scope.devices[0].channel;
                     vo.value2 = "All Devices";
                     vo.value3 = "All OS Versions";
                     break;
-                case "Location":
+                case "location":
                     vo.condition = "is";
                     vo.value1 = $scope.areas[0].country;
                     vo.value2 = "All States";
                     break;
-                case "Android Version":
-                    vo.condition = "is above";
+                case "androidVersion":
+                    vo.condition = "bigger";
                     vo.value1 = $scope.versions[0];
                     break;
                 case "Create Time":
                     vo.condition = "more than"
                     vo.value1 = "";
                     break;
-                case "Client ID":
+                case "clientId":
                     vo.condition = "is"
                     vo.value1 = "";
                     $scope.clientStatus();
@@ -81,9 +81,9 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
                         item.value1 = result.data.clientid;
                         ModalAlert.success({ msg: 'upload successed' }, 2500);
                     } else if (result.status == -1 && result.code == 112) {
-                        ModalAlert.error({ msg: 'Invalid client ID has been found in the uploaded file, please recheck the file.' }, 2500);
+                        ModalAlert.error({ msg: 'Invalid clientId has been found in the uploaded file, please recheck the file.' }, 2500);
                     } else {
-                        ModalAlert.error({ msg: 'Client ID can not be empty!' }, 2500);
+                        ModalAlert.error({ msg: 'clientId can not be empty!' }, 2500);
                     }
                 });
             }
@@ -94,11 +94,11 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
             };
             vo.value1 = str;
             switch (vo.key) {
-                case "Device":
+                case "device":
                     vo.value2 = "All Devices";
                     vo.value3 = "All OS Versions";
                     break;
-                case "Location":
+                case "location":
                     vo.value2 = "All States";
                     break;
             }
@@ -111,7 +111,7 @@ var scope = ["$scope", "serviceAPI", "urlAPI", "Upload", "ModalAlert",
                 "value2": vo.value2,
                 "value3": vo.value3
             }, {
-                "key": "Device",
+                "key": "device",
                 "condition": "is",
                 "value1": $scope.devices[0].channel,
                 "value2": "All Devices",

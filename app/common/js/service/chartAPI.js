@@ -9,8 +9,19 @@ angular.module('app.services').factory('chartAPI', [
 
                 return myChart;
             },
-            getOption: function(obj1, obj2, obj3) {
+            getOption: function(obj1, obj2, obj3, title) {
                 var option = {
+                    title: {
+                        text: title,
+                        padding: 20,
+                        textStyle: {
+                            color: '#333',
+                            fontStyle: 'normal',
+                            fontWeight: 'bolder',
+                            fontFamily: 'sans-serif',
+                            fontSize: 16,
+                        },
+                    },
                     tooltip: {
                         trigger: 'axis'
                     },
